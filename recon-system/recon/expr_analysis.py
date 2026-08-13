@@ -1,0 +1,969 @@
+"""Per-function body analysis.
+
+Single AST walk over each function's body that emits, with full source
+provenance:
+
+  * state reads / writes                       (section 10)
+  * call graph edges (internal/external/etc.)   (section 11)
+  * external call surface facts                 (section 13)
+  * asset / value flow facts                     (section 14)
+  * authorization-mechanism facts                 (section 15)
+  * control-flow structural facts                  (section 18)
+  * event/error emission + revert sites             (section 19)
+  * special EVM/Solidity feature facts               (section 20)
+  * conservative, evidence-backed data-flow edges     (sections 8-9)
+
+Everything here is either a direct AST observation (`observed`) or a
+deterministic, disclosed heuristic (`derived`). Nothing is fabricated; when a
+target/value cannot be resolved it is recorded as `unknown`/`partial`.
+"""
+
+from __future__ import annotations
+
+from typing import Optional
+
+from . import ast_utils, ids
+from .context import ProjectContext
+from .inventory import ContractUnit, FunctionUnit
+from .inventory_facts import function_node_id, state_var_node_id
+from .models import Fact, GraphEdge, GraphNode
+
+TOKEN_OP_NAMES = {
+    "transfer", "transferFrom", "approve", "increaseAllowance", "decreaseAllowance",
+    "safeTransfer", "safeTransferFrom", "safeBatchTransferFrom", "setApprovalForAll",
+    "permit", "mint", "burn",
+}
+LOW_LEVEL_CALL_NAMES = {"call", "delegatecall", "staticcall"}
+ETH_TRANSFER_NAMES = {"transfer", "send"}
+ENV_ROOTS = {"msg", "block", "tx"}
+
+
+def _type_string(node: dict) -> Optional[str]:
+    return ((node or {}).get("typeDescriptions") or {}).get("typeString")
+
+
+def _is_address_type(type_string: Optional[str]) -> bool:
+    return bool(type_string) and type_string.startswith("address")
+
+
+def _is_contract_type(type_string: Optional[str]) -> bool:
+    return bool(type_string) and (
+        type_string.startswith("contract ") or type_string.startswith("interface ")
+    )
+
+
+def _src_text(ctx: ProjectContext, file: str, node: dict) -> str:
+    parsed = ast_utils.parse_src(node.get("src")) if node else None
+    if not parsed:
+        return ""
+    start, length, _ = parsed
+    text_bytes = ctx.file_bytes.get(file, b"")[start:start + length]
+    text = text_bytes.decode("utf-8", errors="replace")
+    return text if len(text) <= 200 else text[:200] + "…"
+
+
+def build_visible_state_vars(ctx: ProjectContext, cu: ContractUnit) -> dict[int, "StateVarUnit"]:
+    visible = {}
+    for base_ast_id in cu.linearized_base_ast_ids or [cu.ast_id]:
+        key = ctx.contract_by_group_ast_id.get((cu.group, base_ast_id))
+        base_cu = ctx.contracts.get(key) if key else None
+        if not base_cu:
+            continue
+        for sv in base_cu.state_vars:
+            visible.setdefault(sv.ast_id, sv)
+    return visible
+
+
+def _peel_to_root(node: Optional[dict]) -> Optional[dict]:
+    while node is not None:
+        nt = node.get("nodeType")
+        if nt == "MemberAccess":
+            node = node.get("expression")
+        elif nt == "IndexAccess":
+            node = node.get("baseExpression")
+        elif nt == "IndexRangeAccess":
+            node = node.get("baseExpression")
+        elif nt == "TupleExpression" and len(node.get("components") or []) == 1:
+            node = (node.get("components") or [None])[0]
+        else:
+            break
+    return node
+
+
+def analyze_function(ctx: ProjectContext, cu: ContractUnit, fu: FunctionUnit) -> None:
+    fnode_id = function_node_id(fu)
+
+    if fu.body_node is None:
+        ctx.add_fact(
+            Fact(
+                id=ids.fact_id("function_body", fu.file, fu.ast_id),
+                type="function_body",
+                status="observed",
+                subject={"function": fu.key},
+                properties={"has_body": False, "reason": "declaration_only (interface/abstract/unimplemented)"},
+                source=ctx.source_ref(fu.file, fu.node),
+                evidence=[],
+                confidence="high",
+                extraction_method="ast",
+            )
+        )
+        return
+
+    visible_state_vars = build_visible_state_vars(ctx, cu)
+    local_scope: dict[int, str] = {}
+    for p in fu.parameters:
+        local_scope[p.ast_id] = "parameter"
+    for r in fu.returns:
+        local_scope[r.ast_id] = "return_variable"
+    for vd in ast_utils.find_all(fu.body_node, "VariableDeclaration"):
+        local_scope.setdefault(vd["id"], "local_variable")
+
+    write_target_ids: set[int] = set()
+    compound_write_ids: set[int] = set()
+
+    for assign in ast_utils.find_all(fu.body_node, "Assignment"):
+        lhs = assign.get("leftHandSide")
+        targets = lhs.get("components") if (lhs or {}).get("nodeType") == "TupleExpression" else [lhs]
+        op = assign.get("operator", "=")
+        for t in targets:
+            root = _peel_to_root(t)
+            if root is not None and root.get("nodeType") == "Identifier":
+                write_target_ids.add(root["id"])
+                if op != "=":
+                    compound_write_ids.add(root["id"])
+
+    for unary in ast_utils.find_all(fu.body_node, "UnaryOperation"):
+        op = unary.get("operator")
+        if op in ("++", "--", "delete"):
+            root = _peel_to_root(unary.get("subExpression"))
+            if root is not None and root.get("nodeType") == "Identifier":
+                write_target_ids.add(root["id"])
+                if op in ("++", "--"):
+                    # increment/decrement reads the prior value before writing.
+                    compound_write_ids.add(root["id"])
+
+    _emit_state_access(ctx, cu, fu, fnode_id, visible_state_vars, write_target_ids, compound_write_ids)
+    _emit_input_origin(ctx, cu, fu, fnode_id)
+    _emit_calls(ctx, cu, fu, fnode_id, local_scope, visible_state_vars)
+    _emit_control_flow(ctx, cu, fu, fnode_id)
+    _emit_events_errors_usage(ctx, cu, fu, fnode_id)
+    _emit_special_features(ctx, cu, fu, fnode_id)
+    _emit_arithmetic_operations(ctx, cu, fu, fnode_id)
+
+
+def _emit_state_access(ctx, cu, fu, fnode_id, visible_state_vars, write_ids, compound_write_ids) -> None:
+    seen_pairs: set[tuple[int, str]] = set()  # (node_id, "read"|"write") dedup
+    for node, _parent in ast_utils.walk(fu.body_node):
+        if node.get("nodeType") != "Identifier":
+            continue
+        refid = node.get("referencedDeclaration")
+        if refid not in visible_state_vars:
+            continue
+        sv = visible_state_vars[refid]
+        is_write = node["id"] in write_ids
+        access_kind = "write" if is_write else "read"
+        key = (node["id"], access_kind)
+        if key in seen_pairs:
+            continue
+        seen_pairs.add(key)
+
+        svnode_id = state_var_node_id(sv)
+        src_ref = ctx.source_ref(fu.file, node)
+        evid = ctx.make_evidence(fu.file, node)
+        fact_type = "state_write" if is_write else "state_read"
+        fact = Fact(
+            id=ids.fact_id(fact_type, fu.file, node["id"]),
+            type=fact_type,
+            status="observed",
+            subject={"function": fu.key, "state_variable": sv.key, "name": sv.name},
+            properties={"type": sv.type_string},
+            source=src_ref,
+            evidence=[evid] if evid else [],
+            confidence="high",
+            extraction_method="ast",
+        )
+        ctx.add_fact(fact)
+        edge_type = "WRITES" if is_write else "READS"
+        ctx.add_edge(
+            GraphEdge(
+                id=ids.edge_id(edge_type, fnode_id, svnode_id, str(node["id"])),
+                type=edge_type,
+                source=fnode_id,
+                target=svnode_id,
+                status="observed",
+                fact_ids=[fact.id],
+            )
+        )
+        if node["id"] in compound_write_ids:
+            read_fact = Fact(
+                id=ids.fact_id("state_read", fu.file, f"{node['id']}:compound"),
+                type="state_read",
+                status="observed",
+                subject={"function": fu.key, "state_variable": sv.key, "name": sv.name},
+                properties={"type": sv.type_string, "reason": "compound_assignment_or_increment_implies_read"},
+                source=src_ref,
+                evidence=[evid] if evid else [],
+                confidence="high",
+                extraction_method="ast",
+            )
+            ctx.add_fact(read_fact)
+            ctx.add_edge(
+                GraphEdge(
+                    id=ids.edge_id("READS", fnode_id, svnode_id, f"compound:{node['id']}"),
+                    type="READS",
+                    source=fnode_id,
+                    target=svnode_id,
+                    status="observed",
+                    fact_ids=[read_fact.id],
+                    properties={"reason": "compound_assignment_implies_read"},
+                )
+            )
+
+
+def _emit_input_origin(ctx, cu, fu, fnode_id) -> None:
+    for node, _parent in ast_utils.walk(fu.body_node):
+        if node.get("nodeType") != "MemberAccess":
+            continue
+        base = node.get("expression") or {}
+        if base.get("nodeType") == "Identifier" and base.get("name") in ENV_ROOTS:
+            origin = f"{base['name']}.{node.get('memberName')}"
+            src_ref = ctx.source_ref(fu.file, node)
+            evid = ctx.make_evidence(fu.file, node)
+            ctx.add_fact(
+                Fact(
+                    id=ids.fact_id("input_origin_env", fu.file, node["id"]),
+                    type="input_origin",
+                    status="observed",
+                    subject={"function": fu.key, "origin": origin},
+                    properties={"category": "environment_variable"},
+                    source=src_ref,
+                    evidence=[evid] if evid else [],
+                    confidence="high",
+                    extraction_method="ast",
+                )
+            )
+
+
+def _unwrap_call_options(expr: dict) -> tuple[dict, dict]:
+    """Unwrap a `target.call{value: v, gas: g}` / `new X{salt: s}` style
+    FunctionCallOptions node into (underlying_expression, options_by_name).
+
+    `options_by_name` maps option name ("value"/"gas"/"salt") to its AST
+    expression node.
+    """
+    if (expr or {}).get("nodeType") != "FunctionCallOptions":
+        return expr, {}
+    names = expr.get("names") or []
+    options = expr.get("options") or []
+    options_by_name = dict(zip(names, options))
+    inner = expr.get("expression") or {}
+    return inner, options_by_name
+
+
+def _classify_call(expr: dict, ctx: ProjectContext, group: str) -> str:
+    """Classify an (already option-unwrapped) callee expression node.
+
+    Returns one of: internal, external, low_level, delegatecall, staticcall,
+    creation, event_call, error_call, require, revert_builtin, assert,
+    selfdestruct, other_builtin, unresolved.
+    """
+    ntype = (expr or {}).get("nodeType")
+
+    if ntype == "NewExpression":
+        return "creation"
+
+    if ntype == "Identifier":
+        name = expr.get("name")
+        if name in ("require",):
+            return "require"
+        if name in ("revert",):
+            return "revert_builtin"
+        if name in ("assert",):
+            return "assert"
+        if name in ("selfdestruct", "suicide"):
+            return "selfdestruct"
+        if name in ("keccak256", "sha256", "ripemd160", "ecrecover", "addmod", "mulmod", "blockhash"):
+            return "other_builtin"
+        refid = expr.get("referencedDeclaration")
+        if refid is not None:
+            decl = ctx.decl_index.get((group, refid))
+            decl_kind = decl.get("kind") if decl else None
+            if decl_kind == "event":
+                return "event_call"
+            if decl_kind == "error":
+                return "error_call"
+            if decl_kind == "function":
+                return "internal"
+            return "unresolved"
+        return "unresolved"
+
+    if ntype == "MemberAccess":
+        member = expr.get("memberName")
+        base_type = _type_string(expr.get("expression") or {})
+        if member in LOW_LEVEL_CALL_NAMES and _is_address_type(base_type):
+            return {"call": "low_level", "delegatecall": "delegatecall", "staticcall": "staticcall"}[member]
+        if _is_contract_type(base_type):
+            return "external"
+        if _is_address_type(base_type) and member in ETH_TRANSFER_NAMES:
+            return "eth_transfer"
+        if member in ("push", "pop"):
+            return "array_mutation"
+        if expr.get("referencedDeclaration") is not None:
+            # e.g. library function call via using-for, or direct library call
+            return "external"
+        return "unresolved"
+
+    return "unresolved"
+
+
+def _emit_calls(ctx, cu, fu, fnode_id, local_scope, visible_state_vars) -> None:
+    for node, _parent in ast_utils.walk(fu.body_node):
+        if node.get("nodeType") != "FunctionCall":
+            continue
+        if node.get("kind") in ("typeConversion", "structConstructorCall"):
+            continue
+
+        raw_expr = node.get("expression") or {}
+        expr, call_options = _unwrap_call_options(raw_expr)
+        category = _classify_call(expr, ctx, fu.group)
+        src_ref = ctx.source_ref(fu.file, node)
+        evid = ctx.make_evidence(fu.file, node)
+
+        if call_options:
+            _emit_call_options(ctx, fu, node, call_options, src_ref, evid)
+
+        if category == "array_mutation":
+            _emit_array_mutation(ctx, fu, fnode_id, node, expr, visible_state_vars, src_ref, evid)
+        elif category == "internal":
+            _emit_internal_call(ctx, fu, fnode_id, node, expr, src_ref, evid)
+        elif category == "external":
+            _emit_external_call(ctx, fu, fnode_id, node, expr, src_ref, evid, "external")
+        elif category in ("low_level", "delegatecall", "staticcall"):
+            _emit_external_call(ctx, fu, fnode_id, node, expr, src_ref, evid, category)
+        elif category == "eth_transfer":
+            _emit_eth_transfer(ctx, fu, fnode_id, node, expr, src_ref, evid)
+        elif category == "creation":
+            _emit_creation(ctx, fu, fnode_id, node, src_ref, evid)
+        elif category == "require":
+            _emit_require(ctx, fu, fnode_id, node, src_ref, evid, visible_state_vars)
+        elif category in ("revert_builtin",):
+            _emit_revert(ctx, fu, fnode_id, node, src_ref, evid, "revert_string")
+        elif category == "assert":
+            _emit_fact(
+                ctx, fu, "assert_statement", src_ref, evid,
+                {"function": fu.key},
+                {"condition": _src_text(ctx, fu.file, node.get("arguments", [{}])[0]) if node.get("arguments") else ""},
+                "observed", confidence="high",
+            )
+        elif category == "other_builtin":
+            _emit_builtin_call(ctx, fu, fnode_id, node, expr, src_ref, evid)
+        elif category == "unresolved":
+            _emit_fact(
+                ctx, fu, "call_unresolved", src_ref, evid,
+                {"function": fu.key},
+                {"callee_expression": _src_text(ctx, fu.file, expr)},
+                "unknown",
+            )
+        elif category == "selfdestruct":
+            _emit_fact(ctx, fu, "selfdestruct_call", src_ref, evid, {"function": fu.key}, {}, "observed")
+        # Errors used as `revert CustomError(...)`: represented as FunctionCall
+        # whose expression is Identifier referencing an ErrorDefinition.
+        if expr.get("nodeType") == "Identifier":
+            decl = ctx.decl_index.get((fu.group, expr.get("referencedDeclaration")))
+            if decl and decl.get("kind") == "error":
+                _emit_revert(ctx, fu, fnode_id, node, src_ref, evid, "custom_error", error_key=decl.get("error_key"))
+
+        # Asset / value flow (token-like operation) — name-pattern based, so
+        # always `derived`, never `observed`, and never asserted as a
+        # verified ERC20/721/1155 call. Deliberately excludes plain ETH
+        # transfers (`address.transfer`/`.send`), which are already recorded
+        # as their own `eth_transfer` fact type — an address-typed base is
+        # native value movement, not a token-contract call.
+        if (
+            expr.get("nodeType") == "MemberAccess"
+            and expr.get("memberName") in TOKEN_OP_NAMES
+            and category not in ("eth_transfer",)
+        ):
+            _emit_token_operation(ctx, fu, fnode_id, node, expr, src_ref, evid)
+
+        # Callback-compatible interface calls (receiver hooks): a call whose
+        # target interface/type name matches known receiver interfaces.
+        target_type = _type_string((expr.get("expression") or {})) if expr.get("nodeType") == "MemberAccess" else None
+        if target_type and any(
+            marker in target_type for marker in ("IERC721Receiver", "IERC1155Receiver", "ERC777")
+        ):
+            _emit_fact(
+                ctx, fu, "callback_capable_call", src_ref, evid,
+                {"function": fu.key}, {"target_type": target_type, "member": expr.get("memberName")},
+                "derived",
+            )
+
+        # Conservative data-flow edges for call arguments (sections 8-9)
+        _emit_call_argument_flows(ctx, fu, fnode_id, node, local_scope, visible_state_vars, src_ref, evid)
+
+
+def _emit_call_options(ctx, fu, call_node, call_options: dict, src_ref, evid) -> None:
+    """Record `{value: ..., gas: ..., salt: ...}` options on a call/creation
+    (e.g. `target.call{value: v}(...)`, `new X{salt: s}(...)`).
+    """
+    props = {name: _src_text(ctx, fu.file, val) for name, val in call_options.items()}
+    _emit_fact(
+        ctx, fu, "call_options", src_ref, evid,
+        {"function": fu.key}, props, "observed", confidence="high",
+    )
+    if "value" in call_options:
+        _emit_fact(
+            ctx, fu, "eth_transfer", src_ref, evid,
+            {"function": fu.key},
+            {"member": "call{value:}", "amount_expression": [props["value"]]},
+            "observed", confidence="high",
+        )
+    if "salt" in call_options:
+        _emit_fact(
+            ctx, fu, "special_evm_feature", src_ref, evid,
+            {"function": fu.key}, {"feature": "create2_salt_option", "salt_expression": props["salt"]},
+            "observed", confidence="high",
+        )
+
+
+def _emit_array_mutation(ctx, fu, fnode_id, node, expr, visible_state_vars, src_ref, evid) -> None:
+    """`array.push(...)` / `array.pop()` are state-mutating even though they
+    are not Assignment nodes; without this, the root array's WRITE would be
+    silently missed by the Assignment/delete-based write detector.
+    """
+    base = expr.get("expression") or {}
+    root = _peel_to_root(base)
+    member = expr.get("memberName")
+    sv = None
+    if root is not None and root.get("nodeType") == "Identifier":
+        sv = visible_state_vars.get(root.get("referencedDeclaration"))
+
+    fact = _emit_fact(
+        ctx, fu, "array_mutation", src_ref, evid,
+        {"function": fu.key},
+        {
+            "operation": member,
+            "target_expression": _src_text(ctx, fu.file, base),
+            "state_variable": sv.key if sv else None,
+        },
+        "observed" if sv else "partial",
+        confidence="high" if sv else "medium",
+    )
+    if sv:
+        from .inventory_facts import state_var_node_id
+        svnode_id = state_var_node_id(sv)
+        write_fact = _emit_fact(
+            ctx, fu, "state_write", src_ref, evid,
+            {"function": fu.key, "state_variable": sv.key, "name": sv.name},
+            {"type": sv.type_string, "via": f"array.{member}()"},
+            "observed", confidence="high",
+        )
+        ctx.add_edge(
+            GraphEdge(
+                id=ids.edge_id("WRITES", fnode_id, svnode_id, f"{member}:{node['id']}"),
+                type="WRITES",
+                source=fnode_id,
+                target=svnode_id,
+                status="observed",
+                fact_ids=[write_fact.id],
+            )
+        )
+
+
+
+def _emit_fact(ctx, fu, fact_type, src_ref, evid, subject, properties, status, confidence="medium") -> Fact:
+    node_hash = f"{src_ref.start}:{src_ref.end}" if src_ref else "na"
+    # Incorporate the full property content (not just its length) so that
+    # multiple distinct facts sharing the same AST node/source span (e.g. one
+    # call_argument_dataflow fact per argument of the same call) still get
+    # distinct, stable ids.
+    import json as _json
+    props_digest = _json.dumps(properties, sort_keys=True, default=str)
+    fact = Fact(
+        id=ids.fact_id(fact_type, fu.file, f"{fu.ast_id}:{node_hash}:{props_digest}"),
+        type=fact_type,
+        status=status,
+        subject=subject,
+        properties=properties,
+        source=src_ref,
+        evidence=[evid] if evid else [],
+        confidence=confidence,
+        extraction_method="ast" if status == "observed" else "ast+heuristic",
+    )
+    return ctx.add_fact(fact)
+
+
+def _emit_internal_call(ctx, fu, fnode_id, node, expr, src_ref, evid) -> None:
+    decl = ctx.decl_index.get((fu.group, expr.get("referencedDeclaration")))
+    callee_key = decl.get("function_key") if decl else None
+    status = "observed" if callee_key else "unknown"
+    fact = Fact(
+        id=ids.fact_id("internal_call", fu.file, node["id"]),
+        type="internal_call",
+        status=status,
+        subject={"caller": fu.key, "callee_name": expr.get("name")},
+        properties={"callee_function": callee_key, "static_target": True},
+        source=src_ref,
+        evidence=[evid] if evid else [],
+        confidence="high" if callee_key else "low",
+        extraction_method="ast",
+    )
+    ctx.add_fact(fact)
+    if callee_key and callee_key in ctx.function_by_key:
+        target_node = function_node_id(ctx.function_by_key[callee_key])
+        ctx.add_edge(
+            GraphEdge(
+                id=ids.edge_id("CALLS", fnode_id, target_node, str(node["id"])),
+                type="CALLS",
+                source=fnode_id,
+                target=target_node,
+                status="observed",
+                properties={"call_type": "internal"},
+                fact_ids=[fact.id],
+            )
+        )
+
+
+def _emit_external_call(ctx, fu, fnode_id, node, expr, src_ref, evid, call_type) -> None:
+    base_expr = expr.get("expression") or {}
+    target_status = "dynamic"
+    if base_expr.get("nodeType") == "Identifier":
+        decl = ctx.decl_index.get((fu.group, base_expr.get("referencedDeclaration")))
+        if decl and decl.get("kind") == "state_variable":
+            sv = None
+            # immutable state vars have a fixed address after construction
+            node_obj = decl.get("node") or {}
+            if node_obj.get("mutability") == "immutable":
+                target_status = "static_immutable"
+
+    decl = ctx.decl_index.get((fu.group, expr.get("referencedDeclaration")))
+    target_function_key = decl.get("function_key") if decl else None
+
+    args_repr = [_src_text(ctx, fu.file, a) for a in node.get("arguments", [])]
+    fact = Fact(
+        id=ids.fact_id(f"{call_type}_call" if call_type != "external" else "external_call", fu.file, node["id"]),
+        type="low_level_call" if call_type in ("low_level", "delegatecall", "staticcall") else "external_call",
+        status="observed",
+        subject={"caller": fu.key},
+        properties={
+            "call_subtype": call_type,
+            "member": expr.get("memberName"),
+            "target_expression": _src_text(ctx, fu.file, base_expr),
+            "target_status": target_status,
+            "target_function": target_function_key,
+            "arguments": args_repr,
+        },
+        source=src_ref,
+        evidence=[evid] if evid else [],
+        confidence="medium",
+        extraction_method="ast",
+    )
+    ctx.add_fact(fact)
+
+    external_node = GraphNode(
+        id=ids.node_id("external_target", f"{fu.file}:{node['id']}"),
+        kind="external_target",
+        label=_src_text(ctx, fu.file, base_expr) or "<external>",
+        properties={"target_status": target_status, "member": expr.get("memberName")},
+    )
+    ctx.add_node(external_node)
+    edge_type = {"low_level": "CALLS", "delegatecall": "DELEGATES_TO", "staticcall": "CALLS"}.get(call_type, "CALLS")
+    ctx.add_edge(
+        GraphEdge(
+            id=ids.edge_id(edge_type, fnode_id, external_node.id, str(node["id"])),
+            type=edge_type,
+            source=fnode_id,
+            target=external_node.id,
+            status="observed",
+            properties={"call_type": call_type, "target_status": target_status},
+            fact_ids=[fact.id],
+        )
+    )
+
+    ctx.add_fact(
+        Fact(
+            id=ids.fact_id("external_call_surface", fu.file, node["id"]),
+            type="external_call_surface",
+            status="observed",
+            subject={"function": fu.key},
+            properties={
+                "call_type": call_type,
+                "member": expr.get("memberName"),
+                "target_status": target_status,
+            },
+            source=src_ref,
+            evidence=[evid] if evid else [],
+            confidence="high",
+            extraction_method="ast",
+        )
+    )
+
+
+def _emit_eth_transfer(ctx, fu, fnode_id, node, expr, src_ref, evid) -> None:
+    _emit_fact(
+        ctx, fu, "eth_transfer",
+        src_ref, evid,
+        {"function": fu.key},
+        {
+            "member": expr.get("memberName"),
+            "target_expression": _src_text(ctx, fu.file, expr.get("expression") or {}),
+            "amount_expression": [_src_text(ctx, fu.file, a) for a in node.get("arguments", [])],
+        },
+        "observed",
+        confidence="high",
+    )
+
+
+def _emit_creation(ctx, fu, fnode_id, node, src_ref, evid) -> None:
+    new_expr = node.get("expression") or {}
+    type_name = ((new_expr.get("typeName") or {}).get("typeDescriptions") or {}).get("typeString") \
+        or (new_expr.get("typeName") or {}).get("name")
+    fact = _emit_fact(
+        ctx, fu, "contract_creation", src_ref, evid,
+        {"function": fu.key}, {"target_type": type_name}, "observed", confidence="high",
+    )
+    target_node = GraphNode(
+        id=ids.node_id("creation_target", f"{fu.file}:{node['id']}"),
+        kind="creation_target",
+        label=type_name or "<contract>",
+        properties={},
+    )
+    ctx.add_node(target_node)
+    ctx.add_edge(
+        GraphEdge(
+            id=ids.edge_id("CREATES", fnode_id, target_node.id, str(node["id"])),
+            type="CREATES",
+            source=fnode_id,
+            target=target_node.id,
+            status="observed",
+            fact_ids=[fact.id],
+        )
+    )
+
+
+_SIGNATURE_BUILTINS = {"ecrecover"}
+_DIGEST_BUILTINS = {"keccak256", "sha256", "ripemd160"}
+
+
+def _emit_builtin_call(ctx, fu, fnode_id, node, expr, src_ref, evid) -> None:
+    name = expr.get("name")
+    args = [_src_text(ctx, fu.file, a) for a in node.get("arguments", [])]
+    _emit_fact(
+        ctx, fu, "builtin_call", src_ref, evid,
+        {"function": fu.key},
+        {"builtin": name, "arguments": args},
+        "observed", confidence="high",
+    )
+    if name in _SIGNATURE_BUILTINS:
+        _emit_fact(
+            ctx, fu, "signature_recovery_operation", src_ref, evid,
+            {"function": fu.key},
+            {"builtin": name, "arguments": args},
+            "observed", confidence="high",
+        )
+    elif name in _DIGEST_BUILTINS:
+        _emit_fact(
+            ctx, fu, "digest_construction_operation", src_ref, evid,
+            {"function": fu.key},
+            {"builtin": name, "arguments": args},
+            "observed", confidence="high",
+        )
+
+
+def _emit_require(ctx, fu, fnode_id, node, src_ref, evid, visible_state_vars, subject_key: str = "function") -> None:
+    args = node.get("arguments", [])
+    condition_text = _src_text(ctx, fu.file, args[0]) if args else ""
+    message = None
+    if len(args) > 1:
+        message = _src_text(ctx, fu.file, args[1])
+    mentions_sender = "msg.sender" in condition_text
+    _emit_fact(
+        ctx, fu, "require_statement", src_ref, evid,
+        {subject_key: fu.key},
+        {"condition": condition_text, "message": message},
+        "observed", confidence="high",
+    )
+    if mentions_sender and args:
+        referenced_state_vars = []
+        for n, _p in ast_utils.walk(args[0]):
+            if n.get("nodeType") == "Identifier" and n.get("referencedDeclaration") in visible_state_vars:
+                referenced_state_vars.append(visible_state_vars[n["referencedDeclaration"]].key)
+        _emit_fact(
+            ctx, fu, "authorization_check", src_ref, evid,
+            {subject_key: fu.key},
+            {
+                "mechanism": "require_msg_sender_comparison",
+                "condition": condition_text,
+                "referenced_state_variables": sorted(set(referenced_state_vars)),
+            },
+            "derived",
+        )
+
+
+def _emit_revert(ctx, fu, fnode_id, node, src_ref, evid, revert_kind, error_key=None) -> None:
+    props = {"revert_kind": revert_kind}
+    if error_key:
+        props["error"] = error_key
+    if node.get("arguments"):
+        props["arguments"] = [_src_text(ctx, fu.file, a) for a in node.get("arguments", [])]
+    _emit_fact(ctx, fu, "revert_site", src_ref, evid, {"function": fu.key}, props, "observed", confidence="high")
+
+
+def _emit_token_operation(ctx, fu, fnode_id, node, expr, src_ref, evid) -> None:
+    args = node.get("arguments", [])
+    arg_texts = [_src_text(ctx, fu.file, a) for a in args]
+    _emit_fact(
+        ctx, fu, "asset_operation", src_ref, evid,
+        {"function": fu.key},
+        {
+            "operation": expr.get("memberName"),
+            "target_expression": _src_text(ctx, fu.file, expr.get("expression") or {}),
+            "arguments": arg_texts,
+            "note": "classified by function-name pattern match; token-standard conformance not verified",
+        },
+        "derived",
+    )
+
+
+def _emit_call_argument_flows(ctx, fu, fnode_id, call_node, local_scope, visible_state_vars, src_ref, evid) -> None:
+    for idx, arg in enumerate(call_node.get("arguments", [])):
+        root = _peel_to_root(arg)
+        origin_kind = "unknown"
+        origin_name = None
+        status = "unknown"
+        if root is not None and root.get("nodeType") == "Identifier":
+            refid = root.get("referencedDeclaration")
+            if refid in visible_state_vars:
+                origin_kind, origin_name = "state_variable", visible_state_vars[refid].name
+                status = "derived" if root is not arg else "observed"
+            elif refid in local_scope:
+                origin_kind, origin_name = local_scope[refid], root.get("name")
+                status = "derived" if root is not arg else "observed"
+            elif root.get("name") in ("msg", "block", "tx"):
+                origin_kind, origin_name = "environment", root.get("name")
+                status = "observed"
+        elif arg.get("nodeType") == "Literal":
+            origin_kind, origin_name, status = "literal", _src_text(ctx, fu.file, arg), "observed"
+
+        _emit_fact(
+            ctx, fu, "call_argument_dataflow", src_ref, evid,
+            {"function": fu.key},
+            {
+                "argument_index": idx,
+                "argument_expression": _src_text(ctx, fu.file, arg),
+                "origin_kind": origin_kind,
+                "origin_name": origin_name,
+            },
+            status,
+        )
+
+
+_CONTROL_NODE_TYPES = {
+    "IfStatement": "if_statement",
+    "ForStatement": "loop",
+    "WhileStatement": "loop",
+    "DoWhileStatement": "loop",
+    "TryStatement": "try_catch",
+    "UncheckedBlock": "unchecked_block",
+    "Conditional": "ternary_expression",
+}
+
+
+def _emit_control_flow(ctx, cu, fu, fnode_id) -> None:
+    for node, _parent in ast_utils.walk(fu.body_node):
+        ntype = node.get("nodeType")
+        if ntype not in _CONTROL_NODE_TYPES:
+            continue
+        src_ref = ctx.source_ref(fu.file, node)
+        evid = ctx.make_evidence(fu.file, node)
+        _emit_fact(
+            ctx, fu, "control_flow_structure", src_ref, evid,
+            {"function": fu.key},
+            {"construct": _CONTROL_NODE_TYPES[ntype]},
+            "observed", confidence="high",
+        )
+
+
+def _emit_events_errors_usage(ctx, cu, fu, fnode_id) -> None:
+    for node, _parent in ast_utils.walk(fu.body_node):
+        if node.get("nodeType") != "EmitStatement":
+            continue
+        call = node.get("eventCall") or {}
+        expr = call.get("expression") or {}
+        decl = ctx.decl_index.get((fu.group, expr.get("referencedDeclaration")))
+        event_key = decl.get("event_key") if decl else None
+        src_ref = ctx.source_ref(fu.file, node)
+        evid = ctx.make_evidence(fu.file, node)
+        fact = _emit_fact(
+            ctx, fu, "event_emission", src_ref, evid,
+            {"function": fu.key},
+            {
+                "event": event_key,
+                "event_name": expr.get("name"),
+                "arguments": [_src_text(ctx, fu.file, a) for a in call.get("arguments", [])],
+            },
+            "observed" if event_key else "unknown",
+            confidence="high" if event_key else "low",
+        )
+        if event_key and event_key in ctx.event_by_key:
+            from .inventory_facts import event_node_id
+            target_node = event_node_id(ctx.event_by_key[event_key])
+            ctx.add_edge(
+                GraphEdge(
+                    id=ids.edge_id("EMITS", fnode_id, target_node, str(node["id"])),
+                    type="EMITS",
+                    source=fnode_id,
+                    target=target_node,
+                    status="observed",
+                    fact_ids=[fact.id],
+                )
+            )
+
+
+_SPECIAL_NODE_TYPES = {
+    "InlineAssembly": "assembly_block",
+}
+
+
+def _enclosing_use(node: dict, parent: Optional[dict]) -> Optional[str]:
+    """Cheap, structural (non-semantic) classification of what immediately
+    consumes an expression's result: assigned to a variable, returned, or
+    used as a state-variable's initializer. Foundational signal for
+    Class-C-style rounding/truncation review — recon does not evaluate
+    whether the truncation is *significant*, only where truncating
+    arithmetic feeds directly into a stored/returned value.
+    """
+    if parent is None:
+        return None
+    pt = parent.get("nodeType")
+    if pt == "Return":
+        return "return_value"
+    if pt == "Assignment" and parent.get("rightHandSide") is node:
+        return "assignment_rhs"
+    if pt == "VariableDeclarationStatement":
+        return "variable_initializer"
+    if pt == "FunctionCall":
+        return "call_argument"
+    return None
+
+
+def _emit_arithmetic_operations(ctx, cu, fu, fnode_id) -> None:
+    """Structural precursor for Class C (rounding/truncation/precision)
+    review: records every division (Solidity integer division always
+    truncates towards zero) with its operands and immediate consumer. This
+    is deliberately NOT a rounding-bug detector — recon does not know
+    whether a given truncation matters; it only makes every division site
+    and what directly consumes its result inspectable without re-parsing
+    the AST.
+    """
+    for node, parent in ast_utils.walk(fu.body_node):
+        if node.get("nodeType") != "BinaryOperation" or node.get("operator") != "/":
+            continue
+        src_ref = ctx.source_ref(fu.file, node)
+        evid = ctx.make_evidence(fu.file, node)
+        _emit_fact(
+            ctx, fu, "division_operation", src_ref, evid,
+            {"function": fu.key},
+            {
+                "left_operand": _src_text(ctx, fu.file, node.get("leftExpression") or {}),
+                "right_operand": _src_text(ctx, fu.file, node.get("rightExpression") or {}),
+                "result_type": _type_string(node),
+                "immediate_consumer": _enclosing_use(node, parent),
+                "note": (
+                    "Solidity integer division truncates towards zero; recon does not "
+                    "evaluate whether this truncation is significant for this value"
+                ),
+            },
+            "observed", confidence="high",
+        )
+
+
+def _emit_special_features(ctx, cu, fu, fnode_id) -> None:
+    for node, _parent in ast_utils.walk(fu.body_node):
+        ntype = node.get("nodeType")
+        if ntype in _SPECIAL_NODE_TYPES:
+            src_ref = ctx.source_ref(fu.file, node)
+            evid = ctx.make_evidence(fu.file, node)
+            _emit_fact(
+                ctx, fu, "special_evm_feature", src_ref, evid,
+                {"function": fu.key},
+                {"feature": _SPECIAL_NODE_TYPES[ntype]},
+                "observed", confidence="high",
+            )
+        if ntype == "FunctionCall":
+            expr = node.get("expression") or {}
+            if expr.get("nodeType") == "Identifier" and expr.get("name") in ("selfdestruct", "suicide"):
+                pass  # already recorded in _emit_calls
+        if ntype == "MemberAccess" and node.get("memberName") in ("code", "codehash"):
+            base_type = _type_string(node.get("expression") or {})
+            if _is_address_type(base_type):
+                src_ref = ctx.source_ref(fu.file, node)
+                evid = ctx.make_evidence(fu.file, node)
+                _emit_fact(
+                    ctx, fu, "special_evm_feature", src_ref, evid,
+                    {"function": fu.key},
+                    {"feature": f"address.{node.get('memberName')}"},
+                    "observed", confidence="high",
+                )
+
+    for node, _parent in ast_utils.walk(fu.body_node):
+        if node.get("nodeType") == "FunctionCallOptions":
+            # value:/gas:/salt: options on a call, e.g. foo{value: x, salt: y}(...)
+            names = node.get("names") or []
+            if "salt" in names:
+                src_ref = ctx.source_ref(fu.file, node)
+                evid = ctx.make_evidence(fu.file, node)
+                _emit_fact(
+                    ctx, fu, "special_evm_feature", src_ref, evid,
+                    {"function": fu.key}, {"feature": "create2_salt_option"}, "observed", confidence="high",
+                )
+
+
+def analyze_modifier(ctx: ProjectContext, cu: ContractUnit, mu) -> None:
+    """Modifier bodies are analyzed for the same authorization/state-access
+    signals a function body would carry — a `require(msg.sender == owner)`
+    written inside `modifier onlyOwner()` is exactly as much an
+    authorization_check as one written inline in a function, and a function
+    that merely `uses` such a modifier inherits that protection.
+
+    Deliberately scoped down from the full analyze_function() pass (no call
+    graph / control-flow / capability extraction for modifiers): the value
+    needed here is specifically "does this modifier gate on an authorization
+    condition", not a full expression analysis of every modifier body. This
+    keeps the change additive and avoids re-deriving machinery
+    (recon/relationships.py::derive_role_privilege_facts) that already
+    consumes function-level authorization_check facts and simply needs the
+    modifier-level equivalent to exist.
+    """
+    if mu.body_node is None:
+        return
+
+    visible_state_vars = build_visible_state_vars(ctx, cu)
+
+    # state reads (writes inside modifiers are rare and are intentionally
+    # out of scope for this pass — see module docstring).
+    for node, _parent in ast_utils.walk(mu.body_node):
+        if node.get("nodeType") != "Identifier":
+            continue
+        sv = visible_state_vars.get(node.get("referencedDeclaration"))
+        if sv is None:
+            continue
+        src_ref = ctx.source_ref(mu.file, node)
+        evid = ctx.make_evidence(mu.file, node)
+        _emit_fact(
+            ctx, mu, "state_read", src_ref, evid,
+            {"modifier": mu.key, "state_variable": sv.key, "name": sv.name},
+            {"type": sv.type_string},
+            "observed", confidence="high",
+        )
+
+    # require()/authorization detection, reusing the exact same logic a
+    # function body would go through.
+    for node, _parent in ast_utils.walk(mu.body_node):
+        if node.get("nodeType") != "FunctionCall":
+            continue
+        expr = node.get("expression") or {}
+        if expr.get("nodeType") == "Identifier" and expr.get("name") == "require":
+            src_ref = ctx.source_ref(mu.file, node)
+            evid = ctx.make_evidence(mu.file, node)
+            _emit_require(ctx, mu, None, node, src_ref, evid, visible_state_vars, subject_key="modifier")
