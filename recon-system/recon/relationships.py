@@ -57,6 +57,32 @@ _APPROVAL_OPS = {"approve", "increaseAllowance", "setApprovalForAll", "permit"}
 
 
 # ===========================================================================
+# Relationship evidence kinds
+# ===========================================================================
+# These are the ONLY kinds of inter-operation relationships that recon
+# will assert.  They are ordered from strongest (most evidence) to weakest.
+#
+#   DATA_DEPENDENCY      - one operation's argument/result directly flows into
+#                         another via a local variable chain (proven by
+#                         local_variable_origin / call_argument_origin_chain facts)
+#   ARGUMENT_DEPENDENCY  - two operations share a common argument value
+#                         (same parameter or literal used in both)
+#   EXECUTION_ORDER      - operations appear in a specific sequential order
+#                         within the same block (proven by AST statement order)
+#   SAME_BLOCK           - operations appear in the same block
+#                         (same basic block / compound statement)
+#   SAME_FUNCTION        - operations appear in the same function body
+#                         (weakest; implies nothing about dependency)
+#
+# Certainty mapping:
+#   DATA_DEPENDENCY     -> INFERENCE (AST-backed propagation)
+#   ARGUMENT_DEPENDENCY -> INFERENCE (shared argument is observable)
+#   EXECUTION_ORDER     -> INFERENCE (statement order is observable)
+#   SAME_BLOCK          -> HYPOTHESIS  (co-location only)
+#   SAME_FUNCTION       -> HYPOTHESIS  (co-location only)
+
+
+# ===========================================================================
 # Role / privilege map
 # ===========================================================================
 
@@ -159,16 +185,85 @@ def derive_role_privilege_facts(ctx: ProjectContext) -> None:
 # Security relationship chains
 # ===========================================================================
 
+def _classify_relationship(call_fact: Fact, asset_fact: Fact, fu, all_facts: list[Fact]) -> tuple[str, str, str]:
+    """Determine the strongest evidence-backed relationship kind between
+    a dynamic call and an asset operation that co-exist in the same function.
+
+    Returns (relation_kind, certainty, note).
+
+    The ONLY time we escalate beyond co_occurs_with is when we have
+    AST-backed evidence of a real dependency:
+
+      - ARGUMENT_DEPENDENCY: both operations use the same parameter or
+        literal value as an input.
+
+    If we can't prove dependency, we fall back to co_occurs_with with
+    HYPOTHESIS certainty.
+
+    CRITICAL: Same-function co-existence alone is NOT a relationship
+    beyond co_occurs_with. We must NEVER mark operations as dependent
+    when we only know they're in the same function.
+    """
+    # Extract AST node IDs involved in the call and asset operation
+    call_ast_id = call_fact.source.ast_node_id if call_fact.source else None
+    asset_ast_id = asset_fact.source.ast_node_id if asset_fact.source else None
+
+    # --- Try ARGUMENT_DEPENDENCY ---
+    # Check if both operations use the same parameter as an input.
+    # An 'input' is either the target_expression (for dynamic calls)
+    # or one of the arguments (for asset operations).
+    call_target = call_fact.properties.get("target_expression", "")
+    call_args = call_fact.properties.get("arguments", [])
+    asset_op_args = asset_fact.properties.get("arguments", [])
+    asset_target = asset_fact.properties.get("target_expression", "")
+
+    # Check for shared parameter usage
+    shared_param = None
+    for param in fu.parameters:
+        param_name = param.name
+        if not param_name:
+            continue
+
+        # Is the parameter in the call's target or arguments?
+        reaches_call = (param_name == call_target) or (param_name in call_args)
+        # Is the parameter in the asset operation's target or arguments?
+        reaches_asset = (param_name == asset_target) or (param_name in asset_op_args)
+
+        if reaches_call and reaches_asset:
+            shared_param = param_name
+            break
+
+    if shared_param:
+        return (
+            "ARGUMENT_DEPENDENCY",
+            "INFERENCE",
+            f"both operations use parameter '{shared_param}' as input",
+        )
+
+    # --- Fall back to co_occurs_with ---
+    # We know they're in the same function, but we have NO evidence of
+    # any actual dependency between them. This must be HYPOTHESIS,
+    # NOT FACT or INFERENCE.
+    return (
+        "co_occurs_with",
+        "HYPOTHESIS",
+        "operations coexist in the same function but no data/control dependency was proven",
+    )
+
+
 def derive_relationship_chains(ctx: ProjectContext) -> None:
     """Connect already-extracted per-function facts into short, explicit
     relationship chains, mirroring the shape requested:
 
         User -> controls -> parameter -> passed_into -> external call
-             -> interacts_with -> target -> co_occurs_with -> asset_operation
+             -> interacts_with -> target -> [relationship] -> asset_operation
 
     rather than leaving "performs an external call" and "approves a token"
     as two unrelated facts a downstream consumer would have to notice and
     connect themselves.
+
+    CRITICAL: We ONLY add relationship steps when we have evidence for them.
+    Same-function co-existence alone gets SAME_FUNCTION with HYPOTHESIS certainty.
     """
     facts_by_function: dict[str, list[Fact]] = defaultdict(list)
     for f in ctx.facts:
@@ -259,20 +354,45 @@ def derive_relationship_chains(ctx: ProjectContext) -> None:
             relevant_assets = approvals + transfers
             if relevant_assets:
                 for asset_fact in relevant_assets:
+                    # Evidence-based relationship classification
+                    edge_kind, edge_certainty, edge_note = _classify_relationship(
+                        call, asset_fact, fu, facts
+                    )
                     steps.append({
                         "actor": "this function",
-                        "relation": "co_occurs_with",
+                        "relation": edge_kind,
                         "target": f"asset_operation({asset_fact.properties.get('operation')} on {asset_fact.properties.get('target_expression')})",
-                        "certainty": "HYPOTHESIS",
-                        "basis_facts": [asset_fact.id],
-                        "note": (
-                            "an asset approval/transfer operation exists in the SAME function as "
-                            "the dynamic-target call above; execution-order and data linkage between "
-                            "them is NOT verified by recon — this is a co-occurrence signal only"
-                        ),
+                        "certainty": edge_certainty,
+                        "basis_facts": [asset_fact.id, call.id],
+                        "note": edge_note,
                     })
 
-            overall = "HYPOTHESIS" if relevant_assets else ("INFERENCE" if (same_call_dataflows or target_is_param_named or callbacks) else "FACT")
+            # Overall certainty: the asset-operation relationship is the
+            # security-relevant question. If all such relationships are
+            # co_occurs_with (HYPOTHESIS), the overall chain certainty is
+            # HYPOTHESIS. If ANY asset relationship is proven (ARGUMENT_DEPENDENCY
+            # / DATA_DEPENDENCY), the overall is INFERENCE. If there are no
+            # asset operations at all, the chain's strength depends on whether
+            # a parameter reaches the call directly.
+            has_proven_asset_dependency = any(
+                s.get("relation") in ("ARGUMENT_DEPENDENCY", "DATA_DEPENDENCY")
+                for s in steps
+            )
+            has_co_occurs_only = any(
+                s.get("relation") == "co_occurs_with"
+                for s in steps
+            )
+            has_asset_relationship = any(
+                s.get("relation") in ("ARGUMENT_DEPENDENCY", "co_occurs_with", "DATA_DEPENDENCY")
+                for s in steps
+            )
+
+            if has_asset_relationship and not has_proven_asset_dependency:
+                overall = "HYPOTHESIS"
+            elif has_proven_asset_dependency:
+                overall = "INFERENCE"
+            else:
+                overall = "INFERENCE" if (same_call_dataflows or target_is_param_named or callbacks) else "FACT"
 
             ctx.add_fact(
                 Fact(

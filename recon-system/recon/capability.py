@@ -25,6 +25,7 @@ def _rule(fact_type, capability, matcher=lambda p: True):
     _RULES.append((fact_type, capability, matcher))
 
 
+# Enhanced capability rules with evidence attributes
 _rule("asset_operation", "can_transfer_token", lambda p: p.get("operation") in
       {"transfer", "transferFrom", "safeTransfer", "safeTransferFrom", "safeBatchTransferFrom"})
 _rule("asset_operation", "can_approve_spender", lambda p: p.get("operation") in
@@ -42,6 +43,157 @@ _rule("special_evm_feature", "can_create_contracts_deterministically",
 _rule("special_evm_feature", "uses_inline_assembly", lambda p: p.get("feature") == "assembly_block")
 _rule("callback_capable_call", "can_invoke_external_callback", lambda p: True)
 _rule("selfdestruct_call", "can_selfdestruct", lambda p: True)
+
+
+def _analyze_capability_attributes(fact, ctx):
+    """Analyze and return enriched attributes for a capability."""
+    attrs = {
+        "target": "unknown",
+        "amount": "unknown",
+        "asset": "unknown",
+        "authorization": "unknown"
+    }
+
+    if fact.type == "asset_operation":
+        # Analyze target control
+        target_expr = fact.properties.get("target_expression", "")
+        if target_expr and not target_expr.startswith("0x"):
+            # Check if target is a parameter (user controlled)
+            fn_key = fact.subject.get("function")
+            if fn_key:
+                fn_facts = [f for f in ctx.facts if f.subject.get("function") == fn_key]
+                for param_fact in fn_facts:
+                    if param_fact.type == "function_parameter":
+                        param_name = param_fact.subject.get("parameter")
+                        if param_name and param_name == target_expr:
+                            attrs["target"] = "user_controlled"
+                            break
+                if attrs["target"] == "unknown":
+                    attrs["target"] = "fixed"
+        
+        # Analyze amount control
+        args = fact.properties.get("arguments", [])
+        if len(args) >= 2:
+            amount_arg = args[1]  # Typically amount is the second argument
+            if amount_arg in ("amount", "value", "qty"):
+                attrs["amount"] = "user_controlled"
+            else:
+                # Check if amount is a literal or parameter
+                fn_key = fact.subject.get("function")
+                if fn_key:
+                    fn_facts = [f for f in ctx.facts if f.subject.get("function") == fn_key]
+                    for param_fact in fn_facts:
+                        if param_fact.type == "function_parameter":
+                            param_name = param_fact.subject.get("parameter")
+                            if param_name and param_name == amount_arg:
+                                attrs["amount"] = "user_controlled"
+                                break
+                    if attrs["amount"] == "unknown":
+                        attrs["amount"] = "fixed"
+        
+        # Analyze asset
+        if target_expr and not target_expr.startswith("0x"):
+            attrs["asset"] = "variable"
+        else:
+            attrs["asset"] = "fixed"
+        
+        # Analyze authorization
+        fn_key = fact.subject.get("function")
+        if fn_key:
+            auth_facts = [f for f in ctx.facts 
+                         if f.type == "access_controlled_function" 
+                         and f.subject.get("function") == fn_key]
+            if auth_facts:
+                attrs["authorization"] = "guarded"
+            else:
+                attrs["authorization"] = "unknown"
+    
+    elif fact.type == "eth_transfer":
+        # Analyze target control for native transfers
+        target_expr = fact.properties.get("target_expression", "")
+        if target_expr:
+            fn_key = fact.subject.get("function")
+            if fn_key:
+                fn_facts = [f for f in ctx.facts if f.subject.get("function") == fn_key]
+                for param_fact in fn_facts:
+                    if param_fact.type == "function_parameter":
+                        param_name = param_fact.subject.get("parameter")
+                        if param_name and param_name == target_expr:
+                            attrs["target"] = "user_controlled"
+                            break
+                if attrs["target"] == "unknown":
+                    attrs["target"] = "fixed"
+        
+        # Analyze amount control for native transfers
+        amount_expr = fact.properties.get("amount_expression", "")
+        if amount_expr:
+            fn_key = fact.subject.get("function")
+            if fn_key:
+                fn_facts = [f for f in ctx.facts if f.subject.get("function") == fn_key]
+                for param_fact in fn_facts:
+                    if param_fact.type == "function_parameter":
+                        param_name = param_fact.subject.get("parameter")
+                        if param_name and param_name == amount_expr:
+                            attrs["amount"] = "user_controlled"
+                            break
+                if attrs["amount"] == "unknown":
+                    attrs["amount"] = "fixed"
+        
+        attrs["asset"] = "fixed"  # Native ETH is always fixed asset
+        
+        # Analyze authorization
+        fn_key = fact.subject.get("function")
+        if fn_key:
+            auth_facts = [f for f in ctx.facts 
+                         if f.type == "access_controlled_function" 
+                         and f.subject.get("function") == fn_key]
+            if auth_facts:
+                attrs["authorization"] = "guarded"
+            else:
+                attrs["authorization"] = "unknown"
+    
+    elif fact.type == "external_call_surface":
+        # Analyze target control for arbitrary calls
+        if fact.properties.get("call_type") == "low_level":
+            target_expr = fact.properties.get("target_expression", "")
+            if target_expr:
+                fn_key = fact.subject.get("function")
+                if fn_key:
+                    # Check if target expression is a parameter
+                    fn_facts = [f for f in ctx.facts if f.subject.get("function") == fn_key]
+                    for param_fact in fn_facts:
+                        if param_fact.type == "function_parameter":
+                            param_name = param_fact.subject.get("parameter")
+                            if param_name and param_name == target_expr:
+                                attrs["target"] = "user_controlled"
+                                break
+                    # If not a parameter, check if it's a local variable that resolves to a parameter
+                    if attrs["target"] == "unknown":
+                        for local_fact in fn_facts:
+                            if local_fact.type == "local_variable_origin" and local_fact.properties.get("variable_name") == target_expr:
+                                chain = local_fact.properties.get("chain", [])
+                                for hop in chain:
+                                    if hop.get("kind") == "parameter":
+                                        attrs["target"] = "user_controlled"
+                                        break
+                                if attrs["target"] == "user_controlled":
+                                    break
+                    # If still unknown, it's fixed
+                    if attrs["target"] == "unknown":
+                        attrs["target"] = "fixed"
+        
+        # Analyze authorization
+        fn_key = fact.subject.get("function")
+        if fn_key:
+            auth_facts = [f for f in ctx.facts 
+                         if f.type == "access_controlled_function" 
+                         and f.subject.get("function") == fn_key]
+            if auth_facts:
+                attrs["authorization"] = "guarded"
+            else:
+                attrs["authorization"] = "unknown"
+    
+    return attrs
 
 
 def derive_capabilities(ctx: ProjectContext) -> None:
@@ -74,13 +226,33 @@ def derive_capabilities(ctx: ProjectContext) -> None:
             if dedup_key in emitted:
                 continue
             emitted.add(dedup_key)
+            
+            # Analyze capability attributes
+            attrs = {}
+            for fact_id in fact_ids:
+                fact = next((f for f in ctx.facts if f.id == fact_id), None)
+                if fact:
+                    fact_attrs = _analyze_capability_attributes(fact, ctx)
+                    # Merge attributes (take the most specific)
+                    for k, v in fact_attrs.items():
+                        if v != "unknown":
+                            attrs[k] = v
+            
+            # Fill in unknowns with defaults
+            for k in ["target", "amount", "asset", "authorization"]:
+                if k not in attrs:
+                    attrs[k] = "unknown"
+            
             ctx.add_fact(
                 Fact(
                     id=ids.fact_id("capability", func_key, capability),
                     type="capability",
                     status="derived",
                     subject={"function": func_key, "capability": capability},
-                    properties={"supporting_facts": sorted(set(fact_ids))},
+                    properties={
+                        "supporting_facts": sorted(set(fact_ids)),
+                        "attributes": attrs
+                    },
                     source=None,
                     evidence=[],
                     confidence="medium",

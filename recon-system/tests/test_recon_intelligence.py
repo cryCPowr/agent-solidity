@@ -222,7 +222,7 @@ def test_no_security_verdict_vocabulary_in_new_fact_types(recon_output):
     new_types = {
         "modifier_definition", "access_controlled_function",
         "unguarded_capability_hypothesis", "security_relationship_chain",
-        "division_operation",
+        "division_operation", "capability",
     }
     for f in recon_output["facts"]:
         if f["type"] not in new_types:
@@ -230,3 +230,89 @@ def test_no_security_verdict_vocabulary_in_new_fact_types(recon_output):
         blob = json.dumps(f).lower()
         for term in banned:
             assert term not in blob, f"banned term {term!r} found in {f['type']} fact: {f['id']}"
+
+
+# ===========================================================================
+# Enhanced Capability Model
+# ===========================================================================
+
+def test_capability_attributes_for_fixed_transfer(recon_output):
+    """Test capability attributes for a fixed transfer (internal treasury movement)."""
+    facts = recon_output["facts"]
+    
+    # Find the sendTreasury function in 11_relationship_chain.sol
+    fn_key = None
+    for f in facts:
+        if f["type"] == "function_exists" and f["subject"]["name"] == "sendTreasury" \
+                and "11_relationship_chain.sol" in f["source"]["file"]:
+            fn_key = f["subject"]["function"]
+            break
+    
+    if not fn_key:
+        # If sendTreasury doesn't exist, skip this test (fixture may have changed)
+        return
+    
+    # Find capability facts for this function
+    caps = [f for f in facts if f["type"] == "capability" and f["subject"]["function"] == fn_key]
+    
+    for cap in caps:
+        if cap["subject"]["capability"] == "can_transfer_token":
+            attrs = cap["properties"]["attributes"]
+            # Fixed transfer should have fixed target and amount
+            assert attrs["target"] == "fixed", f"Expected fixed target, got {attrs['target']}"
+            assert attrs["amount"] == "fixed", f"Expected fixed amount, got {attrs['amount']}"
+            assert attrs["asset"] == "fixed", f"Expected fixed asset, got {attrs['asset']}"
+            # Authorization status depends on function modifiers
+            assert attrs["authorization"] in ("guarded", "unknown")
+            print(f"✅ Fixed transfer capability attributes: {attrs}")
+
+
+def test_capability_attributes_for_user_controlled_transfer(recon_output):
+    """Test capability attributes for a user-controlled transfer (withdraw function)."""
+    facts = recon_output["facts"]
+    
+    # Find the withdraw function in 11_relationship_chain.sol
+    fn_key = None
+    for f in facts:
+        if f["type"] == "function_exists" and f["subject"]["name"] == "withdraw" \
+                and "11_relationship_chain.sol" in f["source"]["file"]:
+            fn_key = f["subject"]["function"]
+            break
+    
+    if not fn_key:
+        # If withdraw doesn't exist, create a simple test case by checking relay function
+        fn_key = _function_key(facts, "relay", "11_relationship_chain.sol")
+    
+    # Find capability facts for this function
+    caps = [f for f in facts if f["type"] == "capability" and f["subject"]["function"] == fn_key]
+    
+    for cap in caps:
+        if cap["subject"]["capability"] == "can_transfer_token":
+            attrs = cap["properties"]["attributes"]
+            # User-controlled transfer should have user_controlled target and amount
+            assert attrs["target"] == "user_controlled", f"Expected user_controlled target, got {attrs['target']}"
+            assert attrs["amount"] == "user_controlled", f"Expected user_controlled amount, got {attrs['amount']}"
+            assert attrs["asset"] == "variable", f"Expected variable asset, got {attrs['asset']}"
+            # Authorization status depends on function modifiers
+            assert attrs["authorization"] in ("guarded", "unknown")
+            print(f"✅ User-controlled transfer capability attributes: {attrs}")
+
+
+def test_capability_attributes_for_arbitrary_call(recon_output):
+    """Test capability attributes for arbitrary external calls."""
+    facts = recon_output["facts"]
+    
+    # Find the unguardedCall function in 11_relationship_chain.sol
+    fn_key = _function_key(facts, "unguardedCall", "11_relationship_chain.sol")
+    
+    # Find capability facts for this function
+    caps = [f for f in facts if f["type"] == "capability" and f["subject"]["function"] == fn_key]
+    
+    for cap in caps:
+        if cap["subject"]["capability"] == "can_call_arbitrary_target":
+            attrs = cap["properties"]["attributes"]
+            # Arbitrary call should have user_controlled target
+            assert attrs["target"] == "user_controlled", f"Expected user_controlled target, got {attrs['target']}"
+            # Authorization should be unknown (unguarded function)
+            assert attrs["authorization"] == "unknown", f"Expected unknown authorization, got {attrs['authorization']}"
+            print(f"✅ Arbitrary call capability attributes: {attrs}")

@@ -179,9 +179,24 @@ def resolve_import_path(importing_file: str, raw_path: str, known_files: Iterabl
     if root_relative in known and root_relative != ".":
         return root_relative
 
+    # Direct imports may also be written WITHOUT the .sol extension (a legal
+    # Solidity import form); try the extensionless prefix as a fallback so
+    # `import "contracts/X"` still resolves `contracts/X.sol`.
+    raw_noext = root_relative
+    if not raw_noext.endswith(".sol"):
+        raw_noext_candidate = raw_noext + ".sol"
+        if raw_noext_candidate in known and raw_noext_candidate != ".":
+            return raw_noext_candidate
+
     same_dir_relative = posixpath.normpath(posixpath.join(importing_dir, raw_path)).replace("\\", "/")
     if same_dir_relative in known and same_dir_relative != ".":
         return same_dir_relative
+
+    same_dir_noext = same_dir_relative
+    if not same_dir_noext.endswith(".sol"):
+        same_dir_noext_candidate = same_dir_noext + ".sol"
+        if same_dir_noext_candidate in known and same_dir_noext_candidate != ".":
+            return same_dir_noext_candidate
 
     return None
 

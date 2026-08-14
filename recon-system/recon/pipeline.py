@@ -175,17 +175,17 @@ def run(
             result = solc_manager.compile_group(group, sources, install_budget)
             compiler_runs.append(
                 {
-                    "requested_version": result.requested_version,
+                    "requested_version": result.requested_constraint,
                     "resolved_version": result.version,
-                    "used_fallback": result.used_fallback,
+                    "used_fallback": result.resolution_method in ("cache_compatible", "installed_compatible"),
                     "files": sorted(result.files),
                     "ok": result.ok,
                     "error_count": len([e for e in result.errors if e.get("severity") == "error"]),
                 }
             )
-            if result.used_fallback:
+            if result.resolution_method in ("cache_compatible", "installed_compatible"):
                 ctx.warn(
-                    f"solc {result.requested_version} unavailable; used fallback {result.version}",
+                    f"solc {result.requested_constraint} unavailable; used fallback {result.version}",
                     files=sorted(result.files),
                 )
             for e in result.errors:

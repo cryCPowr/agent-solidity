@@ -591,6 +591,7 @@ def _emit_external_call(ctx, fu, fnode_id, node, expr, src_ref, evid, call_type)
                 "call_type": call_type,
                 "member": expr.get("memberName"),
                 "target_status": target_status,
+                "target_expression": _src_text(ctx, fu.file, expr.get("expression") or {}),
             },
             source=src_ref,
             evidence=[evid] if evid else [],
@@ -601,6 +602,8 @@ def _emit_external_call(ctx, fu, fnode_id, node, expr, src_ref, evid, call_type)
 
 
 def _emit_eth_transfer(ctx, fu, fnode_id, node, expr, src_ref, evid) -> None:
+    args = node.get("arguments", [])
+    amount_expr = _src_text(ctx, fu.file, args[0]) if args else "unknown"
     _emit_fact(
         ctx, fu, "eth_transfer",
         src_ref, evid,
@@ -608,7 +611,7 @@ def _emit_eth_transfer(ctx, fu, fnode_id, node, expr, src_ref, evid) -> None:
         {
             "member": expr.get("memberName"),
             "target_expression": _src_text(ctx, fu.file, expr.get("expression") or {}),
-            "amount_expression": [_src_text(ctx, fu.file, a) for a in node.get("arguments", [])],
+            "amount_expression": amount_expr,
         },
         "observed",
         confidence="high",

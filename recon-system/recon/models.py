@@ -77,7 +77,7 @@ class Fact:
 
     def to_dict(self) -> dict:
         assert self.status in VALID_STATUSES, f"invalid status {self.status!r} on fact {self.id}"
-        return {
+        result = {
             "id": self.id,
             "type": self.type,
             "status": self.status,
@@ -88,6 +88,17 @@ class Fact:
             "confidence": self.confidence,
             "extraction_method": self.extraction_method,
         }
+        
+        # For capability facts, ensure attributes are always present
+        if self.type == "capability" and "attributes" not in self.properties:
+            result["properties"]["attributes"] = {
+                "target": "unknown",
+                "amount": "unknown",
+                "asset": "unknown",
+                "authorization": "unknown"
+            }
+        
+        return result
 
 
 @dataclass

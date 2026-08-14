@@ -20,6 +20,13 @@ contract RelayExample {
         (ok, ) = target.call(data);
     }
 
+    // GENUINELY CONNECTED: approval and call both use the SAME parameter
+    // This should be detected as ARGUMENT_DEPENDENCY (INFERENCE)
+    function genuinelyConnected(address target, uint256 amount, bytes calldata data) external returns (bool ok) {
+        token.approve(target, amount);  // uses `target`
+        (ok, ) = target.call(data);     // uses same `target`
+    }
+
     modifier onlyOwner() {
         require(msg.sender == owner, "not owner");
         _;
