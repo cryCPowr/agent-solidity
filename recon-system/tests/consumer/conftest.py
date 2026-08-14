@@ -14,8 +14,12 @@ import sys
 import pytest
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-FIXTURES_DIR = os.path.join(REPO_ROOT, "tests", "fixtures")
+FIXTURES_DIR = os.path.join(REPO_ROOT, "tests", "fixtures", "recon")
 
+# Only the local test-helper directory goes on sys.path (to import
+# recon_reader). REPO_ROOT is deliberately NOT added: this module invokes
+# recon.cli as a subprocess so tests exercise it the way an external
+# consumer would, and never imports recon internals directly (see docstring).
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from recon_reader import ReconOutput  # noqa: E402
 

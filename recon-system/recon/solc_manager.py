@@ -36,6 +36,12 @@ import re
 import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Callable
+
+try:  # normal usage: recon/ is a package (see pipeline.py's `from . import ...`)
+    from . import import_resolution
+except ImportError:  # pragma: no cover - flat/colocated-test usage
+    import import_resolution
 
 logger = logging.getLogger("recon.solc_manager")
 
@@ -183,25 +189,103 @@ def version_satisfies(candidate: str, constraint_expr: str) -> bool:
 class CompileGroup:
     constraint_expr: str | None
     files: list[str] = field(default_factory=list)
+    # Import-closure provenance, populated by group_sources_by_version().
+    # Left at their defaults (empty) when a CompileGroup is constructed
+    # directly with just constraint_expr/files, which is how existing
+    # single-file-group tests and call sites build them -- compile_group()
+    # treats an empty member_constraints/unresolved_imports the same as
+    # "no import-graph information available" and falls back to the
+    # original single-constraint behavior.
+    member_constraints: dict[str, str | None] = field(default_factory=dict)
+    unresolved_imports: list[dict] = field(default_factory=list)
+    cycles: list[list[str]] = field(default_factory=list)
 
 
 def group_sources_by_version(sources: dict[str, str]) -> list[CompileGroup]:
-    """Group files by their full pragma constraint expression so each solc
-    invocation gets a self-consistent set. Files with no resolvable pragma
-    form their own group (constraint_expr=None), which resolves to the
-    bundled default compiler -- there's no explicit requirement to violate.
+    """Build compiler-compatible compilation units from the *transitive
+    import closure*, not from each file's pragma in isolation.
 
-    Grouping is by the *whole* constraint expression, not a single version
-    token: two files declaring `^0.8.20` and `>=0.8.20 <0.9.0` are
-    semantically different constraints (even though they happen to share a
-    leading token) and must not be silently merged into one compile unit.
+    Pipeline: resolve every `import` in `sources` -> build the import graph
+    -> compute weakly-connected components (the transitive dependency
+    closure -- if A imports B, directly or transitively, or through a
+    cycle, they land in the same component no matter what either one's
+    pragma says) -> merge components that need an identical, non-conflicting
+    compiler constraint into one solc invocation, purely to cut down on the
+    number of subprocess calls for otherwise-unrelated files.
+
+    Compiling import-connected files in isolation (grouping by pragma
+    alone) silently breaks: whichever file's group didn't happen to
+    include its import partner's content produces a spurious "file not
+    found" from solc, even though the file exists in the repo. Grouping by
+    connected component fixes that structurally.
+
+    Within one component, every member's pragma constraint must hold
+    *simultaneously* -- see `resolve_compiler_for_constraints`, which
+    checks each member's constraint independently rather than
+    string-concatenating them (naively joining two constraints that each
+    contain `||` would parse as the wrong logical expression). A component
+    whose members' constraints can't be simultaneously satisfied gets its
+    combined constraint_expr as an ` AND `-joined label for reporting, and
+    `compile_group()` will report it as unresolved rather than guessing.
+
+    A component with an import that couldn't be resolved to any file in
+    `sources` at all (missing dependency) carries that in
+    `unresolved_imports`; `compile_group()` fails closed on that
+    information before ever invoking solc, since the compile is already
+    known to be incomplete.
     """
-    groups: dict[str, CompileGroup] = {}
-    for relpath, content in sources.items():
-        constraint_expr = extract_pragma_constraint(content)
-        key = constraint_expr if constraint_expr is not None else "\0__no_pragma__"
-        groups.setdefault(key, CompileGroup(constraint_expr=constraint_expr)).files.append(relpath)
-    return [groups[k] for k in sorted(groups)]
+    graph = import_resolution.build_import_graph(sources)
+    components = import_resolution.connected_components(graph, files=sources.keys())
+    all_cycles = import_resolution.find_cycles(graph)
+
+    prelim: list[CompileGroup] = []
+    for comp_files in components:
+        comp_set = set(comp_files)
+        member_constraints = {f: extract_pragma_constraint(sources[f]) for f in comp_files}
+        distinct = sorted({c for c in member_constraints.values() if c is not None})
+        combined_label = " AND ".join(distinct) if distinct else None
+
+        unresolved = [
+            {"importing_file": u.importing_file, "raw_path": u.raw_path, "line": u.line}
+            for u in graph.unresolved
+            if u.importing_file in comp_set
+        ]
+        cycles = [c for c in all_cycles if set(c) <= comp_set]
+
+        prelim.append(CompileGroup(
+            constraint_expr=combined_label,
+            files=list(comp_files),
+            member_constraints=member_constraints,
+            unresolved_imports=unresolved,
+            cycles=cycles,
+        ))
+
+    # Merge components that don't carry unresolved-import provenance and
+    # share an identical combined constraint label -- this is the same
+    # "one solc call per distinct constraint" efficiency the previous
+    # pure-pragma grouping had for files that don't import each other at
+    # all. A component with unresolved imports is keyed uniquely so its
+    # provenance never gets diluted by merging into (or absorbing) an
+    # unrelated group.
+    merged: dict[str, CompileGroup] = {}
+    order: list[str] = []
+    for group in prelim:
+        if group.unresolved_imports:
+            key = "\0__unresolved__::" + ",".join(sorted(group.files))
+        else:
+            key = group.constraint_expr if group.constraint_expr is not None else "\0__no_pragma__"
+        if key not in merged:
+            merged[key] = group
+            order.append(key)
+        else:
+            existing = merged[key]
+            existing.files = sorted(set(existing.files) | set(group.files))
+            existing.member_constraints.update(group.member_constraints)
+            existing.cycles = existing.cycles + [c for c in group.cycles if c not in existing.cycles]
+
+    result = [merged[k] for k in order]
+    result.sort(key=lambda g: (g.files[0] if g.files else ""))
+    return result
 
 
 def _version_node_modules_dir(version: str) -> Path:
@@ -336,6 +420,11 @@ class CompilerRequirement:
 # installed_compatible:      a fresh npm install of a satisfying version succeeded
 # unparseable_constraint:    pragma text didn't parse into any version clause
 # unresolved:                no local/installable compiler satisfies the constraint
+# missing_import:            a member file's import didn't resolve to any known
+#                             source at all; set directly by compile_group()
+#                             (never returned by resolve_compiler*()), since the
+#                             unit is already known-incomplete before compiler
+#                             resolution is even attempted
 RESOLUTION_METHODS = frozenset({
     "no_pragma_bundled_default",
     "bundled_compatible",
@@ -343,7 +432,62 @@ RESOLUTION_METHODS = frozenset({
     "installed_compatible",
     "unparseable_constraint",
     "unresolved",
+    "missing_import",
 })
+
+
+def _resolve_against_predicate(
+    predicate: Callable[[str], bool], budget: InstallBudget
+) -> tuple[str | None, str]:
+    """Shared version-search logic: bundled -> cached -> npm-install, in
+    that preference order, trying each concrete version against
+    `predicate` ("would this version satisfy the compilation unit?").
+
+    Returns `(resolved_version, resolution_method)`; `resolved_version` is
+    None iff `resolution_method == "unresolved"`. Factored out of
+    `resolve_compiler` so both the single-constraint and the multi-file,
+    multi-constraint (`resolve_compiler_for_constraints`) resolution paths
+    share one implementation of "prefer local, then install within
+    budget" -- there is exactly one place that decides which concrete
+    version gets used.
+    """
+    local_candidates = {_BUNDLED_VERSION, *_cached_versions()}
+    matching_local = sorted((v for v in local_candidates if predicate(v)), key=_ver_tuple)
+    if _BUNDLED_VERSION in matching_local:
+        return _BUNDLED_VERSION, "bundled_compatible"
+    if matching_local:
+        return matching_local[-1], "cache_compatible"
+
+    if budget.offline:
+        logger.warning("no local solc satisfies the constraint and offline mode disallows npm; unresolved")
+        return None, "unresolved"
+
+    published = _query_npm_available_versions()
+    if not published:
+        return None, "unresolved"
+
+    satisfying = sorted(
+        (v for v in published if _is_installable_version(v) and predicate(v)),
+        key=_ver_tuple,
+        reverse=True,
+    )
+    if not satisfying:
+        logger.warning("no published/allow-listed solc satisfies the constraint")
+        return None, "unresolved"
+
+    best = satisfying[0]
+    if not budget.try_reserve():
+        logger.warning(
+            "solc@%s would satisfy the constraint but the install budget (%s) is exhausted; unresolved",
+            best, budget.max_installs,
+        )
+        return None, "unresolved"
+
+    if _install_version(best, budget):
+        return best, "installed_compatible"
+
+    logger.warning("npm install of solc@%s failed; unresolved", best)
+    return None, "unresolved"
 
 
 def resolve_compiler(
@@ -378,55 +522,61 @@ def resolve_compiler(
             compatible=False,
         )
 
-    # 1. Prefer what's already on disk -- no network, no subprocess.
-    local_candidates = {_BUNDLED_VERSION, *_cached_versions()}
-    matching_local = sorted(
-        (v for v in local_candidates if version_satisfies(v, constraint_expr)),
-        key=_ver_tuple,
+    version, method = _resolve_against_predicate(
+        lambda v: version_satisfies(v, constraint_expr), budget
     )
-    if _BUNDLED_VERSION in matching_local:
-        return CompilerRequirement(constraint_expr, _BUNDLED_VERSION, "bundled_compatible", True)
-    if matching_local:
-        return CompilerRequirement(constraint_expr, matching_local[-1], "cache_compatible", True)
+    return CompilerRequirement(constraint_expr, version, method, version is not None)
 
-    # 2. Nothing local satisfies it -- see if npm has a satisfying,
-    #    allow-listed version worth installing.
-    if budget.offline:
-        logger.warning(
-            "no local solc satisfies %r and offline mode disallows npm; unresolved",
-            constraint_expr,
+
+def resolve_compiler_for_constraints(
+    constraint_exprs: list[str | None], budget: InstallBudget | None = None
+) -> CompilerRequirement:
+    """Resolve ONE compiler version that satisfies every constraint in
+    `constraint_exprs` *simultaneously* -- for a compilation unit made of
+    several import-connected files, each of which may declare its own
+    pragma.
+
+    Each member constraint is checked independently via
+    `version_satisfies`, and a candidate version must pass all of them.
+    This deliberately does NOT string-concatenate the constraint
+    expressions before matching: `"^0.8.20"` and `"0.7.6 || ^0.8.10"`
+    naively joined as `"^0.8.20 0.7.6 || ^0.8.10"` would parse as the OR of
+    two *different* clause groups instead of the AND of the two original
+    expressions, silently changing what actually gets accepted. The
+    returned `constraint_expr` is a human-readable ` AND `-joined label
+    (for logging/reporting only) built from the distinct constraints
+    actually present -- never re-parsed.
+    """
+    if budget is None:
+        budget = InstallBudget()
+
+    present = [e for e in constraint_exprs if e is not None]
+    distinct = sorted(set(present))
+    label = " AND ".join(distinct) if distinct else None
+
+    if not present:
+        return CompilerRequirement(
+            constraint_expr=None,
+            resolved_version=_BUNDLED_VERSION,
+            resolution_method="no_pragma_bundled_default",
+            compatible=True,
         )
-        return CompilerRequirement(constraint_expr, None, "unresolved", False)
 
-    published = _query_npm_available_versions()
-    if not published:
-        return CompilerRequirement(constraint_expr, None, "unresolved", False)
-
-    satisfying = sorted(
-        (
-            v for v in published
-            if _is_installable_version(v) and version_satisfies(v, constraint_expr)
-        ),
-        key=_ver_tuple,
-        reverse=True,
-    )
-    if not satisfying:
-        logger.warning("no published/allow-listed solc satisfies %r", constraint_expr)
-        return CompilerRequirement(constraint_expr, None, "unresolved", False)
-
-    best = satisfying[0]
-    if not budget.try_reserve():
-        logger.warning(
-            "solc@%s would satisfy %r but the install budget (%s) is exhausted; unresolved",
-            best, constraint_expr, budget.max_installs,
+    unparseable = [e for e in distinct if not _parse_or_groups(e)]
+    if unparseable:
+        logger.warning("unparseable solidity pragma constraint(s) in compilation unit: %r", unparseable)
+        return CompilerRequirement(
+            constraint_expr=label,
+            resolved_version=None,
+            resolution_method="unparseable_constraint",
+            compatible=False,
         )
-        return CompilerRequirement(constraint_expr, None, "unresolved", False)
 
-    if _install_version(best, budget):
-        return CompilerRequirement(constraint_expr, best, "installed_compatible", True)
+    def predicate(v: str) -> bool:
+        return all(version_satisfies(v, e) for e in present)
 
-    logger.warning("npm install of solc@%s failed; %r unresolved", best, constraint_expr)
-    return CompilerRequirement(constraint_expr, None, "unresolved", False)
+    version, method = _resolve_against_predicate(predicate, budget)
+    return CompilerRequirement(label, version, method, version is not None)
 
 
 # --------------------------------------------------------------------------
@@ -448,9 +598,50 @@ class CompileResult:
 def compile_group(
     group: CompileGroup, sources: dict[str, str], budget: InstallBudget | None = None
 ) -> CompileResult:
-    requirement = resolve_compiler(group.constraint_expr, budget)
+    # Fail closed before ever shelling out: if any member's import didn't
+    # resolve to a known source, this unit's Standard JSON `sources` map is
+    # already incomplete and any AST solc produced from it (or the
+    # generic "file not found" solc itself would report) would be less
+    # trustworthy and less specific than reporting the exact missing
+    # import(s) directly.
+    if group.unresolved_imports:
+        detail = "; ".join(
+            f"{u['importing_file']}:{u['line']} imports {u['raw_path']!r} "
+            f"(not found in the analyzed source set)"
+            for u in group.unresolved_imports
+        )
+        return CompileResult(
+            version=None,
+            requested_constraint=group.constraint_expr,
+            files=list(group.files),
+            ok=False,
+            ast_by_file={},
+            errors=[{
+                "type": "missing_import",
+                "message": f"unresolved import(s) block compilation of this unit: {detail}",
+                "severity": "error",
+            }],
+            compatible=False,
+            resolution_method="missing_import",
+        )
+
+    if group.member_constraints:
+        # Import-graph-aware group: check every member's own pragma
+        # independently (never string-concatenated -- see
+        # resolve_compiler_for_constraints) so a version must satisfy all
+        # of them simultaneously.
+        constraint_exprs = [group.member_constraints.get(f, group.constraint_expr) for f in group.files]
+        requirement = resolve_compiler_for_constraints(constraint_exprs, budget)
+    else:
+        requirement = resolve_compiler(group.constraint_expr, budget)
 
     if not requirement.compatible:
+        message = (
+            f"no compatible solc available for constraint "
+            f"{group.constraint_expr!r} ({requirement.resolution_method})"
+        )
+        if len(group.files) > 1 and len(set(group.member_constraints.values())) > 1:
+            message += f"; member pragma constraints: {group.member_constraints}"
         return CompileResult(
             version=None,
             requested_constraint=group.constraint_expr,
@@ -459,10 +650,7 @@ def compile_group(
             ast_by_file={},
             errors=[{
                 "type": "compiler_resolution_failed",
-                "message": (
-                    f"no compatible solc available for constraint "
-                    f"{group.constraint_expr!r} ({requirement.resolution_method})"
-                ),
+                "message": message,
                 "severity": "error",
             }],
             compatible=False,
@@ -565,7 +753,7 @@ def build_trust_summary(results: list[CompileResult]) -> dict:
     for r in results:
         if not r.compatible:
             blockers.append({
-                "type": "compiler_resolution_failed",
+                "type": r.resolution_method if r.resolution_method == "missing_import" else "compiler_resolution_failed",
                 "files": list(r.files),
                 "requested_constraint": r.requested_constraint,
                 "resolution_method": r.resolution_method,

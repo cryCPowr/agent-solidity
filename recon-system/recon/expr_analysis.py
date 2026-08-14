@@ -22,7 +22,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from . import ast_utils, ids
+from . import ast_utils, dataflow, ids
 from .context import ProjectContext
 from .inventory import ContractUnit, FunctionUnit
 from .inventory_facts import function_node_id, state_var_node_id
@@ -149,6 +149,7 @@ def analyze_function(ctx: ProjectContext, cu: ContractUnit, fu: FunctionUnit) ->
     _emit_events_errors_usage(ctx, cu, fu, fnode_id)
     _emit_special_features(ctx, cu, fu, fnode_id)
     _emit_arithmetic_operations(ctx, cu, fu, fnode_id)
+    _emit_expression_origin_chains(ctx, cu, fu, fnode_id, local_scope, visible_state_vars)
 
 
 def _emit_state_access(ctx, cu, fu, fnode_id, visible_state_vars, write_ids, compound_write_ids) -> None:
@@ -756,6 +757,89 @@ def _emit_call_argument_flows(ctx, fu, fnode_id, call_node, local_scope, visible
             },
             status,
         )
+
+
+def _emit_expression_origin_chains(ctx, cu, fu, fnode_id, local_scope, visible_state_vars) -> None:
+    """Conservative local def-use / expression propagation (extends
+    sections 8-9). See recon/dataflow.py's module docstring for the exact
+    propagation rules and where resolution deliberately stops.
+
+    Purely additive: does not alter `call_argument_dataflow` (still
+    emitted by `_emit_call_argument_flows`, one hop, unchanged) or any
+    other existing fact type. Adds two new fact types:
+
+      * `local_variable_origin` -- one fact per local variable that has a
+        write site at all, carrying the full hop-by-hop chain back to its
+        ultimate origin (parameter / state variable / environment /
+        literal), or an explicit `unknown` status with a `reason` when
+        propagation could not resolve it (multiple assignments,
+        branch-guarded assignment, or an unsupported expression shape such
+        as a call result or mapping/array read).
+      * `call_argument_origin_chain` -- the same kind of full chain for
+        each call argument expression itself, which may pass through zero
+        or more local variables before reaching the call site.
+    """
+    local_defs, ambiguous = dataflow.build_local_defs(fu.body_node)
+    local_names: dict[int, str] = {}
+    for vd in ast_utils.find_all(fu.body_node, "VariableDeclaration"):
+        local_names.setdefault(vd["id"], vd.get("name"))
+    visible_state_var_names = {refid: sv.name for refid, sv in visible_state_vars.items()}
+
+    def _emit_origin_fact(fact_type, subject, src_ref, evid, extra_subject, name, result, unresolved_extra=None):
+        chain = [h.to_dict() for h in result.chain]
+        props = {
+            **extra_subject,
+            "root_kind": result.kind,
+            "root_name": result.name,
+            "chain": chain,
+            "hop_count": len(chain),
+        }
+        if result.kind == "unresolved" and not chain:
+            props["reason"] = (unresolved_extra or {}).get("reason", "unsupported_expression_shape")
+            if "expression" in (unresolved_extra or {}):
+                props["expression"] = unresolved_extra["expression"]
+        confidence = "high" if result.status in ("observed", "derived") else "low"
+        _emit_fact(ctx, fu, fact_type, src_ref, evid, subject, props, result.status, confidence=confidence)
+
+    # --- local_variable_origin: one per local var with a known write site ---
+    for vid, rhs_node in local_defs.items():
+        name = local_names.get(vid)
+        result = dataflow.resolve_origin(rhs_node, local_defs, local_scope, visible_state_var_names)
+        src_ref = ctx.source_ref(fu.file, rhs_node)
+        evid = ctx.make_evidence(fu.file, rhs_node)
+        _emit_origin_fact(
+            "local_variable_origin", {"function": fu.key, "variable": name}, src_ref, evid,
+            {"variable_name": name}, name, result,
+            unresolved_extra={"expression": _src_text(ctx, fu.file, rhs_node)},
+        )
+
+    for vid, (reason, site_node) in ambiguous.items():
+        name = local_names.get(vid)
+        src_ref = ctx.source_ref(fu.file, site_node)
+        evid = ctx.make_evidence(fu.file, site_node)
+        _emit_fact(
+            ctx, fu, "local_variable_origin", src_ref, evid,
+            {"function": fu.key, "variable": name},
+            {"variable_name": name, "reason": reason},
+            "unknown", confidence="low",
+        )
+
+    # --- call_argument_origin_chain: one per call argument ---
+    for node, _parent in ast_utils.walk(fu.body_node):
+        if node.get("nodeType") != "FunctionCall":
+            continue
+        if node.get("kind") in ("typeConversion", "structConstructorCall"):
+            continue
+        src_ref = ctx.source_ref(fu.file, node)
+        evid = ctx.make_evidence(fu.file, node)
+        for idx, arg in enumerate(node.get("arguments", [])):
+            result = dataflow.resolve_origin(arg, local_defs, local_scope, visible_state_var_names)
+            _emit_origin_fact(
+                "call_argument_origin_chain", {"function": fu.key}, src_ref, evid,
+                {"argument_index": idx, "argument_expression": _src_text(ctx, fu.file, arg)},
+                None, result,
+                unresolved_extra={"expression": _src_text(ctx, fu.file, arg)},
+            )
 
 
 _CONTROL_NODE_TYPES = {
