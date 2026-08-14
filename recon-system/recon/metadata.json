@@ -1,0 +1,55 @@
+{
+  "analysis_status": "complete",
+  "analyzer_version": "0.1.0",
+  "compiler": {
+    "engine": "solc-js (npm)",
+    "runs": []
+  },
+  "errors": [],
+  "files_analyzed": [],
+  "files_failed": [],
+  "files_partially_analyzed": [],
+  "schema_version": "1.1.0",
+  "source_root": "/path/to/solidity/repo",
+  "warnings": [
+    {
+      "message": "no Solidity source files discovered under repo_root",
+      "repo_root": "/path/to/solidity/repo"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "file_discovery_and_reading"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "compilation"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "inventory"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "modifier_analysis"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "function_analysis"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "capability_and_relationship_derivation"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "total"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "analysis_coverage": {
+    "files_analyzed": 0,
+    "files_failed": 0,
+    "files_partially_analyzed": 0,
+    "unresolved": {
+      "call_argument_dataflows": 0,
+      "event_emissions": 0,
+      "inheritance_bases": 0,
+      "internal_calls": 0
+    }
+  },
+  "asset_operation_count": 0,
+  "authorization_check_count": 0,
+  "callback_capable_call_count": 0,
+  "capabilities": {},
+  "contracts": [],
+  "error_count": 0,
+  "eth_transfer_count": 0,
+  "event_count": 0,
+  "external_call_count": 0,
+  "fact_status_counts": {},
+  "fact_type_counts": {},
+  "function_count": 0,
+  "graph_statistics": {
+    "edge_count": 0,
+    "edges_by_type": {},
+    "node_count": 0,
+    "nodes_by_kind": {}
+  },
+  "interfaces": [],
+  "libraries": [],
+  "state_variable_count": 0,
+  "warnings": [
+    {
+      "message": "no Solidity source files discovered under repo_root",
+      "repo_root": "/path/to/solidity/repo"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "file_discovery_and_reading"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "compilation"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "inventory"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "modifier_analysis"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "function_analysis"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "capability_and_relationship_derivation"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "total"
+    }
+  ]
+}
