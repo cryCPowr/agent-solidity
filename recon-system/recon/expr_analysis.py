@@ -118,6 +118,8 @@ def analyze_function(ctx: ProjectContext, cu: ContractUnit, fu: FunctionUnit) ->
     for vd in ast_utils.find_all(fu.body_node, "VariableDeclaration"):
         local_scope.setdefault(vd["id"], "local_variable")
 
+    fu.local_defs, fu.local_defs_ambiguous = dataflow.build_local_defs(fu.body_node)
+
     write_target_ids: set[int] = set()
     compound_write_ids: set[int] = set()
 
@@ -782,7 +784,8 @@ def _emit_expression_origin_chains(ctx, cu, fu, fnode_id, local_scope, visible_s
         each call argument expression itself, which may pass through zero
         or more local variables before reaching the call site.
     """
-    local_defs, ambiguous = dataflow.build_local_defs(fu.body_node)
+    local_defs = fu.local_defs
+    ambiguous = getattr(fu, "local_defs_ambiguous", {})
     local_names: dict[int, str] = {}
     for vd in ast_utils.find_all(fu.body_node, "VariableDeclaration"):
         local_names.setdefault(vd["id"], vd.get("name"))

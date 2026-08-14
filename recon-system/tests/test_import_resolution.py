@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import unittest
 
-import import_resolution as ir
+from recon import import_resolution as ir
 
 
 # --------------------------------------------------------------------------

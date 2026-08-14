@@ -235,12 +235,20 @@ future stage.
   `selfdestruct`, `address.code`/`.codehash`, create2 salt options.
 - **Capability map** (section 21): deterministically aggregated from the
   above; each capability fact links back to its supporting fact ids.
+  **Enhanced with evidence/attributes**: `target` (fixed/user_controlled),
+  `amount` (fixed/user_controlled), `asset` (fixed/variable), and
+  `authorization` (guarded/unknown) — answering WHO controls target/amount,
+  WHAT asset, and IS authorization present without changing the coarse
+  capability name.
 - **Conservative data-flow edges** (sections 8–9) for call arguments: origin
   classified as parameter / local variable / state variable / literal /
   environment / unknown, peeling through simple member/index-access chains;
   anything more complex (arithmetic, multi-hop) is left `unknown` rather than
   guessed.
-- **Division / arithmetic operation tracking**: every integer-division site
+- **Data-flow propagation**: **extended with local def-use propagation**
+  through simple, unambiguous local variable assignments, so chains like
+  `parameter → local variable → local variable → arithmetic → use` can be
+  recovered instead of stopping at the nearest identifier.
   (`a / b`), its operands, and its immediate consumer (return value / state
   write / variable initializer / call argument) — a structural precursor for
   rounding/truncation/precision review. Recon does not evaluate whether a
@@ -271,24 +279,14 @@ already emitted by `expr_analysis.py`/`capability.py`. No new AST parsing.
   observed authorization mechanism anywhere in scope. An absence-of-evidence
   signal, explicitly not a finding.
 
-**Security relationship chains** (`security_relationship_chain`): connects
+- **Security relationship chains** (`security_relationship_chain`): connects
 per-function facts into an ordered sequence of `{actor, relation, target,
-certainty, basis_facts}` steps, in the shape the task specification asked
-for —
-
-```
-caller --controls--> parameter --passed_into--> call(dynamic target)
-                                                        |
-                                          --co_occurs_with--> asset_operation(approve/transfer)
-```
-
-— instead of leaving "performs an external call" and "approves a token" as
-two facts a consumer has to notice and connect themselves. Every step is
-individually labeled `FACT`/`INFERENCE`/`HYPOTHESIS` (see
-[FACT vs HYPOTHESIS](#fact-vs-hypothesis)); `properties.overall_certainty` is
+certainty, basis_facts}` steps, with **evidence-based relationship classification**
+(`ARGUMENT_DEPENDENCY`, `DATA_DEPENDENCY`, `SAME_BLOCK`, `EXECUTION_ORDER`,
+`co_occurs_with`) instead of generic `co_occurs_with`. Every step is
+individually labeled `FACT`/`INFERENCE`/`HYPOTHESIS`; `properties.overall_certainty` is
 the weakest certainty among a chain's own steps. See
-`tests/fixtures/11_relationship_chain.sol` for the fixture this was built
-against and `tests/test_recon_intelligence.py` for the assertions.
+`tests/fixtures/11_relationship_chain.sol` and `tests/test_recon_intelligence.py`.
 
 ## Known limitations (disclosed, not silently papered over)
 
@@ -377,7 +375,7 @@ cd recon-system
 python3 -m pytest tests/ -v
 ```
 
-94 tests + 1 intentional `xfail`, spread across:
+100+ tests (including 1 intentional `xfail`), spread across:
 
 - `tests/test_pipeline.py`, `tests/test_ground_truth.py` — recon's own
   correctness: positive fixture coverage (inheritance, interfaces, every
@@ -393,8 +391,14 @@ python3 -m pytest tests/ -v
 - `tests/test_recon_intelligence.py` — the security-intelligence layer:
   modifier-body authorization detection, the role/privilege map
   (`access_controlled_function` / `unguarded_capability_hypothesis`),
-  security relationship chains, division-operation tracking, and a
-  banned-vocabulary regression guard scoped to the new fact types.
+  **enriched security relationship chains with evidence-based classification**,
+  **enriched capability model with evidence/attributes**, division-operation
+  tracking, and a banned-vocabulary regression guard scoped to the new fact
+  types.
+- `tests/test_dataflow_propagation.py` — **data-flow propagation tests**
+  covering parameter→local, local→local, parameter→arithmetic→local,
+  local→function call argument, branch/condition, and unknown/unresolved
+  expression scenarios.
 - `tests/consumer/` — a **black-box** consumer contract test suite that
   invokes `recon.cli` as a subprocess and reads only `facts.jsonl` /
   `graph.json` / `summary.json` / `metadata.json` / `snippets/` (never

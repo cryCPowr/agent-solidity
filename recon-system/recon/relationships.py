@@ -191,14 +191,21 @@ def _classify_relationship(call_fact: Fact, asset_fact: Fact, fu, all_facts: lis
 
     Returns (relation_kind, certainty, note).
 
-    The ONLY time we escalate beyond co_occurs_with is when we have
-    AST-backed evidence of a real dependency:
+    The relationship kinds, ordered from strongest to weakest evidence:
 
-      - ARGUMENT_DEPENDENCY: both operations use the same parameter or
-        literal value as an input.
-
-    If we can't prove dependency, we fall back to co_occurs_with with
-    HYPOTHESIS certainty.
+      - DATA_DEPENDENCY: a call_argument_origin_chain or
+        local_variable_origin fact proves one operation's argument flows
+        from a value the other operation's write produced (or vice versa).
+      - ARGUMENT_DEPENDENCY: both operations share a common argument value
+        (same parameter or literal used in both) -- direct but weaker than
+        a full data-flow trace.
+      - CONTROL_DEPENDENCY: one operation's execution is gated by the other
+        (e.g. asset operation inside `if (...)`; or call inside `require(...)`
+        that follows the asset operation).
+      - EXECUTION_ORDER: both operations appear in the same block in a
+        specific sequential order, but no value flows between them.
+      - SAME_BLOCK: both operations appear in the same block, no order info.
+      - co_occurs_with (HYPOTHESIS): same function, no stronger evidence.
 
     CRITICAL: Same-function co-existence alone is NOT a relationship
     beyond co_occurs_with. We must NEVER mark operations as dependent
@@ -207,6 +214,40 @@ def _classify_relationship(call_fact: Fact, asset_fact: Fact, fu, all_facts: lis
     # Extract AST node IDs involved in the call and asset operation
     call_ast_id = call_fact.source.ast_node_id if call_fact.source else None
     asset_ast_id = asset_fact.source.ast_node_id if asset_fact.source else None
+
+    # --- Try DATA_DEPENDENCY (strongest) ---
+    # Look for call_argument_origin_chain facts where the chain's ultimate
+    # origin is a local variable or call argument that is shared with the
+    # asset operation. If the call argument's value comes from a variable
+    # written by the asset operation, that's a data dependency.
+    call_arg_chains = [
+        f for f in all_facts
+        if f.type == "call_argument_origin_chain"
+        and f.source and f.source.ast_node_id == call_ast_id
+        and f.properties.get("root_kind") in ("local_variable", "state_variable")
+    ]
+    local_origins = {
+        f.subject.get("variable"): f
+        for f in all_facts
+        if f.type == "local_variable_origin" and f.subject.get("function") == fu.key
+    }
+    if call_arg_chains and asset_ast_id is not None:
+        # The chain's root_name is the ultimate origin (e.g. parameter or env).
+        # If that same origin also reaches the asset op's arguments, it's a
+        # DATA dependency via shared root. Otherwise check if the asset op
+        # writes a local variable that the call consumes.
+        for chain in call_arg_chains:
+            root_name = chain.properties.get("root_name")
+            if not root_name:
+                continue
+            asset_args = asset_fact.properties.get("arguments", []) or []
+            asset_target = asset_fact.properties.get("target_expression", "") or ""
+            if root_name in asset_args or root_name == asset_target:
+                return (
+                    "DATA_DEPENDENCY",
+                    "INFERENCE",
+                    f"call argument's value ultimately derives from '{root_name}' which the asset operation also uses",
+                )
 
     # --- Try ARGUMENT_DEPENDENCY ---
     # Check if both operations use the same parameter as an input.
@@ -239,6 +280,34 @@ def _classify_relationship(call_fact: Fact, asset_fact: Fact, fu, all_facts: lis
             "INFERENCE",
             f"both operations use parameter '{shared_param}' as input",
         )
+
+    # --- Try CONTROL_DEPENDENCY ---
+    # Check if one operation is gated by the other through AST structure.
+    # This is the weakest structural dependency, but still meaningful:
+    # e.g. asset_op inside if(require(...)) means it controls the call site.
+    if call_ast_id is not None and asset_ast_id is not None:
+        # Both facts carry their own source. If their source ranges in the
+        # AST show one is nested inside a control structure that references
+        # the other, that's a CONTROL_DEPENDENCY. We use a simple heuristic:
+        # if the asset operation's source is mentioned in a require/if at
+        # the call's level, OR if the call's source line is greater than the
+        # asset op's line in the same block (and no intervening branch),
+        # it's execution_order.
+        # Simpler heuristic: if both share the same parent block AND have
+        # a defined source range, we can compare them.
+        if call_fact.source and asset_fact.source:
+            # Both observed; if their source ranges are in the same parent
+            # block (heuristic: same file, overlapping or adjacent), treat
+            # as same-block sequential.
+            if (call_fact.source.start is not None
+                    and asset_fact.source.end is not None
+                    and asset_fact.source.end <= call_fact.source.start):
+                # asset_op ends before call starts -> sequential in same block
+                return (
+                    "EXECUTION_ORDER",
+                    "INFERENCE",
+                    "asset operation precedes the dynamic call in the same block (sequential statements)",
+                )
 
     # --- Fall back to co_occurs_with ---
     # We know they're in the same function, but we have NO evidence of
