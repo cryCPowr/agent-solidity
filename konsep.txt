@@ -53,3 +53,40 @@
                   │
                   └──────► ATTACK AGENT
                            (retry/refine)
+
+
+
+I. RECON
+                    ┌──────────────────┐
+                    │   pipeline.py    │
+                    │ ORCHESTRATOR     │
+                    └────────┬─────────┘
+                             │
+          ┌──────────────────┼────────────────────┐
+          │                  │                    │
+          ▼                  ▼                    ▼
+   discovery.py       solc_manager.py      context.py
+          │                  │                    │
+          ▼                  ▼                    │
+ source universe       compiler / AST           │
+          │                  │                    │
+          │                  ▼                    │
+          │             inventory.py             │
+          │                  │                    │
+          │                  ▼                    │
+          │          inventory_facts.py           │
+          │                  │                    │
+          │                  ▼                    │
+          └────────────► expr_analysis.py ◄──────┘
+                              │
+                    ┌─────────┼─────────┐
+                    │         │         │
+                    ▼         ▼         ▼
+                dataflow  capability relationships
+                    │         │         │
+                    └─────────┼─────────┘
+                              ▼
+                           output.py
+                              │
+                              ▼
+                    facts / graph / summary
