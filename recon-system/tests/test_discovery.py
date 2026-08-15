@@ -1,4 +1,4 @@
-"""Unit tests for `discovery.discover_sources`.
+"""Unit tests for `recon.discovery.discover_sources`.
 
 These call `discover_sources` directly against real temp-dir filesystem
 layouts. They deliberately do NOT go through `recon.cli` / the
@@ -6,7 +6,7 @@ layouts. They deliberately do NOT go through `recon.cli` / the
 pipeline as an external consumer would, which is the wrong altitude for
 pinning down discovery's own boundary logic (and, in this repo, its
 conftest.py has unrelated collection bugs). Put this file wherever
-discovery-level unit tests live, e.g. `tests/unit/test_discovery.py`.
+recon-level unit tests live, e.g. `tests/unit/test_discovery.py`.
 """
 
 from __future__ import annotations
@@ -15,7 +15,7 @@ import os
 
 import pytest
 
-from discovery import discover_sources
+from recon.discovery import discover_sources
 
 
 def _write(path: str, content: str = "// sol\n") -> None:

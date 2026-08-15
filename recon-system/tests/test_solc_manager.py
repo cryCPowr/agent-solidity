@@ -1,4 +1,4 @@
-"""Tests for solc_manager's constraint resolution & trust gating.
+"""Tests for recon.solc_manager's constraint resolution & trust gating.
 
 All subprocess/filesystem interaction with npm/node is mocked -- these tests
 run fully offline and don't touch the real network or a real solc install.
@@ -10,7 +10,7 @@ import json
 import unittest
 from unittest import mock
 
-import solc_manager as sm
+import recon.solc_manager as sm
 
 
 # --------------------------------------------------------------------------

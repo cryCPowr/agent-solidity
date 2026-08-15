@@ -14,7 +14,7 @@ import sys
 import pytest
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-FIXTURES_DIR = os.path.join(REPO_ROOT, "tests", "fixtures", "recon")
+FIXTURES_DIR = os.path.join(REPO_ROOT, "tests", "fixtures")
 
 # Only the local test-helper directory goes on sys.path (to import
 # recon_reader). REPO_ROOT is deliberately NOT added: this module invokes

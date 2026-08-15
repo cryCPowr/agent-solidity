@@ -85,7 +85,7 @@ def test_all_fixtures_compile_and_analysis_completes(recon_output):
     metadata = recon_output["metadata"]
     assert metadata["analysis_status"] == "complete", metadata
     assert len(metadata["files_failed"]) == 0
-    assert len(metadata["files_analyzed"]) == 12
+    assert len(metadata["files_analyzed"]) == 13
 
 
 def test_no_hard_compiler_errors(recon_output):

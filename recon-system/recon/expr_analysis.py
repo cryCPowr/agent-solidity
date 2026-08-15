@@ -360,6 +360,7 @@ def _emit_calls(ctx, cu, fu, fnode_id, local_scope, visible_state_vars) -> None:
             )
         elif category == "other_builtin":
             _emit_builtin_call(ctx, fu, fnode_id, node, expr, src_ref, evid)
+            _emit_decode_encode(ctx, fu, fnode_id, node, expr, src_ref, evid)
         elif category == "unresolved":
             _emit_fact(
                 ctx, fu, "call_unresolved", src_ref, evid,
@@ -367,6 +368,7 @@ def _emit_calls(ctx, cu, fu, fnode_id, local_scope, visible_state_vars) -> None:
                 {"callee_expression": _src_text(ctx, fu.file, expr)},
                 "unknown",
             )
+            _emit_decode_encode(ctx, fu, fnode_id, node, expr, src_ref, evid)
         elif category == "selfdestruct":
             _emit_fact(ctx, fu, "selfdestruct_call", src_ref, evid, {"function": fu.key}, {}, "observed")
         # Errors used as `revert CustomError(...)`: represented as FunctionCall
@@ -401,8 +403,114 @@ def _emit_calls(ctx, cu, fu, fnode_id, local_scope, visible_state_vars) -> None:
                 "derived",
             )
 
+        # Callback relationship via ERC721/1155 safeTransfer/safeBatchTransfer:
+        # these token operations trigger callback receivers. We link the call
+        # to any onERC721Received/onERC1155Received implementation in scope.
+        member_name = expr.get("memberName")
+        if member_name in ("safeTransferFrom", "safeTransfer", "safeBatchTransferFrom"):
+            # Check for receiver functions across all contract units in project context
+            for other_cu in ctx.contracts.values():
+                for other_fu in other_cu.functions:
+                    if other_fu.name in ("onERC721Received", "onERC1155Received", "onERC1155BatchReceived"):
+                        callee_target = _src_text(ctx, fu.file, expr.get("expression") or {})
+                        _emit_fact(
+                            ctx, fu, "callback_relationship", src_ref, evid,
+                            {"caller": fu.key, "callee_target_expression": callee_target},
+                            {
+                                "trigger_operation": member_name,
+                                "callback_function": other_fu.key,
+                                "callback_name": other_fu.name,
+                                "relationship": "external_call → callback_receiver (via safeTransfer)",
+                                "note": "structural link only; actual callback dispatch is semantic",
+                            },
+                            "derived",
+                        )
+                        break
+
+        # Callback relationship: link external call → receiver interface.
+        # This creates the explicit chain:
+        #   external call → callback receiver implementation → onERC721Received / onERC1155Received
+        # needed by Class-B style reasoning without semantic interpretation.
+        if category in ("external", "low_level", "delegatecall", "staticcall"):
+            if target_type and any(
+                marker in target_type for marker in ("IERC721Receiver", "IERC1155Receiver", "ERC777")
+            ):
+                callee_target = _src_text(ctx, fu.file, expr.get("expression") or {})
+                _emit_fact(
+                    ctx, fu, "callback_relationship", src_ref, evid,
+                    {"caller": fu.key, "callee_target_expression": callee_target},
+                    {
+                        "target_type": target_type,
+                        "call_type": category,
+                        "relationship": "external_call → callback_receiver",
+                        "note": "structural link only; actual callback dispatch is semantic",
+                    },
+                    "derived",
+                )
+
         # Conservative data-flow edges for call arguments (sections 8-9)
         _emit_call_argument_flows(ctx, fu, fnode_id, node, local_scope, visible_state_vars, src_ref, evid)
+
+        # Accounting / value-flow effect (Class D): link an asset-affecting
+        # call to the state mutation that immediately follows it.
+        # Builds: external data → decoded slot → variable → consumer
+        #          value → transformation → balance/liability/share → sink
+        member_name = expr.get("memberName") if expr.get("nodeType") == "MemberAccess" else None
+        call_path = (
+            category in ("external", "low_level", "delegatecall", "staticcall")
+            or member_name in TOKEN_OP_NAMES
+        )
+        if call_path:
+            _post_call_state_effect(ctx, fu, fnode_id, node, visible_state_vars)
+
+
+def _post_call_state_effect(ctx, fu, fnode_id, call_node, visible_state_vars) -> None:
+    """Emit a `post_call_state_effect` fact linking an asset-affecting call
+    to the next state write in the same function body.
+
+    This creates the structural chain:
+      value → transformation → balance/liability/share → sink
+
+    Used by Class D (accounting/value-flow) reasoning. Purely structural:
+    records temporal proximity, not semantic causation.
+    """
+    call_end = call_node.get("src")
+    if not call_end:
+        return
+    parts = call_end.split(":")
+    call_end_pos = int(parts[0]) + int(parts[1]) if len(parts) >= 2 else 0
+    # Find the closest state write that comes after the call
+    # (same source-order heuristic)
+    nearest_write = None
+    min_gap = 999999
+    for node, _parent in ast_utils.walk(fu.body_node):
+        if node.get("nodeType") != "Identifier":
+            continue
+        refid = node.get("referencedDeclaration")
+        if refid not in visible_state_vars:
+            continue
+        sv = visible_state_vars[refid]
+        write_src = node.get("src", "")
+        write_parts = write_src.split(":")
+        write_start = int(write_parts[0]) if write_parts[0].isdigit() else 0
+        if write_start > call_end_pos:
+            gap = write_start - call_end_pos
+            if gap < min_gap:
+                min_gap = gap
+                nearest_write = sv
+    if nearest_write:
+        src_ref = ctx.source_ref(fu.file, call_node)
+        evid = ctx.make_evidence(fu.file, call_node)
+        _emit_fact(
+            ctx, fu, "post_call_state_effect", src_ref, evid,
+            {"function": fu.key, "state_variable": nearest_write.key, "name": nearest_write.name},
+            {
+                "type": nearest_write.type_string,
+                "temporal_proximity": "immediate" if min_gap < 50 else "nearby",
+                "note": "structural adjacency only; semantic causation requires verification",
+            },
+            "derived", confidence="medium",
+        )
 
 
 def _emit_call_options(ctx, fu, call_node, call_options: dict, src_ref, evid) -> None:
@@ -917,11 +1025,7 @@ _SPECIAL_NODE_TYPES = {
 
 def _enclosing_use(node: dict, parent: Optional[dict]) -> Optional[str]:
     """Cheap, structural (non-semantic) classification of what immediately
-    consumes an expression's result: assigned to a variable, returned, or
-    used as a state-variable's initializer. Foundational signal for
-    Class-C-style rounding/truncation review — recon does not evaluate
-    whether the truncation is *significant*, only where truncating
-    arithmetic feeds directly into a stored/returned value.
+    consumes an expression's result.
     """
     if parent is None:
         return None
@@ -934,7 +1038,17 @@ def _enclosing_use(node: dict, parent: Optional[dict]) -> Optional[str]:
         return "variable_initializer"
     if pt == "FunctionCall":
         return "call_argument"
-    return None
+    if pt == "UnaryOperation":
+        return f"unary_op:{parent.get('operator')}"
+    if pt == "BinaryOperation":
+        return f"binary_op:{parent.get('operator')}"
+    if pt == "TupleExpression":
+        return "tuple_component"
+    if pt == "IndexAccess":
+        return "index_access_base" if parent.get("baseExpression") is node else "index_access_index"
+    if pt == "MemberAccess":
+        return "member_access_base"
+    return pt.lower() if pt else None
 
 
 def _emit_arithmetic_operations(ctx, cu, fu, fnode_id) -> None:
@@ -993,6 +1107,44 @@ def _emit_arithmetic_operations(ctx, cu, fu, fnode_id) -> None:
                 },
                 "observed", confidence="high",
             )
+
+
+def _emit_decode_encode(
+    ctx, fu, fnode_id, node, expr, src_ref, evid,
+) -> None:
+    """Emit `decode_operation` facts for abi.decode / abi.encode* / msg.data
+
+    Covers the external-data → decoded-internal-value boundary needed by
+    Class B reasoning. Purely structural: records what is decoded/encoded
+    and its immediate consumer. No semantic validation is performed.
+    """
+    if expr.get("nodeType") != "MemberAccess":
+        return
+    member = expr.get("memberName", "")
+    obj = expr.get("expression") or {}
+    if obj.get("nodeType") == "Identifier" and obj.get("name") == "abi":
+        if member not in ("decode", "encode", "encodePacked", "encodeWithSignature", "encodeWithSelector"):
+            return
+        kind = "decode" if member == "decode" else "encode"
+        args = node.get("arguments", [])
+        data_source = _src_text(ctx, fu.file, args[0]) if args else ""
+        types_str = ""
+        if member == "decode" and len(args) > 1:
+            types_str = _src_text(ctx, fu.file, args[1])
+        consumer = _enclosing_use(node, None)
+        _emit_fact(
+            ctx, fu, "decode_operation", src_ref, evid,
+            {"function": fu.key},
+            {
+                "operation": member,
+                "kind": kind,
+                "data_source": data_source,
+                "types": types_str,
+                "immediate_consumer": consumer,
+                "note": "structural extraction only" if kind == "decode" else "encoding preparation",
+            },
+            "observed", confidence="high",
+        )
 
 
 def _emit_special_features(ctx, cu, fu, fnode_id) -> None:

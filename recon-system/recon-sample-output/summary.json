@@ -200,7 +200,7 @@
   "event_count": 2,
   "external_call_count": 20,
   "fact_status_counts": {
-    "derived": 86,
+    "derived": 90,
     "observed": 747,
     "unknown": 30
   },
@@ -215,6 +215,7 @@
     "call_argument_origin_chain": 65,
     "call_options": 2,
     "call_unresolved": 2,
+    "callback_relationship": 4,
     "capability": 30,
     "contract_creation": 2,
     "contract_exists": 24,
@@ -323,37 +324,37 @@
   "state_variable_count": 27,
   "warnings": [
     {
-      "duration_seconds": 0.002,
+      "duration_seconds": 0.001,
       "message": "phase duration",
       "phase": "file_discovery_and_reading"
     },
     {
-      "duration_seconds": 1.284,
+      "duration_seconds": 0.873,
       "message": "phase duration",
       "phase": "compilation"
     },
     {
-      "duration_seconds": 0.045,
+      "duration_seconds": 0.027,
       "message": "phase duration",
       "phase": "inventory"
     },
     {
-      "duration_seconds": 0.001,
+      "duration_seconds": 0.002,
       "message": "phase duration",
       "phase": "modifier_analysis"
     },
     {
-      "duration_seconds": 0.115,
+      "duration_seconds": 0.079,
       "message": "phase duration",
       "phase": "function_analysis"
     },
     {
-      "duration_seconds": 0.007,
+      "duration_seconds": 0.005,
       "message": "phase duration",
       "phase": "capability_and_relationship_derivation"
     },
     {
-      "duration_seconds": 1.456,
+      "duration_seconds": 0.988,
       "message": "phase duration",
       "phase": "total"
     }

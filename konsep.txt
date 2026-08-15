@@ -113,3 +113,21 @@ I. RECON
                               │
                               ▼
                     facts / graph / summary
+
+| Kemampuan                    | Recon | Threat            | Attack | Validator |
+| ---------------------------- | ----- | ----------------- | ------ | --------- |
+| AST/inventory                | 🟢    | —                 | —      | —         |
+| Call/data/state graph        | 🟢    | —                 | —      | —         |
+| User-controlled input        | 🟢/🟡 | 🟢 interpretation | —      | —         |
+| Asset/capability mapping     | 🟢    | 🟢                | —      | —         |
+| Dynamic call + approval      | 🟢    | 🟢/🟡             | 🔴     | 🔴        |
+| Callback chain               | 🟢/🟡 | 🟡                | 🔴     | 🔴        |
+| Rounding primitive           | 🟢    | 🟡                | 🔴     | 🔴        |
+| Rounding → unfair allocation | —     | 🟡                | 🔴     | 🔴        |
+| Precompile field semantics   | 🟡    | 🔴/🟡             | —      | —         |
+| Gross vs net accounting      | —/🟡  | 🟡                | 🔴     | 🔴        |
+| Economic consequence         | —     | 🟡                | 🟡     | 🔴        |
+| Final exploit proof          | —     | —                 | 🟡     | 🔴        |
+| Final report                 | —     | —                 | —      | 🟢 later  |
+
+
