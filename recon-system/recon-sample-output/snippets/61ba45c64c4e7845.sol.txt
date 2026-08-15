@@ -1,0 +1,17 @@
+function verifyAndConsume(
+        address claimedSigner,
+        uint256 amount,
+        uint256 deadline,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) external returns (bool) {
+        require(block.timestamp <= deadline, "expired");
+        bytes32 digest = keccak256(
+            abi.encodePacked(claimedSigner, amount, nonces[claimedSigner], deadline)
+        );
+        address recovered = ecrecover(digest, v, r, s);
+        require(recovered == claimedSigner, "bad signature");
+        nonces[claimedSigner] += 1;
+        return true;
+    }

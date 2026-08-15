@@ -1,0 +1,3 @@
+unchecked {
+            return i + 1;
+        }

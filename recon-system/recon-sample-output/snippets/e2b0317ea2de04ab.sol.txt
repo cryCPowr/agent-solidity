@@ -1,0 +1,3 @@
+interface ITarget {
+    function ping(uint256 x) external returns (uint256);
+}

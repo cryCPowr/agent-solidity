@@ -945,27 +945,54 @@ def _emit_arithmetic_operations(ctx, cu, fu, fnode_id) -> None:
     whether a given truncation matters; it only makes every division site
     and what directly consumes its result inspectable without re-parsing
     the AST.
+
+    Additionally emits generic `arithmetic_operation` facts for all binary
+    operations (/, *, -, +, %, etc.) to provide broader arithmetic context
+    for downstream precision/overflow analysis. This is purely structural;
+    no vulnerability claims are made.
     """
     for node, parent in ast_utils.walk(fu.body_node):
-        if node.get("nodeType") != "BinaryOperation" or node.get("operator") != "/":
+        if node.get("nodeType") != "BinaryOperation":
             continue
+        operator = node.get("operator")
         src_ref = ctx.source_ref(fu.file, node)
         evid = ctx.make_evidence(fu.file, node)
+        left_text = _src_text(ctx, fu.file, node.get("leftExpression") or {})
+        right_text = _src_text(ctx, fu.file, node.get("rightExpression") or {})
+        result_type = _type_string(node)
+        consumer = _enclosing_use(node, parent)
+
+        # Generic arithmetic operation fact (ALL binary ops)
         _emit_fact(
-            ctx, fu, "division_operation", src_ref, evid,
+            ctx, fu, "arithmetic_operation", src_ref, evid,
             {"function": fu.key},
             {
-                "left_operand": _src_text(ctx, fu.file, node.get("leftExpression") or {}),
-                "right_operand": _src_text(ctx, fu.file, node.get("rightExpression") or {}),
-                "result_type": _type_string(node),
-                "immediate_consumer": _enclosing_use(node, parent),
-                "note": (
-                    "Solidity integer division truncates towards zero; recon does not "
-                    "evaluate whether this truncation is significant for this value"
-                ),
+                "operator": operator,
+                "left_operand": left_text,
+                "right_operand": right_text,
+                "result_type": result_type,
+                "immediate_consumer": consumer,
             },
             "observed", confidence="high",
         )
+
+        # Specific division operation fact (keeps backward compatibility)
+        if operator == "/":
+            _emit_fact(
+                ctx, fu, "division_operation", src_ref, evid,
+                {"function": fu.key},
+                {
+                    "left_operand": left_text,
+                    "right_operand": right_text,
+                    "result_type": result_type,
+                    "immediate_consumer": consumer,
+                    "note": (
+                        "Solidity integer division truncates towards zero; recon does not "
+                        "evaluate whether this truncation is significant for this value"
+                    ),
+                },
+                "observed", confidence="high",
+            )
 
 
 def _emit_special_features(ctx, cu, fu, fnode_id) -> None:

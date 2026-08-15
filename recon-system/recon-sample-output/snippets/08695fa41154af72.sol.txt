@@ -1,0 +1,1 @@
+require(operators[msg.sender], "not operator")

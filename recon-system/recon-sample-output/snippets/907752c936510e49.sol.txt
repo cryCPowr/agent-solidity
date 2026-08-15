@@ -1,0 +1,3 @@
+function setPrefix(string memory p) public override {
+        _prefix = p;
+    }

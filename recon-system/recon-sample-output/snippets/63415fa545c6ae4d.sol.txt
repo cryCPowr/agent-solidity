@@ -1,0 +1,3 @@
+function readBalance(address who) external view returns (uint256) {
+        return accounts[who].balance;
+    }

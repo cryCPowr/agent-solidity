@@ -1,0 +1,3 @@
+function pullPayment(address from, uint256 amount) external {
+        paymentToken.transferFrom(from, address(this), amount);
+    }

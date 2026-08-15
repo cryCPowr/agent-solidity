@@ -1,0 +1,4 @@
+function withdraw(uint256 amount) external {
+        deposits[msg.sender] -= amount;
+        payable(msg.sender).transfer(amount);
+    }

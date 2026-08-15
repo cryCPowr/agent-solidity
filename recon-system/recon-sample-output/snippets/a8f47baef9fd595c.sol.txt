@@ -1,0 +1,1 @@
+function setApprovalForAll(address operator, bool approved) external;

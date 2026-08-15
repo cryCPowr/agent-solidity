@@ -1,0 +1,4 @@
+function setValue(uint256 newValue) external onlyOwner {
+        value = newValue;
+        emit ValueChanged(newValue, msg.sender);
+    }

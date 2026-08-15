@@ -1,0 +1,3 @@
+function moveNft(address from, address to, uint256 tokenId) external {
+        nft.safeTransferFrom(from, to, tokenId);
+    }

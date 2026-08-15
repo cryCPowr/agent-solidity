@@ -46,153 +46,128 @@ _rule("selfdestruct_call", "can_selfdestruct", lambda p: True)
 
 
 def _analyze_capability_attributes(fact, ctx):
-    """Analyze and return enriched attributes for a capability."""
+    """Analyze and return enriched attributes for a capability.
+
+    Classification vocabulary (driven by EVIDENCE, never by absence):
+      - user_controlled : the value derives from a function parameter
+      - state_controlled: the value derives from a state variable
+      - derived         : the value derives from an expression that is
+                          neither a bare parameter nor a bare state var
+                          (e.g. arithmetic, type conversion, function call)
+      - fixed           : the value is a literal constant (AST Literal) or
+                          an immutable/compile-time constant reference
+      - unknown         : no AST evidence was found; MUST NOT be upgraded
+                          to fixed/derived just because dataflow failed
+
+    Default is ALWAYS "unknown". Only AST evidence moves it.
+    """
     attrs = {
         "target": "unknown",
         "amount": "unknown",
         "asset": "unknown",
-        "authorization": "unknown"
+        "authorization": "unknown",
     }
 
+    def _fn_parameters(fn_key):
+        return {
+            f.subject.get("parameter")
+            for f in ctx.facts
+            if f.type == "function_parameter" and f.subject.get("function") == fn_key
+        }
+
+    def _classify_value(expr, fn_key):
+        """Classify a bare expression string against function parameters."""
+        if not expr:
+            return "unknown"
+        params = _fn_parameters(fn_key)
+        if expr in params:
+            return "user_controlled"
+        return "unknown"
+
     if fact.type == "asset_operation":
-        # Analyze target control
+        fn_key = fact.subject.get("function")
         target_expr = fact.properties.get("target_expression", "")
-        if target_expr and not target_expr.startswith("0x"):
-            # Check if target is a parameter (user controlled)
-            fn_key = fact.subject.get("function")
-            if fn_key:
-                fn_facts = [f for f in ctx.facts if f.subject.get("function") == fn_key]
-                for param_fact in fn_facts:
-                    if param_fact.type == "function_parameter":
-                        param_name = param_fact.subject.get("parameter")
-                        if param_name and param_name == target_expr:
-                            attrs["target"] = "user_controlled"
-                            break
-                if attrs["target"] == "unknown":
-                    attrs["target"] = "fixed"
-        
-        # Analyze amount control
+        # Target classification: parameter -> user_controlled; literal address
+        # (0x...) -> fixed; otherwise unknown (NOT fixed-by-default).
+        if target_expr.startswith("0x") or target_expr.startswith("address("):
+            attrs["target"] = "fixed"
+        else:
+            attrs["target"] = _classify_value(target_expr, fn_key)
+
+        # Amount classification: 2nd argument. Parameter -> user_controlled;
+        # literal number -> fixed; otherwise unknown.
         args = fact.properties.get("arguments", [])
         if len(args) >= 2:
-            amount_arg = args[1]  # Typically amount is the second argument
-            if amount_arg in ("amount", "value", "qty"):
-                attrs["amount"] = "user_controlled"
+            amount_arg = args[1]
+            # Literal detection: numbers, hex, strings
+            if amount_arg.isdigit() or amount_arg.startswith("0x"):
+                attrs["amount"] = "fixed"
             else:
-                # Check if amount is a literal or parameter
-                fn_key = fact.subject.get("function")
-                if fn_key:
-                    fn_facts = [f for f in ctx.facts if f.subject.get("function") == fn_key]
-                    for param_fact in fn_facts:
-                        if param_fact.type == "function_parameter":
-                            param_name = param_fact.subject.get("parameter")
-                            if param_name and param_name == amount_arg:
-                                attrs["amount"] = "user_controlled"
-                                break
-                    if attrs["amount"] == "unknown":
-                        attrs["amount"] = "fixed"
-        
-        # Analyze asset
-        if target_expr and not target_expr.startswith("0x"):
-            attrs["asset"] = "variable"
-        else:
+                attrs["amount"] = _classify_value(amount_arg, fn_key)
+
+        # Asset: the token/asset address used. Literal -> fixed;
+        # anything else -> unknown.
+        if target_expr.startswith("0x") or target_expr.startswith("address("):
             attrs["asset"] = "fixed"
-        
-        # Analyze authorization
-        fn_key = fact.subject.get("function")
+        elif "IERC20" in target_expr or "token" in target_expr.lower():
+            # State-deployed token reference (e.g. token.transfer) is
+            # state_controlled — the token address is a state variable.
+            attrs["asset"] = "state_controlled"
+        else:
+            attrs["asset"] = "unknown"
+
+        # Authorization
         if fn_key:
-            auth_facts = [f for f in ctx.facts 
-                         if f.type == "access_controlled_function" 
+            auth_facts = [f for f in ctx.facts
+                         if f.type == "access_controlled_function"
                          and f.subject.get("function") == fn_key]
             if auth_facts:
                 attrs["authorization"] = "guarded"
-            else:
-                attrs["authorization"] = "unknown"
-    
+
     elif fact.type == "eth_transfer":
-        # Analyze target control for native transfers
+        fn_key = fact.subject.get("function")
         target_expr = fact.properties.get("target_expression", "")
-        if target_expr:
-            fn_key = fact.subject.get("function")
-            if fn_key:
-                fn_facts = [f for f in ctx.facts if f.subject.get("function") == fn_key]
-                for param_fact in fn_facts:
-                    if param_fact.type == "function_parameter":
-                        param_name = param_fact.subject.get("parameter")
-                        if param_name and param_name == target_expr:
-                            attrs["target"] = "user_controlled"
-                            break
-                if attrs["target"] == "unknown":
-                    attrs["target"] = "fixed"
-        
-        # Analyze amount control for native transfers
         amount_expr = fact.properties.get("amount_expression", "")
-        if amount_expr:
-            fn_key = fact.subject.get("function")
-            if fn_key:
-                fn_facts = [f for f in ctx.facts if f.subject.get("function") == fn_key]
-                for param_fact in fn_facts:
-                    if param_fact.type == "function_parameter":
-                        param_name = param_fact.subject.get("parameter")
-                        if param_name and param_name == amount_expr:
-                            attrs["amount"] = "user_controlled"
-                            break
-                if attrs["amount"] == "unknown":
-                    attrs["amount"] = "fixed"
+        # amount_expression can be a string or a list of strings
+        if isinstance(amount_expr, list):
+            amount_expr = amount_expr[0] if amount_expr else ""
         
-        attrs["asset"] = "fixed"  # Native ETH is always fixed asset
-        
-        # Analyze authorization
-        fn_key = fact.subject.get("function")
+        if target_expr.startswith("0x") or target_expr.startswith("address("):
+            attrs["target"] = "fixed"
+        else:
+            attrs["target"] = _classify_value(target_expr, fn_key)
+    
+        if isinstance(amount_expr, str) and (amount_expr.isdigit() or amount_expr.startswith("0x")):
+            attrs["amount"] = "fixed"
+        else:
+            attrs["amount"] = _classify_value(amount_expr, fn_key) if isinstance(amount_expr, str) else "unknown"
+
+        # Native ETH asset is always the same asset (contract balance)
+        attrs["asset"] = "fixed"
+
         if fn_key:
-            auth_facts = [f for f in ctx.facts 
-                         if f.type == "access_controlled_function" 
+            auth_facts = [f for f in ctx.facts
+                         if f.type == "access_controlled_function"
                          and f.subject.get("function") == fn_key]
             if auth_facts:
                 attrs["authorization"] = "guarded"
-            else:
-                attrs["authorization"] = "unknown"
-    
+
     elif fact.type == "external_call_surface":
-        # Analyze target control for arbitrary calls
         if fact.properties.get("call_type") == "low_level":
+            fn_key = fact.subject.get("function")
             target_expr = fact.properties.get("target_expression", "")
-            if target_expr:
-                fn_key = fact.subject.get("function")
-                if fn_key:
-                    # Check if target expression is a parameter
-                    fn_facts = [f for f in ctx.facts if f.subject.get("function") == fn_key]
-                    for param_fact in fn_facts:
-                        if param_fact.type == "function_parameter":
-                            param_name = param_fact.subject.get("parameter")
-                            if param_name and param_name == target_expr:
-                                attrs["target"] = "user_controlled"
-                                break
-                    # If not a parameter, check if it's a local variable that resolves to a parameter
-                    if attrs["target"] == "unknown":
-                        for local_fact in fn_facts:
-                            if local_fact.type == "local_variable_origin" and local_fact.properties.get("variable_name") == target_expr:
-                                chain = local_fact.properties.get("chain", [])
-                                for hop in chain:
-                                    if hop.get("kind") == "parameter":
-                                        attrs["target"] = "user_controlled"
-                                        break
-                                if attrs["target"] == "user_controlled":
-                                    break
-                    # If still unknown, it's fixed
-                    if attrs["target"] == "unknown":
-                        attrs["target"] = "fixed"
-        
-        # Analyze authorization
-        fn_key = fact.subject.get("function")
-        if fn_key:
-            auth_facts = [f for f in ctx.facts 
-                         if f.type == "access_controlled_function" 
-                         and f.subject.get("function") == fn_key]
-            if auth_facts:
-                attrs["authorization"] = "guarded"
+            if target_expr.startswith("0x") or target_expr.startswith("address("):
+                attrs["target"] = "fixed"
             else:
-                attrs["authorization"] = "unknown"
-    
+                attrs["target"] = _classify_value(target_expr, fn_key)
+
+            if fn_key:
+                auth_facts = [f for f in ctx.facts
+                             if f.type == "access_controlled_function"
+                             and f.subject.get("function") == fn_key]
+                if auth_facts:
+                    attrs["authorization"] = "guarded"
+
     return attrs
 
 

@@ -1,0 +1,4 @@
+interface IERC721Like {
+    function safeTransferFrom(address from, address to, uint256 tokenId) external;
+    function approve(address to, uint256 tokenId) external;
+}

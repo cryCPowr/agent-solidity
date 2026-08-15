@@ -1,0 +1,3595 @@
+{
+  "edges": [
+    {
+      "fact_ids": [],
+      "id": "edge:00dd325ca3c61266",
+      "properties": {},
+      "source": "node:754b1e9f597fabc5",
+      "status": "observed",
+      "target": "node:e277d143655c68ba",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:4daf579e95f75727"
+      ],
+      "id": "edge:0338d31ff4249004",
+      "properties": {},
+      "source": "node:926c2881cbc1bd3e",
+      "status": "observed",
+      "target": "node:24a8e40cc7bf9ca8",
+      "type": "CREATES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:03bd581f570c8c18",
+      "properties": {},
+      "source": "node:754b1e9f597fabc5",
+      "status": "observed",
+      "target": "node:74c089bff4cc26fb",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:06adaadc670a1861",
+      "properties": {},
+      "source": "node:add2d51a2e2333ba",
+      "status": "observed",
+      "target": "node:c7536ca4c26551b1",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:0864c2764e52c5bc",
+      "properties": {},
+      "source": "node:b0a0c41ee50775e2",
+      "status": "observed",
+      "target": "node:0f0cb0c0c0c0f2fa",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:08e543c3acf0e80e",
+      "properties": {},
+      "source": "node:b6de5e41f74a6585",
+      "status": "observed",
+      "target": "node:558d7644cc5da522",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:0985838dfa0a8707",
+      "properties": {},
+      "source": "node:add2d51a2e2333ba",
+      "status": "observed",
+      "target": "node:5f3e2666c715ca70",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:0a84aad8135ba580",
+      "properties": {},
+      "source": "node:6cd093a8527ca969",
+      "status": "observed",
+      "target": "node:0dd6272a7994cd2f",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:97383771de8a5f49"
+      ],
+      "id": "edge:0b4ad8f63f6e025f",
+      "properties": {},
+      "source": "node:0dfa13ff2a121bd0",
+      "status": "observed",
+      "target": "node:9728c9d79d747e9b",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [
+        "fact:865d2d1ecae67ef0"
+      ],
+      "id": "edge:0b5f5a2e8265a950",
+      "properties": {},
+      "source": "node:a381fc648322ab67",
+      "status": "observed",
+      "target": "node:9728c9d79d747e9b",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:0f797b5e2de850bf",
+      "properties": {},
+      "source": "node:6cd093a8527ca969",
+      "status": "observed",
+      "target": "node:086ce6f6847f9344",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:10a9c1d5e49bcb29",
+      "properties": {},
+      "source": "node:6c345c50b6e9de4f",
+      "status": "observed",
+      "target": "node:e10b96c9d2aca415",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:217299db2112c834"
+      ],
+      "id": "edge:10ba3686b23eaf98",
+      "properties": {},
+      "source": "node:d145bd6dbd39aaf0",
+      "status": "observed",
+      "target": "node:7a60ce1c9ea14c4f",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [
+        "fact:48ce211803f60280"
+      ],
+      "id": "edge:12021dca0541dcae",
+      "properties": {},
+      "source": "node:f7de4b51cc4bd2ec",
+      "status": "observed",
+      "target": "node:d0e4df71dd110e7d",
+      "type": "IMPLEMENTS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:139f774fc446a258",
+      "properties": {},
+      "source": "node:6cd093a8527ca969",
+      "status": "observed",
+      "target": "node:81f802c935944b65",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:7659cde6922ed045"
+      ],
+      "id": "edge:14429f97af9e2f57",
+      "properties": {},
+      "source": "node:78a278787d89372e",
+      "status": "observed",
+      "target": "node:0b8080e95c8c2b88",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:271013cc148f1b5d"
+      ],
+      "id": "edge:14a2031aeb1b96bb",
+      "properties": {
+        "call_type": "external",
+        "target_status": "dynamic"
+      },
+      "source": "node:233156f700b7d562",
+      "status": "observed",
+      "target": "node:243a3f120a44fd3e",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [
+        "fact:c0aa399b2e7f4b41"
+      ],
+      "id": "edge:1666565b200b1b33",
+      "properties": {},
+      "source": "node:ac83404df23f0857",
+      "status": "observed",
+      "target": "node:7a60ce1c9ea14c4f",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:91d5e98a5e73910f"
+      ],
+      "id": "edge:1788956572d38851",
+      "properties": {},
+      "source": "node:8ae2b8e14483c0f4",
+      "status": "observed",
+      "target": "node:3d1a5ab1c43ed53c",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:b03a594c4b222cda"
+      ],
+      "id": "edge:17a18aa6e07594c1",
+      "properties": {
+        "call_type": "internal"
+      },
+      "source": "node:c7602477cf841d43",
+      "status": "observed",
+      "target": "node:c7536ca4c26551b1",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [
+        "fact:2731e508d9798125"
+      ],
+      "id": "edge:1bb689484ec5d8d5",
+      "properties": {
+        "call_type": "external",
+        "target_status": "dynamic"
+      },
+      "source": "node:9f60a6619e8416e5",
+      "status": "observed",
+      "target": "node:8259b3327d74d11c",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:1f861359f78c54d0",
+      "properties": {},
+      "source": "node:308a406faab69a2b",
+      "status": "observed",
+      "target": "node:53000d550b8eecfe",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:52724bc4f2f3d17a"
+      ],
+      "id": "edge:2154b39337cdd272",
+      "properties": {},
+      "source": "node:78a278787d89372e",
+      "status": "observed",
+      "target": "node:3d5fdef721a78a53",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [
+        "fact:dd4a2993fadc212a"
+      ],
+      "id": "edge:216a6db2d766bc08",
+      "properties": {},
+      "source": "node:3d53cfcdc8fd139d",
+      "status": "observed",
+      "target": "node:6c9558a96b1aab66",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:222938e579fdb896",
+      "properties": {},
+      "source": "node:75cf1d9ef6321b50",
+      "status": "observed",
+      "target": "node:daf917b46603cc74",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:22336375f2f30876",
+      "properties": {},
+      "source": "node:754b1e9f597fabc5",
+      "status": "observed",
+      "target": "node:67824e2e73226e65",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:24ca364a482004d9",
+      "properties": {},
+      "source": "node:82f99ae7ab7792bd",
+      "status": "observed",
+      "target": "node:317dbfb964c3a0ed",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:269b4841c7b05efc",
+      "properties": {},
+      "source": "node:f7de4b51cc4bd2ec",
+      "status": "observed",
+      "target": "node:8ae2b8e14483c0f4",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:288498e5ce824ecc",
+      "properties": {},
+      "source": "node:3d86a1314704ee79",
+      "status": "observed",
+      "target": "node:98a26cc9bf55ea80",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:1430d4446744051c"
+      ],
+      "id": "edge:28bcefff82b3f6cf",
+      "properties": {},
+      "source": "node:c7602477cf841d43",
+      "status": "observed",
+      "target": "node:8efcc514366481cb",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:8490632c2f457c03"
+      ],
+      "id": "edge:2aa4b78c21a53a0a",
+      "properties": {
+        "call_type": "low_level",
+        "target_status": "dynamic"
+      },
+      "source": "node:67824e2e73226e65",
+      "status": "observed",
+      "target": "node:f8447a06a50c9fa6",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [
+        "fact:8a248c569ff1b185"
+      ],
+      "id": "edge:2b71852697a33519",
+      "properties": {
+        "reason": "compound_assignment_implies_read"
+      },
+      "source": "node:a381fc648322ab67",
+      "status": "observed",
+      "target": "node:9728c9d79d747e9b",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:2c5e5e84722d1c30",
+      "properties": {},
+      "source": "node:6cd093a8527ca969",
+      "status": "observed",
+      "target": "node:70eaef04bd8f6c56",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:2cce70a65b119a2b",
+      "properties": {},
+      "source": "node:b6de5e41f74a6585",
+      "status": "observed",
+      "target": "node:d9fd88d63695a2f9",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:ee858a0bee6e403c"
+      ],
+      "id": "edge:2dc8cc699063737c",
+      "properties": {},
+      "source": "node:926c2881cbc1bd3e",
+      "status": "observed",
+      "target": "node:1f0f8f96a90c0558",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [
+        "fact:b8b621ed8bcca94a"
+      ],
+      "id": "edge:2fb01f9ffad28fac",
+      "properties": {},
+      "source": "node:09c92003c8e3765a",
+      "status": "observed",
+      "target": "node:aeabb637adf5e5f0",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [
+        "fact:b7d49ec85a54e9ba"
+      ],
+      "id": "edge:2fb168ef84147963",
+      "properties": {
+        "call_type": "internal"
+      },
+      "source": "node:ccaef38606457531",
+      "status": "observed",
+      "target": "node:88a67ee82d78a304",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [
+        "fact:69ba1b844440b7ee"
+      ],
+      "id": "edge:31f3c7fb0bb9d7d3",
+      "properties": {
+        "reason": "compound_assignment_implies_read"
+      },
+      "source": "node:d145bd6dbd39aaf0",
+      "status": "observed",
+      "target": "node:7a60ce1c9ea14c4f",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:33ba47ecd90a7761",
+      "properties": {},
+      "source": "node:4967dd582a41f91c",
+      "status": "observed",
+      "target": "node:09c92003c8e3765a",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:936ffdb3262a748f"
+      ],
+      "id": "edge:391a3c67095ec03d",
+      "properties": {},
+      "source": "node:109a72d7bbd36861",
+      "status": "observed",
+      "target": "node:93c2d8aff8b74392",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:5064293c1530e45f"
+      ],
+      "id": "edge:3c5d043ec893ca40",
+      "properties": {},
+      "source": "node:be115075d2746ed7",
+      "status": "observed",
+      "target": "node:93c2d8aff8b74392",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:a75b7069be36e6b8"
+      ],
+      "id": "edge:3dacc8622c7f2b75",
+      "properties": {},
+      "source": "node:df11b3853e1a3d1a",
+      "status": "observed",
+      "target": "node:086ce6f6847f9344",
+      "type": "USES_MODIFIER"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:3dec2616c2071c20",
+      "properties": {},
+      "source": "node:308a406faab69a2b",
+      "status": "observed",
+      "target": "node:5df7b7d9d183ff18",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:3ef8e0bd97906784",
+      "properties": {},
+      "source": "node:ef7b9addd205651b",
+      "status": "observed",
+      "target": "node:3749de7b8492dcde",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:3f608cc33b7fc27a",
+      "properties": {},
+      "source": "node:308a406faab69a2b",
+      "status": "observed",
+      "target": "node:d632d85d49af337b",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:f94567aac491c901"
+      ],
+      "id": "edge:3fa12d846f6bdbae",
+      "properties": {},
+      "source": "node:9f60a6619e8416e5",
+      "status": "observed",
+      "target": "node:93c2d8aff8b74392",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:c37fd49df227cde0"
+      ],
+      "id": "edge:3fe986f1512ebc7b",
+      "properties": {},
+      "source": "node:0731c6f643d9583d",
+      "status": "observed",
+      "target": "node:7c66b7678e7043b6",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:40e131af54493921",
+      "properties": {},
+      "source": "node:3d86a1314704ee79",
+      "status": "observed",
+      "target": "node:6c9558a96b1aab66",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:a630274d92b66355"
+      ],
+      "id": "edge:411663e6bec6a33b",
+      "properties": {},
+      "source": "node:5bd16660d8a071e6",
+      "status": "observed",
+      "target": "node:0b8080e95c8c2b88",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:43b1590b2d252d7a",
+      "properties": {},
+      "source": "node:b6de5e41f74a6585",
+      "status": "observed",
+      "target": "node:3382051e54866a3a",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:1edf2b194fc05df8"
+      ],
+      "id": "edge:463e69ce2d1bc8f4",
+      "properties": {},
+      "source": "node:ae882be2f91f1ac5",
+      "status": "observed",
+      "target": "node:5a8e60f8dc28cd8e",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [
+        "fact:0359ea47152918e8"
+      ],
+      "id": "edge:46dd583b2a5acf1b",
+      "properties": {},
+      "source": "node:8edf7e60b9b18a31",
+      "status": "observed",
+      "target": "node:9728c9d79d747e9b",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:471d4b4b9989db72",
+      "properties": {},
+      "source": "node:f7de4b51cc4bd2ec",
+      "status": "observed",
+      "target": "node:5d662944f676822f",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:5ed3333bf61a858b"
+      ],
+      "id": "edge:488e57aad660d61f",
+      "properties": {
+        "call_type": "external",
+        "target_status": "dynamic"
+      },
+      "source": "node:0731c6f643d9583d",
+      "status": "observed",
+      "target": "node:8fd33f3917c6f69d",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [
+        "fact:44a8e5f388339003"
+      ],
+      "id": "edge:4aa14b73b427eb18",
+      "properties": {
+        "call_type": "low_level",
+        "target_status": "dynamic"
+      },
+      "source": "node:d0b78b65c099bc01",
+      "status": "observed",
+      "target": "node:bcc06ebee4302dd0",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:4d5c1f0ce8c2c189",
+      "properties": {},
+      "source": "node:add2d51a2e2333ba",
+      "status": "observed",
+      "target": "node:c475bf6209e3a0e0",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:4880d36e136efe15"
+      ],
+      "id": "edge:4f1354f879d6950c",
+      "properties": {},
+      "source": "node:daf917b46603cc74",
+      "status": "observed",
+      "target": "node:aeabb637adf5e5f0",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:4fcf65e633c50886",
+      "properties": {},
+      "source": "node:b0a0c41ee50775e2",
+      "status": "observed",
+      "target": "node:d30626ee0587bf5e",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:511aced10bddcc94",
+      "properties": {},
+      "source": "node:add2d51a2e2333ba",
+      "status": "observed",
+      "target": "node:1e1761941e9cdaaa",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:52a7b2384f826b28",
+      "properties": {},
+      "source": "node:6cd093a8527ca969",
+      "status": "observed",
+      "target": "node:df11b3853e1a3d1a",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:167dadad4e7cfd3c"
+      ],
+      "id": "edge:5460559d21ce97e8",
+      "properties": {},
+      "source": "node:3382051e54866a3a",
+      "status": "observed",
+      "target": "node:c2034347054112db",
+      "type": "USES_MODIFIER"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:54b025b0a9df5bfe",
+      "properties": {},
+      "source": "node:23ab50f6672fbbc2",
+      "status": "observed",
+      "target": "node:cc7d5c221ea5779c",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:55c494d71178cd59",
+      "properties": {},
+      "source": "node:ef7b9addd205651b",
+      "status": "observed",
+      "target": "node:0a5f1e285c8cf6f5",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:5d641cdc09ed476b",
+      "properties": {},
+      "source": "node:091d4f12ec99ff76",
+      "status": "observed",
+      "target": "node:1f0f8f96a90c0558",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:b1550dd48176754d"
+      ],
+      "id": "edge:5e081ccce8ff0ddd",
+      "properties": {},
+      "source": "node:1db55fa73a97839d",
+      "status": "observed",
+      "target": "node:6202ae8676e57988",
+      "type": "CREATES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:6038db6af9b10925",
+      "properties": {},
+      "source": "node:308a406faab69a2b",
+      "status": "observed",
+      "target": "node:5e65c9419de7c9db",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:66834398f961b0ff",
+      "properties": {},
+      "source": "node:add2d51a2e2333ba",
+      "status": "observed",
+      "target": "node:8efcc514366481cb",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:2855ad4e1e2d4543"
+      ],
+      "id": "edge:67cf1b8974a42046",
+      "properties": {},
+      "source": "node:0beb9ba3af3689e4",
+      "status": "observed",
+      "target": "node:f136fc62ec95c055",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [
+        "fact:5fd266d012e81bcf"
+      ],
+      "id": "edge:6846176ebeaebafe",
+      "properties": {},
+      "source": "node:c97d2916673bc236",
+      "status": "observed",
+      "target": "node:f136fc62ec95c055",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:69b09728887fd0a0",
+      "properties": {},
+      "source": "node:ef7b9addd205651b",
+      "status": "observed",
+      "target": "node:61a801d97e307ac8",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:aa4f03449d8ddaf3"
+      ],
+      "id": "edge:6b671448b83d8fba",
+      "properties": {},
+      "source": "node:d145bd6dbd39aaf0",
+      "status": "observed",
+      "target": "node:7a60ce1c9ea14c4f",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [
+        "fact:9403b1658d033a3d"
+      ],
+      "id": "edge:6c85acb5027aa38e",
+      "properties": {},
+      "source": "node:d0b78b65c099bc01",
+      "status": "observed",
+      "target": "node:9728c9d79d747e9b",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:6ee6ca99d1998998",
+      "properties": {},
+      "source": "node:75cf1d9ef6321b50",
+      "status": "observed",
+      "target": "node:626a498e089137fc",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:6f077a735e4eb030",
+      "properties": {},
+      "source": "node:b0a0c41ee50775e2",
+      "status": "observed",
+      "target": "node:77a962a501c3b39c",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:6fbaea123f89df5e",
+      "properties": {},
+      "source": "node:b6de5e41f74a6585",
+      "status": "observed",
+      "target": "node:ff5fecff3db4a6b9",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:7016ce5fdc09dc01",
+      "properties": {},
+      "source": "node:78a830c4626403ac",
+      "status": "observed",
+      "target": "node:3d5fdef721a78a53",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:0d01487795a22f2d"
+      ],
+      "id": "edge:703bcbd00b51a9ce",
+      "properties": {},
+      "source": "node:d9fd88d63695a2f9",
+      "status": "observed",
+      "target": "node:19b4be78b116df0d",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:7102ffb675c8643c",
+      "properties": {},
+      "source": "node:091d4f12ec99ff76",
+      "status": "observed",
+      "target": "node:926c2881cbc1bd3e",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:b144a5db01a113c4"
+      ],
+      "id": "edge:71b8b8871a89eeab",
+      "properties": {
+        "call_type": "external",
+        "target_status": "dynamic"
+      },
+      "source": "node:109a72d7bbd36861",
+      "status": "observed",
+      "target": "node:fc359d24453cae3b",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:72c17cd25b072d71",
+      "properties": {},
+      "source": "node:f7de4b51cc4bd2ec",
+      "status": "observed",
+      "target": "node:93c2d8aff8b74392",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:2eee2e1b55f9d953"
+      ],
+      "id": "edge:747996f37c3a012c",
+      "properties": {
+        "call_type": "external",
+        "target_status": "dynamic"
+      },
+      "source": "node:8ae2b8e14483c0f4",
+      "status": "observed",
+      "target": "node:fa865b548dd86206",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [
+        "fact:f6ca31cb09c7812e"
+      ],
+      "id": "edge:75fc3c21f3224a56",
+      "properties": {
+        "call_type": "external",
+        "target_status": "dynamic"
+      },
+      "source": "node:9ff4df810f41adca",
+      "status": "observed",
+      "target": "node:325bf51962156374",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [
+        "fact:f8588af5f392ae07"
+      ],
+      "id": "edge:790a6aecf0fde78d",
+      "properties": {},
+      "source": "node:10dfe5e8c17768ab",
+      "status": "observed",
+      "target": "node:7a60ce1c9ea14c4f",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [
+        "fact:f57d80ee6402cfe0"
+      ],
+      "id": "edge:79604b9cc3c46985",
+      "properties": {
+        "call_type": "external",
+        "target_status": "dynamic"
+      },
+      "source": "node:d30626ee0587bf5e",
+      "status": "observed",
+      "target": "node:ec839db434c6d8e6",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:7b19b5232605bbaa",
+      "properties": {},
+      "source": "node:78a830c4626403ac",
+      "status": "observed",
+      "target": "node:0b8080e95c8c2b88",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:7c6c94763e5e9778",
+      "properties": {},
+      "source": "node:308a406faab69a2b",
+      "status": "observed",
+      "target": "node:ac83404df23f0857",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:7ffe54516c8a18de",
+      "properties": {},
+      "source": "node:ef7b9addd205651b",
+      "status": "observed",
+      "target": "node:c97d2916673bc236",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:03b08673db105d38"
+      ],
+      "id": "edge:8100e4789f557ddd",
+      "properties": {
+        "call_type": "low_level",
+        "target_status": "dynamic"
+      },
+      "source": "node:df11b3853e1a3d1a",
+      "status": "observed",
+      "target": "node:d6b32716d5c60066",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [
+        "fact:ec40bb58cc69e743"
+      ],
+      "id": "edge:82569e329a3f00ba",
+      "properties": {},
+      "source": "node:74c089bff4cc26fb",
+      "status": "observed",
+      "target": "node:222fa904823596ec",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [
+        "fact:8f63de3156a2c74e"
+      ],
+      "id": "edge:84abe92fbcc91249",
+      "properties": {},
+      "source": "node:1db55fa73a97839d",
+      "status": "observed",
+      "target": "node:1f0f8f96a90c0558",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:851f21c43e98825f",
+      "properties": {},
+      "source": "node:4967dd582a41f91c",
+      "status": "observed",
+      "target": "node:aeabb637adf5e5f0",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:d568301873768aed"
+      ],
+      "id": "edge:86d3ed61522642b8",
+      "properties": {
+        "reason": "compound_assignment_implies_read"
+      },
+      "source": "node:d456bbbae74be522",
+      "status": "observed",
+      "target": "node:558d7644cc5da522",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:613fdf70abbaf26f"
+      ],
+      "id": "edge:876f5edf52c6b128",
+      "properties": {},
+      "source": "node:233156f700b7d562",
+      "status": "observed",
+      "target": "node:0dd6272a7994cd2f",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:efb5b8683332288f"
+      ],
+      "id": "edge:87b12a741453c9bf",
+      "properties": {},
+      "source": "node:5bd16660d8a071e6",
+      "status": "observed",
+      "target": "node:d3d731b3bc3d660a",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:8802740c48f05638",
+      "properties": {},
+      "source": "node:091d4f12ec99ff76",
+      "status": "observed",
+      "target": "node:1db55fa73a97839d",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:88204a5aae0fde6f",
+      "properties": {},
+      "source": "node:6cd093a8527ca969",
+      "status": "observed",
+      "target": "node:233156f700b7d562",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:88215982ada5bf55",
+      "properties": {},
+      "source": "node:6c345c50b6e9de4f",
+      "status": "observed",
+      "target": "node:8edf7e60b9b18a31",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:88eb52daa8f8c35b",
+      "properties": {},
+      "source": "node:fedd635baf8f82a1",
+      "status": "observed",
+      "target": "node:fafb7f9305adadfb",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:8baeccff3476a46a",
+      "properties": {},
+      "source": "node:add2d51a2e2333ba",
+      "status": "observed",
+      "target": "node:5a8e60f8dc28cd8e",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:8c372b970dc3e4dd",
+      "properties": {},
+      "source": "node:6c345c50b6e9de4f",
+      "status": "observed",
+      "target": "node:98cf7b6ebc09e321",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:8d18eb58c826034a",
+      "properties": {},
+      "source": "node:308a406faab69a2b",
+      "status": "observed",
+      "target": "node:7a60ce1c9ea14c4f",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:8efa681c1298dca2",
+      "properties": {},
+      "source": "node:b6de5e41f74a6585",
+      "status": "observed",
+      "target": "node:00fb2133d7f6188c",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:8f8cabd5f02ecd8a",
+      "properties": {},
+      "source": "node:c5cc859ed19d8ebe",
+      "status": "observed",
+      "target": "node:34e4afdbea9c5b19",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:3a79e35525fdc747"
+      ],
+      "id": "edge:8fd207c48cc06e63",
+      "properties": {},
+      "source": "node:d145bd6dbd39aaf0",
+      "status": "observed",
+      "target": "node:5e65c9419de7c9db",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:9550c719e55741ec",
+      "properties": {},
+      "source": "node:add2d51a2e2333ba",
+      "status": "observed",
+      "target": "node:9ff4df810f41adca",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:95c9d8c2ef08be32",
+      "properties": {},
+      "source": "node:fedd635baf8f82a1",
+      "status": "observed",
+      "target": "node:4ef172db69aa7e42",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:95d6377693ea7e92",
+      "properties": {},
+      "source": "node:b0a0c41ee50775e2",
+      "status": "observed",
+      "target": "node:a60e5ae400c4dc49",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:974bb9a5c7f5058b",
+      "properties": {},
+      "source": "node:add2d51a2e2333ba",
+      "status": "observed",
+      "target": "node:c7602477cf841d43",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:8ee1d853f11b3e40"
+      ],
+      "id": "edge:978029970b89c4c1",
+      "properties": {},
+      "source": "node:98a26cc9bf55ea80",
+      "status": "observed",
+      "target": "node:6c9558a96b1aab66",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [
+        "fact:f44bd05ac3f598b4"
+      ],
+      "id": "edge:9c1bf0aaacb2c753",
+      "properties": {},
+      "source": "node:d456bbbae74be522",
+      "status": "observed",
+      "target": "node:558d7644cc5da522",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [
+        "fact:2645d8fc47413b73"
+      ],
+      "id": "edge:9ed8fe14b2054c27",
+      "properties": {},
+      "source": "node:14f9811d327435a0",
+      "status": "observed",
+      "target": "node:aeabb637adf5e5f0",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:7e39f415298f2c06"
+      ],
+      "id": "edge:a011e8a355c37e36",
+      "properties": {
+        "call_type": "low_level",
+        "target_status": "dynamic"
+      },
+      "source": "node:c475bf6209e3a0e0",
+      "status": "observed",
+      "target": "node:d0533f4effc9e20e",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [
+        "fact:1835eb9c1281df93"
+      ],
+      "id": "edge:a218361a4bba4757",
+      "properties": {},
+      "source": "node:53000d550b8eecfe",
+      "status": "observed",
+      "target": "node:5df7b7d9d183ff18",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:a265de07d37fedcb",
+      "properties": {},
+      "source": "node:b6de5e41f74a6585",
+      "status": "observed",
+      "target": "node:d456bbbae74be522",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:a3db996624156cbc",
+      "properties": {},
+      "source": "node:ef7b9addd205651b",
+      "status": "observed",
+      "target": "node:f136fc62ec95c055",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:ca7e5b2dfce69c75"
+      ],
+      "id": "edge:a49574392128b8ca",
+      "properties": {
+        "call_type": "external",
+        "target_status": "dynamic"
+      },
+      "source": "node:be115075d2746ed7",
+      "status": "observed",
+      "target": "node:0e5540e99a627d99",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [
+        "fact:a68228ecdc188c12"
+      ],
+      "id": "edge:a64ebfc0238ba312",
+      "properties": {},
+      "source": "node:98cf7b6ebc09e321",
+      "status": "observed",
+      "target": "node:9728c9d79d747e9b",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [
+        "fact:a05f1548cf5f0e90"
+      ],
+      "id": "edge:a775348ba3b76bb7",
+      "properties": {
+        "call_type": "low_level",
+        "target_status": "dynamic"
+      },
+      "source": "node:81f802c935944b65",
+      "status": "observed",
+      "target": "node:b9943a0c747d6a1f",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:a7a89610dc85ec8a",
+      "properties": {},
+      "source": "node:f87537658d63a08f",
+      "status": "observed",
+      "target": "node:239b31766ff2cdc4",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:c8d105ec434b95f0"
+      ],
+      "id": "edge:a8ece0aa2a2fc484",
+      "properties": {},
+      "source": "node:1e1761941e9cdaaa",
+      "status": "observed",
+      "target": "node:8efcc514366481cb",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:a91d6a51f52e5de2",
+      "properties": {},
+      "source": "node:add2d51a2e2333ba",
+      "status": "observed",
+      "target": "node:42c7bf809401e322",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:a91e128c26e1a7f4",
+      "properties": {},
+      "source": "node:aaf5387c8660fa8c",
+      "status": "observed",
+      "target": "node:275bdac1f10c1f2e",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:a99b4fe97478ac60",
+      "properties": {},
+      "source": "node:6c345c50b6e9de4f",
+      "status": "observed",
+      "target": "node:c029f21355cea03a",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:ab5ee576a97aaf21",
+      "properties": {},
+      "source": "node:3d86a1314704ee79",
+      "status": "observed",
+      "target": "node:b696ec4a47d9d385",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:53822250b1ae1774"
+      ],
+      "id": "edge:ab90e176b0efb1de",
+      "properties": {},
+      "source": "node:e10b96c9d2aca415",
+      "status": "observed",
+      "target": "node:9728c9d79d747e9b",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:acf82c5864685b31",
+      "properties": {},
+      "source": "node:b0a0c41ee50775e2",
+      "status": "observed",
+      "target": "node:c6b02fe990a8d3a3",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:e1a843083ee10f27"
+      ],
+      "id": "edge:aecb427a9ea25ee9",
+      "properties": {},
+      "source": "node:926c2881cbc1bd3e",
+      "status": "observed",
+      "target": "node:1f0f8f96a90c0558",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:b014109486f962ab",
+      "properties": {},
+      "source": "node:6cd093a8527ca969",
+      "status": "observed",
+      "target": "node:c86b8d7bcf70d83f",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:6cdda6c539e87c2a"
+      ],
+      "id": "edge:b1ab08b6926e9adc",
+      "properties": {},
+      "source": "node:1db55fa73a97839d",
+      "status": "observed",
+      "target": "node:1f0f8f96a90c0558",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:e8451800bcdb9e02"
+      ],
+      "id": "edge:b24b194d1e89d676",
+      "properties": {},
+      "source": "node:b696ec4a47d9d385",
+      "status": "observed",
+      "target": "node:6c9558a96b1aab66",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:9fd828296cccbfff"
+      ],
+      "id": "edge:b2f5ac5cf197f7db",
+      "properties": {
+        "reason": "compound_assignment_implies_read"
+      },
+      "source": "node:0dfa13ff2a121bd0",
+      "status": "observed",
+      "target": "node:9728c9d79d747e9b",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:b3d80331e9e1e769",
+      "properties": {},
+      "source": "node:f7de4b51cc4bd2ec",
+      "status": "observed",
+      "target": "node:7c66b7678e7043b6",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:b518ab484129989f",
+      "properties": {},
+      "source": "node:754b1e9f597fabc5",
+      "status": "observed",
+      "target": "node:88a67ee82d78a304",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:b80ecf1c93905724",
+      "properties": {},
+      "source": "node:75cf1d9ef6321b50",
+      "status": "observed",
+      "target": "node:14f9811d327435a0",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:b89bcc5802acda4d",
+      "properties": {},
+      "source": "node:75cf1d9ef6321b50",
+      "status": "observed",
+      "target": "node:0143c2f859a752b8",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:b8d57a62892ff2b6",
+      "properties": {},
+      "source": "node:78a830c4626403ac",
+      "status": "observed",
+      "target": "node:d3d731b3bc3d660a",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:bb24a5cd8e84b656",
+      "properties": {},
+      "source": "node:f99902362785181c",
+      "status": "observed",
+      "target": "node:c37d2cd39f06892c",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:bb84d5574cf1546e",
+      "properties": {},
+      "source": "node:6c345c50b6e9de4f",
+      "status": "observed",
+      "target": "node:a381fc648322ab67",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:bcbcb3d6a479b621",
+      "properties": {},
+      "source": "node:f7de4b51cc4bd2ec",
+      "status": "observed",
+      "target": "node:109a72d7bbd36861",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:52d5b3ddac8d90d0"
+      ],
+      "id": "edge:bedd8b17e6bbd68b",
+      "properties": {},
+      "source": "node:61a801d97e307ac8",
+      "status": "observed",
+      "target": "node:f136fc62ec95c055",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:c05edcd878da9ab4",
+      "properties": {},
+      "source": "node:f7de4b51cc4bd2ec",
+      "status": "observed",
+      "target": "node:3d1a5ab1c43ed53c",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:c0c3a7bf949794fa",
+      "properties": {},
+      "source": "node:c5cc859ed19d8ebe",
+      "status": "observed",
+      "target": "node:4909286d87757fd0",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:c2237721f5b854e4",
+      "properties": {},
+      "source": "node:ef7b9addd205651b",
+      "status": "observed",
+      "target": "node:a1583c399a814ceb",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:aee713fa1dadf01f"
+      ],
+      "id": "edge:c2a7f5095767b15f",
+      "properties": {
+        "call_type": "staticcall",
+        "target_status": "dynamic"
+      },
+      "source": "node:d318361a340b1ea2",
+      "status": "observed",
+      "target": "node:9fccef84b60552d4",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [
+        "fact:5f7264fd2c638a0a"
+      ],
+      "id": "edge:c2e0f6f422d5ee02",
+      "properties": {},
+      "source": "node:0beb9ba3af3689e4",
+      "status": "observed",
+      "target": "node:3749de7b8492dcde",
+      "type": "EMITS"
+    },
+    {
+      "fact_ids": [
+        "fact:d25b3fe7eaf9667c"
+      ],
+      "id": "edge:c37af85e5c6755ae",
+      "properties": {},
+      "source": "node:d145bd6dbd39aaf0",
+      "status": "observed",
+      "target": "node:5e65c9419de7c9db",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:c501bfd43e8b97fd",
+      "properties": {},
+      "source": "node:b0a0c41ee50775e2",
+      "status": "observed",
+      "target": "node:634431445b6930ca",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:c57229e100222191",
+      "properties": {},
+      "source": "node:6c345c50b6e9de4f",
+      "status": "observed",
+      "target": "node:0dfa13ff2a121bd0",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:c798173ab07b6f84",
+      "properties": {},
+      "source": "node:78a830c4626403ac",
+      "status": "observed",
+      "target": "node:78a278787d89372e",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:ca9cc18f9e0a2b68",
+      "properties": {},
+      "source": "node:14274bf3e0cc6f60",
+      "status": "observed",
+      "target": "node:6cf8b301cda56f6c",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:cae23fd39192bb0c",
+      "properties": {},
+      "source": "node:add2d51a2e2333ba",
+      "status": "observed",
+      "target": "node:d318361a340b1ea2",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:cc4eb34f769a5b2f",
+      "properties": {},
+      "source": "node:14274bf3e0cc6f60",
+      "status": "observed",
+      "target": "node:ceccee447c149bbb",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:cdc929a1bc7e8640",
+      "properties": {},
+      "source": "node:14274bf3e0cc6f60",
+      "status": "observed",
+      "target": "node:797212fc0daa0bca",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:384d692dc0f9341d"
+      ],
+      "id": "edge:cecd921031e10550",
+      "properties": {
+        "call_type": "internal"
+      },
+      "source": "node:42c7bf809401e322",
+      "status": "observed",
+      "target": "node:c7536ca4c26551b1",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [
+        "fact:80e5f2d0a7c65955"
+      ],
+      "id": "edge:d0d9b0110f37fa20",
+      "properties": {},
+      "source": "node:61a801d97e307ac8",
+      "status": "observed",
+      "target": "node:0a5f1e285c8cf6f5",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [
+        "fact:01a4c8d8f0c91db7"
+      ],
+      "id": "edge:d2259615aec8235d",
+      "properties": {},
+      "source": "node:75cf1d9ef6321b50",
+      "status": "observed",
+      "target": "node:4967dd582a41f91c",
+      "type": "INHERITS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:d2999991b147a26c",
+      "properties": {},
+      "source": "node:754b1e9f597fabc5",
+      "status": "observed",
+      "target": "node:222fa904823596ec",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:ca859440fb6cfcba"
+      ],
+      "id": "edge:d664858ab69091cf",
+      "properties": {},
+      "source": "node:ff5fecff3db4a6b9",
+      "status": "observed",
+      "target": "node:00fb2133d7f6188c",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:3a4814403ab29441"
+      ],
+      "id": "edge:d78c1cea6f1cdddf",
+      "properties": {
+        "call_type": "low_level",
+        "target_status": "dynamic"
+      },
+      "source": "node:70eaef04bd8f6c56",
+      "status": "observed",
+      "target": "node:b2e746c80e937ef5",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [
+        "fact:11ac28f18b2aed4d"
+      ],
+      "id": "edge:d828e4a676db58e3",
+      "properties": {},
+      "source": "node:78a278787d89372e",
+      "status": "observed",
+      "target": "node:d3d731b3bc3d660a",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:579e5acafe29df01"
+      ],
+      "id": "edge:d8ebc8002d6c5fd4",
+      "properties": {
+        "reason": "compound_assignment_implies_read"
+      },
+      "source": "node:d0b78b65c099bc01",
+      "status": "observed",
+      "target": "node:9728c9d79d747e9b",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:d98a5164995e4810",
+      "properties": {},
+      "source": "node:ef7b9addd205651b",
+      "status": "observed",
+      "target": "node:d9258dde078e4bf7",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:daad83161dc31fa4",
+      "properties": {},
+      "source": "node:754b1e9f597fabc5",
+      "status": "observed",
+      "target": "node:ccaef38606457531",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:511e3efba00d3899"
+      ],
+      "id": "edge:dfbaccd9782243c1",
+      "properties": {},
+      "source": "node:0beb9ba3af3689e4",
+      "status": "observed",
+      "target": "node:d9258dde078e4bf7",
+      "type": "USES_MODIFIER"
+    },
+    {
+      "fact_ids": [
+        "fact:0457f52739c7e009"
+      ],
+      "id": "edge:e02ac30bf91462a2",
+      "properties": {},
+      "source": "node:53000d550b8eecfe",
+      "status": "observed",
+      "target": "node:5df7b7d9d183ff18",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:8895f125ed807dc1"
+      ],
+      "id": "edge:e0773e6719f35090",
+      "properties": {},
+      "source": "node:4967dd582a41f91c",
+      "status": "observed",
+      "target": "node:72d1b63f879ae2a5",
+      "type": "IMPLEMENTS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:e093644ae13ea9ea",
+      "properties": {},
+      "source": "node:ef7b9addd205651b",
+      "status": "observed",
+      "target": "node:0beb9ba3af3689e4",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:05321a6840004d56"
+      ],
+      "id": "edge:e0ef3a8d6532b9dc",
+      "properties": {},
+      "source": "node:cc7d5c221ea5779c",
+      "status": "observed",
+      "target": "node:ac8dd2b96a4666ce",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [
+        "fact:c02b2f1b74672128"
+      ],
+      "id": "edge:e2305cc1177552a0",
+      "properties": {},
+      "source": "node:3382051e54866a3a",
+      "status": "observed",
+      "target": "node:00fb2133d7f6188c",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:e2cb1ebdff15e171",
+      "properties": {},
+      "source": "node:b6de5e41f74a6585",
+      "status": "observed",
+      "target": "node:19b4be78b116df0d",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:e2f387c6432c8130",
+      "properties": {},
+      "source": "node:f7de4b51cc4bd2ec",
+      "status": "observed",
+      "target": "node:be115075d2746ed7",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:e3ff37d82d8bc5d5",
+      "properties": {},
+      "source": "node:72d1b63f879ae2a5",
+      "status": "observed",
+      "target": "node:f71273b6a535b646",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:e4f36bfa0a39e5bb",
+      "properties": {},
+      "source": "node:f7de4b51cc4bd2ec",
+      "status": "observed",
+      "target": "node:9f60a6619e8416e5",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:e7725d9e17f79d19",
+      "properties": {},
+      "source": "node:b0a0c41ee50775e2",
+      "status": "observed",
+      "target": "node:78c6242e46da2ece",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:037f522a6a150d52"
+      ],
+      "id": "edge:e847d362dc81e9a1",
+      "properties": {},
+      "source": "node:d632d85d49af337b",
+      "status": "observed",
+      "target": "node:5e65c9419de7c9db",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:96ced145bfb99c7f"
+      ],
+      "id": "edge:e84a298ffe8a5076",
+      "properties": {
+        "reason": "compound_assignment_implies_read"
+      },
+      "source": "node:98cf7b6ebc09e321",
+      "status": "observed",
+      "target": "node:9728c9d79d747e9b",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:8f9ee445550fcc05"
+      ],
+      "id": "edge:ebd2a78ecd01c587",
+      "properties": {},
+      "source": "node:0dfa13ff2a121bd0",
+      "status": "observed",
+      "target": "node:c029f21355cea03a",
+      "type": "EMITS"
+    },
+    {
+      "fact_ids": [
+        "fact:f81fda7c294895a0"
+      ],
+      "id": "edge:ebf98bfb54b7e024",
+      "properties": {},
+      "source": "node:70eaef04bd8f6c56",
+      "status": "observed",
+      "target": "node:0dd6272a7994cd2f",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:ec2bbbfd88caaea8",
+      "properties": {},
+      "source": "node:3d86a1314704ee79",
+      "status": "observed",
+      "target": "node:3d53cfcdc8fd139d",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:ec87c637b73f089f",
+      "properties": {},
+      "source": "node:308a406faab69a2b",
+      "status": "observed",
+      "target": "node:10dfe5e8c17768ab",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:411bc633f02ce227"
+      ],
+      "id": "edge:ee1ca481edfebd59",
+      "properties": {
+        "call_type": "external",
+        "target_status": "dynamic"
+      },
+      "source": "node:c7602477cf841d43",
+      "status": "observed",
+      "target": "node:21e572b82ba73089",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [
+        "fact:d4ffe9a336f5dc6a"
+      ],
+      "id": "edge:ee7339601226a12b",
+      "properties": {
+        "reason": "compound_assignment_implies_read"
+      },
+      "source": "node:8edf7e60b9b18a31",
+      "status": "observed",
+      "target": "node:9728c9d79d747e9b",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:f22dc3f800cb9168",
+      "properties": {},
+      "source": "node:6c345c50b6e9de4f",
+      "status": "observed",
+      "target": "node:d0b78b65c099bc01",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:df01856d761fa08b"
+      ],
+      "id": "edge:f32c32dcb4495c43",
+      "properties": {
+        "call_type": "delegatecall",
+        "target_status": "dynamic"
+      },
+      "source": "node:5f3e2666c715ca70",
+      "status": "observed",
+      "target": "node:656caf321858908c",
+      "type": "DELEGATES_TO"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:f38bf33fdb6b6d5d",
+      "properties": {},
+      "source": "node:add2d51a2e2333ba",
+      "status": "observed",
+      "target": "node:ae882be2f91f1ac5",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:f7242f341d7285eb",
+      "properties": {},
+      "source": "node:6c345c50b6e9de4f",
+      "status": "observed",
+      "target": "node:9728c9d79d747e9b",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:f77fc8f42348592d",
+      "properties": {},
+      "source": "node:f7de4b51cc4bd2ec",
+      "status": "observed",
+      "target": "node:0731c6f643d9583d",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:f827d6998ad9736f",
+      "properties": {},
+      "source": "node:d0e4df71dd110e7d",
+      "status": "observed",
+      "target": "node:3fe668ee66616708",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:f936848dfc88505e",
+      "properties": {},
+      "source": "node:308a406faab69a2b",
+      "status": "observed",
+      "target": "node:d145bd6dbd39aaf0",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:fb4cdef7c425b1f6"
+      ],
+      "id": "edge:f9f219d8f8380fe6",
+      "properties": {
+        "call_type": "external",
+        "target_status": "dynamic"
+      },
+      "source": "node:70eaef04bd8f6c56",
+      "status": "observed",
+      "target": "node:fce75c225571c8c7",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [
+        "fact:96ffa1d059e0ba76"
+      ],
+      "id": "edge:fa0e5c6c7d507844",
+      "properties": {
+        "call_type": "external",
+        "target_status": "dynamic"
+      },
+      "source": "node:1e1761941e9cdaaa",
+      "status": "observed",
+      "target": "node:85426549c80e6651",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:fbe93ebf66ca7c0f",
+      "properties": {},
+      "source": "node:78a830c4626403ac",
+      "status": "observed",
+      "target": "node:5bd16660d8a071e6",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:135dba646ce4abd5"
+      ],
+      "id": "edge:fc0c777f69f6e474",
+      "properties": {
+        "reason": "compound_assignment_implies_read"
+      },
+      "source": "node:e10b96c9d2aca415",
+      "status": "observed",
+      "target": "node:9728c9d79d747e9b",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:31764587c7aa036d"
+      ],
+      "id": "edge:fc587466a1f8279b",
+      "properties": {},
+      "source": "node:d456bbbae74be522",
+      "status": "observed",
+      "target": "node:558d7644cc5da522",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [
+        "fact:935fd616ed905d0f"
+      ],
+      "id": "edge:fec0e04ab4c7e7e9",
+      "properties": {
+        "call_type": "low_level",
+        "target_status": "dynamic"
+      },
+      "source": "node:233156f700b7d562",
+      "status": "observed",
+      "target": "node:77dea226f4a493b0",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:fed4c0d8639a5384",
+      "properties": {},
+      "source": "node:23ab50f6672fbbc2",
+      "status": "observed",
+      "target": "node:ac8dd2b96a4666ce",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:ffd51bd39c00a701",
+      "properties": {},
+      "source": "node:b6de5e41f74a6585",
+      "status": "observed",
+      "target": "node:c2034347054112db",
+      "type": "DECLARES"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "node:00fb2133d7f6188c",
+      "kind": "state_variable",
+      "label": "operators",
+      "properties": {
+        "mutability": "mutable",
+        "type": "mapping(address => bool)",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:0143c2f859a752b8",
+      "kind": "function",
+      "label": "combine",
+      "properties": {
+        "kind": "function",
+        "signature": "combine(uint256,uint256)",
+        "state_mutability": "pure",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:0731c6f643d9583d",
+      "kind": "function",
+      "label": "moveNft",
+      "properties": {
+        "kind": "function",
+        "signature": "moveNft(address,address,uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:086ce6f6847f9344",
+      "kind": "modifier",
+      "label": "onlyOwner",
+      "properties": {
+        "parameters": []
+      }
+    },
+    {
+      "id": "node:091d4f12ec99ff76",
+      "kind": "contract",
+      "label": "Factory",
+      "properties": {
+        "contract_kind": "contract",
+        "file": "09_proxy_create.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:09c92003c8e3765a",
+      "kind": "function",
+      "label": "setPrefix",
+      "properties": {
+        "kind": "function",
+        "signature": "setPrefix(string)",
+        "state_mutability": "nonpayable",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:0a5f1e285c8cf6f5",
+      "kind": "state_variable",
+      "label": "owner",
+      "properties": {
+        "mutability": "mutable",
+        "type": "address",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:0b8080e95c8c2b88",
+      "kind": "state_variable",
+      "label": "totalPool",
+      "properties": {
+        "mutability": "mutable",
+        "type": "uint256",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:0beb9ba3af3689e4",
+      "kind": "function",
+      "label": "setValue",
+      "properties": {
+        "kind": "function",
+        "signature": "setValue(uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:0dd6272a7994cd2f",
+      "kind": "state_variable",
+      "label": "token",
+      "properties": {
+        "mutability": "mutable",
+        "type": "contract ITokenLike",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:0dfa13ff2a121bd0",
+      "kind": "function",
+      "label": "deposit",
+      "properties": {
+        "kind": "function",
+        "signature": "deposit()",
+        "state_mutability": "payable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:0e5540e99a627d99",
+      "kind": "external_target",
+      "label": "paymentToken",
+      "properties": {
+        "member": "transferFrom",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:0f0cb0c0c0c0f2fa",
+      "kind": "function",
+      "label": "whileSum",
+      "properties": {
+        "kind": "function",
+        "signature": "whileSum(uint256)",
+        "state_mutability": "pure",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:109a72d7bbd36861",
+      "kind": "function",
+      "label": "approveSpender",
+      "properties": {
+        "kind": "function",
+        "signature": "approveSpender(address,uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:10dfe5e8c17768ab",
+      "kind": "function",
+      "label": "clearAccount",
+      "properties": {
+        "kind": "function",
+        "signature": "clearAccount(address)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:14274bf3e0cc6f60",
+      "kind": "contract",
+      "label": "IERC20Like",
+      "properties": {
+        "contract_kind": "interface",
+        "file": "06_tokens_callbacks.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:14f9811d327435a0",
+      "kind": "function",
+      "label": "greet",
+      "properties": {
+        "kind": "function",
+        "signature": "greet()",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:19b4be78b116df0d",
+      "kind": "state_variable",
+      "label": "owner",
+      "properties": {
+        "mutability": "mutable",
+        "type": "address",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:1db55fa73a97839d",
+      "kind": "function",
+      "label": "deployDeterministic",
+      "properties": {
+        "kind": "function",
+        "signature": "deployDeterministic(uint256,bytes32)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:1e1761941e9cdaaa",
+      "kind": "function",
+      "label": "pingFixed",
+      "properties": {
+        "kind": "function",
+        "signature": "pingFixed(uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:1f0f8f96a90c0558",
+      "kind": "state_variable",
+      "label": "deployed",
+      "properties": {
+        "mutability": "mutable",
+        "type": "address[]",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:21e572b82ba73089",
+      "kind": "external_target",
+      "label": "fixedTarget",
+      "properties": {
+        "member": "ping",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:222fa904823596ec",
+      "kind": "state_variable",
+      "label": "info",
+      "properties": {
+        "mutability": "mutable",
+        "type": "struct LooksDangerousButIsnt.Metadata",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:233156f700b7d562",
+      "kind": "function",
+      "label": "genuinelyConnected",
+      "properties": {
+        "kind": "function",
+        "signature": "genuinelyConnected(address,uint256,bytes)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:239b31766ff2cdc4",
+      "kind": "function",
+      "label": "ping",
+      "properties": {
+        "kind": "function",
+        "signature": "ping(uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:23ab50f6672fbbc2",
+      "kind": "contract",
+      "label": "Thing",
+      "properties": {
+        "contract_kind": "contract",
+        "file": "09_proxy_create.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:243a3f120a44fd3e",
+      "kind": "external_target",
+      "label": "token",
+      "properties": {
+        "member": "approve",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:24a8e40cc7bf9ca8",
+      "kind": "creation_target",
+      "label": "contract Thing",
+      "properties": {}
+    },
+    {
+      "id": "node:275bdac1f10c1f2e",
+      "kind": "state_variable",
+      "label": "note",
+      "properties": {
+        "mutability": "mutable",
+        "type": "string",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:308a406faab69a2b",
+      "kind": "contract",
+      "label": "Ledger",
+      "properties": {
+        "contract_kind": "contract",
+        "file": "04_data_structures.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:317dbfb964c3a0ed",
+      "kind": "function",
+      "label": "risky",
+      "properties": {
+        "kind": "function",
+        "signature": "risky(uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:325bf51962156374",
+      "kind": "external_target",
+      "label": "ITarget(target)",
+      "properties": {
+        "member": "ping",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:3382051e54866a3a",
+      "kind": "function",
+      "label": "setOperator",
+      "properties": {
+        "kind": "function",
+        "signature": "setOperator(address,bool)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:34e4afdbea9c5b19",
+      "kind": "function",
+      "label": "approve",
+      "properties": {
+        "kind": "function",
+        "signature": "approve(address,uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:3749de7b8492dcde",
+      "kind": "event",
+      "label": "ValueChanged",
+      "properties": {
+        "parameters": [
+          "uint256",
+          "address"
+        ]
+      }
+    },
+    {
+      "id": "node:3d1a5ab1c43ed53c",
+      "kind": "state_variable",
+      "label": "multiToken",
+      "properties": {
+        "mutability": "mutable",
+        "type": "contract IERC1155Like",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:3d53cfcdc8fd139d",
+      "kind": "function",
+      "label": "upgradeTo",
+      "properties": {
+        "kind": "function",
+        "signature": "upgradeTo(address)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:3d5fdef721a78a53",
+      "kind": "state_variable",
+      "label": "allocated",
+      "properties": {
+        "mutability": "mutable",
+        "type": "mapping(address => uint256)",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:3d86a1314704ee79",
+      "kind": "contract",
+      "label": "GenericProxy",
+      "properties": {
+        "contract_kind": "contract",
+        "file": "09_proxy_create.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:3fe668ee66616708",
+      "kind": "function",
+      "label": "onERC721Received",
+      "properties": {
+        "kind": "function",
+        "signature": "onERC721Received(address,address,uint256,bytes)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:42c7bf809401e322",
+      "kind": "function",
+      "label": "useHelper",
+      "properties": {
+        "kind": "function",
+        "signature": "useHelper(uint256)",
+        "state_mutability": "pure",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:4909286d87757fd0",
+      "kind": "function",
+      "label": "safeTransferFrom",
+      "properties": {
+        "kind": "function",
+        "signature": "safeTransferFrom(address,address,uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:4967dd582a41f91c",
+      "kind": "contract",
+      "label": "BaseGreeter",
+      "properties": {
+        "contract_kind": "contract",
+        "file": "02_inheritance_interfaces.sol",
+        "is_abstract": true
+      }
+    },
+    {
+      "id": "node:4ef172db69aa7e42",
+      "kind": "function",
+      "label": "setApprovalForAll",
+      "properties": {
+        "kind": "function",
+        "signature": "setApprovalForAll(address,bool)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:53000d550b8eecfe",
+      "kind": "function",
+      "label": "addMember",
+      "properties": {
+        "kind": "function",
+        "signature": "addMember(address)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:558d7644cc5da522",
+      "kind": "state_variable",
+      "label": "nonces",
+      "properties": {
+        "mutability": "mutable",
+        "type": "mapping(address => uint256)",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:5a8e60f8dc28cd8e",
+      "kind": "state_variable",
+      "label": "configuredTarget",
+      "properties": {
+        "mutability": "mutable",
+        "type": "address",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:5bd16660d8a071e6",
+      "kind": "function",
+      "label": "computeShare",
+      "properties": {
+        "kind": "function",
+        "signature": "computeShare(uint256)",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:5d662944f676822f",
+      "kind": "function",
+      "label": "onERC721Received",
+      "properties": {
+        "kind": "function",
+        "signature": "onERC721Received(address,address,uint256,bytes)",
+        "state_mutability": "pure",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:5df7b7d9d183ff18",
+      "kind": "state_variable",
+      "label": "members",
+      "properties": {
+        "mutability": "mutable",
+        "type": "address[]",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:5e65c9419de7c9db",
+      "kind": "state_variable",
+      "label": "history",
+      "properties": {
+        "mutability": "mutable",
+        "type": "uint256[]",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:5f3e2666c715ca70",
+      "kind": "function",
+      "label": "delegateTo",
+      "properties": {
+        "kind": "function",
+        "signature": "delegateTo(address,bytes)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:61a801d97e307ac8",
+      "kind": "function",
+      "label": "<constructor>",
+      "properties": {
+        "kind": "constructor",
+        "signature": null,
+        "state_mutability": "nonpayable",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:6202ae8676e57988",
+      "kind": "creation_target",
+      "label": "<contract>",
+      "properties": {}
+    },
+    {
+      "id": "node:626a498e089137fc",
+      "kind": "function",
+      "label": "combine",
+      "properties": {
+        "kind": "function",
+        "signature": "combine(uint256,uint256,uint256)",
+        "state_mutability": "pure",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:634431445b6930ca",
+      "kind": "function",
+      "label": "rawLoad",
+      "properties": {
+        "kind": "function",
+        "signature": "rawLoad(uint256)",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:656caf321858908c",
+      "kind": "external_target",
+      "label": "implementation",
+      "properties": {
+        "member": "delegatecall",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:67824e2e73226e65",
+      "kind": "function",
+      "label": "callDerivedAddress",
+      "properties": {
+        "kind": "function",
+        "signature": "callDerivedAddress(bytes32)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:6c345c50b6e9de4f",
+      "kind": "contract",
+      "label": "Vault",
+      "properties": {
+        "contract_kind": "contract",
+        "file": "07_payable_eth.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:6c9558a96b1aab66",
+      "kind": "state_variable",
+      "label": "implementation",
+      "properties": {
+        "mutability": "mutable",
+        "type": "address",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:6cd093a8527ca969",
+      "kind": "contract",
+      "label": "RelayExample",
+      "properties": {
+        "contract_kind": "contract",
+        "file": "11_relationship_chain.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:6cf8b301cda56f6c",
+      "kind": "function",
+      "label": "transfer",
+      "properties": {
+        "kind": "function",
+        "signature": "transfer(address,uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:70eaef04bd8f6c56",
+      "kind": "function",
+      "label": "relay",
+      "properties": {
+        "kind": "function",
+        "signature": "relay(address,uint256,address,bytes)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:72d1b63f879ae2a5",
+      "kind": "contract",
+      "label": "IGreeter",
+      "properties": {
+        "contract_kind": "interface",
+        "file": "02_inheritance_interfaces.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:74c089bff4cc26fb",
+      "kind": "function",
+      "label": "setLabel",
+      "properties": {
+        "kind": "function",
+        "signature": "setLabel(string)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:754b1e9f597fabc5",
+      "kind": "contract",
+      "label": "LooksDangerousButIsnt",
+      "properties": {
+        "contract_kind": "contract",
+        "file": "10_negative.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:75cf1d9ef6321b50",
+      "kind": "contract",
+      "label": "EnglishGreeter",
+      "properties": {
+        "contract_kind": "contract",
+        "file": "02_inheritance_interfaces.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:77a962a501c3b39c",
+      "kind": "function",
+      "label": "sumUpTo",
+      "properties": {
+        "kind": "function",
+        "signature": "sumUpTo(uint256)",
+        "state_mutability": "pure",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:77dea226f4a493b0",
+      "kind": "external_target",
+      "label": "target",
+      "properties": {
+        "member": "call",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:78a278787d89372e",
+      "kind": "function",
+      "label": "settle",
+      "properties": {
+        "kind": "function",
+        "signature": "settle(address,uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:78a830c4626403ac",
+      "kind": "contract",
+      "label": "AllocationExample",
+      "properties": {
+        "contract_kind": "contract",
+        "file": "12_arithmetic_precision.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:78c6242e46da2ece",
+      "kind": "function",
+      "label": "uncheckedIncrement",
+      "properties": {
+        "kind": "function",
+        "signature": "uncheckedIncrement(uint256)",
+        "state_mutability": "pure",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:797212fc0daa0bca",
+      "kind": "function",
+      "label": "transferFrom",
+      "properties": {
+        "kind": "function",
+        "signature": "transferFrom(address,address,uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:7a60ce1c9ea14c4f",
+      "kind": "state_variable",
+      "label": "accounts",
+      "properties": {
+        "mutability": "mutable",
+        "type": "mapping(address => struct Ledger.Account)",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:7c66b7678e7043b6",
+      "kind": "state_variable",
+      "label": "nft",
+      "properties": {
+        "mutability": "mutable",
+        "type": "contract IERC721Like",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:81f802c935944b65",
+      "kind": "function",
+      "label": "unguardedCall",
+      "properties": {
+        "kind": "function",
+        "signature": "unguardedCall(address,bytes)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:8259b3327d74d11c",
+      "kind": "external_target",
+      "label": "paymentToken",
+      "properties": {
+        "member": "transfer",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:82f99ae7ab7792bd",
+      "kind": "contract",
+      "label": "IMaybeFails",
+      "properties": {
+        "contract_kind": "interface",
+        "file": "08_control_flow_special.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:85426549c80e6651",
+      "kind": "external_target",
+      "label": "fixedTarget",
+      "properties": {
+        "member": "ping",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:88a67ee82d78a304",
+      "kind": "function",
+      "label": "_rekt",
+      "properties": {
+        "kind": "function",
+        "signature": "_rekt()",
+        "state_mutability": "pure",
+        "visibility": "internal"
+      }
+    },
+    {
+      "id": "node:8ae2b8e14483c0f4",
+      "kind": "function",
+      "label": "moveMulti",
+      "properties": {
+        "kind": "function",
+        "signature": "moveMulti(address,address,uint256[],uint256[])",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:8edf7e60b9b18a31",
+      "kind": "function",
+      "label": "<receive>",
+      "properties": {
+        "kind": "receive",
+        "signature": null,
+        "state_mutability": "payable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:8efcc514366481cb",
+      "kind": "state_variable",
+      "label": "fixedTarget",
+      "properties": {
+        "mutability": "mutable",
+        "type": "contract ITarget",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:8fd33f3917c6f69d",
+      "kind": "external_target",
+      "label": "nft",
+      "properties": {
+        "member": "safeTransferFrom",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:926c2881cbc1bd3e",
+      "kind": "function",
+      "label": "deployPlain",
+      "properties": {
+        "kind": "function",
+        "signature": "deployPlain(uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:93c2d8aff8b74392",
+      "kind": "state_variable",
+      "label": "paymentToken",
+      "properties": {
+        "mutability": "mutable",
+        "type": "contract IERC20Like",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:9728c9d79d747e9b",
+      "kind": "state_variable",
+      "label": "deposits",
+      "properties": {
+        "mutability": "mutable",
+        "type": "mapping(address => uint256)",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:98a26cc9bf55ea80",
+      "kind": "function",
+      "label": "<constructor>",
+      "properties": {
+        "kind": "constructor",
+        "signature": null,
+        "state_mutability": "nonpayable",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:98cf7b6ebc09e321",
+      "kind": "function",
+      "label": "withdraw",
+      "properties": {
+        "kind": "function",
+        "signature": "withdraw(uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:9f60a6619e8416e5",
+      "kind": "function",
+      "label": "payOut",
+      "properties": {
+        "kind": "function",
+        "signature": "payOut(address,uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:9fccef84b60552d4",
+      "kind": "external_target",
+      "label": "target",
+      "properties": {
+        "member": "staticcall",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:9ff4df810f41adca",
+      "kind": "function",
+      "label": "pingDynamic",
+      "properties": {
+        "kind": "function",
+        "signature": "pingDynamic(address,uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:a1583c399a814ceb",
+      "kind": "error",
+      "label": "NotOwner",
+      "properties": {
+        "parameters": [
+          "address"
+        ]
+      }
+    },
+    {
+      "id": "node:a381fc648322ab67",
+      "kind": "function",
+      "label": "withdrawViaSend",
+      "properties": {
+        "kind": "function",
+        "signature": "withdrawViaSend(uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:a60e5ae400c4dc49",
+      "kind": "function",
+      "label": "branch",
+      "properties": {
+        "kind": "function",
+        "signature": "branch(uint256)",
+        "state_mutability": "pure",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:aaf5387c8660fa8c",
+      "kind": "contract",
+      "label": "Owned",
+      "properties": {
+        "contract_kind": "contract",
+        "file": "10_negative.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:ac83404df23f0857",
+      "kind": "function",
+      "label": "readBalance",
+      "properties": {
+        "kind": "function",
+        "signature": "readBalance(address)",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:ac8dd2b96a4666ce",
+      "kind": "state_variable",
+      "label": "v",
+      "properties": {
+        "mutability": "mutable",
+        "type": "uint256",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:add2d51a2e2333ba",
+      "kind": "contract",
+      "label": "Caller",
+      "properties": {
+        "contract_kind": "contract",
+        "file": "03_calls.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:ae882be2f91f1ac5",
+      "kind": "function",
+      "label": "setTarget",
+      "properties": {
+        "kind": "function",
+        "signature": "setTarget(address)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:aeabb637adf5e5f0",
+      "kind": "state_variable",
+      "label": "_prefix",
+      "properties": {
+        "mutability": "mutable",
+        "type": "string",
+        "visibility": "internal"
+      }
+    },
+    {
+      "id": "node:b0a0c41ee50775e2",
+      "kind": "contract",
+      "label": "ControlFlowShowcase",
+      "properties": {
+        "contract_kind": "contract",
+        "file": "08_control_flow_special.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:b2e746c80e937ef5",
+      "kind": "external_target",
+      "label": "target",
+      "properties": {
+        "member": "call",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:b696ec4a47d9d385",
+      "kind": "function",
+      "label": "<fallback>",
+      "properties": {
+        "kind": "fallback",
+        "signature": null,
+        "state_mutability": "payable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:b6de5e41f74a6585",
+      "kind": "contract",
+      "label": "AccessAndSignatures",
+      "properties": {
+        "contract_kind": "contract",
+        "file": "05_authorization_signatures.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:b9943a0c747d6a1f",
+      "kind": "external_target",
+      "label": "target",
+      "properties": {
+        "member": "call",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:bcc06ebee4302dd0",
+      "kind": "external_target",
+      "label": "payable(msg.sender)",
+      "properties": {
+        "member": "call",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:be115075d2746ed7",
+      "kind": "function",
+      "label": "pullPayment",
+      "properties": {
+        "kind": "function",
+        "signature": "pullPayment(address,uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:c029f21355cea03a",
+      "kind": "event",
+      "label": "Deposited",
+      "properties": {
+        "parameters": [
+          "address",
+          "uint256"
+        ]
+      }
+    },
+    {
+      "id": "node:c2034347054112db",
+      "kind": "modifier",
+      "label": "onlyOwner",
+      "properties": {
+        "parameters": []
+      }
+    },
+    {
+      "id": "node:c37d2cd39f06892c",
+      "kind": "function",
+      "label": "approve",
+      "properties": {
+        "kind": "function",
+        "signature": "approve(address,uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:c475bf6209e3a0e0",
+      "kind": "function",
+      "label": "rawCall",
+      "properties": {
+        "kind": "function",
+        "signature": "rawCall(address,bytes)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:c5cc859ed19d8ebe",
+      "kind": "contract",
+      "label": "IERC721Like",
+      "properties": {
+        "contract_kind": "interface",
+        "file": "06_tokens_callbacks.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:c6b02fe990a8d3a3",
+      "kind": "state_variable",
+      "label": "data",
+      "properties": {
+        "mutability": "mutable",
+        "type": "uint256[]",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:c7536ca4c26551b1",
+      "kind": "function",
+      "label": "_helper",
+      "properties": {
+        "kind": "function",
+        "signature": "_helper(uint256)",
+        "state_mutability": "pure",
+        "visibility": "internal"
+      }
+    },
+    {
+      "id": "node:c7602477cf841d43",
+      "kind": "function",
+      "label": "chained",
+      "properties": {
+        "kind": "function",
+        "signature": "chained(uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:c86b8d7bcf70d83f",
+      "kind": "state_variable",
+      "label": "owner",
+      "properties": {
+        "mutability": "mutable",
+        "type": "address",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:c97d2916673bc236",
+      "kind": "function",
+      "label": "getValue",
+      "properties": {
+        "kind": "function",
+        "signature": "getValue()",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:cc7d5c221ea5779c",
+      "kind": "function",
+      "label": "<constructor>",
+      "properties": {
+        "kind": "constructor",
+        "signature": null,
+        "state_mutability": "nonpayable",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:ccaef38606457531",
+      "kind": "function",
+      "label": "transfer",
+      "properties": {
+        "kind": "function",
+        "signature": "transfer()",
+        "state_mutability": "pure",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:ceccee447c149bbb",
+      "kind": "function",
+      "label": "approve",
+      "properties": {
+        "kind": "function",
+        "signature": "approve(address,uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:d0533f4effc9e20e",
+      "kind": "external_target",
+      "label": "target",
+      "properties": {
+        "member": "call",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:d0b78b65c099bc01",
+      "kind": "function",
+      "label": "withdrawViaCall",
+      "properties": {
+        "kind": "function",
+        "signature": "withdrawViaCall(uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:d0e4df71dd110e7d",
+      "kind": "contract",
+      "label": "IERC721Receiver",
+      "properties": {
+        "contract_kind": "interface",
+        "file": "06_tokens_callbacks.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:d145bd6dbd39aaf0",
+      "kind": "function",
+      "label": "deposit",
+      "properties": {
+        "kind": "function",
+        "signature": "deposit(uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:d30626ee0587bf5e",
+      "kind": "function",
+      "label": "tryExternal",
+      "properties": {
+        "kind": "function",
+        "signature": "tryExternal(contract,uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:d318361a340b1ea2",
+      "kind": "function",
+      "label": "readOnlyCall",
+      "properties": {
+        "kind": "function",
+        "signature": "readOnlyCall(address,bytes)",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:d3d731b3bc3d660a",
+      "kind": "state_variable",
+      "label": "totalWeight",
+      "properties": {
+        "mutability": "mutable",
+        "type": "uint256",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:d456bbbae74be522",
+      "kind": "function",
+      "label": "verifyAndConsume",
+      "properties": {
+        "kind": "function",
+        "signature": "verifyAndConsume(address,uint256,uint256,uint8,bytes32,bytes32)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:d632d85d49af337b",
+      "kind": "function",
+      "label": "totalHistoryLength",
+      "properties": {
+        "kind": "function",
+        "signature": "totalHistoryLength()",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:d6b32716d5c60066",
+      "kind": "external_target",
+      "label": "target",
+      "properties": {
+        "member": "call",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:d9258dde078e4bf7",
+      "kind": "modifier",
+      "label": "onlyOwner",
+      "properties": {
+        "parameters": []
+      }
+    },
+    {
+      "id": "node:d9fd88d63695a2f9",
+      "kind": "function",
+      "label": "<constructor>",
+      "properties": {
+        "kind": "constructor",
+        "signature": null,
+        "state_mutability": "nonpayable",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:daf917b46603cc74",
+      "kind": "function",
+      "label": "setPrefix",
+      "properties": {
+        "kind": "function",
+        "signature": "setPrefix(string)",
+        "state_mutability": "nonpayable",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:df11b3853e1a3d1a",
+      "kind": "function",
+      "label": "ownerOnlyRelay",
+      "properties": {
+        "kind": "function",
+        "signature": "ownerOnlyRelay(address,bytes)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:e10b96c9d2aca415",
+      "kind": "function",
+      "label": "<fallback>",
+      "properties": {
+        "kind": "fallback",
+        "signature": null,
+        "state_mutability": "payable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:e277d143655c68ba",
+      "kind": "state_variable",
+      "label": "exploitTarget",
+      "properties": {
+        "mutability": "mutable",
+        "type": "uint256",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:ec839db434c6d8e6",
+      "kind": "external_target",
+      "label": "target",
+      "properties": {
+        "member": "risky",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:ef7b9addd205651b",
+      "kind": "contract",
+      "label": "SimpleStore",
+      "properties": {
+        "contract_kind": "contract",
+        "file": "01_simple.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:f136fc62ec95c055",
+      "kind": "state_variable",
+      "label": "value",
+      "properties": {
+        "mutability": "mutable",
+        "type": "uint256",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:f71273b6a535b646",
+      "kind": "function",
+      "label": "greet",
+      "properties": {
+        "kind": "function",
+        "signature": "greet()",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:f7de4b51cc4bd2ec",
+      "kind": "contract",
+      "label": "Marketplace",
+      "properties": {
+        "contract_kind": "contract",
+        "file": "06_tokens_callbacks.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:f8447a06a50c9fa6",
+      "kind": "external_target",
+      "label": "target",
+      "properties": {
+        "member": "call",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:f87537658d63a08f",
+      "kind": "contract",
+      "label": "ITarget",
+      "properties": {
+        "contract_kind": "interface",
+        "file": "03_calls.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:f99902362785181c",
+      "kind": "contract",
+      "label": "ITokenLike",
+      "properties": {
+        "contract_kind": "interface",
+        "file": "11_relationship_chain.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:fa865b548dd86206",
+      "kind": "external_target",
+      "label": "multiToken",
+      "properties": {
+        "member": "safeBatchTransferFrom",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:fafb7f9305adadfb",
+      "kind": "function",
+      "label": "safeBatchTransferFrom",
+      "properties": {
+        "kind": "function",
+        "signature": "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:fc359d24453cae3b",
+      "kind": "external_target",
+      "label": "paymentToken",
+      "properties": {
+        "member": "approve",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:fce75c225571c8c7",
+      "kind": "external_target",
+      "label": "token",
+      "properties": {
+        "member": "approve",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:fedd635baf8f82a1",
+      "kind": "contract",
+      "label": "IERC1155Like",
+      "properties": {
+        "contract_kind": "interface",
+        "file": "06_tokens_callbacks.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:ff5fecff3db4a6b9",
+      "kind": "function",
+      "label": "operatorOnlyAction",
+      "properties": {
+        "kind": "function",
+        "signature": "operatorOnlyAction()",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    }
+  ]
+}

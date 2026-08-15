@@ -452,7 +452,14 @@ def derive_relationship_chains(ctx: ProjectContext) -> None:
                 for s in steps
             )
             has_asset_relationship = any(
-                s.get("relation") in ("ARGUMENT_DEPENDENCY", "co_occurs_with", "DATA_DEPENDENCY")
+                s.get("relation") in (
+                    "ARGUMENT_DEPENDENCY",
+                    "DATA_DEPENDENCY",
+                    "CONTROL_DEPENDENCY",
+                    "EXECUTION_ORDER",
+                    "SAME_BLOCK",
+                    "co_occurs_with",
+                )
                 for s in steps
             )
 

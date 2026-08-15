@@ -1,0 +1,3 @@
+function delegateTo(address implementation, bytes calldata data) external returns (bool ok) {
+        (ok, ) = implementation.delegatecall(data);
+    }

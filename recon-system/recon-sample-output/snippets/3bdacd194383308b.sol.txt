@@ -1,0 +1,3 @@
+function payOut(address to, uint256 amount) external {
+        paymentToken.transfer(to, amount);
+    }

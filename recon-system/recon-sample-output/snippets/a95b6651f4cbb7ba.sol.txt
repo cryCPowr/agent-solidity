@@ -1,0 +1,1 @@
+paymentToken.approve(spender, amount)

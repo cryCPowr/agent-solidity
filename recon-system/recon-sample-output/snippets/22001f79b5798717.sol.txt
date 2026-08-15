@@ -1,0 +1,4 @@
+function callDerivedAddress(bytes32 seed) external returns (bool ok) {
+        address target = address(uint160(uint256(keccak256(abi.encodePacked(seed)))));
+        (ok, ) = target.call("");
+    }

@@ -1,0 +1,5 @@
+function deployPlain(uint256 v) external returns (address addr) {
+        Thing t = new Thing(v);
+        addr = address(t);
+        deployed.push(addr);
+    }

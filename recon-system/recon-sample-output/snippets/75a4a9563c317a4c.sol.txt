@@ -1,0 +1,7 @@
+abstract contract BaseGreeter is IGreeter {
+    string internal _prefix;
+
+    function setPrefix(string memory p) public virtual {
+        _prefix = p;
+    }
+}
