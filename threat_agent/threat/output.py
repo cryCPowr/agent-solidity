@@ -136,7 +136,8 @@ def _tb_to_dict(tb: loader.TrustBoundary) -> dict[str, Any]:
     return {
         "source": tb.source,
         "target": tb.target,
-        "relationship": tb.relationship,
+        "trust": tb.trust,
+        "resolution": tb.resolution,
         "evidence_fact_ids": tb.evidence_fact_ids,
         "rationale": tb.rationale,
     }

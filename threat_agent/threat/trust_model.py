@@ -1,16 +1,26 @@
 """Trust Boundary Model.
 
 Builds trust relationships between components:
-- contract → external protocol (token, oracle, bridge)
-- user → protocol (caller side)
-- operator → configuration
-- contract → contract (via CALLS edges)
+- contract -> external protocol (token, oracle, bridge)
+- user -> protocol (caller side)
+- operator -> configuration
+- contract -> contract (via CALLS edges)
 
-Relationship categories:
-  trusted           : has authorization_check / trusted reference
-  untrusted         : uncontrolled input from external source
-  partially_trusted : controlled but unverified (e.g. function param flowing into call)
-  unknown           : cannot determine
+SEPARATES TWO CONCERNS (per hardening requirement):
+
+1. resolution:
+   - static      : target/expression resolves to a concrete address
+   - dynamic     : target is computed from runtime input (parameter, memory, etc.)
+   - unknown     : cannot be determined
+
+2. trust:
+   - trusted           : has authorization_check / trusted reference
+   - untrusted         : uncontrolled input from external source
+   - partially_trusted : controlled but unverified (e.g. function param flowing into call)
+   - unknown           : cannot determine
+
+DYNAMIC TARGET != UNTRUSTED TARGET.
+A dynamic target may be partially_trusted if the caller validates it.
 """
 
 from __future__ import annotations
@@ -25,7 +35,8 @@ from . import loader
 class TrustBoundary:
     source: str
     target: str
-    relationship: str  # trusted | untrusted | partially_trusted | unknown
+    trust: str = "unknown"        # trusted | untrusted | partially_trusted | unknown
+    resolution: str = "unknown"  # static | dynamic | unknown
     evidence_fact_ids: list[str] = field(default_factory=list)
     rationale: str = ""
 
@@ -35,16 +46,16 @@ def build_trust_boundaries(recon: loader.ReconArtifact) -> list[TrustBoundary]:
 
     Strategy:
     - For each CALLS edge, build a boundary between caller and callee
-    - If call target is dynamic / user_controlled -> untrusted (or partially_trusted)
-    - If call target is a known protocol/contract -> partially_trusted
-    - Always also add a 'user -> protocol' boundary for public entrypoints
+    - Resolution is determined by call properties (dynamic/static)
+    - Trust is determined by authorization evidence, not just resolution
+    - Always also add a "user -> protocol" boundary for public entrypoints
     """
     boundaries: dict[tuple[str, str], TrustBoundary] = {}
 
     def _ensure(src: str, tgt: str) -> TrustBoundary:
         key = (src, tgt)
         if key not in boundaries:
-            boundaries[key] = TrustBoundary(source=src, target=tgt, relationship="unknown", rationale="")
+            boundaries[key] = TrustBoundary(source=src, target=tgt, trust="unknown", resolution="unknown", rationale="")
         return boundaries[key]
 
     # --- From CALLS edges ---
@@ -55,55 +66,58 @@ def build_trust_boundaries(recon: loader.ReconArtifact) -> list[TrustBoundary]:
         props = edge.get("properties") or {}
         src_node = recon.graph.nodes_by_id.get(edge.get("source", ""), {})
         tgt_node = recon.graph.nodes_by_id.get(edge.get("target", ""), {})
-        src_kind = src_node.get("kind", "unknown")
-        tgt_kind = tgt_node.get("kind", "unknown")
-        # src is usually a function, tgt is usually a function or external_target
-        src_name = src_node.get("name") or edge.get("source", "")
-        tgt_name = tgt_node.get("name") or edge.get("target", "")
-        if tgt_kind == "external_target":
-            # The protocol calls an external address -> boundary protocol -> external
+
+        if tgt_node.get("kind") == "external_target":
             src_contract = _contract_for_node(src_node.get("id", ""), recon)
+            tgt_name = tgt_node.get("name") or edge.get("target", "")
             boundary = _ensure(src_contract, f"external:{tgt_name}")
+
+            # Determine resolution
             if props.get("target_status") == "dynamic":
-                boundary.relationship = "untrusted"
-                boundary.rationale = (
-                    "external target is dynamically derived; trust depends on caller "
-                    "validation"
-                )
-            elif props.get("call_type") == "delegatecall":
-                boundary.relationship = "untrusted"
-                boundary.rationale = "delegatecall to external target inherits its code"
+                boundary.resolution = "dynamic"
             else:
-                boundary.relationship = "partially_trusted"
-                boundary.rationale = "external call to a specific known target"
+                boundary.resolution = "static"
+
+            # Determine trust - SEPARATE from resolution
+            if props.get("call_type") == "delegatecall":
+                boundary.trust = "untrusted"
+                boundary.resolution = boundary.resolution or "dynamic"
+                boundary.rationale = "delegatecall to external target inherits its code and storage context"
+            elif boundary.resolution == "dynamic":
+                # Dynamic resolution alone does NOT imply untrusted.
+                # Trust depends on whether the caller validates the target.
+                # We mark as partially_trusted by default (needs validation) and
+                # escalate to untrusted only if we can prove lack of validation.
+                # Since Recon cannot prove validation, we treat dynamic as
+                # partially_trusted with a note about the need for analysis.
+                boundary.trust = "partially_trusted"
+                boundary.rationale = (
+                    "dynamic target: caller validation status unknown; "
+                    "requires dataflow verification to establish trust"
+                )
+            elif boundary.resolution == "static":
+                boundary.trust = "partially_trusted"
+                boundary.rationale = "static external call to a known address; trust depends on target behavior"
+            else:
+                boundary.trust = "unknown"
+                boundary.rationale = "cannot determine trust level for this external call"
+
             for fid in edge.get("fact_ids") or []:
                 boundary.evidence_fact_ids.append(fid)
-        else:
-            # Internal call between functions/contracts
-            src_contract = _contract_for_node(src_node.get("id", ""), recon)
-            tgt_contract = _contract_for_node(tgt_node.get("id", ""), recon)
-            if src_contract and tgt_contract and src_contract != tgt_contract:
-                boundary = _ensure(src_contract, tgt_contract)
-                boundary.relationship = "partially_trusted"
-                boundary.rationale = "internal cross-contract call"
-                for fid in edge.get("fact_ids") or []:
-                    boundary.evidence_fact_ids.append(fid)
 
     # --- External user -> protocol boundary ---
     for fn_fact in loader.functions(recon):
+        fn_key = fn_fact["subject"]["function"]
+        fn_facts = loader.facts_for_function(recon, fn_key)
         visibility = next(
-            (
-                f
-                for f in loader.facts_for_function(recon, fn_fact["subject"]["function"])
-                if f["type"] == "function_visibility"
-            ),
+            (f for f in fn_facts if f["type"] == "function_visibility"),
             None,
         )
         if visibility and visibility["properties"].get("visibility") in ("external", "public"):
-            fn_key = fn_fact["subject"]["function"]
             contract_key = fn_key.split("#")[0]
             boundary = _ensure("external_user", contract_key)
-            boundary.relationship = "untrusted"
+            boundary.trust = "untrusted"
+            boundary.resolution = "static"
             boundary.rationale = "any external account can call this public function"
             boundary.evidence_fact_ids.append(visibility.get("id", fn_fact["id"]))
 
@@ -120,15 +134,19 @@ def build_trust_boundaries(recon: loader.ReconArtifact) -> list[TrustBoundary]:
             else:
                 actor = "actor:unknown_authority"
             boundary = _ensure(actor, contract_key)
-            boundary.relationship = "partially_trusted"
+            # Authority presence implies some level of trust, but resolution
+            # depends on the state variable used for authorization
+            boundary.trust = "partially_trusted"
+            boundary.resolution = "static"
             boundary.rationale = (
-                f"authority over {fn_key} gated by {mech.get('kind')} check"
+                f"authority over {fn_key} gated by {mech.get('kind')} check; "
+                f"trust level depends on mutability of referenced state variables"
             )
             boundary.evidence_fact_ids.append(acf["id"])
             for bfid in mech.get("basis_facts", []):
                 boundary.evidence_fact_ids.append(bfid)
 
-    # Dedupe evidence ids
+    # Deduplicate evidence ids
     result = list(boundaries.values())
     for b in result:
         b.evidence_fact_ids = sorted(set(b.evidence_fact_ids))
@@ -136,15 +154,17 @@ def build_trust_boundaries(recon: loader.ReconArtifact) -> list[TrustBoundary]:
 
 
 def _contract_for_node(node_id: str, recon: loader.ReconArtifact) -> str:
-    """Resolve a graph node to its enclosing contract (best-effort)."""
+    """Resolve a graph node to its enclosing contract name."""
     node = recon.graph.nodes_by_id.get(node_id, {})
     if not node:
         return ""
-    parent_id = node.get("contract")
-    if parent_id:
-        return parent_id
-    kind = node.get("kind", "")
-    if kind == "contract":
+
+    if node.get("contract"):
+        return node["contract"]
+
+    if node.get("kind") == "contract":
         return node.get("name", node_id)
+
     # Fallback: derive from node_id pattern (file#X)
-    return node_id.split("#")[0] if "#" in node_id else node_id
+    parts = node_id.split("#")
+    return parts[0] if parts else node_id

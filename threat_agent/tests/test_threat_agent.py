@@ -127,6 +127,7 @@ def test_non_privileged_function_does_not_create_excessive_hypotheses(artifacts)
             "rounding_allocation", "signature_replay", "cross_contract_trust",
             "DoS_griefing", "upgrade_risk", "economic_manipulation",
             "initialization_vulnerability", "flash_loan_sensitivity",
+            "novel_composition",
         )
 
 
@@ -170,11 +171,12 @@ def test_cross_contract_reasoning(artifacts):
 # ===========================================================================
 def test_no_duplicate_hypotheses(artifacts):
     """Same hypothesis should not appear twice."""
-    seen = set()
+    seen_ids = set()
     for h in artifacts["hypotheses"]:
-        key = (h.category, tuple(sorted(h.affected_functions)))
-        assert key not in seen, f"Duplicate hypothesis: {h.hypothesis_id} ({h.category}, {h.affected_functions})"
-        seen.add(key)
+        assert h.hypothesis_id not in seen_ids, (
+            f"Duplicate hypothesis ID: {h.hypothesis_id} ({h.category}, {h.affected_functions})"
+        )
+        seen_ids.add(h.hypothesis_id)
 
 
 # ===========================================================================

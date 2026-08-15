@@ -9,7 +9,8 @@ Each hypothesis references:
 - affected_assets (asset expressions)
 - invariant_candidate_id (if applicable)
 
-Hypothesis categories:
+Hypothesis categories (named lenses -- see category-specific _generate_*
+functions below):
 - arbitrary_execution
 - callback_reentrancy
 - accounting_mismatch
@@ -21,6 +22,25 @@ Hypothesis categories:
 - economic_manipulation
 - initialization_vulnerability
 - flash_loan_sensitivity
+
+Plus one open-set category produced by the generic composition layer
+(composition.py) for signal combinations that don't match any named lens:
+- novel_composition
+
+Architecture
+------------
+generate_hypotheses() is deliberately NOT just "run N detectors". It runs:
+  1. Category-specific lenses (the _generate_* functions below) -- these
+     encode well-understood vulnerability patterns and produce detailed,
+     specific statements/preconditions.
+  2. The generic composition layer (composition.generate_composed_hypotheses)
+     -- this reasons over broad signal buckets (asset movement, state
+     mutation, computation, ...) with no knowledge of named vulnerability
+     classes, so a bug pattern nobody has written a lens for yet still has
+     a chance to surface (labeled "novel_composition" if it doesn't match
+     a known pattern).
+Lenses run first so that, when both layers find the same (category,
+functions) combination, the lens's richer statement wins during dedup.
 """
 
 from __future__ import annotations
@@ -30,6 +50,7 @@ from typing import Any
 
 from . import loader
 from .invariants import InvariantCandidate
+from .composition import generate_composed_hypotheses
 
 
 HYPOTHESIS_CATEGORIES = [
@@ -44,6 +65,7 @@ HYPOTHESIS_CATEGORIES = [
     "economic_manipulation",
     "initialization_vulnerability",
     "flash_loan_sensitivity",
+    "novel_composition",
 ]
 
 
@@ -95,14 +117,35 @@ def generate_hypotheses(
     - Not shallow rules ("external call = vulnerability")
     - But structured combinations of proven facts
     - Each hypothesis references concrete Recon facts
+
+    IDs are deterministic: a content-derived hash over (category, normalized
+    statement, sorted fact ids, graph references, invariant). Generation
+    order does not influence the final ID.
     """
+    import hashlib
+
+    def _deterministic_id(h: ThreatHypothesis) -> str:
+        stmt = " ".join(h.statement.strip().lower().split())
+        components = [
+            h.category,
+            stmt,
+            "|".join(sorted(h.observed_facts)),
+            "|".join(sorted(h.graph_nodes)),
+            "|".join(sorted(h.graph_edges)),
+            h.invariant_candidate_id or "",
+            "|".join(sorted(h.affected_functions)),
+        ]
+        raw = "\n".join(components).encode("utf-8")
+        return f"H-{hashlib.sha256(raw).hexdigest()[:10]}"
+
     hypotheses: list[ThreatHypothesis] = []
     counter = 0
 
     def _next_id() -> str:
+        # Temporary placeholder ID; overwritten by deterministic ID below.
         nonlocal counter
         counter += 1
-        return f"H-{counter:03d}"
+        return f"H-TMP-{counter:03d}"
 
     # --- Category 1: Arbitrary Execution + Token + Callback ---
     _generate_arbitrary_execution(recon, hypotheses, _next_id, invariants)
@@ -128,11 +171,31 @@ def generate_hypotheses(
     # --- Category 8: Economic Manipulation ---
     _generate_economic_hypotheses(recon, hypotheses, _next_id, invariants)
 
-    # --- Deduplicate ---
-    seen = set()
+    # --- Generic composition layer: catches signal combinations that don't
+    # match any named lens above (see composition.py). Runs after the
+    # lenses so lens statements win ties during dedup below. ---
+    from .composition import generate_composed_hypotheses  # deferred import
+
+    hypotheses.extend(generate_composed_hypotheses(recon, invariants, _next_id))
+
+    # --- Assign deterministic content-derived IDs (Problem 4) ---
+    for h in hypotheses:
+        h.hypothesis_id = _deterministic_id(h)
+
+    # --- Deduplicate on a rich key (Problem 5): not just category +
+    # affected functions. Two hypotheses over the same function that mean
+    # different things (different statement / facts / edges) must both
+    # survive. ---
+    seen: set[tuple] = set()
     unique: list[ThreatHypothesis] = []
     for h in hypotheses:
-        key = (h.category, tuple(sorted(h.affected_functions)))
+        key = (
+            h.category,
+            " ".join(h.statement.strip().lower().split()),
+            tuple(sorted(h.observed_facts)),
+            tuple(sorted(h.graph_edges)),
+            h.invariant_candidate_id or "",
+        )
         if key not in seen:
             seen.add(key)
             unique.append(h)
