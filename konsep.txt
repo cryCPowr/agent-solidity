@@ -54,6 +54,29 @@
                   └──────► ATTACK AGENT
                            (retry/refine)
 
+                    REPO
+                      ↓
+                ORCHESTRATOR
+                      ↓
+                    RECON
+                      ↓
+               PROTOCOL MODEL
+                      ↓
+                   THREAT
+                      ↓
+               SECURITY MODEL
+                      ↓
+                   ATTACK
+                      ↓
+              HYPOTHESIS QUEUE
+                      ↓
+                 VALIDATOR
+                 ↙        ↘
+             REJECT      CONFIRM
+               ↓             ↓
+             ATTACK       FINDING
+              retry
+
 
 
 I. RECON
