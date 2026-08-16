@@ -1,0 +1,4 @@
+interface IOracle {
+    function getPrice() external view returns (uint256);
+    function getData() external returns (bytes memory);
+}

@@ -1,0 +1,8 @@
+function processData(address oracle) external {
+        bytes memory data = IOracle(oracle).getData();
+        // Simulate decode: this triggers decode_operation fact
+        (uint256 rawPrice, uint256 rawSupply) = abi.decode(data, (uint256, uint256));
+        uint256 scaled = rawPrice / 1e18;  // arithmetic with rounding
+        tokenPrice = scaled;                // state write
+        totalSupply = rawSupply;            // state write
+    }

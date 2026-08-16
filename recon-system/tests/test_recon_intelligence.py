@@ -63,14 +63,15 @@ def _node_by_label(graph, label, kind):
 
 
 # ===========================================================================
-# Decode semantic extraction tests
+# Decode / encode semantic extraction tests
 # ===========================================================================
 
 def test_decode_operation_is_extracted(recon_output):
-    """Verify decode_operation facts are emitted for abi.decode calls.
-
-    Requires a fixture with abi.decode(...) calls where decoded fields
-    are consumed by arithmetic or state writes.
+    """`decode_operation` facts are emitted for abi.decode calls, and ONLY
+    for abi.decode calls — see test_decode_operation_never_contains_encode_calls
+    for the regression this guards (decode_operation previously also
+    contained abi.encodePacked/etc. facts, distinguishable only by an
+    easy-to-miss `properties.kind` field).
     """
     facts = recon_output["facts"]
     decode_facts = [f for f in facts if f["type"] == "decode_operation"]
@@ -80,32 +81,53 @@ def test_decode_operation_is_extracted(recon_output):
         "(2) abi.decode not classified into other_builtin branch, "
         "(3) the decoded types are not structural (e.g., memory arrays)."
     )
-    # Check each decode fact has required structural fields
     for fact in decode_facts:
-        assert "operation" in fact["properties"], (
-            f"decode_operation missing 'operation' in properties: {fact['id']}"
+        assert fact["properties"]["operation"] == "decode"
+        assert fact["properties"]["kind"] == "decode"
+        assert "data_source" in fact["properties"]
+        assert fact["properties"].get("types"), (
+            f"decode_operation should have a decoded types field: {fact['id']}"
         )
-        assert "data_source" in fact["properties"], (
-            f"decode_operation missing 'data_source' in properties: {fact['id']}"
+
+
+def test_encode_operation_is_extracted_as_a_distinct_type(recon_output):
+    """abi.encodePacked/encode/encodeWithSignature/encodeWithSelector calls
+    are real, useful facts (e.g. digest-construction inputs) but are NOT
+    decode operations. They must appear under their own `encode_operation`
+    fact type, never under `decode_operation`.
+    """
+    facts = recon_output["facts"]
+    encode_facts = [f for f in facts if f["type"] == "encode_operation"]
+    assert len(encode_facts) > 0, "expected at least one abi.encode* call in the fixture corpus"
+    for fact in encode_facts:
+        assert fact["properties"]["kind"] == "encode"
+        assert fact["properties"]["operation"] in (
+            "encode", "encodePacked", "encodeWithSignature", "encodeWithSelector",
         )
-        # Verify the fact references structural information
-        # encode operations may not have types (no decoding), but decode ones must
-        if fact["properties"].get("operation") == "decode":
-            assert fact["properties"].get("types"), (
-                f"decode_operation should have types field: {fact['id']}"
-            )
+
+
+def test_decode_operation_never_contains_encode_calls(recon_output):
+    """Regression guard for the exact misattribution bug: filtering strictly
+    on `type == "decode_operation"` must never yield an encodePacked/encode
+    call. (Previously 2 of 4 "decode_operation" facts in this fixture corpus
+    were actually abi.encodePacked calls from unrelated files.)
+    """
+    facts = recon_output["facts"]
+    decode_facts = [f for f in facts if f["type"] == "decode_operation"]
+    for fact in decode_facts:
+        assert fact["properties"]["operation"] != "encodePacked"
+        assert fact["properties"]["kind"] != "encode"
 
 
 def test_negative_decode_fixture_preserves_unknown(recon_output):
-    """Verify that Recon doesn't invent decode facts for non-decode calls.
-
-    A fixture without abi.decode should produce zero decode_operation facts.
+    """A function with no abi.decode/abi.encode* call must produce neither
+    decode_operation nor encode_operation facts — recon does not invent
+    codec boundaries that aren't in the source.
     """
     facts = recon_output["facts"]
-    # When running against 10_negative.sol which has no abi.decode,
-    # decode_operation should be 0
-    # This test validates the boundary - not inventing decode facts
-    # when there's no decode in source
+    fn = _function_key(facts, "getValue", "01_simple.sol")
+    assert _find_all(facts, "decode_operation", function=fn) == []
+    assert _find_all(facts, "encode_operation", function=fn) == []
 
 
 # ===========================================================================
@@ -167,11 +189,58 @@ def test_callback_relationship_is_extracted(recon_output):
         )
 
 
-def test_negative_callback_fixture_preserves_unknown(recon_output):
-    """Verify Recon doesn't invent callback relationships when patterns absent."""
+def test_callback_relationship_never_targets_a_bodiless_interface_declaration(recon_output):
+    """Regression guard: an interface's own abstract method declaration
+    (e.g. IERC721Receiver.onERC721Received, which has no body and can never
+    actually be the function invoked at runtime) must never be linked as a
+    callback target. Only functions with a real body — genuine
+    implementations — may appear as `callback_function`.
+
+    (Previously, a single safeTransferFrom call site was linked to BOTH the
+    concrete Marketplace.onERC721Received implementation AND the
+    IERC721Receiver interface's own bodiless declaration, inflating a
+    2-candidate relationship into a misleading "4 callback relationships".)
+    """
     facts = recon_output["facts"]
-    # When running against generic fixtures without ERC721 patterns,
-    # callback_relationship should be 0 (but currently it's > 0 from 06_tokens_callbacks.sol)
+    cb_facts = [f for f in facts if f["type"] == "callback_relationship" and "trigger_operation" in f["properties"]]
+    assert len(cb_facts) > 0
+
+    function_body_by_key = {
+        f["subject"]["function"]: f["properties"]["has_body"]
+        for f in facts if f["type"] == "function_exists"
+    }
+    for fact in cb_facts:
+        callback_key = fact["properties"]["callback_function"]
+        assert callback_key in function_body_by_key, f"callback_function {callback_key} must resolve to a real function"
+        assert function_body_by_key[callback_key] is True, (
+            f"callback_relationship {fact['id']} links to a bodiless (interface-only) "
+            f"declaration {callback_key} — it can never be the function actually invoked"
+        )
+
+
+def test_callback_relationship_links_to_the_concrete_marketplace_implementation(recon_output):
+    """Positive counterpart: the real Marketplace.onERC721Received
+    implementation must still be found — the fix must not throw out the
+    genuinely useful relationship along with the noisy one.
+    """
+    facts = recon_output["facts"]
+    marketplace_receiver_fn = _function_key(facts, "onERC721Received", "06_tokens_callbacks.sol")
+    matches = [
+        f for f in facts
+        if f["type"] == "callback_relationship"
+        and f["properties"].get("callback_function") == marketplace_receiver_fn
+    ]
+    assert len(matches) > 0
+
+
+def test_negative_callback_fixture_preserves_unknown(recon_output):
+    """A function with no safeTransfer-family call must produce zero
+    callback_relationship facts — recon does not invent callback surfaces
+    that aren't in the source.
+    """
+    facts = recon_output["facts"]
+    fn = _function_key(facts, "getValue", "01_simple.sol")
+    assert _find_all(facts, "callback_relationship", caller=fn) == []
 
 
 # ===========================================================================

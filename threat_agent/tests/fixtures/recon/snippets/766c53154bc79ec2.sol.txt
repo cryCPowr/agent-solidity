@@ -1,0 +1,3 @@
+function setLabel(string memory label) external {
+        info.label = label; // does not touch info.owner, no auth semantics
+    }

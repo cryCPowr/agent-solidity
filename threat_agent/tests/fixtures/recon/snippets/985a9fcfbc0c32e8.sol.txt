@@ -1,0 +1,3 @@
+function readOnlyCall(address target, bytes calldata data) external view returns (bool ok) {
+        (ok, ) = target.staticcall(data);
+    }

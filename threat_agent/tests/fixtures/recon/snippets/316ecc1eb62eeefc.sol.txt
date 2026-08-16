@@ -1,0 +1,1 @@
+fixedTarget.ping(doubled)

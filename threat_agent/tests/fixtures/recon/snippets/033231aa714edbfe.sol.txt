@@ -1,0 +1,4 @@
+contract Thing {
+    uint256 public v;
+    constructor(uint256 _v) { v = _v; }
+}

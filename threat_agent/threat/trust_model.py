@@ -69,7 +69,7 @@ def build_trust_boundaries(recon: loader.ReconArtifact) -> list[TrustBoundary]:
 
         if tgt_node.get("kind") == "external_target":
             src_contract = _contract_for_node(src_node.get("id", ""), recon)
-            tgt_name = tgt_node.get("name") or edge.get("target", "")
+            tgt_name = tgt_node.get("label") or edge.get("target", "")
             boundary = _ensure(src_contract, f"external:{tgt_name}")
 
             # Determine resolution
@@ -154,17 +154,36 @@ def build_trust_boundaries(recon: loader.ReconArtifact) -> list[TrustBoundary]:
 
 
 def _contract_for_node(node_id: str, recon: loader.ReconArtifact) -> str:
-    """Resolve a graph node to its enclosing contract name."""
+    """Resolve a graph node to its enclosing contract name.
+
+    Same logic as hypothesis.py: use DECLARES edges to map child nodes
+    back to their contract labels, because Recon graph nodes do not carry
+    direct contract fields.
+    """
+    # Build contract map from DECLARES edges
+    contract_map: dict[str, str] = {}
+    for edge in recon.graph.edges:
+        if edge.get("type") == "DECLARES":
+            src_id = edge.get("source", "")
+            tgt_id = edge.get("target", "")
+            src_node = recon.graph.nodes_by_id.get(src_id, {})
+            if src_node.get("kind") == "contract":
+                contract_label = src_node.get("label", "")
+                if contract_label:
+                    contract_map[tgt_id] = contract_label
+
+    # Direct lookup
+    contract = contract_map.get(node_id)
+    if contract:
+        return contract
+
+    # If node itself is a contract
     node = recon.graph.nodes_by_id.get(node_id, {})
-    if not node:
-        return ""
-
-    if node.get("contract"):
-        return node["contract"]
-
     if node.get("kind") == "contract":
-        return node.get("name", node_id)
+        return node.get("label", node_id)
+    # external_target nodes have their own label (e.g., "token", "paymentToken")
+    if node.get("kind") == "external_target":
+        return node.get("label", node_id)
 
-    # Fallback: derive from node_id pattern (file#X)
-    parts = node_id.split("#")
-    return parts[0] if parts else node_id
+    # Last resort: return opaque id (no parsing from hashes)
+    return node_id

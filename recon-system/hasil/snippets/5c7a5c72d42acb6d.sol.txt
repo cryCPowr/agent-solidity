@@ -1,0 +1,5 @@
+try target.risky(x) returns (uint256 result) {
+            return (result, true);
+        } catch {
+            return (0, false);
+        }

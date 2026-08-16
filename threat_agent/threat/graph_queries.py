@@ -162,7 +162,7 @@ def cross_contract_chains(
 
             tgt_id = edge.get("target", "")
             tgt_node = recon.graph.nodes_by_id.get(tgt_id, {})
-            tgt_contract = tgt_node.get("contract")
+            tgt_contract = _contract_for_node(tgt_id, recon)
 
             # Only continue if we cross to a different contract
             if tgt_contract and tgt_contract != start_contract:
@@ -196,13 +196,45 @@ def _find_function_node(recon: loader.ReconArtifact, function_key: str) -> str |
     return None
 
 
+def _contract_for_node(node_id: str, recon: loader.ReconArtifact) -> str:
+    """Resolve a graph node to its enclosing contract name.
+
+    Uses DECLARES edges to map child nodes back to their contract labels,
+    because Recon graph nodes do not carry direct contract fields.
+    """
+    # Build contract map from DECLARES edges
+    contract_map: dict[str, str] = {}
+    for edge in recon.graph.edges:
+        if edge.get("type") == "DECLARES":
+            src_id = edge.get("source", "")
+            tgt_id = edge.get("target", "")
+            src_node = recon.graph.nodes_by_id.get(src_id, {})
+            if src_node.get("kind") == "contract":
+                contract_label = src_node.get("label", "")
+                if contract_label:
+                    contract_map[tgt_id] = contract_label
+
+    contract = contract_map.get(node_id)
+    if contract:
+        return contract
+
+    node = recon.graph.nodes_by_id.get(node_id, {})
+    if node.get("kind") == "contract":
+        return node.get("label", node_id)
+    if node.get("kind") == "external_target":
+        return node.get("label", node_id)
+    return node_id
+
+
 def _find_contract_node(recon: loader.ReconArtifact, contract_key: str) -> str | None:
-    """Find the graph node ID for a contract key."""
+    """Find the graph node ID for a contract key.
+
+    Uses contract label (not nonexistent 'name'/'contract' fields).
+    """
     for node in recon.graph.nodes:
         if node.get("kind") == "contract":
-            name = node.get("name", "")
-            key = node.get("contract") or name
-            if key == contract_key or contract_key in name:
+            name = node.get("label", "")
+            if name == contract_key or contract_key in name:
                 return node.get("id")
     return None
 

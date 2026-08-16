@@ -1,0 +1,4 @@
+constructor(uint256 initialValue) {
+        owner = msg.sender;
+        value = initialValue;
+    }

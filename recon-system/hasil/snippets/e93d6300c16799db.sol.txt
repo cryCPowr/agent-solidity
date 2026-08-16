@@ -1,0 +1,4 @@
+function updatePrice(address oracle) external {
+        uint256 price = IOracle(oracle).getPrice();
+        tokenPrice = price;  // state write after external call
+    }

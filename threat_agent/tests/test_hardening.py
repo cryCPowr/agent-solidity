@@ -35,15 +35,10 @@ from threat.model_provider import (
 )
 
 
-RECON_OUTPUT = os.path.join(
-    os.path.dirname(__file__), "..", "..", "recon-system", "recon-sample-output"
-)
-
-
 @pytest.fixture(scope="session")
-def recon():
-    """Load real Recon artifacts."""
-    return loader.load_recon(RECON_OUTPUT)
+def recon(recon_output_dir):
+    """Load real Recon artifacts (resolved by conftest)."""
+    return loader.load_recon(recon_output_dir)
 
 
 @pytest.fixture(scope="session")
@@ -62,14 +57,14 @@ def artifacts(recon):
 # Problem 1: Generic composition layer produces hypotheses even when no
 # category-specific lens matches.
 # ===========================================================================
-def test_problem_1_generic_composition_layer(artifacts):
+def test_problem_1_generic_composition_layer(artifacts, recon_output_dir):
     """The composition layer produces novel_composition hypotheses for
     bucket combinations not covered by any named lens."""
-    profiles = build_function_profiles(loader.load_recon(RECON_OUTPUT))
+    profiles = build_function_profiles(loader.load_recon(recon_output_dir))
     assert profiles, "Function profiles should be populated from real Recon"
 
     composed = generate_composed_hypotheses(
-        loader.load_recon(RECON_OUTPUT),
+        loader.load_recon(recon_output_dir),
         artifacts["invariants"],
         lambda: "T-1",
     )
@@ -84,11 +79,10 @@ def test_problem_1_generic_composition_layer(artifacts):
 # ===========================================================================
 # Problem 2: Accounting reasoning is not restricted to signature/digest facts.
 # ===========================================================================
-def test_problem_2_accounting_not_digest_limited(artifacts):
+def test_problem_2_accounting_not_digest_limited(artifacts, recon):
     """Accounting hypothesis must not require digest_construction_operation
     or signature_recovery_operation. Recon's existing facts should drive
     accounting reasoning through generic buckets."""
-    recon = loader.load_recon(RECON_OUTPUT)
     # data_ingestion bucket must be reachable without digest facts
     profiles = build_function_profiles(recon)
     has_data_ingestion_without_digest = False
@@ -136,9 +130,8 @@ def test_problem_3_trust_model_has_resolution_field(artifacts):
 # ===========================================================================
 # Problem 4: Hypothesis IDs are content-derived deterministic.
 # ===========================================================================
-def test_problem_4_ids_are_deterministic(artifacts):
+def test_problem_4_ids_are_deterministic(artifacts, recon):
     """Same input must produce same hypothesis IDs across runs."""
-    recon = loader.load_recon(RECON_OUTPUT)
     invariants = artifacts["invariants"]
 
     hyp1 = generate_hypotheses(recon, invariants)
@@ -292,9 +285,8 @@ def test_problem_12_model_abstraction_noop():
     assert r2.model_id == "noop"
 
 
-def test_problem_12_filter_drops_ungrounded_claims():
+def test_problem_12_filter_drops_ungrounded_claims(recon):
     """Raw LLM output without grounding must be filtered out."""
-    recon = loader.load_recon(RECON_OUTPUT)
     known = {f["id"] for f in recon.facts_obj.facts}
 
     bad = ModelResponse(
@@ -317,9 +309,8 @@ def test_problem_12_filter_drops_ungrounded_claims():
 # ===========================================================================
 # Additional regression: dedup is content-based, not position-based.
 # ===========================================================================
-def test_dedup_idempotent(artifacts):
+def test_dedup_idempotent(artifacts, recon):
     """Two separate runs produce identical sets of hypothesis IDs."""
-    recon = loader.load_recon(RECON_OUTPUT)
     invariants = artifacts["invariants"]
     hyp1 = {h.hypothesis_id for h in generate_hypotheses(recon, invariants)}
     hyp2 = {h.hypothesis_id for h in generate_hypotheses(recon, invariants)}
@@ -329,9 +320,8 @@ def test_dedup_idempotent(artifacts):
 # ===========================================================================
 # Additional regression: no hypothesis references a non-existent fact.
 # ===========================================================================
-def test_no_dangling_fact_references(artifacts):
+def test_no_dangling_fact_references(artifacts, recon):
     """All hypothesis.referenced fact IDs must exist in the Recon artifact."""
-    recon = loader.load_recon(RECON_OUTPUT)
     known = {f["id"] for f in recon.facts_obj.facts}
     for h in artifacts["hypotheses"]:
         for fid in h.observed_facts:

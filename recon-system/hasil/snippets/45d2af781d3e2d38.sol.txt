@@ -1,0 +1,3 @@
+function setTarget(address t) external {
+        configuredTarget = t;
+    }

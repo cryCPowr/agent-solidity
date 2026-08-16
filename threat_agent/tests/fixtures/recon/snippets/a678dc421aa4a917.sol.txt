@@ -1,0 +1,1 @@
+IOracle(oracle).getPrice()

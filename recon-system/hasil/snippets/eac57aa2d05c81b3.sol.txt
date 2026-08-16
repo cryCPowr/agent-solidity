@@ -1,0 +1,3 @@
+function operatorOnlyAction() external {
+        require(operators[msg.sender], "not operator");
+    }

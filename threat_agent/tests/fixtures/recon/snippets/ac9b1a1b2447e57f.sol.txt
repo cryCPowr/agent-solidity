@@ -1,0 +1,7 @@
+function distribute(address oracle, address user) external {
+        bytes memory data = IOracle(oracle).getData();
+        (uint256 rawPrice, uint256 rawSupply) = abi.decode(data, (uint256, uint256));
+        uint256 share = rawPrice / rawSupply;  // division with rounding
+        balances[user] += share;               // accounting state write
+        emit Transferred(user, share);         // event sink
+    }

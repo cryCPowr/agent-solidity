@@ -1,0 +1,3 @@
+function ownerOnlyRelay(address target, bytes calldata data) external onlyOwner returns (bool ok) {
+        (ok, ) = target.call(data);
+    }

@@ -24,14 +24,10 @@ from threat.prioritization import prioritize_all
 from threat.output import write_threat_output
 
 
-RECON_OUTPUT = os.path.join(
-    os.path.dirname(__file__), "..", "..", "recon-system", "recon-sample-output"
-)
-
-
 @pytest.fixture(scope="session")
-def recon():
-    return loader.load_recon(RECON_OUTPUT)
+def recon(recon_output_dir):
+    """Use real Recon artifact resolved by conftest."""
+    return loader.load_recon(recon_output_dir)
 
 
 @pytest.fixture(scope="session")

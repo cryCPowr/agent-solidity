@@ -1,0 +1,7 @@
+function tryExternal(IMaybeFails target, uint256 x) external returns (uint256, bool) {
+        try target.risky(x) returns (uint256 result) {
+            return (result, true);
+        } catch {
+            return (0, false);
+        }
+    }

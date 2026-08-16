@@ -1,0 +1,3 @@
+function totalHistoryLength() external view returns (uint256) {
+        return history.length;
+    }

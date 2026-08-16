@@ -1,0 +1,5 @@
+function withdrawViaCall(uint256 amount) external {
+        deposits[msg.sender] -= amount;
+        (bool ok, ) = payable(msg.sender).call{value: amount}("");
+        require(ok, "transfer failed");
+    }

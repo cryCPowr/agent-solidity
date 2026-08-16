@@ -1,0 +1,3 @@
+function setOperator(address who, bool allowed) external onlyOwner {
+        operators[who] = allowed;
+    }

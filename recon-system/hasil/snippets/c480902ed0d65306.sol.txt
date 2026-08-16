@@ -1,0 +1,14 @@
+contract AllocationExample {
+    uint256 public totalPool;
+    uint256 public totalWeight;
+    mapping(address => uint256) public allocated;
+
+    function computeShare(uint256 weight) external view returns (uint256) {
+        return (totalPool * weight) / totalWeight;
+    }
+
+    function settle(address user, uint256 weight) external {
+        uint256 share = (totalPool * weight) / totalWeight;
+        allocated[user] = share;
+    }
+}

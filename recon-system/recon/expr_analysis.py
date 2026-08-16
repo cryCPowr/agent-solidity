@@ -405,13 +405,30 @@ def _emit_calls(ctx, cu, fu, fnode_id, local_scope, visible_state_vars) -> None:
 
         # Callback relationship via ERC721/1155 safeTransfer/safeBatchTransfer:
         # these token operations trigger callback receivers. We link the call
-        # to any onERC721Received/onERC1155Received implementation in scope.
+        # to any onERC721Received/onERC1155Received IMPLEMENTATION in scope.
+        #
+        # BUGFIX: this previously matched by function name alone across every
+        # contract in the project, including bodiless interface declarations
+        # (e.g. IERC721Receiver's own abstract `onERC721Received`). An
+        # unimplemented interface method can never actually be the function
+        # invoked at runtime — Solidity does not allow calling it — so
+        # including it was pure noise: a single real call site was reported
+        # as having 2 "callback relationships" when only 1 (the concrete
+        # implementation) could ever really execute. `other_fu.body_node is
+        # not None` restricts this to genuine implementations. We still
+        # cannot know WHICH concrete contract's implementation is behind a
+        # dynamically-typed interface reference (that's runtime dispatch),
+        # so multiple real implementations across different contracts may
+        # still all be linked here as structurally-plausible candidates —
+        # that part is an intentional, disclosed heuristic (see the `note`
+        # below), not a bug.
         member_name = expr.get("memberName")
         if member_name in ("safeTransferFrom", "safeTransfer", "safeBatchTransferFrom"):
             # Check for receiver functions across all contract units in project context
             for other_cu in ctx.contracts.values():
                 for other_fu in other_cu.functions:
-                    if other_fu.name in ("onERC721Received", "onERC1155Received", "onERC1155BatchReceived"):
+                    if other_fu.name in ("onERC721Received", "onERC1155Received", "onERC1155BatchReceived") \
+                            and other_fu.body_node is not None:
                         callee_target = _src_text(ctx, fu.file, expr.get("expression") or {})
                         _emit_fact(
                             ctx, fu, "callback_relationship", src_ref, evid,
@@ -1112,11 +1129,25 @@ def _emit_arithmetic_operations(ctx, cu, fu, fnode_id) -> None:
 def _emit_decode_encode(
     ctx, fu, fnode_id, node, expr, src_ref, evid,
 ) -> None:
-    """Emit `decode_operation` facts for abi.decode / abi.encode* / msg.data
+    """Emit `decode_operation` / `encode_operation` facts for abi.decode /
+    abi.encode* / msg.data.
 
     Covers the external-data → decoded-internal-value boundary needed by
     Class B reasoning. Purely structural: records what is decoded/encoded
     and its immediate consumer. No semantic validation is performed.
+
+    BUGFIX: previously both decode AND encode operations were emitted under
+    the single fact type `"decode_operation"`, distinguished only by a
+    `properties.kind` field ("decode" vs "encode"). A consumer filtering on
+    `type == "decode_operation"` — the reasonable, literal reading of that
+    type name — would silently also receive `abi.encodePacked`/`abi.encode`/
+    etc. facts that are not decode operations at all. This produced a real,
+    observed misattribution (an external verification pass reported "4
+    decode_operation facts, all abi.decode" when only 2 of the 4 were
+    actually decode calls; the other 2 were encodePacked calls in unrelated
+    files). The fact TYPE now matches its contents exactly: `decode_operation`
+    is abi.decode only, `encode_operation` covers the encode family. This is
+    an additive-shape rename (properties unchanged), not a schema redesign.
     """
     if expr.get("nodeType") != "MemberAccess":
         return
@@ -1125,23 +1156,24 @@ def _emit_decode_encode(
     if obj.get("nodeType") == "Identifier" and obj.get("name") == "abi":
         if member not in ("decode", "encode", "encodePacked", "encodeWithSignature", "encodeWithSelector"):
             return
-        kind = "decode" if member == "decode" else "encode"
+        is_decode = member == "decode"
+        fact_type = "decode_operation" if is_decode else "encode_operation"
         args = node.get("arguments", [])
         data_source = _src_text(ctx, fu.file, args[0]) if args else ""
         types_str = ""
-        if member == "decode" and len(args) > 1:
+        if is_decode and len(args) > 1:
             types_str = _src_text(ctx, fu.file, args[1])
         consumer = _enclosing_use(node, None)
         _emit_fact(
-            ctx, fu, "decode_operation", src_ref, evid,
+            ctx, fu, fact_type, src_ref, evid,
             {"function": fu.key},
             {
                 "operation": member,
-                "kind": kind,
+                "kind": "decode" if is_decode else "encode",
                 "data_source": data_source,
                 "types": types_str,
                 "immediate_consumer": consumer,
-                "note": "structural extraction only" if kind == "decode" else "encoding preparation",
+                "note": "structural extraction only" if is_decode else "encoding preparation",
             },
             "observed", confidence="high",
         )

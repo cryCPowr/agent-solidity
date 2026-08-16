@@ -1,0 +1,4 @@
+function chained(uint256 x) external returns (uint256) {
+        uint256 doubled = _helper(x);
+        return fixedTarget.ping(doubled);
+    }

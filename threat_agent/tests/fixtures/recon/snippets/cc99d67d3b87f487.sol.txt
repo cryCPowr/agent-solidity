@@ -1,0 +1,5 @@
+function deposit(uint256 amount) external {
+        accounts[msg.sender].balance += amount;
+        accounts[msg.sender].active = true;
+        history.push(amount);
+    }

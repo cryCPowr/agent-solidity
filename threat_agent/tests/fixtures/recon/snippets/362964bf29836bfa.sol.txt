@@ -1,0 +1,31 @@
+contract ControlFlowShowcase {
+    uint256[] public data;
+
+    function sumUpTo(uint256 n) external pure returns (uint256 total) {
+        for (uint256 i = 0; i < n; i++) {
+            total += i;
+        }
+    }
+
+    function whileSum(uint256 n) external pure returns (uint256 total) {
+        uint256 i = 0;
+        while (i < n) {
+            total += i;
+            i++;
+        }
+    }
+
+    function branch(uint256 x) external pure returns (string memory) {
+        if (x == 0) {
+            return "zero";
+        } else if (x < 10) {
+            return "small";
+        } else {
+            return "large";
+        }
+    }
+
+    function tryExternal(IMaybeFails target, uint256 x) external returns (uint256, bool) {
+        try target.risky(x) returns (uint256 result) {
+            return (res
+/* … truncated … */

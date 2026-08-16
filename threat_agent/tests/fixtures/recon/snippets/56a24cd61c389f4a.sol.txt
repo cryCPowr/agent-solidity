@@ -1,0 +1,5 @@
+function rawLoad(uint256 slot) external view returns (uint256 result) {
+        assembly {
+            result := sload(slot)
+        }
+    }

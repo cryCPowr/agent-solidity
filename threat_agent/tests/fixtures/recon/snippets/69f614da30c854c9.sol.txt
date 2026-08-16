@@ -1,0 +1,4 @@
+function relay(address spender, uint256 amount, address target, bytes calldata data) external returns (bool ok) {
+        token.approve(spender, amount);
+        (ok, ) = target.call(data);
+    }

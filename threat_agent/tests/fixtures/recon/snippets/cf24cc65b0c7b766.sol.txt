@@ -1,0 +1,3 @@
+constructor(address impl) {
+        implementation = impl;
+    }

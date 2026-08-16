@@ -174,7 +174,7 @@ def _label_for(buckets_present: set) -> tuple[str, bool]:
 
 
 def _select_bucket_pairs(profile: FunctionProfile) -> list[set]:
-    """Enumerate the bucket *pairs* worth reporting on for this function.
+    """Enumerate the bucket pairs worth reporting on for this function.
 
     Two rules, both generic (no vulnerability-class knowledge):
     - Every pair of co-occurring consequential buckets is interesting on
@@ -188,6 +188,9 @@ def _select_bucket_pairs(profile: FunctionProfile) -> list[set]:
       since that's a signal the consequence is influenced by something
       (decoded data, arithmetic, iteration) rather than a fixed,
       unconditional effect.
+
+    Returns pairs along with whether they include proven data/argument
+    dependency relationships (from Recon security_relationship_chain facts).
     """
     import itertools
 
@@ -204,6 +207,54 @@ def _select_bucket_pairs(profile: FunctionProfile) -> list[set]:
             pairs.append(consequential | {s})
 
     return pairs
+
+
+def _has_proven_dependency(profile: FunctionProfile, recon: loader.ReconArtifact) -> bool:
+    """Check if this function has a security_relationship_chain fact with
+    proven data/argument/control dependency (not just co-occurrence).
+
+    Uses Recon's pre-composed security_relationship_chain facts that contain
+    ARGUMENT_DEPENDENCY or CONTROL_DEPENDENCY relations with FACT-level
+    certainty.
+    """
+    chain_facts = profile.buckets.get("external_interaction", [])
+    for f in chain_facts:
+        if f.get("type") == "security_relationship_chain":
+            steps = f.get("properties", {}).get("steps", [])
+            for step in steps:
+                if step.get("relation") in ("ARGUMENT_DEPENDENCY", "CONTROL_DEPENDENCY"):
+                    if step.get("certainty") == "FACT":
+                        return True
+        if f.get("type") == "security_relationship_chain" and \
+           f.get("properties", {}).get("pattern") == "user_influenced_dynamic_call":
+            # This chain proves parameter → call dependency (not just co-occurrence)
+            return True
+    return False
+
+
+def _evidence_tier(profile: FunctionProfile, recon: loader.ReconArtifact) -> tuple[str, bool]:
+    """Determine the evidence tier for a function profile.
+
+    Returns (tier_name, has_proven_dependency):
+    - "GRAPH_REACHABILITY" if there's a proven data/argument/control dependency chain
+    - "ARGUMENT_DEPENDENCY" if security_relationship_chain exists (parameter → call)
+    - "DATA_DEPENDENCY" if state_write/asset_operation facts share provenance
+    - "CO_OCCURRENCE" if signals merely co-occur in the same function
+
+    A hypothesis based on proven dependency (GRAPH_REACHABILITY or ARGUMENT_DEPENDENCY)
+    should be stronger and higher priority than one based on mere co-occurrence.
+    """
+    chain_facts = profile.buckets.get("external_interaction", [])
+    has_chain = any(f.get("type") == "security_relationship_chain" for f in chain_facts)
+
+    has_dependency = _has_proven_dependency(profile, recon)
+
+    if has_dependency:
+        return "GRAPH_REACHABILITY", True
+    elif has_chain:
+        return "ARGUMENT_DEPENDENCY", True
+    else:
+        return "CO_OCCURRENCE", False
 
 
 def generate_composed_hypotheses(
@@ -253,12 +304,51 @@ def generate_composed_hypotheses(
                 for b in ordered_buckets
             )
 
+            tier_name, has_proven = _evidence_tier(profile, recon)
+
+            # Determine evidence tier and priority
+            if tier_name == "GRAPH_REACHABILITY":
+                priority = "high_interest"
+                uncertainty = (
+                    "Multiple proven dependency relations (argument, control, data) "
+                    "connect the signals into a coherent chain. This suggests a "
+                    "real security pattern that deserves attention. Whether it "
+                    "violates a protocol invariant is not yet confirmed."
+                )
+                suggested_next = (
+                    f"Follow the proven chain from {fn_key} through {', '.join(ordered_buckets)} "
+                    f"to determine actual security impact."
+                )
+            elif tier_name == "ARGUMENT_DEPENDENCY":
+                priority = "medium_interest"
+                uncertainty = (
+                    "A security_relationship_chain proves parameter → call dependency, "
+                    "but whether this leads to actual security impact is not yet confirmed."
+                )
+                suggested = f"Analyze the chain {fn_key} → user-controlled target → asset impact. " if "asset_movement" in signature else ""
+                suggested_next = (
+                    f"{suggested}Check if the dependency creates a real security concern "
+                    f"and whether the caller-controlled parameter reaches a sensitive sink."
+                )
+            else:  # CO_OCCURRENCE
+                priority = "low_interest"
+                uncertainty = (
+                    "Signals co-occur in the same function but there is no proven "
+                    "data/argument/control dependency. Whether they cause each other "
+                    "requires deeper analysis or proof."
+                )
+                suggested_next = (
+                    f"Verify if {', '.join(ordered_buckets)} are causally connected "
+                    f"or merely coincidental. Look for data/argument/control dependency chains."
+                )
+
             h = ThreatHypothesis(
                 hypothesis_id=next_id(),
                 category=label,
                 statement=(
                     f"Function {fn_key} combines the following signals: {ops_desc}"
                     f"{' and is externally reachable' if profile.is_entrypoint else ''}. "
+                    f"{'A proven dependency chain connects these signals. ' if has_proven else ''}"
                     f"This combination has not been ruled out as security-relevant, "
                     f"whether or not it matches a previously catalogued hypothesis "
                     f"category."
@@ -274,18 +364,12 @@ def generate_composed_hypotheses(
                     f"The involved signals ({', '.join(ordered_buckets)}) can be chained "
                     f"in a way that violates an implicit protocol assumption",
                 ],
-                uncertainty=(
-                    "Generated by generic signal composition rather than a named "
-                    "detector; whether this constitutes a real concern requires "
-                    "manual review of the underlying facts."
-                ),
-                suggested_next_investigation=(
-                    f"Review {fn_key} for how these signal types interact: "
-                    f"{', '.join(ordered_buckets)}."
-                ),
+                uncertainty=uncertainty,
+                suggested_next_investigation=suggested_next,
                 invariant_candidate_id=inv_by_function.get(fn_key, ""),
-                priority="medium_interest",
-                priority_rationale="Generic composition of consequential signal buckets",
+                priority=priority,
+                priority_rationale=f"Generic composition ({tier_name})",
+                evidence_tier=tier_name,
             )
             out.append(h)
 
