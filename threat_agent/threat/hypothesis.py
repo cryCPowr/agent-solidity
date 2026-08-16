@@ -49,6 +49,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from . import loader
+from .evidence import classify_evidence
 from .invariants import InvariantCandidate
 from .composition import generate_composed_hypotheses
 
@@ -86,7 +87,8 @@ class ThreatHypothesis:
     priority: str = "low_interest"
     priority_rationale: str = ""
     suggested_next_investigation: str = ""
-    evidence_tier: str = ""  # "CO_OCCURRENCE" | "ARGUMENT_DEPENDENCY" | "GRAPH_REACHABILITY"
+    evidence_tier: str = ""  # canonical tier from threat/evidence.py:
+    # "CO_OCCURRENCE" | "RELATIONSHIP_GROUNDED" | "ARGUMENT_DEPENDENCY" | "GRAPH_REACHABILITY"
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -209,37 +211,6 @@ def _find_function_facts(recon: loader.ReconArtifact, fn_key: str) -> list[dict[
     return loader.facts_for_function(recon, fn_key)
 
 
-def _evidence_tier_for_facts(
-    fact_ids: list[str], recon: loader.ReconArtifact
-) -> str:
-    """Determine evidence tier for a set of observed fact IDs.
-
-    Tiers:
-    - GRAPH_REACHABILITY: proven dependency relations
-    - ARGUMENT_DEPENDENCY: relationship chain exists
-    - CO_OCCURRENCE: no proven dependency
-    """
-    if not fact_ids:
-        return "CO_OCCURRENCE"
-    fid_set = set(fact_ids)
-    has_proven = False
-    has_relationship = False
-    for fact in recon.facts_obj.facts:
-        if fact.get("id") not in fid_set:
-            continue
-        if fact.get("type") == "security_relationship_chain":
-            has_relationship = True
-            rel_type = fact.get("properties", {}).get("relationship_type", "")
-            if rel_type in ("ARGUMENT_DEPENDENCY", "DATA_DEPENDENCY", "CONTROL_DEPENDENCY"):
-                has_proven = True
-                break
-    if has_proven:
-        return "GRAPH_REACHABILITY"
-    if has_relationship:
-        return "ARGUMENT_DEPENDENCY"
-    return "CO_OCCURRENCE"
-
-
 def _generate_arbitrary_execution(
     recon: loader.ReconArtifact,
     out: list[ThreatHypothesis],
@@ -314,7 +285,7 @@ def _generate_arbitrary_execution(
                 "Arbitrary call target with token capability creates "
                 "potential asset redirection surface"
             )
-        h.evidence_tier = _evidence_tier_for_facts(h.observed_facts, recon)
+        h.evidence_tier = classify_evidence(h.observed_facts, h.graph_nodes, h.graph_edges, recon)
         out.append(h)
 
     # Low-level call with dynamic target
@@ -345,7 +316,7 @@ def _generate_arbitrary_execution(
                 priority="high_interest" if related_caps else "medium_interest",
                 priority_rationale="Low-level call with dynamic target is a trust boundary crossing",
             )
-            h.evidence_tier = _evidence_tier_for_facts(h.observed_facts, recon)
+            h.evidence_tier = classify_evidence(h.observed_facts, h.graph_nodes, h.graph_edges, recon)
             out.append(h)
 
 
@@ -396,7 +367,7 @@ def _generate_callback_hypotheses(
                 priority="medium_interest",
                 priority_rationale="External call + state mutation creates reentrancy surface",
             )
-            h.evidence_tier = _evidence_tier_for_facts(h.observed_facts, recon)
+            h.evidence_tier = classify_evidence(h.observed_facts, h.graph_nodes, h.graph_edges, recon)
             out.append(h)
 
 
@@ -461,7 +432,7 @@ def _generate_accounting_hypotheses(
                 priority="high_interest",
                 priority_rationale="Digest construction + state/arithmetic is a semantic mismatch surface",
             )
-            h.evidence_tier = _evidence_tier_for_facts(h.observed_facts, recon)
+            h.evidence_tier = classify_evidence(h.observed_facts, h.graph_nodes, h.graph_edges, recon)
             out.append(h)
 
 
@@ -524,7 +495,7 @@ def _generate_rounding_hypotheses(
                 "creates rounding advantage opportunity" if has_asset else
                 "Division affects calculation; potential for rounding bias"
             ),
-            evidence_tier=_evidence_tier_for_facts(observed, recon),
+            evidence_tier=classify_evidence(observed, [], [], recon),
         )
         out.append(h)
 
@@ -570,7 +541,7 @@ def _generate_signature_hypotheses(
             ),
             priority="high_interest" if observed else "medium_interest",
             priority_rationale="Signature operations are replay-prone without proper binding",
-            evidence_tier=_evidence_tier_for_facts(observed, recon),
+            evidence_tier=classify_evidence(observed, [], [], recon),
         )
         out.append(h)
 
@@ -631,7 +602,7 @@ def _generate_cross_contract_hypotheses(
                 priority="medium_interest",
                 priority_rationale="Dynamic cross-contract call is a trust boundary",
             )
-            h.evidence_tier = _evidence_tier_for_facts(h.observed_facts, recon)
+            h.evidence_tier = classify_evidence(h.observed_facts, h.graph_nodes, h.graph_edges, recon)
             out.append(h)
 
 
@@ -678,7 +649,7 @@ def _generate_dos_hypotheses(
             ),
             priority="medium_interest",
             priority_rationale="Unbounded array operations can cause DoS",
-            evidence_tier=_evidence_tier_for_facts(observed, recon),
+            evidence_tier=classify_evidence(observed, [], [], recon),
         )
         out.append(h)
 
@@ -709,7 +680,7 @@ def _generate_dos_hypotheses(
                 priority="low_interest",
                 priority_rationale="Standard external call; only concerning if no error handling",
             )
-            h.evidence_tier = _evidence_tier_for_facts(h.observed_facts, recon)
+            h.evidence_tier = classify_evidence(h.observed_facts, h.graph_nodes, h.graph_edges, recon)
             out.append(h)
 
 
@@ -773,7 +744,7 @@ def _generate_economic_hypotheses(
             ),
             priority="high_interest" if observed else "medium_interest",
             priority_rationale="Arithmetic + asset movement = economic exposure",
-            evidence_tier=_evidence_tier_for_facts(observed, recon),
+            evidence_tier=classify_evidence(observed, [], [], recon),
         )
         out.append(h)
 

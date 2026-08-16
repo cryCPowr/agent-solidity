@@ -30,6 +30,7 @@ from .surface import build_surfaces
 from .invariants import generate_invariants
 from .hypothesis import generate_hypotheses
 from .prioritization import prioritize_all
+from .evidence import EvidenceTier
 
 
 def write_threat_output(
@@ -103,6 +104,10 @@ def write_threat_output(
         "hypotheses_by_priority": {
             p: sum(1 for h in hypotheses if h.priority == p)
             for p in ("very_high_interest", "high_interest", "medium_interest", "low_interest")
+        },
+        "hypotheses_by_evidence_tier": {
+            t: sum(1 for h in hypotheses if h.evidence_tier == t)
+            for t in EvidenceTier.all()
         },
         "hypotheses_by_category": {
             c: sum(1 for h in hypotheses if h.category == c)

@@ -77,7 +77,8 @@
         "uncertainty": {"type": "string"},
         "priority": {"type": "string", "enum": ["very_high_interest", "high_interest", "medium_interest", "low_interest"]},
         "priority_rationale": {"type": "string"},
-        "suggested_next_investigation": {"type": "string"}
+        "suggested_next_investigation": {"type": "string"},
+        "evidence_tier": {"type": "string", "enum": ["CO_OCCURRENCE", "RELATIONSHIP_GROUNDED", "ARGUMENT_DEPENDENCY", "GRAPH_REACHABILITY"]}
       },
       "required": ["hypothesis_id", "category", "statement", "actor", "observed_facts", "priority", "priority_rationale", "suggested_next_investigation"]
     }

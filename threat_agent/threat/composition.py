@@ -38,6 +38,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from . import loader
+from .evidence import classify_evidence, EvidenceTier
 from .invariants import InvariantCandidate
 
 
@@ -188,9 +189,6 @@ def _select_bucket_pairs(profile: FunctionProfile) -> list[set]:
       since that's a signal the consequence is influenced by something
       (decoded data, arithmetic, iteration) rather than a fixed,
       unconditional effect.
-
-    Returns pairs along with whether they include proven data/argument
-    dependency relationships (from Recon security_relationship_chain facts).
     """
     import itertools
 
@@ -209,52 +207,19 @@ def _select_bucket_pairs(profile: FunctionProfile) -> list[set]:
     return pairs
 
 
-def _has_proven_dependency(profile: FunctionProfile, recon: loader.ReconArtifact) -> bool:
-    """Check if this function has a security_relationship_chain fact with
-    proven data/argument/control dependency (not just co-occurrence).
 
-    Uses Recon's pre-composed security_relationship_chain facts that contain
-    ARGUMENT_DEPENDENCY or CONTROL_DEPENDENCY relations with FACT-level
-    certainty.
+def _evidence_tier(profile: FunctionProfile, recon: loader.ReconArtifact) -> EvidenceTier:
+    """Classify the evidence backing a function's composed signals.
+
+    Uses the canonical classifier from evidence.py (Bug 4: single source of
+    truth). Composition hypotheses are function-scoped, so the tier reflects
+    the strongest fact-level evidence attached to the function -- including
+    facts that are not bucketed (e.g. call_argument_dataflow), because they
+    still prove how the function's signals are wired together. The O(1)
+    by_function index provides the candidate facts.
     """
-    chain_facts = profile.buckets.get("external_interaction", [])
-    for f in chain_facts:
-        if f.get("type") == "security_relationship_chain":
-            steps = f.get("properties", {}).get("steps", [])
-            for step in steps:
-                if step.get("relation") in ("ARGUMENT_DEPENDENCY", "CONTROL_DEPENDENCY"):
-                    if step.get("certainty") == "FACT":
-                        return True
-        if f.get("type") == "security_relationship_chain" and \
-           f.get("properties", {}).get("pattern") == "user_influenced_dynamic_call":
-            # This chain proves parameter → call dependency (not just co-occurrence)
-            return True
-    return False
-
-
-def _evidence_tier(profile: FunctionProfile, recon: loader.ReconArtifact) -> tuple[str, bool]:
-    """Determine the evidence tier for a function profile.
-
-    Returns (tier_name, has_proven_dependency):
-    - "GRAPH_REACHABILITY" if there's a proven data/argument/control dependency chain
-    - "ARGUMENT_DEPENDENCY" if security_relationship_chain exists (parameter → call)
-    - "DATA_DEPENDENCY" if state_write/asset_operation facts share provenance
-    - "CO_OCCURRENCE" if signals merely co-occur in the same function
-
-    A hypothesis based on proven dependency (GRAPH_REACHABILITY or ARGUMENT_DEPENDENCY)
-    should be stronger and higher priority than one based on mere co-occurrence.
-    """
-    chain_facts = profile.buckets.get("external_interaction", [])
-    has_chain = any(f.get("type") == "security_relationship_chain" for f in chain_facts)
-
-    has_dependency = _has_proven_dependency(profile, recon)
-
-    if has_dependency:
-        return "GRAPH_REACHABILITY", True
-    elif has_chain:
-        return "ARGUMENT_DEPENDENCY", True
-    else:
-        return "CO_OCCURRENCE", False
+    fact_ids = [f.get("id", "") for f in loader.facts_for_function(recon, profile.fn_key)]
+    return classify_evidence(fact_ids, [], [], recon)
 
 
 def generate_composed_hypotheses(
@@ -285,6 +250,10 @@ def generate_composed_hypotheses(
         if not pairs:
             continue
 
+        # One tier per function: the strongest evidence among the
+        # function's facts (canonical classifier, Bug 4).
+        tier = _evidence_tier(profile, recon)
+
         # Group pairs by their best-effort label, merging bucket sets that
         # land on the same label. This keeps unrecognized combinations
         # ("novel_composition") as their own hypothesis instead of being
@@ -304,10 +273,10 @@ def generate_composed_hypotheses(
                 for b in ordered_buckets
             )
 
-            tier_name, has_proven = _evidence_tier(profile, recon)
-
-            # Determine evidence tier and priority
-            if tier_name == "GRAPH_REACHABILITY":
+            # Provisional priority per tier; the final evidence-aware
+            # priority is (re)assigned by prioritization.prioritize_all,
+            # which enforces the tier ceilings (Bug 3).
+            if tier is EvidenceTier.GRAPH_REACHABILITY:
                 priority = "high_interest"
                 uncertainty = (
                     "Multiple proven dependency relations (argument, control, data) "
@@ -319,10 +288,11 @@ def generate_composed_hypotheses(
                     f"Follow the proven chain from {fn_key} through {', '.join(ordered_buckets)} "
                     f"to determine actual security impact."
                 )
-            elif tier_name == "ARGUMENT_DEPENDENCY":
+            elif tier is EvidenceTier.ARGUMENT_DEPENDENCY:
                 priority = "medium_interest"
                 uncertainty = (
-                    "A security_relationship_chain proves parameter → call dependency, "
+                    "Verified argument/dataflow evidence (e.g. call_argument_dataflow, "
+                    "parameter origin) connects inputs to calls in this function, "
                     "but whether this leads to actual security impact is not yet confirmed."
                 )
                 suggested = f"Analyze the chain {fn_key} → user-controlled target → asset impact. " if "asset_movement" in signature else ""
@@ -330,7 +300,20 @@ def generate_composed_hypotheses(
                     f"{suggested}Check if the dependency creates a real security concern "
                     f"and whether the caller-controlled parameter reaches a sensitive sink."
                 )
-            else:  # CO_OCCURRENCE
+            elif tier is EvidenceTier.RELATIONSHIP_GROUNDED:
+                priority = "medium_interest"
+                uncertainty = (
+                    "An explicit Recon relationship chain connects these signals, "
+                    "but no argument/dataflow dependency (and no graph path) has "
+                    "been verified. Whether the relationship implies causation "
+                    "requires deeper analysis."
+                )
+                suggested_next = (
+                    f"Inspect the relationship-chain steps for {fn_key}: do they "
+                    f"carry actual argument/dataflow dependencies between "
+                    f"{', '.join(ordered_buckets)}, or only co-occurrence?"
+                )
+            else:  # EvidenceTier.CO_OCCURRENCE
                 priority = "low_interest"
                 uncertainty = (
                     "Signals co-occur in the same function but there is no proven "
@@ -342,13 +325,20 @@ def generate_composed_hypotheses(
                     f"or merely coincidental. Look for data/argument/control dependency chains."
                 )
 
+            chain_clause = {
+                EvidenceTier.GRAPH_REACHABILITY: "A verified graph path connects these signals. ",
+                EvidenceTier.ARGUMENT_DEPENDENCY: "A proven argument/dataflow dependency connects these signals. ",
+                EvidenceTier.RELATIONSHIP_GROUNDED: "An explicit Recon relationship chain connects these signals. ",
+                EvidenceTier.CO_OCCURRENCE: "",
+            }[tier]
+
             h = ThreatHypothesis(
                 hypothesis_id=next_id(),
                 category=label,
                 statement=(
                     f"Function {fn_key} combines the following signals: {ops_desc}"
                     f"{' and is externally reachable' if profile.is_entrypoint else ''}. "
-                    f"{'A proven dependency chain connects these signals. ' if has_proven else ''}"
+                    f"{chain_clause}"
                     f"This combination has not been ruled out as security-relevant, "
                     f"whether or not it matches a previously catalogued hypothesis "
                     f"category."
@@ -368,8 +358,8 @@ def generate_composed_hypotheses(
                 suggested_next_investigation=suggested_next,
                 invariant_candidate_id=inv_by_function.get(fn_key, ""),
                 priority=priority,
-                priority_rationale=f"Generic composition ({tier_name})",
-                evidence_tier=tier_name,
+                priority_rationale=f"Generic composition ({tier.value})",
+                evidence_tier=tier.value,
             )
             out.append(h)
 
