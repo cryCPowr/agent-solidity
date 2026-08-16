@@ -49,15 +49,53 @@ _THIS_DIR = Path(__file__).resolve().parent.parent  # recon-system/
 _COMPILE_JS = _THIS_DIR / "compile.js"
 _BUNDLED_NODE_MODULES = _THIS_DIR / "node_modules"
 _CACHE_DIR = _THIS_DIR / ".solc-cache"
-_BUNDLED_VERSION = "0.8.24"
+# What we *aim* to ship as the bundled compiler. This is a declaration, not
+# a fact: the authoritative bundled version is read from the bundled solc
+# package's own package.json at import time (see _BUNDLED_VERSION below) so
+# a stale constant can never make us claim "compiled with 0.8.24" while
+# actually invoking whatever solc happens to be installed in node_modules.
+_BUNDLED_DECLARED_VERSION = "0.8.24"
 
 _PRAGMA_RE = re.compile(r"pragma\s+solidity\s+([^;]+);")
 _STRICT_SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+$")
 
+
+def _read_installed_solc_version(node_modules_dir: Path) -> str | None:
+    """Return the *verified* version of the solc package under
+    `node_modules_dir`, read from its package.json -- or None if it cannot
+    be read (missing/corrupt package).
+
+    Directory names are never trusted: the compiler actually invoked is
+    whatever `require()` loads from this directory, and only package.json
+    says which version that is.
+    """
+    try:
+        with open(node_modules_dir / "solc" / "package.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return None
+    version = data.get("version")
+    return version if isinstance(version, str) and _STRICT_SEMVER_RE.match(version) else None
+
+
+def _bundled_version() -> str:
+    """Verified bundled compiler version (declared value only as fallback
+    when the bundled package cannot be read at all)."""
+    verified = _read_installed_solc_version(_BUNDLED_NODE_MODULES)
+    return verified if verified is not None else _BUNDLED_DECLARED_VERSION
+
+
+# The bundled version as a module attribute (tests and call sites read it
+# call-time via the module global; it reflects the *actual* bundled solc).
+_BUNDLED_VERSION = _bundled_version()
+
 # A single semver clause inside a pragma constraint expression, e.g.
-# "^0.8.20", ">=0.8.20", "0.8.24". The operator is optional; a bare version
-# is treated the same way solidity treats it -- like `^version`.
-_CLAUSE_RE = re.compile(r"(\^|~|>=|<=|>|<|=)?\s*(\d+)\.(\d+)\.(\d+)")
+# "^0.8.20", ">=0.8.20", "0.8.24", or the two-component "^0.8" / ">=0.6"
+# form (legal and common in real repositories; npm/solidity treat the
+# missing patch component as .0 for range purposes, so "^0.8" means
+# ">=0.8.0 <0.9.0"). The operator is optional; a bare version is treated
+# the same way solidity treats it -- like `^version`.
+_CLAUSE_RE = re.compile(r"(\^|~|>=|<=|>|<|=)?\s*(\d+)\.(\d+)(?:\.(\d+))?")
 
 # Hard cap on how many *distinct* non-bundled solc versions a single run is
 # allowed to trigger `npm install` for. A repo can contain arbitrarily many
@@ -132,7 +170,10 @@ def _parse_or_groups(constraint_expr: str) -> list[list[tuple[str, tuple[int, in
         if not group_text:
             continue
         clauses = [
-            (m.group(1) or "^", (int(m.group(2)), int(m.group(3)), int(m.group(4))))
+            (
+                m.group(1) or "^",
+                (int(m.group(2)), int(m.group(3)), int(m.group(4) or "0")),
+            )
             for m in _CLAUSE_RE.finditer(group_text)
         ]
         if clauses:
@@ -201,9 +242,16 @@ class CompileGroup:
     cycles: list[list[str]] = field(default_factory=list)
 
 
-def group_sources_by_version(sources: dict[str, str]) -> list[CompileGroup]:
+def group_sources_by_version(
+    sources: dict[str, str], prefix_aliases: dict[str, str] | None = None
+) -> list[CompileGroup]:
     """Build compiler-compatible compilation units from the *transitive
     import closure*, not from each file's pragma in isolation.
+
+    `prefix_aliases` (raw import prefix -> relpath prefix, e.g. from a
+    Foundry remappings.txt expanded by external_deps.expand_sources) is
+    threaded into import resolution so remapped bare imports resolve onto
+    the files added under their true on-disk relpaths.
 
     Pipeline: resolve every `import` in `sources` -> build the import graph
     -> compute weakly-connected components (the transitive dependency
@@ -234,7 +282,7 @@ def group_sources_by_version(sources: dict[str, str]) -> list[CompileGroup]:
     information before ever invoking solc, since the compile is already
     known to be incomplete.
     """
-    graph = import_resolution.build_import_graph(sources)
+    graph = import_resolution.build_import_graph(sources, prefix_aliases=prefix_aliases)
     components = import_resolution.connected_components(graph, files=sources.keys())
     all_cycles = import_resolution.find_cycles(graph)
 
@@ -292,25 +340,54 @@ def _version_node_modules_dir(version: str) -> Path:
     return _CACHE_DIR / version / "node_modules"
 
 
-def _node_modules_for(version: str) -> str:
-    if version == _BUNDLED_VERSION and (_BUNDLED_NODE_MODULES / "solc").exists():
+def _node_modules_for(version: str) -> str | None:
+    """Locate a node_modules directory whose solc package *verifiably* is
+    `version` (package.json is the only authority -- never the directory
+    name), or None if no such directory exists.
+
+    Preference order:
+    - the bundled recon-system/node_modules, when its verified version
+      matches (or when it has no readable solc package at all: there is
+      nothing to mislabel, and the compiler invocation itself will fail
+      loudly rather than silently substitute a wrong version);
+    - otherwise the first (deterministically sorted) .solc-cache entry
+      whose verified version matches.
+
+    A cache directory whose name promises one version but whose package
+    says another is skipped: trusting it would invoke an unrequested
+    compiler while reporting the requested one.
+    """
+    bundled_actual = _read_installed_solc_version(_BUNDLED_NODE_MODULES)
+    if bundled_actual == version or bundled_actual is None:
         return str(_BUNDLED_NODE_MODULES)
-    return str(_version_node_modules_dir(version))
+
+    if _CACHE_DIR.exists():
+        for child in sorted(_CACHE_DIR.iterdir()):
+            if not child.is_dir() or not _STRICT_SEMVER_RE.match(child.name):
+                continue
+            if _read_installed_solc_version(child / "node_modules") == version:
+                return str(child / "node_modules")
+    return None
 
 
 def _cached_versions() -> list[str]:
-    """Versions already installed on disk (this run or a previous one)."""
+    """Versions actually installed in the Recon-managed cache, *verified*
+    against each entry's solc package.json (a tampered or partially-written
+    cache directory reports the version it really contains, not the one
+    its name claims)."""
     if not _CACHE_DIR.exists():
         return []
-    out = []
+    out: set[str] = set()
     for child in _CACHE_DIR.iterdir():
         if (
             child.is_dir()
             and _STRICT_SEMVER_RE.match(child.name)
             and (child / "node_modules" / "solc").exists()
         ):
-            out.append(child.name)
-    return out
+            verified = _read_installed_solc_version(child / "node_modules")
+            if verified is not None:
+                out.add(verified)
+    return sorted(out, key=_ver_tuple)
 
 
 def _query_npm_available_versions(timeout: int = 30) -> list[str] | None:
@@ -378,9 +455,11 @@ class InstallBudget:
 def _install_version(version: str, budget: InstallBudget) -> bool:
     """Attempt `npm install solc@version` into the per-version cache dir.
 
-    Returns True iff the install succeeded and solc is present afterwards.
-    Does not touch the budget itself beyond the single reservation the
-    caller already made via `try_reserve()`.
+    Returns True iff the install succeeded AND the installed package's
+    version verifiably reads back as `version` from its package.json --
+    a half-written or redirected install must not be reported as the
+    requested compiler. Does not touch the budget itself beyond the single
+    reservation the caller already made via `try_reserve()`.
     """
     target_dir = _CACHE_DIR / version
     node_modules = _version_node_modules_dir(version)
@@ -396,7 +475,16 @@ def _install_version(version: str, budget: InstallBudget) -> bool:
     except (subprocess.TimeoutExpired, OSError) as exc:
         logger.warning("npm install failed for solc@%s: %s", version, exc)
         return False
-    return proc.returncode == 0 and (node_modules / "solc").exists()
+    if proc.returncode != 0 or not (node_modules / "solc").exists():
+        return False
+    installed = _read_installed_solc_version(node_modules)
+    if installed != version:
+        logger.warning(
+            "npm install of solc@%s produced a package reporting version %r; rejecting",
+            version, installed,
+        )
+        return False
+    return True
 
 
 # --------------------------------------------------------------------------
@@ -412,6 +500,11 @@ class CompilerRequirement:
     resolved_version: str | None
     resolution_method: str  # see RESOLUTION_METHODS below
     compatible: bool
+    # Diagnostics for structured failure reporting (never used to pick a
+    # compiler): every concrete version that was considered and rejected,
+    # and why resolution ended the way it did.
+    attempted_versions: list[str] = field(default_factory=list)
+    reason: str = ""
 
 
 # no_pragma_bundled_default: no pragma present -> bundled used by convention
@@ -420,6 +513,9 @@ class CompilerRequirement:
 # installed_compatible:      a fresh npm install of a satisfying version succeeded
 # unparseable_constraint:    pragma text didn't parse into any version clause
 # unresolved:                no local/installable compiler satisfies the constraint
+# invocation_mismatch:       resolution succeeded but the compiler that was
+#                             actually invoked reports a different version than
+#                             the resolved one (verification failure: fail closed)
 # missing_import:            a member file's import didn't resolve to any known
 #                             source at all; set directly by compile_group()
 #                             (never returned by resolve_compiler*()), since the
@@ -432,39 +528,139 @@ RESOLUTION_METHODS = frozenset({
     "installed_compatible",
     "unparseable_constraint",
     "unresolved",
+    "invocation_mismatch",
     "missing_import",
 })
 
 
+def _normalize_hint(raw: str) -> str | None:
+    """Normalize a build-metadata compiler hint to strict x.y.z, or None.
+
+    Hints arrive from human-authored config (`0.8.28`, `^0.8.20`, `=0.8.28`);
+    strip the comparison operators and validate. Anything that doesn't
+    normalize to a real version is ignored -- a malformed hint must never
+    block pragma-driven resolution.
+    """
+    cleaned = re.sub(r"[\^~<>=\s]+", "", raw.strip())
+    return cleaned if _STRICT_SEMVER_RE.match(cleaned) else None
+
+
+def extract_compiler_hints(repo_root: str) -> dict:
+    """Read compiler version *hints* from target-repo build metadata.
+
+    Inspected (best effort, regex/JSON only -- nothing from the repo is
+    ever executed): hardhat.config.{ts,js,cjs,mjs}, foundry.toml,
+    package.json (truffle/embark-style compilers.solc.version).
+
+    Hints are diagnostics/tie-breakers ONLY: source pragmas remain the
+    authoritative compatibility constraint, and the target repo's
+    node_modules/solc version is deliberately never consulted here (a
+    transitive JS dependency says nothing about pragma requirements).
+
+    Returns {"by_file": {relpath: {"raw": str, "version": str|None}},
+             "primary": str|None, "conflicting": bool} where `primary` is
+    the single distinct normalized hint across all sources (None when
+    absent or conflicting).
+    """
+    import os
+
+    repo_root = os.path.abspath(repo_root)
+    by_file: dict[str, dict] = {}
+
+    hardhat_re = re.compile(r"version\s*[:=]\s*['\"]([^'\"]+)['\"]")
+    for name in ("hardhat.config.ts", "hardhat.config.js", "hardhat.config.cjs", "hardhat.config.mjs"):
+        path = os.path.join(repo_root, name)
+        if not os.path.isfile(path):
+            continue
+        try:
+            with open(path, "r", encoding="utf-8", errors="replace") as f:
+                text = f.read(64 * 1024)
+        except OSError:
+            continue
+        m = hardhat_re.search(text)
+        if m:
+            by_file[name] = {"raw": m.group(1), "version": _normalize_hint(m.group(1))}
+
+    foundry_path = os.path.join(repo_root, "foundry.toml")
+    if os.path.isfile(foundry_path):
+        try:
+            with open(foundry_path, "r", encoding="utf-8", errors="replace") as f:
+                text = f.read(64 * 1024)
+        except OSError:
+            text = ""
+        m = (
+            re.search(r"(?m)^\s*solc_version\s*=\s*['\"]([^'\"]+)['\"]", text)
+            or re.search(r"(?m)^\s*solc\s*=\s*['\"]([^'\"]+)['\"]", text)
+        )
+        if m:
+            by_file["foundry.toml"] = {"raw": m.group(1), "version": _normalize_hint(m.group(1))}
+
+    pkg_path = os.path.join(repo_root, "package.json")
+    if os.path.isfile(pkg_path):
+        try:
+            with open(pkg_path, "r", encoding="utf-8") as f:
+                pkg = json.load(f)
+            raw = (((pkg.get("compilers") or {}).get("solc")) or {}).get("version")
+            if isinstance(raw, str):
+                by_file["package.json"] = {"raw": raw, "version": _normalize_hint(raw)}
+        except (OSError, json.JSONDecodeError):
+            pass
+
+    versions = sorted({v["version"] for v in by_file.values() if v["version"]})
+    return {
+        "by_file": dict(sorted(by_file.items())),
+        "primary": versions[0] if len(versions) == 1 else None,
+        "conflicting": len(versions) > 1,
+    }
+
+
 def _resolve_against_predicate(
-    predicate: Callable[[str], bool], budget: InstallBudget
-) -> tuple[str | None, str]:
+    predicate: Callable[[str], bool], budget: InstallBudget, hint: str | None = None
+) -> tuple[str | None, str, list[str], str]:
     """Shared version-search logic: bundled -> cached -> npm-install, in
     that preference order, trying each concrete version against
     `predicate` ("would this version satisfy the compilation unit?").
 
-    Returns `(resolved_version, resolution_method)`; `resolved_version` is
-    None iff `resolution_method == "unresolved"`. Factored out of
-    `resolve_compiler` so both the single-constraint and the multi-file,
-    multi-constraint (`resolve_compiler_for_constraints`) resolution paths
-    share one implementation of "prefer local, then install within
-    budget" -- there is exactly one place that decides which concrete
-    version gets used.
+    `hint` (from build metadata) never widens what is acceptable -- every
+    candidate must still pass `predicate` -- it only breaks ties *within*
+    an acquisition tier: among multiple satisfying cached versions the
+    hinted one is preferred over the highest, and among published versions
+    the hinted one is preferred over the highest. A hint that itself fails
+    the predicate is ignored entirely (pragmas are authoritative).
+
+    Returns `(resolved_version, resolution_method, attempted_versions,
+    reason)`; `resolved_version` is None iff `resolution_method ==
+    "unresolved"`. Factored out of `resolve_compiler` so both the
+    single-constraint and the multi-file, multi-constraint
+    (`resolve_compiler_for_constraints`) resolution paths share one
+    implementation of "prefer local, then install within budget" -- there
+    is exactly one place that decides which concrete version gets used.
     """
+    attempted: list[str] = []
+
     local_candidates = {_BUNDLED_VERSION, *_cached_versions()}
+    rejected_local = sorted((v for v in local_candidates if not predicate(v)), key=_ver_tuple)
+    attempted.extend(rejected_local)
     matching_local = sorted((v for v in local_candidates if predicate(v)), key=_ver_tuple)
     if _BUNDLED_VERSION in matching_local:
-        return _BUNDLED_VERSION, "bundled_compatible"
+        return _BUNDLED_VERSION, "bundled_compatible", attempted, ""
     if matching_local:
-        return matching_local[-1], "cache_compatible"
+        if hint is not None and hint in matching_local:
+            chosen = hint
+        else:
+            chosen = matching_local[-1]
+        return chosen, "cache_compatible", attempted, ""
 
     if budget.offline:
         logger.warning("no local solc satisfies the constraint and offline mode disallows npm; unresolved")
-        return None, "unresolved"
+        return None, "unresolved", attempted, (
+            "no local (bundled or cached) solc satisfies the constraint and "
+            "offline mode disallows npm acquisition"
+        )
 
     published = _query_npm_available_versions()
     if not published:
-        return None, "unresolved"
+        return None, "unresolved", attempted, "npm registry query failed or returned no versions"
 
     satisfying = sorted(
         (v for v in published if _is_installable_version(v) and predicate(v)),
@@ -473,25 +669,30 @@ def _resolve_against_predicate(
     )
     if not satisfying:
         logger.warning("no published/allow-listed solc satisfies the constraint")
-        return None, "unresolved"
+        return None, "unresolved", attempted, "no published, allow-listed solc version satisfies the constraint"
 
-    best = satisfying[0]
+    best = hint if (hint is not None and hint in satisfying) else satisfying[0]
     if not budget.try_reserve():
         logger.warning(
             "solc@%s would satisfy the constraint but the install budget (%s) is exhausted; unresolved",
             best, budget.max_installs,
         )
-        return None, "unresolved"
+        return None, "unresolved", attempted, (
+            f"solc@{best} satisfies the constraint but the per-run install "
+            f"budget ({budget.max_installs}) is exhausted"
+        )
 
     if _install_version(best, budget):
-        return best, "installed_compatible"
+        return best, "installed_compatible", attempted, ""
 
     logger.warning("npm install of solc@%s failed; unresolved", best)
-    return None, "unresolved"
+    return None, "unresolved", attempted, f"npm install of solc@{best} failed or installed an unverifiable package"
 
 
 def resolve_compiler(
-    constraint_expr: str | None, budget: InstallBudget | None = None
+    constraint_expr: str | None,
+    budget: InstallBudget | None = None,
+    hint: str | None = None,
 ) -> CompilerRequirement:
     """Resolve a pragma constraint expression to a concrete, *compatible*
     solc version -- or report that none is available.
@@ -501,6 +702,10 @@ def resolve_compiler(
     the bundled compiler anyway" path here: an incompatible compiler
     producing an AST that looks like normal output is exactly the failure
     mode this function exists to prevent.
+
+    `hint` (a normalized x.y.z from build metadata) may only influence
+    which *already-satisfying* version is preferred, never whether a
+    version is acceptable.
     """
     if budget is None:
         budget = InstallBudget()
@@ -520,16 +725,22 @@ def resolve_compiler(
             resolved_version=None,
             resolution_method="unparseable_constraint",
             compatible=False,
+            reason=f"pragma constraint {constraint_expr!r} did not parse into any version clause",
         )
 
-    version, method = _resolve_against_predicate(
-        lambda v: version_satisfies(v, constraint_expr), budget
+    version, method, attempted, reason = _resolve_against_predicate(
+        lambda v: version_satisfies(v, constraint_expr), budget, hint=hint
     )
-    return CompilerRequirement(constraint_expr, version, method, version is not None)
+    return CompilerRequirement(
+        constraint_expr, version, method, version is not None,
+        attempted_versions=attempted, reason=reason,
+    )
 
 
 def resolve_compiler_for_constraints(
-    constraint_exprs: list[str | None], budget: InstallBudget | None = None
+    constraint_exprs: list[str | None],
+    budget: InstallBudget | None = None,
+    hint: str | None = None,
 ) -> CompilerRequirement:
     """Resolve ONE compiler version that satisfies every constraint in
     `constraint_exprs` *simultaneously* -- for a compilation unit made of
@@ -570,13 +781,17 @@ def resolve_compiler_for_constraints(
             resolved_version=None,
             resolution_method="unparseable_constraint",
             compatible=False,
+            reason=f"unparseable pragma constraint(s) in unit: {unparseable!r}",
         )
 
     def predicate(v: str) -> bool:
         return all(version_satisfies(v, e) for e in present)
 
-    version, method = _resolve_against_predicate(predicate, budget)
-    return CompilerRequirement(label, version, method, version is not None)
+    version, method, attempted, reason = _resolve_against_predicate(predicate, budget, hint=hint)
+    return CompilerRequirement(
+        label, version, method, version is not None,
+        attempted_versions=attempted, reason=reason,
+    )
 
 
 # --------------------------------------------------------------------------
@@ -593,10 +808,35 @@ class CompileResult:
     errors: list[dict]
     compatible: bool
     resolution_method: str
+    # Diagnostics mirroring CompilerRequirement + invocation verification.
+    attempted_versions: list[str] = field(default_factory=list)
+    reason: str = ""
+    invoked_version: str | None = None  # version the compiler wrapper reports, when available
+
+
+def _unwrap_compile_output(output: dict) -> tuple[dict, str | None]:
+    """Split compile.js output into (solc_standard_output, invoked_version).
+
+    compile.js wraps the solc Standard JSON Output as
+    `{"solc_version": "...", "solc_output": {...}}` so the Python side can
+    verify the compiler that actually ran. A bare solc output (no wrapper
+    keys) is accepted for compatibility with older wrappers/tests, with
+    invoked_version=None (verification simply not possible).
+    """
+    if isinstance(output, dict) and "solc_output" in output:
+        wrapper_version = output.get("solc_version")
+        return output["solc_output"] or {}, (
+            wrapper_version.split("+", 1)[0] if isinstance(wrapper_version, str) else None
+        )
+    return output, None
 
 
 def compile_group(
-    group: CompileGroup, sources: dict[str, str], budget: InstallBudget | None = None
+    group: CompileGroup,
+    sources: dict[str, str],
+    budget: InstallBudget | None = None,
+    hint: str | None = None,
+    remappings: list[str] | None = None,
 ) -> CompileResult:
     # Fail closed before ever shelling out: if any member's import didn't
     # resolve to a known source, this unit's Standard JSON `sources` map is
@@ -620,6 +860,10 @@ def compile_group(
                 "type": "missing_import",
                 "message": f"unresolved import(s) block compilation of this unit: {detail}",
                 "severity": "error",
+                "requested_constraint": group.constraint_expr,
+                "resolution_method": "missing_import",
+                "attempted_versions": [],
+                "reason": detail,
             }],
             compatible=False,
             resolution_method="missing_import",
@@ -631,15 +875,17 @@ def compile_group(
         # resolve_compiler_for_constraints) so a version must satisfy all
         # of them simultaneously.
         constraint_exprs = [group.member_constraints.get(f, group.constraint_expr) for f in group.files]
-        requirement = resolve_compiler_for_constraints(constraint_exprs, budget)
+        requirement = resolve_compiler_for_constraints(constraint_exprs, budget, hint=hint)
     else:
-        requirement = resolve_compiler(group.constraint_expr, budget)
+        requirement = resolve_compiler(group.constraint_expr, budget, hint=hint)
 
     if not requirement.compatible:
         message = (
             f"no compatible solc available for constraint "
             f"{group.constraint_expr!r} ({requirement.resolution_method})"
         )
+        if requirement.reason:
+            message += f": {requirement.reason}"
         if len(group.files) > 1 and len(set(group.member_constraints.values())) > 1:
             message += f"; member pragma constraints: {group.member_constraints}"
         return CompileResult(
@@ -652,13 +898,49 @@ def compile_group(
                 "type": "compiler_resolution_failed",
                 "message": message,
                 "severity": "error",
+                "requested_constraint": group.constraint_expr,
+                "resolution_method": requirement.resolution_method,
+                "attempted_versions": list(requirement.attempted_versions),
+                "reason": requirement.reason,
             }],
             compatible=False,
             resolution_method=requirement.resolution_method,
+            attempted_versions=list(requirement.attempted_versions),
+            reason=requirement.reason,
         )
 
     resolved_version = requirement.resolved_version
     node_modules = _node_modules_for(resolved_version)
+    if node_modules is None:
+        # Resolution said "use X", but no install location verifiably
+        # contains X. Invoking whatever *is* installed would compile with
+        # an unrequested compiler while reporting the requested one -- fail
+        # closed instead.
+        message = (
+            f"resolved solc {resolved_version} could not be located with a "
+            f"verified package version (directory names are not trusted)"
+        )
+        logger.error(message)
+        return CompileResult(
+            version=resolved_version,
+            requested_constraint=group.constraint_expr,
+            files=list(group.files),
+            ok=False,
+            ast_by_file={},
+            errors=[{
+                "type": "compiler_resolution_failed",
+                "message": message,
+                "severity": "error",
+                "requested_constraint": group.constraint_expr,
+                "resolution_method": "unresolved",
+                "attempted_versions": list(requirement.attempted_versions),
+                "reason": message,
+            }],
+            compatible=False,
+            resolution_method="unresolved",
+            attempted_versions=list(requirement.attempted_versions),
+            reason=message,
+        )
 
     std_input = {
         "language": "Solidity",
@@ -671,6 +953,11 @@ def compile_group(
             "outputSelection": {"*": {"": ["ast"]}},
         },
     }
+    if remappings:
+        # solc matches an import string exactly against the sources-map
+        # keys; bare dependency imports ("@openzeppelin/...") only resolve
+        # when remapped onto the key the file is keyed under.
+        std_input["settings"]["remappings"] = list(remappings)
 
     with _TempInput(std_input) as input_path:
         try:
@@ -705,7 +992,7 @@ def compile_group(
         )
 
     try:
-        output = json.loads(proc.stdout)
+        raw_output = json.loads(proc.stdout)
     except json.JSONDecodeError as exc:
         return CompileResult(
             version=resolved_version,
@@ -716,6 +1003,37 @@ def compile_group(
             errors=[{"message": f"could not parse compiler output: {exc}", "severity": "error"}],
             compatible=True,
             resolution_method=requirement.resolution_method,
+        )
+
+    output, invoked_version = _unwrap_compile_output(raw_output)
+
+    # Verification: the compiler that actually ran must be the one we
+    # resolved. A mismatch means the AST was produced by a different
+    # compiler than reported -- never silently accept it.
+    if invoked_version is not None and invoked_version != resolved_version:
+        message = (
+            f"compiler version mismatch: resolved {resolved_version} but the "
+            f"invoked compiler reports {invoked_version}"
+        )
+        logger.error(message)
+        return CompileResult(
+            version=resolved_version,
+            requested_constraint=group.constraint_expr,
+            files=list(group.files),
+            ok=False,
+            ast_by_file={},
+            errors=[{
+                "type": "compiler_version_mismatch",
+                "message": message,
+                "severity": "error",
+                "requested_constraint": group.constraint_expr,
+                "resolution_method": "invocation_mismatch",
+                "attempted_versions": list(requirement.attempted_versions),
+                "reason": message,
+            }],
+            compatible=False,
+            resolution_method="invocation_mismatch",
+            invoked_version=invoked_version,
         )
 
     errors = output.get("errors", []) or []
@@ -735,6 +1053,7 @@ def compile_group(
         errors=errors,
         compatible=True,
         resolution_method=requirement.resolution_method,
+        invoked_version=invoked_version,
     )
 
 
@@ -748,15 +1067,23 @@ def build_trust_summary(results: list[CompileResult]) -> dict:
     a downstream consumer can quietly ignore alongside a partially-populated
     result -- an incompatible-compiler AST must not be mistaken for a
     complete one.
+
+    Each blocker carries the full structured error: requested_constraint,
+    files, resolution_method, attempted_versions, reason.
     """
     blockers = []
     for r in results:
         if not r.compatible:
             blockers.append({
-                "type": r.resolution_method if r.resolution_method == "missing_import" else "compiler_resolution_failed",
+                "type": (
+                    r.resolution_method if r.resolution_method in ("missing_import", "invocation_mismatch")
+                    else "compiler_resolution_failed"
+                ),
                 "files": list(r.files),
                 "requested_constraint": r.requested_constraint,
                 "resolution_method": r.resolution_method,
+                "attempted_versions": list(r.attempted_versions),
+                "reason": r.reason,
             })
     return {
         "analysis_status": "untrusted" if blockers else "complete",

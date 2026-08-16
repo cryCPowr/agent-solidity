@@ -1,3 +1,0 @@
-function _helper(uint256 x) internal pure returns (uint256) {
-        return x * 2;
-    }

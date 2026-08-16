@@ -1,0 +1,86 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "IScaledEntropyProvider",
+  "sourceName": "contracts/interfaces/IScaledEntropyProvider.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint32",
+          "name": "_gasLimit",
+          "type": "uint32"
+        }
+      ],
+      "name": "getFee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint32",
+          "name": "_gasLimit",
+          "type": "uint32"
+        },
+        {
+          "components": [
+            {
+              "internalType": "uint8",
+              "name": "samples",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minRange",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxRange",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "withReplacement",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct IScaledEntropyProvider.SetRequest[]",
+          "name": "_requests",
+          "type": "tuple[]"
+        },
+        {
+          "internalType": "bytes4",
+          "name": "_selector",
+          "type": "bytes4"
+        },
+        {
+          "internalType": "bytes",
+          "name": "_context",
+          "type": "bytes"
+        }
+      ],
+      "name": "requestAndCallbackScaledRandomness",
+      "outputs": [
+        {
+          "internalType": "uint64",
+          "name": "requestId",
+          "type": "uint64"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

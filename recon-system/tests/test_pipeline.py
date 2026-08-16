@@ -546,3 +546,147 @@ def test_cli_runs_end_to_end(tmp_path):
     assert os.path.exists(os.path.join(out_dir, "schema.json"))
     assert os.path.exists(os.path.join(out_dir, "metadata.json"))
     assert os.path.exists(os.path.join(out_dir, "summary.json"))
+
+
+# ---------------------------------------------------------------------------
+# Target-agnostic compiler resolution + dependency expansion (the Megapot /
+# Jackpot failure mode): a realistic Hardhat repo layout must resolve its
+# compiler from the source pragmas, pull node_modules *source* dependencies
+# into the compile universe, and verify the invoked compiler version --
+# while never treating the repo's own node_modules/solc as either a source
+# or a compiler.
+# ---------------------------------------------------------------------------
+
+def test_realistic_hardhat_repo_resolves_compilers_and_dependencies(tmp_path):
+    sys.path.insert(0, REPO_ROOT)
+    from recon.pipeline import run
+
+    repo = tmp_path / "repo"
+    (repo / "contracts" / "lib").mkdir(parents=True)
+    (repo / "contracts" / "interfaces").mkdir(parents=True)
+    oz = repo / "node_modules" / "@openzeppelin" / "contracts" / "access"
+    oz.mkdir(parents=True)
+
+    (oz / "Ownable.sol").write_text(
+        "pragma solidity ^0.8.20;\n"
+        "contract Ownable {\n"
+        "    address public owner;\n"
+        "    constructor() { owner = msg.sender; }\n"
+        "}\n"
+    )
+    # Nested first-party lib/ directory (Hardhat layout) -- must be
+    # discovered even though Foundry's root-level lib/ is skipped.
+    (repo / "contracts" / "lib" / "MathHelpers.sol").write_text(
+        "pragma solidity ^0.8.20;\n"
+        "library MathHelpers {\n"
+        "    function double(uint256 v) internal pure returns (uint256) { return v * 2; }\n"
+        "}\n"
+    )
+    (repo / "contracts" / "IThing.sol").write_text(
+        "pragma solidity ^0.8.20;\ninterface IThing { function value() external view returns (uint256); }\n"
+    )
+    (repo / "contracts" / "Vault.sol").write_text(
+        "pragma solidity ^0.8.20;\n"
+        'import "@openzeppelin/contracts/access/Ownable.sol";\n'
+        'import "./lib/MathHelpers.sol";\n'
+        'import "./IThing.sol";\n'
+        "contract Vault is Ownable, IThing {\n"
+        "    uint256 public v;\n"
+        "    function set(uint256 x) external { v = MathHelpers.double(x); }\n"
+        "    function value() external view returns (uint256) { return v; }\n"
+        "}\n"
+    )
+    (repo / "hardhat.config.ts").write_text(
+        'const config = { solidity: { version: "0.8.28" } };\nexport default config;\n'
+    )
+    (repo / "package.json").write_text('{"name": "repo", "version": "1.0.0"}\n')
+
+    out_dir = str(tmp_path / "out")
+    run(str(repo), out_dir)
+    metadata = json.load(open(os.path.join(out_dir, "metadata.json")))
+
+    assert metadata["analysis_status"] == "complete", metadata
+    assert metadata["files_failed"] == []
+    analyzed = set(metadata["files_analyzed"])
+    assert "contracts/Vault.sol" in analyzed
+    assert "contracts/lib/MathHelpers.sol" in analyzed           # nested lib/ discovered
+    assert "contracts/IThing.sol" in analyzed
+    assert "node_modules/@openzeppelin/contracts/access/Ownable.sol" in analyzed
+
+    # Dependency provenance is explicit in metadata.
+    assert metadata["dependency_files_added"] == [
+        "node_modules/@openzeppelin/contracts/access/Ownable.sol"
+    ]
+    # Build metadata read as a hint (diagnostics), never as an override.
+    assert metadata["build_metadata_hints"]["primary"] == "0.8.28"
+    assert metadata["build_metadata_hints"]["by_file"]["hardhat.config.ts"]["version"] == "0.8.28"
+
+    # Every compilation unit: resolved a compatible compiler, invoked
+    # exactly that version, and the invocation was verified.
+    for run_entry in metadata["compiler"]["runs"]:
+        assert run_entry["ok"], run_entry
+        assert run_entry["resolved_version"] is not None
+        assert run_entry["invoked_version"] == run_entry["resolved_version"], run_entry
+        assert run_entry["version_verified"] is True, run_entry
+
+    # Vault + its base + its interface must exist as contracts in facts.
+    names = {
+        f["subject"]["name"]
+        for f in (line and json.loads(line) for line in open(os.path.join(out_dir, "facts.jsonl")))
+        if f["type"] == "contract_exists"
+    }
+    assert {"Vault", "Ownable", "MathHelpers", "IThing"} <= names
+
+
+def test_dependency_expansion_adds_node_modules_sources_and_remappings(tmp_path):
+    sys.path.insert(0, REPO_ROOT)
+    from recon import external_deps, import_resolution
+
+    repo = tmp_path / "repo"
+    (repo / "contracts").mkdir(parents=True)
+    oz = repo / "node_modules" / "@openzeppelin" / "contracts" / "access"
+    oz.mkdir(parents=True)
+    (oz / "Ownable.sol").write_text("pragma solidity ^0.8.20;\ncontract Ownable {}\n")
+    main = (
+        "pragma solidity ^0.8.20;\n"
+        'import "@openzeppelin/contracts/access/Ownable.sol";\n'
+        "contract Main is Ownable {}\n"
+    )
+
+    result = external_deps.expand_sources({"contracts/Main.sol": main}, str(repo))
+
+    assert result.added == ["node_modules/@openzeppelin/contracts/access/Ownable.sol"]
+    assert result.unresolved_remaining == []
+    # solc matches import strings against sources-map keys exactly: the
+    # bare import must be remapped onto the key the file was added under.
+    assert result.solc_remappings == [
+        "@openzeppelin/contracts/access/Ownable.sol="
+        "node_modules/@openzeppelin/contracts/access/Ownable.sol"
+    ]
+    graph = import_resolution.build_import_graph(result.sources)
+    assert graph.edges["contracts/Main.sol"] == {
+        "node_modules/@openzeppelin/contracts/access/Ownable.sol"
+    }
+
+
+def test_dependency_expansion_never_adds_the_compiler_package(tmp_path):
+    sys.path.insert(0, REPO_ROOT)
+    from recon import external_deps
+
+    repo = tmp_path / "repo"
+    (repo / "contracts").mkdir(parents=True)
+    solc_pkg = repo / "node_modules" / "solc" / "inner"
+    solc_pkg.mkdir(parents=True)
+    (solc_pkg / "Thing.sol").write_text("pragma solidity ^0.8.4;\ncontract Thing {}\n")
+    main = (
+        "pragma solidity ^0.8.20;\n"
+        'import "solc/inner/Thing.sol";\n'
+        "contract Main {}\n"
+    )
+
+    result = external_deps.expand_sources({"contracts/Main.sol": main}, str(repo))
+    # node_modules/solc is the *compiler* package: never a source, even
+    # though the import text would locate a file there.
+    assert result.added == []
+    assert result.solc_remappings == []
+    assert [u["raw_path"] for u in result.unresolved_remaining] == ["solc/inner/Thing.sol"]

@@ -1,5 +1,0 @@
-if (x < 10) {
-            return "small";
-        } else {
-            return "large";
-        }

@@ -1,0 +1,11 @@
+./contracts/mocks/ETHRejectingContract.sol
+./contracts/mocks/EntropyCallbackMock.sol
+./contracts/mocks/EntropyMock.sol
+./contracts/mocks/FisherYatesWithRejectionTester.sol
+./contracts/mocks/MockDepository.sol
+./contracts/mocks/MockJackpot.sol
+./contracts/mocks/ReentrantUSDCMock.sol
+./contracts/mocks/ScaledEntropyProviderMock.sol
+./contracts/mocks/TicketComboTrackerTester.sol
+./contracts/mocks/USDCMock.sol
+./contracts/mocks/UintCastsTester.sol

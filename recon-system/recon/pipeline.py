@@ -36,7 +36,17 @@ import logging
 import os
 import time
 
-from . import ast_utils, capability, expr_analysis, inventory, inventory_facts, output, relationships, solc_manager
+from . import (
+    ast_utils,
+    capability,
+    external_deps,
+    expr_analysis,
+    inventory,
+    inventory_facts,
+    output,
+    relationships,
+    solc_manager,
+)
 from .context import ProjectContext
 
 # Per-file and total-repo size guards applied before any file is opened for
@@ -113,6 +123,10 @@ def run(
     total_bytes_read = 0
     total_cap_hit = False
     per_file_ast: dict[str, tuple[str, dict]] = {}  # relpath -> (group_version, source_unit)
+    # Defaults so the partial-output paths (timeout / circuit breaker before
+    # these phases ran) can still assemble run_meta below.
+    expansion = external_deps.ExpansionResult(sources={})
+    compiler_hints: dict = {"by_file": {}, "primary": None, "conflicting": False}
 
     try:
         # ---- Discovery / read ---------------------------------------------
@@ -162,17 +176,80 @@ def run(
             ctx.warn("no Solidity source files discovered under repo_root", repo_root=repo_root)
         _record_phase("file_discovery_and_reading", t_phase)
 
+        # ---- External dependency expansion -----------------------------------
+        # Discovery intentionally skips dependency directories, but solc
+        # needs the full import closure in one sources map. Pull in the
+        # on-disk files referenced by unresolved imports (node_modules
+        # packages, remapped paths, files in skipped dirs), strictly inside
+        # the repo boundary and under the same size caps.
+        t_phase = time.monotonic()
+        expansion = external_deps.expand_sources(sources, repo_root)
+        for note in expansion.notes:
+            ctx.warn(f"dependency expansion: {note}")
+        for relpath in expansion.added:
+            content = expansion.sources[relpath]
+            sources[relpath] = content
+            ctx.files[relpath] = content
+            content_bytes = content.encode("utf-8")
+            ctx.file_bytes[relpath] = content_bytes
+            ctx.line_indexes[relpath] = ast_utils.LineIndex(content_bytes)
+        if expansion.prefix_aliases:
+            ctx.warn(
+                "import remappings applied",
+                remappings={p: t for p, t in sorted(expansion.prefix_aliases.items())},
+            )
+        if expansion.added:
+            ctx.warn(
+                "dependency sources added to compilation universe",
+                count=len(expansion.added),
+                files=expansion.added,
+            )
+        _record_phase("dependency_expansion", t_phase)
+
+        # ---- Build metadata compiler hints (diagnostics, never override) ----
+        compiler_hints = solc_manager.extract_compiler_hints(repo_root)
+        if compiler_hints["by_file"]:
+            ctx.warn("build metadata compiler hints found", **compiler_hints["by_file"])
+        if compiler_hints["conflicting"]:
+            ctx.warn(
+                "build metadata hints conflict with each other; no hint used",
+                hints=compiler_hints["by_file"],
+            )
+
         # ---- Compilation ----------------------------------------------------
         t_phase = time.monotonic()
-        groups = solc_manager.group_sources_by_version(sources)
+        groups = solc_manager.group_sources_by_version(
+            sources, prefix_aliases=expansion.prefix_aliases
+        )
 
         install_budget = solc_manager.InstallBudget(offline=offline, **(
             {"max_installs": max_solc_installs} if max_solc_installs is not None else {}
         ))
 
+        hint = compiler_hints["primary"]
         for group in groups:
             _check_deadline()
-            result = solc_manager.compile_group(group, sources, install_budget)
+
+            # A hint that contradicts this unit's pragma constraints is
+            # reported, never applied: source pragmas are authoritative.
+            if hint is not None and group.constraint_expr is not None:
+                members_sat = [
+                    solc_manager.version_satisfies(hint, c)
+                    for c in (group.member_constraints or {}).values()
+                    if c is not None
+                ]
+                if members_sat and not all(members_sat):
+                    ctx.warn(
+                        "build metadata hint conflicts with unit pragma constraints; pragma wins",
+                        hint=hint,
+                        constraint=group.constraint_expr,
+                        files=sorted(group.files),
+                    )
+
+            result = solc_manager.compile_group(
+                group, sources, install_budget,
+                hint=hint, remappings=expansion.solc_remappings,
+            )
             compiler_runs.append(
                 {
                     "requested_version": result.requested_constraint,
@@ -181,11 +258,22 @@ def run(
                     "files": sorted(result.files),
                     "ok": result.ok,
                     "error_count": len([e for e in result.errors if e.get("severity") == "error"]),
+                    "resolution_method": result.resolution_method,
+                    "invoked_version": result.invoked_version,
+                    "version_verified": (
+                        result.invoked_version is not None
+                        and result.invoked_version == result.version
+                    ),
+                    "attempted_versions": list(result.attempted_versions),
+                    "reason": result.reason,
+                    "hint": hint,
                 }
             )
             if result.resolution_method in ("cache_compatible", "installed_compatible"):
                 ctx.warn(
-                    f"solc {result.requested_constraint} unavailable; used fallback {result.version}",
+                    f"constraint {result.requested_constraint} not satisfied by the bundled "
+                    f"compiler; resolved compatible solc {result.version} via "
+                    f"{result.resolution_method}",
                     files=sorted(result.files),
                 )
             for e in result.errors:
@@ -323,7 +411,14 @@ def run(
         "files_analyzed": files_analyzed,
         "files_partially_analyzed": files_partial,
         "files_failed": files_failed,
-        "compiler": {"engine": "solc-js (npm)", "runs": compiler_runs},
+        "dependency_files_added": expansion.added,
+        "import_prefix_aliases": expansion.prefix_aliases,
+        "build_metadata_hints": compiler_hints,
+        "compiler": {
+            "engine": "solc-js (npm)",
+            "bundled_version": solc_manager._BUNDLED_VERSION,
+            "runs": compiler_runs,
+        },
         "analysis_status": analysis_status,
         "errors": errors_out,
         "phase_durations_seconds": phase_durations,

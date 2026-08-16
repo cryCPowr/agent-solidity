@@ -1,1 +1,0 @@
-target.call(data)

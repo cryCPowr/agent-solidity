@@ -1,3 +1,0 @@
-function clearAccount(address who) external {
-        delete accounts[who];
-    }

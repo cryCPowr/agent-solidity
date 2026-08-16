@@ -1,3 +1,0 @@
-interface IGreeter {
-    function greet() external view returns (string memory);
-}

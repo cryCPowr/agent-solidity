@@ -7,7 +7,9 @@ run fully offline and don't touch the real network or a real solc install.
 from __future__ import annotations
 
 import json
+import tempfile
 import unittest
+from pathlib import Path
 from unittest import mock
 
 import recon.solc_manager as sm
@@ -647,6 +649,321 @@ class TestResolveCompilerForConstraints(unittest.TestCase):
         self.assertIsNone(req.resolved_version)
         self.assertEqual(req.resolution_method, "unparseable_constraint")
         self.assertFalse(req.compatible)
+
+
+# --------------------------------------------------------------------------
+# Target-agnostic compiler hardening: version verification, build-metadata
+# hints, two-component pragmas, structured resolution errors.
+#
+# These pin the Megapot/Jackpot failure mode: a repo whose hardhat config
+# (and true dependency closure) needs 0.8.28 must get a compiler that
+# satisfies the *pragma*, verified to actually be the compiler invoked --
+# never a silently substituted bundled/cached/transitive version.
+# --------------------------------------------------------------------------
+
+def _bundled(version: str):
+    return mock.patch.object(sm, "_BUNDLED_VERSION", version)
+
+
+class TestTwoComponentPragmas(unittest.TestCase):
+    """Real repositories write `pragma solidity ^0.8;` -- the missing patch
+    component must behave as .0 (npm/solidity partial-version semantics),
+    not poison the whole compilation unit as unparseable."""
+
+    def test_caret_two_component(self):
+        self.assertTrue(sm.version_satisfies("0.8.28", "^0.8"))
+        self.assertTrue(sm.version_satisfies("0.8.0", "^0.8"))
+        self.assertFalse(sm.version_satisfies("0.7.6", "^0.8"))
+        self.assertFalse(sm.version_satisfies("0.9.0", "^0.8"))
+
+    def test_gte_two_component(self):
+        self.assertTrue(sm.version_satisfies("0.8.28", ">=0.6"))
+        self.assertFalse(sm.version_satisfies("0.5.17", ">=0.6"))
+
+    def test_unit_containing_two_component_pragma_resolves(self):
+        # Combinations.sol in the Jackpot repo declares ^0.8 alongside
+        # ^0.8.28 members: 0.8.28 must satisfy both simultaneously.
+        with _bundled("0.8.28"), \
+             mock.patch.object(sm, "_cached_versions", return_value=[]), \
+             mock.patch("subprocess.run"):
+            req = sm.resolve_compiler_for_constraints(["^0.8", "^0.8.28"])
+        self.assertTrue(req.compatible)
+        self.assertEqual(req.resolved_version, "0.8.28")
+
+
+class TestTargetAgnosticResolution(unittest.TestCase):
+    def test_bundled_0_8_24_satisfies_caret_0_8_20(self):
+        with _bundled("0.8.24"), \
+             mock.patch.object(sm, "_cached_versions", return_value=[]), \
+             mock.patch("subprocess.run") as run:
+            req = sm.resolve_compiler("^0.8.20")
+        run.assert_not_called()
+        self.assertEqual(req.resolved_version, "0.8.24")
+        self.assertEqual(req.resolution_method, "bundled_compatible")
+        self.assertTrue(req.compatible)
+
+    def test_bundled_0_8_24_does_not_satisfy_caret_0_8_28(self):
+        with _bundled("0.8.24"), \
+             mock.patch.object(sm, "_cached_versions", return_value=[]), \
+             mock.patch.object(sm, "_query_npm_available_versions", return_value=None):
+            req = sm.resolve_compiler("^0.8.28")
+        self.assertFalse(req.compatible)
+        self.assertIsNone(req.resolved_version)
+        self.assertEqual(req.resolution_method, "unresolved")
+        # Never the incompatible bundled compiler as a silent substitute.
+        self.assertNotEqual(req.resolved_version, "0.8.24")
+
+    def test_cached_0_8_28_selected_for_caret_0_8_28(self):
+        with _bundled("0.8.24"), \
+             mock.patch.object(sm, "_cached_versions", return_value=["0.8.26", "0.8.28"]), \
+             mock.patch("subprocess.run") as run:
+            req = sm.resolve_compiler("^0.8.28")
+        run.assert_not_called()
+        self.assertEqual(req.resolved_version, "0.8.28")
+        self.assertEqual(req.resolution_method, "cache_compatible")
+        self.assertTrue(req.compatible)
+
+    def test_cached_compiler_reused_on_second_run_without_npm(self):
+        with _bundled("0.8.24"), \
+             mock.patch.object(sm, "_cached_versions", return_value=["0.8.28"]), \
+             mock.patch("subprocess.run") as run:
+            first = sm.resolve_compiler("^0.8.28")
+            second = sm.resolve_compiler("^0.8.28")
+        run.assert_not_called()  # no `npm view`, no `npm install` -- cache hit
+        self.assertEqual(first.resolved_version, second.resolved_version, "0.8.28")
+        self.assertEqual(second.resolution_method, "cache_compatible")
+
+    def test_missing_compatible_compiler_triggers_npm_acquisition(self):
+        published = ["0.8.28", "0.8.29"]
+        with _bundled("0.8.24"), \
+             mock.patch.object(sm, "_cached_versions", return_value=[]), \
+             mock.patch.object(sm, "_query_npm_available_versions", return_value=published), \
+             mock.patch.object(sm, "_install_version", return_value=True) as install:
+            req = sm.resolve_compiler("^0.8.28")
+        install.assert_called_once()
+        self.assertEqual(install.call_args[0][0], "0.8.29")  # highest satisfying
+        self.assertEqual(req.resolved_version, "0.8.29")
+        self.assertEqual(req.resolution_method, "installed_compatible")
+        self.assertTrue(req.compatible)
+
+    def test_multiple_pragma_files_select_compiler_satisfying_all(self):
+        with _bundled("0.8.24"), \
+             mock.patch.object(sm, "_cached_versions", return_value=["0.8.20", "0.8.28"]), \
+             mock.patch("subprocess.run") as run:
+            req = sm.resolve_compiler_for_constraints(["^0.8.20", "^0.8.28"])
+        run.assert_not_called()
+        # 0.8.20 satisfies only the first; 0.8.28 satisfies both.
+        self.assertEqual(req.resolved_version, "0.8.28")
+        self.assertTrue(req.compatible)
+
+    def test_target_repo_solc_version_never_overrides_pragma(self):
+        """The Megapot case: node_modules/solc (transitive JS dep) reports
+        0.8.26 while the pragma requires ^0.8.28. A hint of 0.8.26 must be
+        ignored entirely -- only versions satisfying the pragma qualify."""
+        with _bundled("0.8.24"), \
+             mock.patch.object(sm, "_cached_versions", return_value=["0.8.28"]), \
+             mock.patch("subprocess.run") as run:
+            req = sm.resolve_compiler("^0.8.28", hint="0.8.26")
+        run.assert_not_called()
+        self.assertEqual(req.resolved_version, "0.8.28")
+        self.assertNotEqual(req.resolved_version, "0.8.26")
+
+    def test_hint_breaks_ties_but_never_widens(self):
+        # Preferred among satisfying cached versions...
+        with _bundled("0.8.24"), \
+             mock.patch.object(sm, "_cached_versions", return_value=["0.8.28", "0.8.29"]):
+            req = sm.resolve_compiler("^0.8.28", hint="0.8.28")
+        self.assertEqual(req.resolved_version, "0.8.28")
+        # ...and among published versions (install the hinted one, not the
+        # highest), but only when the hint itself satisfies the constraint.
+        with _bundled("0.8.24"), \
+             mock.patch.object(sm, "_cached_versions", return_value=[]), \
+             mock.patch.object(sm, "_query_npm_available_versions", return_value=["0.8.28", "0.8.29"]), \
+             mock.patch.object(sm, "_install_version", return_value=True) as install:
+            req = sm.resolve_compiler("^0.8.28", hint="0.8.28")
+        self.assertEqual(install.call_args[0][0], "0.8.28")
+        self.assertEqual(req.resolved_version, "0.8.28")
+
+    def test_install_budget_exhaustation_reports_reason_and_attempts(self):
+        published = ["0.7.6"]
+        budget = sm.InstallBudget(max_installs=1, installs_used=1)
+        with _bundled("0.8.24"), \
+             mock.patch.object(sm, "_cached_versions", return_value=[]), \
+             mock.patch.object(sm, "_query_npm_available_versions", return_value=published), \
+             mock.patch.object(sm, "_install_version") as install:
+            req = sm.resolve_compiler("^0.7.0", budget=budget)
+        install.assert_not_called()
+        self.assertEqual(req.resolution_method, "unresolved")
+        self.assertFalse(req.compatible)
+        self.assertIn("budget", req.reason)
+        self.assertIn("0.8.24", req.attempted_versions)  # rejected local candidate recorded
+
+
+class TestVersionVerification(unittest.TestCase):
+    """resolved_version == installed package version == invoked compiler."""
+
+    def _write_solc_pkg(self, base: Path, version: str | None) -> None:
+        solc_dir = base / "node_modules" / "solc"
+        solc_dir.mkdir(parents=True, exist_ok=True)
+        if version is not None:
+            (solc_dir / "package.json").write_text(json.dumps({"version": version}))
+
+    def test_read_installed_solc_version_reads_package_json(self):
+        with tempfile.TemporaryDirectory() as td:
+            base = Path(td)
+            self._write_solc_pkg(base, "0.8.28")
+            self.assertEqual(sm._read_installed_solc_version(base / "node_modules"), "0.8.28")
+            # Unreadable / non-strict versions verify as None, never guessed.
+            self._write_solc_pkg(base / "other", "not-a-version")
+            self.assertIsNone(sm._read_installed_solc_version(base / "other" / "node_modules"))
+            self.assertIsNone(sm._read_installed_solc_version(base / "missing"))
+
+    def test_node_modules_for_rejects_mismatched_directories(self):
+        with tempfile.TemporaryDirectory() as td:
+            base = Path(td)
+            bundled = base / "bundled"
+            cache = base / "cache"
+            self._write_solc_pkg(bundled, "0.8.24")                       # readable mismatch
+            self._write_solc_pkg(cache / "0.8.28", "0.8.26")              # lying dir name
+            self._write_solc_pkg(cache / "0.8.29", "0.8.29")              # honest dir name
+            with mock.patch.object(sm, "_BUNDLED_NODE_MODULES", bundled / "node_modules"), \
+                 mock.patch.object(sm, "_CACHE_DIR", cache):
+                # Lying cache dir is skipped: no verifiable 0.8.28 anywhere.
+                self.assertIsNone(sm._node_modules_for("0.8.28"))
+                # Honest cache dir is found by content, not by name.
+                self.assertEqual(sm._node_modules_for("0.8.29"), str(cache / "0.8.29" / "node_modules"))
+                # _cached_versions reports verified contents, not dir names.
+                self.assertIn("0.8.26", sm._cached_versions())
+                self.assertNotIn("0.8.28", sm._cached_versions())
+
+    def test_install_version_verifies_installed_package(self):
+        with tempfile.TemporaryDirectory() as td:
+            cache = Path(td)
+            with mock.patch.object(sm, "_CACHE_DIR", cache), \
+                 mock.patch("subprocess.run") as run:
+                run.return_value = mock.Mock(returncode=0, stdout="", stderr="")
+                # npm "succeeded" but no readable package: unverifiable.
+                self.assertFalse(sm._install_version("0.8.28", sm.InstallBudget()))
+                # Package present and matching: accepted.
+                self._write_solc_pkg(cache / "0.8.28", "0.8.28")
+                self.assertTrue(sm._install_version("0.8.28", sm.InstallBudget()))
+                # Package present but a different version: rejected.
+                self._write_solc_pkg(cache / "0.8.30", "0.8.26")
+                self.assertFalse(sm._install_version("0.8.30", sm.InstallBudget()))
+
+    def test_compile_group_fails_closed_on_invocation_version_mismatch(self):
+        group = sm.CompileGroup(constraint_expr=">=0.6.0", files=["A.sol"])
+        sources = {"A.sol": "pragma solidity >=0.6.0;\ncontract A {}"}
+        # Wrapper reports a different compiler than the resolved bundled one.
+        fake_output = json.dumps({
+            "solc_version": "0.7.6+commit.7cb8a229",
+            "solc_output": {"errors": [], "sources": {"A.sol": {"ast": {"nodeType": "SourceUnit"}}}},
+        })
+        fake_proc = mock.Mock(returncode=0, stdout=fake_output, stderr="")
+        with mock.patch.object(sm, "_cached_versions", return_value=[]), \
+             mock.patch("subprocess.run", return_value=fake_proc):
+            result = sm.compile_group(group, sources)
+        self.assertFalse(result.ok)
+        self.assertFalse(result.compatible)  # trust gate: untrusted, not degraded output
+        self.assertEqual(result.resolution_method, "invocation_mismatch")
+        self.assertEqual(result.ast_by_file, {})
+        self.assertEqual(result.errors[0]["type"], "compiler_version_mismatch")
+
+    def test_compile_group_accepts_matching_wrapper_version(self):
+        group = sm.CompileGroup(constraint_expr=">=0.6.0", files=["A.sol"])
+        sources = {"A.sol": "pragma solidity >=0.6.0;\ncontract A {}"}
+        fake_output = json.dumps({
+            "solc_version": sm._BUNDLED_VERSION + "+commit.7893614a",
+            "solc_output": {"errors": [], "sources": {"A.sol": {"ast": {"nodeType": "SourceUnit"}}}},
+        })
+        fake_proc = mock.Mock(returncode=0, stdout=fake_output, stderr="")
+        with mock.patch.object(sm, "_cached_versions", return_value=[]), \
+             mock.patch("subprocess.run", return_value=fake_proc):
+            result = sm.compile_group(group, sources)
+        self.assertTrue(result.ok)
+        self.assertTrue(result.compatible)
+        self.assertEqual(result.invoked_version, sm._BUNDLED_VERSION)
+        self.assertEqual(result.version, sm._BUNDLED_VERSION)
+
+    def test_unresolved_error_carries_attempted_versions_and_reason(self):
+        with _bundled("0.8.24"), \
+             mock.patch.object(sm, "_cached_versions", return_value=["0.8.26"]), \
+             mock.patch.object(sm, "_query_npm_available_versions", return_value=None):
+            req = sm.resolve_compiler("^0.8.28")
+        self.assertFalse(req.compatible)
+        self.assertEqual(req.attempted_versions, ["0.8.24", "0.8.26"])
+        self.assertIn("npm", req.reason)
+
+    def test_build_trust_summary_blockers_include_reason_and_attempts(self):
+        results = [
+            sm.CompileResult(
+                version=None, requested_constraint="^0.8.28", files=["B.sol"],
+                ok=False, ast_by_file={}, errors=[{"type": "compiler_resolution_failed"}],
+                compatible=False, resolution_method="unresolved",
+                attempted_versions=["0.8.24"], reason="no published, allow-listed solc version satisfies the constraint",
+            ),
+        ]
+        summary = sm.build_trust_summary(results)
+        self.assertEqual(summary["analysis_status"], "untrusted")
+        blocker = summary["trust_blockers"][0]
+        self.assertEqual(blocker["requested_constraint"], "^0.8.28")
+        self.assertEqual(blocker["files"], ["B.sol"])
+        self.assertEqual(blocker["resolution_method"], "unresolved")
+        self.assertEqual(blocker["attempted_versions"], ["0.8.24"])
+        self.assertIn("satisfies", blocker["reason"])
+
+
+class TestBuildMetadataHints(unittest.TestCase):
+    """hardhat/foundry metadata is read as a *hint*; pragmas stay
+    authoritative (see TestTargetAgnosticResolution for the override
+    guard)."""
+
+    def test_hardhat_config_ts_hint(self):
+        with tempfile.TemporaryDirectory() as td:
+            Path(td, "hardhat.config.ts").write_text(
+                'solidity: {\n  version: "0.8.28",\n},\n'
+            )
+            hints = sm.extract_compiler_hints(td)
+        self.assertEqual(hints["primary"], "0.8.28")
+        self.assertEqual(hints["by_file"]["hardhat.config.ts"]["version"], "0.8.28")
+        self.assertFalse(hints["conflicting"])
+
+    def test_foundry_toml_hint(self):
+        with tempfile.TemporaryDirectory() as td:
+            Path(td, "foundry.toml").write_text('[profile.default]\nsolc_version = "0.8.20"\n')
+            hints = sm.extract_compiler_hints(td)
+        self.assertEqual(hints["primary"], "0.8.20")
+        self.assertEqual(hints["by_file"]["foundry.toml"]["version"], "0.8.20")
+
+    def test_package_json_compilers_hint(self):
+        with tempfile.TemporaryDirectory() as td:
+            Path(td, "package.json").write_text(
+                json.dumps({"compilers": {"solc": {"version": "0.8.26"}}})
+            )
+            hints = sm.extract_compiler_hints(td)
+        self.assertEqual(hints["primary"], "0.8.26")
+
+    def test_conflicting_hints_disable_hint_use(self):
+        with tempfile.TemporaryDirectory() as td:
+            Path(td, "hardhat.config.ts").write_text('solidity: { version: "0.8.28" }')
+            Path(td, "foundry.toml").write_text('solc_version = "0.8.20"\n')
+            hints = sm.extract_compiler_hints(td)
+        self.assertTrue(hints["conflicting"])
+        self.assertIsNone(hints["primary"])
+
+    def test_no_metadata_yields_no_hint(self):
+        with tempfile.TemporaryDirectory() as td:
+            hints = sm.extract_compiler_hints(td)
+        self.assertIsNone(hints["primary"])
+        self.assertEqual(hints["by_file"], {})
+
+    def test_malformed_hint_value_is_ignored(self):
+        with tempfile.TemporaryDirectory() as td:
+            Path(td, "hardhat.config.ts").write_text('solidity: { version: "latest" }')
+            hints = sm.extract_compiler_hints(td)
+        self.assertIsNone(hints["primary"])
+        self.assertEqual(hints["by_file"]["hardhat.config.ts"]["raw"], "latest")
+        self.assertIsNone(hints["by_file"]["hardhat.config.ts"]["version"])
 
 
 if __name__ == "__main__":

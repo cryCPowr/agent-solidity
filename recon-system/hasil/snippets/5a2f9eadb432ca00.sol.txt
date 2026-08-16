@@ -1,1 +1,0 @@
-function getData() external returns (bytes memory);

@@ -1,4 +1,0 @@
-function settle(address user, uint256 weight) external {
-        uint256 share = (totalPool * weight) / totalWeight;
-        allocated[user] = share;
-    }

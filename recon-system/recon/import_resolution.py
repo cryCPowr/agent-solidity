@@ -148,7 +148,12 @@ def parse_imports(importing_file: str, source_text: str) -> list[ImportStatement
     return out
 
 
-def resolve_import_path(importing_file: str, raw_path: str, known_files: Iterable[str]) -> str | None:
+def resolve_import_path(
+    importing_file: str,
+    raw_path: str,
+    known_files: Iterable[str],
+    prefix_aliases: dict[str, str] | None = None,
+) -> str | None:
     """Resolve one raw import path to a canonical relpath in `known_files`,
     or None if it cannot be resolved to anything we know about.
 
@@ -156,12 +161,20 @@ def resolve_import_path(importing_file: str, raw_path: str, known_files: Iterabl
       these strictly relative to the importing file's own directory, so
       that's the only place we look.
     - Anything else is a "direct" import. Solidity resolves these via
-      import remappings / include paths, which this pipeline has no
-      config for (no remappings.txt/foundry.toml input is threaded
-      through here); we treat the path as repo-root-relative first (the
-      common case for Hardhat/Foundry-style `import "contracts/X.sol"`),
-      then fall back to resolving it relative to the importing file's own
-      directory as a secondary, best-effort attempt.
+      import remappings / include paths. We accept, in order:
+        1. the path repo-root-relative (Hardhat/Foundry-style
+           `import "contracts/X.sol"`),
+        2. `node_modules/<raw>` (how Hardhat resolves bare package imports
+           once external_deps.expand_sources has pulled the dependency's
+           file into the source set under its true on-disk relpath),
+        3. `prefix_aliases` rewrites (Foundry remappings like
+           `@oz/=node_modules/@openzeppelin/contracts/`): the longest
+           matching raw-path prefix is replaced by the mapped relpath
+           prefix before the known-files lookup,
+        4. the importing file's own directory as a best-effort fallback.
+
+    `prefix_aliases` never overrides an exact root-relative match -- a
+    repo's own file at the spelled path always wins over a remapping.
     """
     raw_path = raw_path.strip().replace("\\", "/")
     if not raw_path:
@@ -175,30 +188,38 @@ def resolve_import_path(importing_file: str, raw_path: str, known_files: Iterabl
         candidate = candidate.replace("\\", "/")
         return candidate if candidate in known and candidate != "." else None
 
-    root_relative = posixpath.normpath(raw_path).replace("\\", "/")
-    if root_relative in known and root_relative != ".":
-        return root_relative
+    def _try(candidate: str) -> str | None:
+        """Known-files lookup with the extensionless fallback."""
+        candidate = candidate.replace("\\", "/")
+        if candidate in known and candidate != ".":
+            return candidate
+        if not candidate.endswith(".sol"):
+            with_ext = candidate + ".sol"
+            if with_ext in known and with_ext != ".":
+                return with_ext
+        return None
 
-    # Direct imports may also be written WITHOUT the .sol extension (a legal
-    # Solidity import form); try the extensionless prefix as a fallback so
-    # `import "contracts/X"` still resolves `contracts/X.sol`.
-    raw_noext = root_relative
-    if not raw_noext.endswith(".sol"):
-        raw_noext_candidate = raw_noext + ".sol"
-        if raw_noext_candidate in known and raw_noext_candidate != ".":
-            return raw_noext_candidate
+    # 1. Repo-root-relative (exact spelled path wins over any remapping).
+    root_hit = _try(posixpath.normpath(raw_path))
+    if root_hit:
+        return root_hit
 
-    same_dir_relative = posixpath.normpath(posixpath.join(importing_dir, raw_path)).replace("\\", "/")
-    if same_dir_relative in known and same_dir_relative != ".":
-        return same_dir_relative
+    # 2. node_modules convention for bare package imports.
+    nm_hit = _try(posixpath.normpath(posixpath.join("node_modules", raw_path)))
+    if nm_hit:
+        return nm_hit
 
-    same_dir_noext = same_dir_relative
-    if not same_dir_noext.endswith(".sol"):
-        same_dir_noext_candidate = same_dir_noext + ".sol"
-        if same_dir_noext_candidate in known and same_dir_noext_candidate != ".":
-            return same_dir_noext_candidate
+    # 3. Remapping prefix aliases, longest matching prefix first.
+    for prefix, target in sorted((prefix_aliases or {}).items(), key=lambda p: -len(p[0])):
+        if raw_path == prefix or raw_path.startswith(prefix + "/"):
+            suffix = raw_path[len(prefix):]
+            rewritten = _try(posixpath.normpath(posixpath.join(target, suffix)))
+            if rewritten:
+                return rewritten
+            break  # only the longest matching alias applies
 
-    return None
+    # 4. Importing-file-relative fallback.
+    return _try(posixpath.normpath(posixpath.join(importing_dir, raw_path)))
 
 
 @dataclass(frozen=True)
@@ -220,10 +241,17 @@ class ImportGraph:
     statements: list[ImportStatement] = field(default_factory=list)
 
 
-def build_import_graph(sources: dict[str, str]) -> ImportGraph:
+def build_import_graph(
+    sources: dict[str, str], prefix_aliases: dict[str, str] | None = None
+) -> ImportGraph:
     """Parse and resolve every import in `sources`, producing a full
     import dependency graph plus a deterministic list of unresolved
     (missing) imports.
+
+    `prefix_aliases` (raw-path prefix -> relpath prefix, e.g. from a
+    Foundry remappings.txt) is threaded through to resolve_import_path so
+    remapped bare imports resolve once the target files are part of the
+    source set.
 
     Duplicate imports -- the same file importing the same target more than
     once, whether via an identical literal or two different literals that
@@ -242,7 +270,7 @@ def build_import_graph(sources: dict[str, str]) -> ImportGraph:
     for relpath in sorted(known_files):
         for stmt in parse_imports(relpath, sources[relpath]):
             statements.append(stmt)
-            resolved = resolve_import_path(relpath, stmt.raw_path, known_files)
+            resolved = resolve_import_path(relpath, stmt.raw_path, known_files, prefix_aliases)
             if resolved is None:
                 unresolved.append(UnresolvedImport(relpath, stmt.raw_path, stmt.line))
                 continue

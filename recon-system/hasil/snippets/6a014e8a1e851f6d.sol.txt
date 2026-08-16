@@ -1,4 +1,0 @@
-function deposit() external payable {
-        deposits[msg.sender] += msg.value;
-        emit Deposited(msg.sender, msg.value);
-    }

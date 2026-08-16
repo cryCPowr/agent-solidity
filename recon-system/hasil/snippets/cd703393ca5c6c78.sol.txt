@@ -1,5 +1,0 @@
-function deployDeterministic(uint256 v, bytes32 salt) external returns (address addr) {
-        Thing t = new Thing{salt: salt}(v);
-        addr = address(t);
-        deployed.push(addr);
-    }

@@ -1,0 +1,92 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "IPayoutCalculator",
+  "sourceName": "contracts/interfaces/IPayoutCalculator.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_drawingId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_prizePool",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint8",
+          "name": "_ballMax",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint8",
+          "name": "_bonusballMax",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "_result",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "_dupResult",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "calculateAndStoreDrawingUserWinnings",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_drawingId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_tierId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getTierPayout",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_drawingId",
+          "type": "uint256"
+        }
+      ],
+      "name": "setDrawingTierInfo",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

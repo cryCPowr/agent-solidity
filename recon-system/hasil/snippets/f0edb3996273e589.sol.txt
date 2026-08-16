@@ -1,1 +1,0 @@
-paymentToken.transferFrom(from, address(this), amount)

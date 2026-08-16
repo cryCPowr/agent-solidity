@@ -1,3 +1,0 @@
-keccak256(
-            abi.encodePacked(claimedSigner, amount, nonces[claimedSigner], deadline)
-        )

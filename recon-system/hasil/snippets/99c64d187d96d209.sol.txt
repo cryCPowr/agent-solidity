@@ -1,1 +1,0 @@
-require(msg.sender == owner, "not owner")

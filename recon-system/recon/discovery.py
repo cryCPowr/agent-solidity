@@ -48,8 +48,14 @@ SKIP_DIR_NAMES = {
     ".venv",
     "venv",
     "__pycache__",
-    "lib",  # forge git-submodule deps commonly live here; still scanned if
-            # --include-lib is passed (see discover_sources)
+    # NOTE: "lib" is deliberately NOT in this set. Foundry keeps git-submodule
+    # dependencies in a *root-level* lib/ -- that specific case is skipped in
+    # discover_sources() (and re-enabled by --include-lib) -- but Hardhat and
+    # Truffle projects routinely keep first-party sources in nested
+    # directories that happen to be named lib/ (contracts/lib/...), which
+    # must be discovered like any other source directory. Skipping every
+    # directory named lib/ orphans those files and every contract importing
+    # them then fails compilation with spurious "unresolved import" errors.
 }
 
 
@@ -92,8 +98,6 @@ def discover_sources(
     repo_root = os.path.abspath(repo_root)
     repo_root_real = os.path.realpath(repo_root)
     skip = set(SKIP_DIR_NAMES) | set(extra_skip_dirs)
-    if include_lib:
-        skip.discard("lib")
 
     found: list[DiscoveredFile] = []
     for dirpath, dirnames, filenames in os.walk(repo_root):
@@ -102,7 +106,17 @@ def discover_sources(
         # or outside the repo) are never visited via that route. This is
         # what makes the "directory symlink" case deterministic - behavior
         # doesn't depend on the target, and there's no symlink-loop risk.
-        dirnames[:] = sorted(d for d in dirnames if d not in skip and not d.startswith("."))
+        is_root = dirpath == repo_root
+        dirnames[:] = sorted(
+            d for d in dirnames
+            if d not in skip
+            and not d.startswith(".")
+            # Root-level lib/ is the Foundry git-submodule directory; it is
+            # skipped unless --include-lib is passed. Nested lib/ directories
+            # (e.g. Hardhat's contracts/lib/) are first-party source dirs and
+            # are always walked (see SKIP_DIR_NAMES).
+            and not (d == "lib" and is_root and not include_lib)
+        )
         for fname in sorted(filenames):
             if not fname.endswith(".sol"):
                 continue

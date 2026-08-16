@@ -1,3 +1,0 @@
-function unguardedCall(address target, bytes calldata data) external returns (bool ok) {
-        (ok, ) = target.call(data);
-    }

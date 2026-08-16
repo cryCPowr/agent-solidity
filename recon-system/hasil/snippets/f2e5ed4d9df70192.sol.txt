@@ -1,4 +1,0 @@
-function withdrawViaSend(uint256 amount) external returns (bool sent) {
-        deposits[msg.sender] -= amount;
-        sent = payable(msg.sender).send(amount);
-    }

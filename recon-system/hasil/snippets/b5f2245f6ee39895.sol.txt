@@ -1,3 +1,0 @@
-receive() external payable {
-        deposits[msg.sender] += msg.value;
-    }

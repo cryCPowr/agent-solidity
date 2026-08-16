@@ -1,0 +1,242 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "IJackpotLPManager",
+  "sourceName": "contracts/interfaces/IJackpotLPManager.sol",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_drawingId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        }
+      ],
+      "name": "emergencyWithdrawLP",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "withdrawableAmount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_drawingId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getDrawingAccumulator",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_drawingId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getLPDrawingState",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "lpPoolTotal",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "pendingDeposits",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "pendingWithdrawals",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct IJackpotLPManager.LPDrawingState",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_drawingId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_initialLPValue",
+          "type": "uint256"
+        }
+      ],
+      "name": "initializeDrawingLP",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "initializeLP",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_drawingId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_lpAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "processDeposit",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_drawingId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_lpEarnings",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_userWinnings",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_protocolFeeAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "processDrawingSettlement",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "newLPValue",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "newAccumulator",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_drawingId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_lpAddress",
+          "type": "address"
+        }
+      ],
+      "name": "processFinalizeWithdraw",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "withdrawableAmount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_drawingId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address",
+          "name": "_lpAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amountToWithdrawInShares",
+          "type": "uint256"
+        }
+      ],
+      "name": "processInitiateWithdraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_drawingId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_lpPoolCap",
+          "type": "uint256"
+        }
+      ],
+      "name": "setLPPoolCap",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

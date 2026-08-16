@@ -1,1 +1,0 @@
-Deposited(msg.sender, msg.value)

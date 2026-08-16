@@ -1,3 +1,0 @@
-function approveSpender(address spender, uint256 amount) external {
-        paymentToken.approve(spender, amount);
-    }

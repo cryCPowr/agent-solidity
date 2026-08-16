@@ -1,1 +1,0 @@
-event Deposited(address indexed who, uint256 amount);

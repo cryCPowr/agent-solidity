@@ -1,3 +1,0 @@
-interface IMaybeFails {
-    function risky(uint256 x) external returns (uint256);
-}

@@ -1,1 +1,0 @@
-event Transferred(address to, uint256 amount);

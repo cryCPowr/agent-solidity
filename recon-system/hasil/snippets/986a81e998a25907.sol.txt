@@ -1,4 +1,0 @@
-while (i < n) {
-            total += i;
-            i++;
-        }

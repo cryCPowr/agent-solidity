@@ -1,1 +1,0 @@
-ecrecover(digest, v, r, s)

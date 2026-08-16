@@ -1,5 +1,0 @@
-function _rekt() internal pure returns (uint256) {
-        // Comment: "this drains the vault and sends funds to attacker" —
-        // the comment is fiction; the function body only does arithmetic.
-        return 1 + 1;
-    }

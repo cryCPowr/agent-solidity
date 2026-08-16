@@ -1,5 +1,0 @@
-function moveMulti(
-        address from, address to, uint256[] calldata ids, uint256[] calldata amounts
-    ) external {
-        multiToken.safeBatchTransferFrom(from, to, ids, amounts, "");
-    }

@@ -1,3 +1,0 @@
-function addMember(address who) external {
-        members.push(who);
-    }

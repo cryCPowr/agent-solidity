@@ -1,3 +1,0 @@
-contract Owned {
-    string public note = "not an access-control base contract";
-}

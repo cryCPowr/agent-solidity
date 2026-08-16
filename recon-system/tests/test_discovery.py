@@ -70,6 +70,25 @@ def test_lib_skipped_by_default_but_includable(tmp_path):
     }
 
 
+def test_nested_lib_dir_is_first_party_and_discovered(tmp_path):
+    """Hardhat/Truffle projects keep first-party sources in nested lib/
+    directories (contracts/lib/...). Only the *root-level* lib/ is the
+    Foundry submodule dir; nested ones must always be discovered, or every
+    contract importing from them fails compilation with spurious
+    unresolved-import errors."""
+    repo = tmp_path / "repo"
+    _write(str(repo / "Vault.sol"))
+    _write(str(repo / "contracts" / "Vault.sol"))
+    _write(str(repo / "contracts" / "lib" / "Combinations.sol"))
+    _write(str(repo / "test" / "helpers" / "lib" / "Deep.sol"))
+    assert _relpaths(str(repo)) == {
+        "Vault.sol",
+        "contracts/Vault.sol",
+        "contracts/lib/Combinations.sol",
+        "test/helpers/lib/Deep.sol",
+    }
+
+
 def test_extra_skip_dirs(tmp_path):
     repo = tmp_path / "repo"
     _write(str(repo / "Vault.sol"))

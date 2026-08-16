@@ -1,4 +1,0 @@
-function genuinelyConnected(address target, uint256 amount, bytes calldata data) external returns (bool ok) {
-        token.approve(target, amount);  // uses `target`
-        (ok, ) = target.call(data);     // uses same `target`
-    }

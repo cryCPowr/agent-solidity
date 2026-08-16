@@ -20,17 +20,21 @@ def main(argv=None) -> int:
     parser.add_argument("-o", "--output", default="recon", help="Output directory (default: ./recon)")
     parser.add_argument(
         "--include-lib", action="store_true",
-        help="Include files under lib/ directories (git-submodule dependencies), which are skipped by default",
+        help="Include files under the repo-root lib/ directory (Foundry git-submodule "
+             "dependencies), which is skipped by default. Nested lib/ directories "
+             "(e.g. contracts/lib/) are always discovered.",
     )
     parser.add_argument(
         "--offline", action="store_true",
-        help="Never run `npm install` to fetch a repo-requested solc version; always use the "
-             "bundled compiler instead. Recommended when analyzing untrusted repositories.",
+        help="Never run `npm install` to fetch a repo-requested solc version; only "
+             "bundled/cached compilers are used, and units they cannot satisfy are "
+             "reported unresolved. Recommended when analyzing untrusted repositories.",
     )
     parser.add_argument(
         "--max-solc-installs", type=int, default=None,
         help="Cap on distinct non-bundled solc versions this run may `npm install` "
-             "(default: 5). Extra versions fall back to the bundled compiler.",
+             "(default: 5). Units beyond the cap are reported unresolved, never "
+             "silently compiled with an incompatible compiler.",
     )
     parser.add_argument("-v", "--verbose", action="store_true", help="Verbose logging")
     args = parser.parse_args(argv)

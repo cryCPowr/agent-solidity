@@ -1,3 +1,0 @@
-function pingFixed(uint256 x) external returns (uint256) {
-        return fixedTarget.ping(x);
-    }

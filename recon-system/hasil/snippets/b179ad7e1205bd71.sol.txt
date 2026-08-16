@@ -1,1 +1,0 @@
-event ValueChanged(uint256 indexed newValue, address indexed changedBy);

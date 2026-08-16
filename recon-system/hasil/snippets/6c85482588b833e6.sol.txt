@@ -1,7 +1,0 @@
-function whileSum(uint256 n) external pure returns (uint256 total) {
-        uint256 i = 0;
-        while (i < n) {
-            total += i;
-            i++;
-        }
-    }

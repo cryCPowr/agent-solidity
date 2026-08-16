@@ -1,3 +1,0 @@
-assembly {
-            result := sload(slot)
-        }

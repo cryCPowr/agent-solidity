@@ -1,1 +1,0 @@
-mapping(address => bool) public operators
