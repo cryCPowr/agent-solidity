@@ -1,0 +1,6 @@
+if (maxDepth < depthPerRound) {
+                uint256 leafCount = 2 ** maxDepth;
+                require(_treeNodes.length == leafCount, "Invalid node count");
+            } else {
+                require(_treeNodes.length == 2 ** depthPerRound, "Invalid node count");
+            }

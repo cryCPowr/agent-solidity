@@ -1,0 +1,16 @@
+function _calculateNodeShare(uint256 _balance) internal view returns (uint256) {
+        uint256 userCapital = getUserDepositBalance();
+        uint256 nodeCapital = nodeDepositBalance;
+        uint256 nodeShare = 0;
+        // Calculate the total capital (node + user)
+        uint256 capital = userCapital.add(nodeCapital);
+        if (_balance > capital) {
+            // Total rewards to share
+            uint256 rewards = _balance.sub(capital);
+            nodeShare = nodeCapital.add(calculateNodeRewards(nodeCapital, userCapital, rewards));
+        } else if (_balance > userCapital) {
+            nodeShare = _balance.sub(userCapital);
+        }
+        // Check if node has an ETH penalty
+        uint256 penaltyRate = RocketMinipoolPenaltyInterface(rocketMinipoolPenalty).getPenaltyRate(ad
+/* … truncated … */

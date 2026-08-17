@@ -1,0 +1,1 @@
+abi.encodePacked(_namespace, ".index", _value.receiver, _value.validatorId)

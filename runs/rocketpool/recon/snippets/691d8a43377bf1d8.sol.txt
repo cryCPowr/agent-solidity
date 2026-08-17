@@ -1,0 +1,3 @@
+function getMinimumLegacyRPLStake() override external view returns (uint256) {
+        return getSettingUint("node.minimum.legacy.staked.rpl");
+    }

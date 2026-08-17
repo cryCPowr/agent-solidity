@@ -1,0 +1,1 @@
+function getTotalQueueLength() external view returns (uint256);

@@ -1,0 +1,3 @@
+if (settingKey == keccak256(bytes("network.pdao.share"))) {
+                return _setProtocolDAOShare(_value);
+            }

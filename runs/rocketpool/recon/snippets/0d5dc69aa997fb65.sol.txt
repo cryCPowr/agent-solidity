@@ -1,0 +1,10 @@
+function createMinipool(address _nodeAddress, uint256 _salt) override public onlyLatestContract("rocketMinipoolManager", address(this)) onlyLatestContract("rocketNodeDeposit", msg.sender) returns (RocketMinipoolInterface) {
+        // Load contracts
+        AddressSetStorageInterface addressSetStorage = AddressSetStorageInterface(getContractAddress("addressSetStorage"));
+        // Check node minipool limit based on RPL stake
+        { // Local scope to prevent stack too deep error
+          RocketDAOProtocolSettingsMinipoolInterface rocketDAOProtocolSettingsMinipool = RocketDAOProtocolSettingsMinipoolInterface(getContractAddress("rocketDAOProtocolSettingsMinipool"));
+          // Check global minipool limit
+          uint256 totalActiveMinipoolCount = getActiveMinipoolCount();
+          r
+/* … truncated … */

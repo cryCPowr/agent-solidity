@@ -1,0 +1,3 @@
+function getCurrentBlockGasLimit() public view returns (uint256 gaslimit) {
+        gaslimit = block.gaslimit;
+    }

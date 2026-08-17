@@ -1,0 +1,1 @@
+require(etherBalances[contractName] >= _amount, "Insufficient contract ETH balance")

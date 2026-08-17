@@ -1,0 +1,4 @@
+function bootstrapUpgrade(string memory _type, string memory _name, string memory _contractAbi, address _contractAddress) override external onlyGuardian onlyBootstrapMode {
+        bytes32 typeHash = keccak256(abi.encodePacked(_type));
+        _execute(typeHash, _name, _contractAbi, _contractAddress);
+    }

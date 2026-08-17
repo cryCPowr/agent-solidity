@@ -1,0 +1,1 @@
+setSettingUint("minipool.scrub.quorum", 0.51 ether)

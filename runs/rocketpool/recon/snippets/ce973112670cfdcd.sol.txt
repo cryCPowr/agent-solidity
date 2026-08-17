@@ -1,0 +1,6 @@
+function lookupGas(string calldata _key, uint32 _block) external view returns (uint256) {
+        bytes32 key = keccak256(abi.encodePacked(_key));
+        uint256 gasBefore = gasleft();
+        snapshots.lookup(key, _block);
+        return gasBefore - gasleft();
+    }

@@ -1,0 +1,4 @@
+if (status == MinipoolStatus.Prelaunch) {
+                minipools[total] = address(minipool);
+                total++;
+            }

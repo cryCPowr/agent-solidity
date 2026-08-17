@@ -1,0 +1,6 @@
+constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
+        version = 1;
+        // Precompute static storage keys
+        challengerKey = keccak256("last.trusted.node.megapool.challenger");
+        setCountKey = keccak256("megapool.validator.set.count");
+    }

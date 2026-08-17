@@ -1,0 +1,3 @@
+function unstakeLegacyRPL(uint256 _amount) override external {
+        unstakeLegacyRPLFor(msg.sender, _amount);
+    }

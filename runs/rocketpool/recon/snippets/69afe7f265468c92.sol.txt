@@ -1,0 +1,1 @@
+function unlockRPL(address _nodeAddress, uint256 _amount) external;

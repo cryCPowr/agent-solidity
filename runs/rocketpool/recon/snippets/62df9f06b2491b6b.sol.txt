@@ -1,0 +1,10 @@
+constructor(RocketStorageInterface _rocketStorageAddress) RocketDAOProtocolSettings(_rocketStorageAddress, "proposals") {
+        version = 3;
+        // Initialize settings on deployment
+        if(!getBool(keccak256(abi.encodePacked(settingNameSpace, "deployed")))) {
+            // Init settings
+            setSettingUint("proposal.vote.phase1.time", 1 weeks);           // How long a proposal can be voted on in phase 1
+            setSettingUint("proposal.vote.phase2.time", 1 weeks);           // How long a proposal can be voted on in phase 2
+            setSettingUint("proposal.vote.delay.time", 1 weeks);            // How long before a proposal can be voted on after it is created
+            setSettingUint("proposal.execute.time", 4 weeks);               // How long a proposal can be e
+/* … truncated … */

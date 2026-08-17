@@ -1,0 +1,1 @@
+setSettingBool("minipool.scrub.penalty.enabled", false)

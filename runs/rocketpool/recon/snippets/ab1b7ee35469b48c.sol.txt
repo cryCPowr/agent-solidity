@@ -1,0 +1,7 @@
+function isAllowListedController(address _address) override public view returns (bool) {
+        address[] memory allowList = getAllowListedControllers();
+        for (uint256 i = 0; i < allowList.length; ++i) {
+            if (allowList[i] == _address) return true;
+        }
+        return false;
+    }

@@ -1,0 +1,3 @@
+if (_nodeShare > _value) {
+            _nodeShare = _value;
+        }

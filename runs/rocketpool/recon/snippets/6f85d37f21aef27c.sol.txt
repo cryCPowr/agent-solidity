@@ -1,0 +1,1 @@
+function destroy(uint256 _proposalID) external;

@@ -1,0 +1,3 @@
+function getSettingBool(string memory _settingPath) public view override returns (bool) {
+        return getBool(keccak256(abi.encodePacked(settingNameSpace, _settingPath)));
+    }

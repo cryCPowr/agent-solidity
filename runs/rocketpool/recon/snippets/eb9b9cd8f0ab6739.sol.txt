@@ -1,0 +1,1 @@
+RocketMinipoolBaseInterface(proxy).initialise(address(rocketStorage), _nodeAddress)

@@ -1,0 +1,12 @@
+function depositExcessCollateral() external override {
+        // Load contracts
+        RocketDAOProtocolSettingsNetworkInterface rocketDAOProtocolSettingsNetwork = RocketDAOProtocolSettingsNetworkInterface(getContractAddress("rocketDAOProtocolSettingsNetwork"));
+        RocketDepositPoolInterface rocketDepositPool = RocketDepositPoolInterface(getContractAddress("rocketDepositPool"));
+        // Get collateral and target collateral rate
+        uint256 collateralRate = getCollateralRate();
+        uint256 targetCollateralRate = rocketDAOProtocolSettingsNetwork.getTargetRethCollateralRate();
+        // Check if we are in excess
+        if (collateralRate > targetCollateralRate) {
+            // Calculate our target collateral in ETH
+            uint256 targetCollateral = address(this).bala
+/* … truncated … */

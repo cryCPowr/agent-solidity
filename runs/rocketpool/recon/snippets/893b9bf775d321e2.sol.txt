@@ -1,0 +1,15 @@
+function getSmoothingPoolRegisteredNodeCount(uint256 _offset, uint256 _limit) override external view returns (uint256) {
+        // Get contracts
+        AddressSetStorageInterface addressSetStorage = AddressSetStorageInterface(getContractAddress("addressSetStorage"));
+        // Precompute node key
+        bytes32 nodeKey = keccak256(abi.encodePacked("nodes.index"));
+        // Iterate over the requested minipool range
+        uint256 totalNodes = getNodeCount();
+        uint256 max = _offset + _limit;
+        if (max > totalNodes || _limit == 0) {max = totalNodes;}
+        uint256 count = 0;
+        for (uint256 i = _offset; i < max; ++i) {
+            address nodeAddress = addressSetStorage.getItem(nodeKey, i);
+            if (getSmoothingPoolRegistrationState(nodeAddress)) {
+          
+/* … truncated … */

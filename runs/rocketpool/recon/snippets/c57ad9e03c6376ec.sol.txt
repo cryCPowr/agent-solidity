@@ -1,0 +1,9 @@
+function vote(uint256 _proposalID, bool _support) override external onlySecurityMember() onlyLatestContract("rocketDAOSecurityProposals", address(this)) {
+        // Load contracts
+        RocketDAOProposalInterface daoProposal = RocketDAOProposalInterface(getContractAddress("rocketDAOProposal"));
+        RocketDAOSecurityInterface daoSecurity = RocketDAOSecurityInterface(getContractAddress("rocketDAOSecurity"));
+        // Did they join after this proposal was created? If so, they can't vote or it'll throw off the set proposalVotesRequired
+        require(daoSecurity.getMemberJoinedTime(msg.sender) < daoProposal.getCreated(_proposalID), "Member cannot vote on proposal created before they became a member");
+        // Vote now, one vote per trusted node member
+        daoProposal.vote(msg.
+/* … truncated … */

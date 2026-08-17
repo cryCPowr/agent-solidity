@@ -1,0 +1,1 @@
+keccak256(abi.encodePacked("dao.protocol.setting.", _settingNameSpace))

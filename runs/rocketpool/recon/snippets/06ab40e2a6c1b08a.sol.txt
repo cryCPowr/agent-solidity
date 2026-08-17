@@ -1,0 +1,1 @@
+function addValidator(address _megapoolAddress, uint32 _validatorId, bytes calldata _pubkey) external;

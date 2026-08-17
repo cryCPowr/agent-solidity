@@ -1,0 +1,13 @@
+function promote() override external onlyMinipoolOwner(msg.sender) onlyInitialised {
+        // Check status
+        require(status == MinipoolStatus.Prelaunch, "The minipool can only promote while in prelaunch");
+        require(vacant, "Cannot promote a non-vacant minipool");
+        // Get contracts
+        RocketDAONodeTrustedSettingsMinipoolInterface rocketDAONodeTrustedSettingsMinipool = RocketDAONodeTrustedSettingsMinipoolInterface(getContractAddress("rocketDAONodeTrustedSettingsMinipool"));
+        // Clear vacant flag
+        vacant = false;
+        // Check scrub period
+        uint256 scrubPeriod = rocketDAONodeTrustedSettingsMinipool.getPromotionScrubPeriod();
+        require(block.timestamp > statusTime + scrubPeriod, "Not enough time has passed to promote");
+        // Progre
+/* … truncated … */

@@ -1,0 +1,1 @@
+getLength(_key) < capacity.sub(1)

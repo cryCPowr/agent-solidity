@@ -1,0 +1,1 @@
+function maybeAssignDeposits(uint256 _max) external;

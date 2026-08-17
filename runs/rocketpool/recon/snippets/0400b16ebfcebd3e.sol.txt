@@ -1,0 +1,1 @@
+function getEffectiveDelegate() external view returns (address);

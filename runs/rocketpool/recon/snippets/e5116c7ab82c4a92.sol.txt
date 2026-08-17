@@ -1,0 +1,20 @@
+function getState(uint256 _proposalID) override public view returns (ProposalState) {
+        // Check the proposal ID is legit
+        require(getTotal() >= _proposalID && _proposalID > 0, "Invalid proposal ID");
+        // Destroyed?
+        if (getDestroyed(_proposalID)) {
+            return ProposalState.Destroyed;
+        }
+        // Has it been executed?
+        else if (getExecuted(_proposalID)) {
+            return ProposalState.Executed;
+        } else {
+            uint256 start = getStart(_proposalID);
+            // Is the proposal pending?
+            if (block.timestamp < start) {
+                return ProposalState.Pending;
+            } else {
+                // The proposal is active and can be voted on
+                uint256 phase1End = getPhase1End(_proposalID);
+     
+/* … truncated … */

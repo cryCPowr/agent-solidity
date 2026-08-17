@@ -1,0 +1,9 @@
+if (useLatestDelegate) {
+            delegateContract = getContractAddress("rocketMegapoolDelegate");
+        } else {
+            // Force delegate upgrade on expiry
+            if (getDelegateExpired()) {
+                _delegateUpgrade();
+            }
+            delegateContract = rocketMegapoolDelegate;
+        }

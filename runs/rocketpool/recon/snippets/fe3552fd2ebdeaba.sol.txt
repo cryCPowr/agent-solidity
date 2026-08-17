@@ -1,0 +1,1 @@
+function getDepositType() external view returns (MinipoolDeposit);

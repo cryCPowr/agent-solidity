@@ -1,0 +1,8 @@
+function nodeDeposit(uint256 _bondAmount) override external payable onlyThisLatestContract onlyLatestContract("rocketNodeDeposit", msg.sender) {
+        // Deposit ETH into the vault
+        if (msg.value > 0) {
+            rocketVault.depositEther{value: msg.value}();
+        }
+        // Increase recorded node balance
+        addUint(nodeBalanceKey, _bondAmount);
+    }

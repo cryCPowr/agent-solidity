@@ -1,0 +1,1 @@
+require(vacant == false, "Vacant minipool cannot refund")

@@ -1,0 +1,1 @@
+totalScrubVotes.add(1)

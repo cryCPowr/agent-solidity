@@ -1,0 +1,4 @@
+function toInt32(int256 value) internal pure returns (int32) {
+        require(value >= -2**31 && value < 2**31, "SafeCast: value doesn\'t fit in 32 bits");
+        return int32(value);
+    }

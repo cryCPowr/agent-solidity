@@ -1,0 +1,1 @@
+require(lastDistributionTime != 0, "No first validator")

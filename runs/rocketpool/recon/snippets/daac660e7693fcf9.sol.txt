@@ -1,0 +1,3 @@
+function getLastBlockHash() public view returns (bytes32 blockHash) {
+        blockHash = blockhash(block.number - 1);
+    }

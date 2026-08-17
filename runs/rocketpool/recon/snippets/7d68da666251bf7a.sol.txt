@@ -1,0 +1,18 @@
+if (block.timestamp < phase2End) {
+                        return ProposalState.ActivePhase2;
+                } else {
+                    // Is the proposal vetoed?
+                    if (getVetoed(_proposalID)) {
+                        return ProposalState.Vetoed;
+                    }
+
+                    uint256 votesFor = getVotingPowerFor(_proposalID);
+                    uint256 votesAgainst = getVotingPowerAgainst(_proposalID);
+                    uint256 votesAbstained = getVotingPowerAbstained(_proposalID);
+                    uint256 totalVotes = votesFor + votesAgainst + votesAbstained;
+
+                    // Has the proposal reached quorum?
+                    if (totalVotes >= getVotingPowerRequired(_proposalID)) {
+                        if (votesFor > votesAgainst) {
+   
+/* … truncated … */

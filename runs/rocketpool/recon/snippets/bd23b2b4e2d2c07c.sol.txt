@@ -1,0 +1,1 @@
+function unstakeRPLFor(address _nodeAddress, uint256 _amount) external;

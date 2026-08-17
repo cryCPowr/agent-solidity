@@ -1,0 +1,1 @@
+function getScrubPenaltyEnabled() external view returns(bool);

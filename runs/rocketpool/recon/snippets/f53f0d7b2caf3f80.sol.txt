@@ -1,0 +1,1 @@
+function getVacantMinipoolCount() external view returns (uint256);

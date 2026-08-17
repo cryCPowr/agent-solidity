@@ -1,0 +1,8 @@
+function setRewardNetwork(address _nodeAddress, uint256 _network) override external onlyLatestContract("rocketNodeManager", address(this)) onlyRegisteredNode(_nodeAddress) {
+        // Confirm the transaction is from the node's current withdrawal address
+        address withdrawalAddress = rocketStorage.getNodeWithdrawalAddress(_nodeAddress);
+        require(withdrawalAddress == msg.sender, "Only a tx from a node's withdrawal address can change reward network");
+        // Check network is enabled
+        RocketDAONodeTrustedSettingsRewardsInterface rocketDAONodeTrustedSettingsRewards = RocketDAONodeTrustedSettingsRewardsInterface(getContractAddress("rocketDAONodeTrustedSettingsRewards"));
+        require(rocketDAONodeTrustedSettingsRewards.getNetworkEnabled(_network), "Network is not enab
+/* … truncated … */

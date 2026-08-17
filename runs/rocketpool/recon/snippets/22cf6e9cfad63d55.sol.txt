@@ -1,0 +1,1 @@
+function getUserDistributed() override external view returns (bool) { return userDistributed; }

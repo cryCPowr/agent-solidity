@@ -1,0 +1,5 @@
+function getCollateralRate() override public view returns (uint256) {
+        uint256 totalEthValue = getEthValue(totalSupply());
+        if (totalEthValue == 0) { return calcBase; }
+        return calcBase.mul(address(this).balance).div(totalEthValue);
+    }

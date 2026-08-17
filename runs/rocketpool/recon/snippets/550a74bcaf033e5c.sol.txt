@@ -1,0 +1,1 @@
+function getEnabled() external view returns (bool);

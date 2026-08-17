@@ -1,0 +1,1 @@
+function getStartingPriceRatio() external view returns (uint256);

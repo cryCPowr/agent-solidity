@@ -1,0 +1,25 @@
+contract RocketMegapoolProxy is RocketMegapoolProxyInterface, RocketMegapoolStorageLayout {
+    // Events
+    event EtherReceived(address indexed from, uint256 amount, uint256 time);
+    event DelegateUpgraded(address oldDelegate, address newDelegate, uint256 time);
+    event UseLatestUpdated(bool state, uint256 time);
+
+    // Immutables
+    address immutable private self;
+    RocketStorageInterface immutable private rocketStorage;
+
+    // Construct
+    constructor (RocketStorageInterface _rocketStorage) {
+        self = address(this);
+        rocketStorage = _rocketStorage;
+    }
+
+    /// @dev Prevent direct calls to this contract
+    modifier notSelf() {
+        require(address(this) != self);
+        _;
+    }
+
+    /// @dev Only allow access from the owning node address
+    modifier only
+/* … truncated … */

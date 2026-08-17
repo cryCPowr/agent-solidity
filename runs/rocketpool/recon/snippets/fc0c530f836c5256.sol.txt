@@ -1,0 +1,1 @@
+uint256 constant internal receiverOffset = 256 - 160

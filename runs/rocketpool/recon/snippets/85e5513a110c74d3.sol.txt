@@ -1,0 +1,1 @@
+require(validator.inPrestake, "Validator not prestaked")

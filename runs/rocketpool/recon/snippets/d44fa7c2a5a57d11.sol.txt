@@ -1,0 +1,1 @@
+_setSettingUint("node.minimum.legacy.staked.rpl", 0.15 ether)

@@ -1,0 +1,8 @@
+while (_low < _high) {
+            uint256 mid = Math.average(_low, _high);
+            if (_timeAt(_key, mid) > _time) {
+                _high = mid;
+            } else {
+                _low = mid + 1;
+            }
+        }

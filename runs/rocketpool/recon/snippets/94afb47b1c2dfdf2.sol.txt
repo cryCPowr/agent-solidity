@@ -1,0 +1,1 @@
+newTotalSupply.mul(inflationRate).div(10**18)

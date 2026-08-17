@@ -1,0 +1,4 @@
+for (uint256 i = _offset; i < max; ++i) {
+            nodes[total] = addressSetStorage.getItem(nodeKey, i);
+            total++;
+        }

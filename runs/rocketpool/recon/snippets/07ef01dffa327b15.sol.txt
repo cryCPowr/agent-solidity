@@ -1,0 +1,3 @@
+unchecked { // Infeasible overflow
+            capacityNeeded = getBalance() + msg.value;
+        }

@@ -1,0 +1,12 @@
+function _tryDistribute(address _nodeAddress) internal {
+        // Get contracts
+        RocketNodeDistributorFactoryInterface rocketNodeDistributorFactory = RocketNodeDistributorFactoryInterface(getContractAddress("rocketNodeDistributorFactory"));
+        address distributorAddress = rocketNodeDistributorFactory.getProxyAddress(_nodeAddress);
+        // If there are funds to distribute than call distribute
+        if (distributorAddress.balance > 0) {
+            // Get contracts
+            RocketNodeManagerInterface rocketNodeManager = RocketNodeManagerInterface(getContractAddress("rocketNodeManager"));
+            // Ensure distributor has been initialised
+            require(rocketNodeManager.getFeeDistributorInitialised(_nodeAddress), "Distributor not initialised");
+            Rock
+/* … truncated … */

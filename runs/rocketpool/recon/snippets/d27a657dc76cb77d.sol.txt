@@ -1,0 +1,1 @@
+lastTimestamp + (frequency * 95 / 100)

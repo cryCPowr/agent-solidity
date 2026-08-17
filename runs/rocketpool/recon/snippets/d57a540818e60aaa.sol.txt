@@ -1,0 +1,1 @@
+newTotalSupply.sub(totalSupplyCurrent)

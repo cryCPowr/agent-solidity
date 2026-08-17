@@ -1,0 +1,8 @@
+for (uint256 i = 0; i < minipools.length; ++i) {
+                RocketMinipoolInterface minipool = RocketMinipoolInterface(minipools[i]);
+                // Assign deposit to minipool
+                minipool.deposit{value: variableDepositAmount}();
+                nodeBalanceUsed = nodeBalanceUsed + minipool.getNodeTopUpValue();
+                // Emit deposit assigned event
+                emit DepositAssigned(minipools[i], variableDepositAmount, block.timestamp);
+            }

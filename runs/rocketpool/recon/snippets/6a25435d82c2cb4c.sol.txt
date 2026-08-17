@@ -1,0 +1,13 @@
+function getState(uint256 _upgradeProposalID) override public view returns (UpgradeProposalState) {
+        // Check the proposal ID is legit
+        require(getTotal() >= _upgradeProposalID && _upgradeProposalID > 0, "Invalid upgrade proposal ID");
+        if (getVetoed(_upgradeProposalID)) {
+            return UpgradeProposalState.Vetoed;
+        } else if (getExecuted(_upgradeProposalID)) {
+            return UpgradeProposalState.Executed;
+        } else if (block.timestamp < getEnd(_upgradeProposalID)) {
+            return UpgradeProposalState.Pending;
+        } else {
+            return UpgradeProposalState.Succeeded;
+        }
+    }

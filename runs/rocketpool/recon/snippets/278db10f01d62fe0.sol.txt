@@ -1,0 +1,6 @@
+function setRPLLockingAllowed(address _nodeAddress, bool _allowed) override external onlyRPLWithdrawalAddressOrNode(_nodeAddress) {
+        // Set the value
+        setBool(keccak256(abi.encodePacked("rpl.locking.allowed", _nodeAddress)), _allowed);
+        // Log it
+        emit RPLLockingAllowed(_nodeAddress, _allowed, block.timestamp);
+    }

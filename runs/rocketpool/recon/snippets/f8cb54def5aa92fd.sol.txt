@@ -1,0 +1,14 @@
+function _dequeueItem(bytes32 _namespace) internal returns (DepositQueueValue memory item) {
+        uint256 data = getUint(keccak256(abi.encodePacked(_namespace, ".data")));
+        uint256 length = uint64(data >> lengthOffset);
+        require(length > 0, "Queue can't be empty");
+        uint256 start = uint64(data >> startOffset);
+        uint256 packedItem = getUint(keccak256(abi.encodePacked(_namespace, ".item", start)));
+        item = _unpackItem(packedItem);
+
+        uint256 nextItem = getUint(keccak256(abi.encodePacked(_namespace, ".next", start)));
+        // clear the 64 bits used to stored the 'start' pointer
+        data &= ~(uint256(ones64Bits) << startOffset);
+        data |= nextItem << startOffset;
+        deleteUint(keccak256(abi.encodePacked(_namespace, ".index", item.re
+/* … truncated … */

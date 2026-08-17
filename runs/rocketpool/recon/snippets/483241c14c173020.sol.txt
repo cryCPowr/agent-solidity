@@ -1,0 +1,7 @@
+function _sendToRETH(uint256 _amount) internal {
+        if (_amount == 0) {
+            return;
+        }
+        (bool success,) = rocketTokenRETH.call{value: _amount}("");
+        require(success);
+    }

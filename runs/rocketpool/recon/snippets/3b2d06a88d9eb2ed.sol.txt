@@ -1,0 +1,1 @@
+require(_bondAmount == getNewValidatorBondRequirement(), "Bond requirement not met")

@@ -1,0 +1,15 @@
+contract RocketDAOProtocolSettingsMinipool is RocketDAOProtocolSettings, RocketDAOProtocolSettingsMinipoolInterface {
+
+    uint256 constant internal minipoolUserDistributeWindowStart = 90 days;
+
+    constructor(RocketStorageInterface _rocketStorageAddress) RocketDAOProtocolSettings(_rocketStorageAddress, "minipool") {
+        version = 4;
+        // Initialise settings on deployment
+        if(!getBool(keccak256(abi.encodePacked(settingNameSpace, "deployed")))) {
+            // Apply settings
+            setSettingBool("minipool.submit.withdrawable.enabled", false);
+            setSettingBool("minipool.bond.reduction.enabled", false);
+            setSettingUint("minipool.launch.timeout", 72 hours);
+            setSettingUint("minipool.maximum.count", 14);
+            setSettingUint("minipo
+/* … truncated … */

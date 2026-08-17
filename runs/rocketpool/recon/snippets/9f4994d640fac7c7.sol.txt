@@ -1,0 +1,1 @@
+_indices.length * challengeBond

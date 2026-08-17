@@ -1,0 +1,1 @@
+keccak256(abi.encodePacked("node.smoothing.pool.changed.time", msg.sender))

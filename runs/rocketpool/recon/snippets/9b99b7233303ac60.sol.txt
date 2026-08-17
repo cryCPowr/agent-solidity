@@ -1,0 +1,1 @@
+ActionChallengeDecided(_nodeAddress, msg.sender, challengeSuccess, block.timestamp)

@@ -1,0 +1,13 @@
+function getExcessBalance() override public view returns (uint256) {
+        // Get minipool queue capacity
+        RocketMinipoolQueueInterface rocketMinipoolQueue = RocketMinipoolQueueInterface(getContractAddress("rocketMinipoolQueue"));
+        uint256 capacity = rocketMinipoolQueue.getEffectiveCapacity();
+        capacity += getUint(requestedTotalKey);
+        uint256 balance = getBalance();
+        // Calculate and return
+        if (capacity >= balance) {
+            return 0;
+        } else {
+            return balance - capacity;
+        }
+    }

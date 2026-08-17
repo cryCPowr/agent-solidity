@@ -1,0 +1,1 @@
+function getChallengeWindow() external view returns(uint256);

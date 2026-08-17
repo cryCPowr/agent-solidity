@@ -1,0 +1,1 @@
+function prepareVacancy(uint256 _bondAmount, uint256 _currentBalance) external;

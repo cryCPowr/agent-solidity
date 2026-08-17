@@ -1,0 +1,1 @@
+minipool.prepareVacancy(_bondAmount, _currentBalance)

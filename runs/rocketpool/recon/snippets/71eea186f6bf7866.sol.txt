@@ -1,0 +1,1 @@
+function burnFrom(address account, uint256 amount) external;

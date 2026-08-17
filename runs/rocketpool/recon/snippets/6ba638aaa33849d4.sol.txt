@@ -1,0 +1,10 @@
+function delegateUpgrade() external override onlyMinipoolOwner notSelf {
+        // Set previous address
+        rocketMinipoolDelegatePrev = rocketMinipoolDelegate;
+        // Set new delegate
+        rocketMinipoolDelegate = getContractAddress("rocketMinipoolDelegate");
+        // Verify
+        require(rocketMinipoolDelegate != rocketMinipoolDelegatePrev, "New delegate is the same as the existing one");
+        // Log event
+        emit DelegateUpgraded(rocketMinipoolDelegatePrev, rocketMinipoolDelegate, block.timestamp);
+    }

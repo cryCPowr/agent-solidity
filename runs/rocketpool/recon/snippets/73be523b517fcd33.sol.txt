@@ -1,0 +1,4 @@
+function calculateUserShare(uint256 _balance) override external view returns (uint256) {
+        // User's share is just the balance minus node refund minus node's share
+        return _balance.sub(calculateNodeShare(_balance));
+    }

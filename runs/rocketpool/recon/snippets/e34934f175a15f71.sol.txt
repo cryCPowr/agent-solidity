@@ -1,0 +1,12 @@
+function removeItem(bytes32 _key, address _value) override external onlyLatestContract("addressSetStorage", address(this)) onlyLatestNetworkContract {
+        uint256 index = getUint(keccak256(abi.encodePacked(_key, ".index", _value)));
+        require(index-- > 0, "Item does not exist in set");
+        uint count = getUint(keccak256(abi.encodePacked(_key, ".count")));
+        if (index < count.sub(1)) {
+            address lastItem = getAddress(keccak256(abi.encodePacked(_key, ".item", count.sub(1))));
+            setAddress(keccak256(abi.encodePacked(_key, ".item", index)), lastItem);
+            setUint(keccak256(abi.encodePacked(_key, ".index", lastItem)), index.add(1));
+        }
+        setUint(keccak256(abi.encodePacked(_key, ".index", _value)), 0);
+        setUint(keccak256(abi.enc
+/* … truncated … */

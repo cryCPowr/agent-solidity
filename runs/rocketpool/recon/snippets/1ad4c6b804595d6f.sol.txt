@@ -1,0 +1,11 @@
+if(_nodeAddress == msg.sender) {
+            // Challenge is defeated, node has responded
+            deleteUint(challengeTimeKey);
+        }else{
+            // The challenge refute window has passed, the member can be ejected now
+            require(challengeTime.add(rocketDAONodeTrustedSettingsMembers.getChallengeWindow()) < block.timestamp, "Refute window has not yet passed");
+            // Node has been challenged and failed to respond in the given window, remove them as a member and their bond is burned
+            _memberRemove(_nodeAddress);
+            // Challenge was successful
+            challengeSuccess = true;
+        }

@@ -1,0 +1,5 @@
+if (protocolDAOAmount > 0) {
+            address rocketClaimDAO = getContractAddress("rocketClaimDAO");
+            (bool success,) = rocketClaimDAO.call{value: protocolDAOAmount}("");
+            require(success, "Failed to send protocol DAO rewards");
+        }

@@ -1,0 +1,30 @@
+abstract contract RocketMinipoolStorageLayout {
+    // Storage state enum
+    enum StorageState {
+        Undefined,
+        Uninitialised,
+        Initialised
+    }
+
+	// Main Rocket Pool storage contract
+    RocketStorageInterface internal rocketStorage = RocketStorageInterface(0);
+
+    // Status
+    MinipoolStatus internal status;
+    uint256 internal statusBlock;
+    uint256 internal statusTime;
+    uint256 internal withdrawalBlock;
+
+    // Deposit type
+    MinipoolDeposit internal depositType;
+
+    // Node details
+    address internal nodeAddress;
+    uint256 internal nodeFee;
+    uint256 internal nodeDepositBalance;
+    bool internal nodeDepositAssigned;          // NO LONGER IN USE
+    uint256 internal nodeRefundBalance;
+    uint256 internal nodeSlashBalance;
+
+    // User deposit det
+/* … truncated … */

@@ -1,0 +1,1 @@
+event MinipoolVacancyPrepared(uint256 bondAmount, uint256 currentBalance, uint256 time);

@@ -1,0 +1,1 @@
+RocketMegapoolInterface(head.receiver).assignFunds{value: ethRequired}(head.validatorId)

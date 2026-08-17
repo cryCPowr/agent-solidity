@@ -1,0 +1,1 @@
+SSZ.concat(path, _pathBeaconStateToSlot())

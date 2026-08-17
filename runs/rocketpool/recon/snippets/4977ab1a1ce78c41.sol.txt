@@ -1,0 +1,5 @@
+function _repayDebt(uint256 _amount) internal {
+        require(debt >= _amount, "Not enough debt");
+        _sendToRETH(_amount);
+        _reduceDebt(_amount);
+    }

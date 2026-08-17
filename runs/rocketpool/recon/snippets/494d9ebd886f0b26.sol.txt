@@ -1,0 +1,1 @@
+function getPreMigrationBalance() override external view returns (uint256) { return preMigrationBalance; }

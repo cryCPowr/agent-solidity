@@ -1,0 +1,1 @@
+rocketNetworkSnapshots.push(key, uint224(uint160(_newDelegate)))

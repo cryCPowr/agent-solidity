@@ -1,0 +1,1 @@
+rocketDAOSecurityProposals.proposalInvite(_id, _memberAddress)

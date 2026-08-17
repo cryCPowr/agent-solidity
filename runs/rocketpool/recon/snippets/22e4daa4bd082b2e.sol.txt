@@ -1,0 +1,1 @@
+rocketNetworkVoting.getVotingPower(msg.sender, blockNumber)

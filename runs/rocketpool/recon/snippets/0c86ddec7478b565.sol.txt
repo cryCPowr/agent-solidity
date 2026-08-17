@@ -1,0 +1,3 @@
+function getContainsLegacy() override external view returns (bool) {
+        return getLengthLegacy(queueKeyFull).add(getLengthLegacy(queueKeyHalf)) > 0;
+    }

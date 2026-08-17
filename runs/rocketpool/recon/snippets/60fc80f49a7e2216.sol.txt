@@ -1,0 +1,3 @@
+function setEnabled(bool _enabled) external {
+        enabled = _enabled;
+    }

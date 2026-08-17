@@ -1,0 +1,1 @@
+ProposalVoted(_proposalID, _nodeOperator, _voteDirection, _votes, block.timestamp)

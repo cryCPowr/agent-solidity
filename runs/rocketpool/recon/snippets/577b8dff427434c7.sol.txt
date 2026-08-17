@@ -1,0 +1,9 @@
+constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
+        version = 7;
+        // Precompute keys
+        totalKey = keccak256(abi.encodePacked("rpl.staked.total.amount"));
+        totalMegapoolKey = keccak256(abi.encodePacked("rpl.megapool.staked.total.amount"));
+        // Store immutable contract references
+        rplToken = RocketTokenRPLInterface(getContractAddress("rocketTokenRPL"));
+        rocketVault = RocketVaultInterface(getContractAddress("rocketVault"));
+    }

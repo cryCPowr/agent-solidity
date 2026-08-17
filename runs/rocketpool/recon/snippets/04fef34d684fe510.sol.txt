@@ -1,0 +1,3 @@
+if (creditToUse > 0) {
+            subUint(keccak256(abi.encodePacked("node.deposit.credit.balance", msg.sender)), creditToUse);
+        }

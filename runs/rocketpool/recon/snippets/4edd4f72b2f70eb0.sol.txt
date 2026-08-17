@@ -1,0 +1,6 @@
+function setDeployedStatus() external {
+        // Only guardian can lock this down
+        require(msg.sender == guardian, "Is not guardian account");
+        // Set it now
+        storageInit = true;
+    }

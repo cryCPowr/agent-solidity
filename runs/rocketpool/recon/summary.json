@@ -1,935 +1,2218 @@
 {
   "analysis_coverage": {
-    "files_analyzed": 2,
-    "files_failed": 179,
+    "files_analyzed": 196,
+    "files_failed": 0,
     "files_partially_analyzed": 0,
     "unresolved": {
-      "call_argument_dataflows": 0,
+      "call_argument_dataflows": 2580,
       "event_emissions": 0,
-      "inheritance_bases": 0,
+      "inheritance_bases": 55,
       "internal_calls": 0
     }
   },
-  "asset_operation_count": 0,
-  "authorization_check_count": 0,
+  "asset_operation_count": 17,
+  "authorization_check_count": 73,
   "callback_capable_call_count": 0,
-  "capabilities": {},
+  "capabilities": {
+    "can_approve_spender": 6,
+    "can_burn": 2,
+    "can_call_arbitrary_target": 18,
+    "can_create_contracts": 20,
+    "can_create_contracts_deterministically": 1,
+    "can_delegatecall": 4,
+    "can_mint": 2,
+    "can_modify_authorization_state": 15,
+    "can_receive_native_value": 62,
+    "can_transfer_native_value": 40,
+    "can_transfer_token": 6,
+    "uses_inline_assembly": 26
+  },
   "contracts": [
+    {
+      "file": "contracts/contract/RocketBase.sol",
+      "is_abstract": true,
+      "key": "contracts/contract/RocketBase.sol#628",
+      "kind": "contract",
+      "name": "RocketBase"
+    },
+    {
+      "file": "contracts/contract/RocketStorage.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/RocketStorage.sol#1347",
+      "kind": "contract",
+      "name": "RocketStorage"
+    },
+    {
+      "file": "contracts/contract/RocketVault.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/RocketVault.sol#1881",
+      "kind": "contract",
+      "name": "RocketVault"
+    },
+    {
+      "file": "contracts/contract/auction/RocketAuctionManager.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/auction/RocketAuctionManager.sol#3119",
+      "kind": "contract",
+      "name": "RocketAuctionManager"
+    },
+    {
+      "file": "contracts/contract/dao/RocketDAOProposal.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/RocketDAOProposal.sol#4137",
+      "kind": "contract",
+      "name": "RocketDAOProposal"
+    },
+    {
+      "file": "contracts/contract/dao/node/RocketDAONodeTrusted.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/node/RocketDAONodeTrusted.sol#4770",
+      "kind": "contract",
+      "name": "RocketDAONodeTrusted"
+    },
+    {
+      "file": "contracts/contract/dao/node/RocketDAONodeTrustedActions.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/node/RocketDAONodeTrustedActions.sol#5727",
+      "kind": "contract",
+      "name": "RocketDAONodeTrustedActions"
+    },
+    {
+      "file": "contracts/contract/dao/node/RocketDAONodeTrustedProposals.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/node/RocketDAONodeTrustedProposals.sol#6377",
+      "kind": "contract",
+      "name": "RocketDAONodeTrustedProposals"
+    },
+    {
+      "file": "contracts/contract/dao/node/RocketDAONodeTrustedUpgrade.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/node/RocketDAONodeTrustedUpgrade.sol#1883",
+      "kind": "contract",
+      "name": "RocketDAONodeTrustedUpgrade"
+    },
+    {
+      "file": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettings.sol",
+      "is_abstract": true,
+      "key": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettings.sol#6515",
+      "kind": "contract",
+      "name": "RocketDAONodeTrustedSettings"
+    },
+    {
+      "file": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsMembers.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsMembers.sol#6720",
+      "kind": "contract",
+      "name": "RocketDAONodeTrustedSettingsMembers"
+    },
+    {
+      "file": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsMinipool.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsMinipool.sol#6994",
+      "kind": "contract",
+      "name": "RocketDAONodeTrustedSettingsMinipool"
+    },
+    {
+      "file": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsProposals.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsProposals.sol#7120",
+      "kind": "contract",
+      "name": "RocketDAONodeTrustedSettingsProposals"
+    },
+    {
+      "file": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsRewards.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsRewards.sol#7252",
+      "kind": "contract",
+      "name": "RocketDAONodeTrustedSettingsRewards"
+    },
+    {
+      "file": "contracts/contract/dao/protocol/RocketDAOProtocol.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/protocol/RocketDAOProtocol.sol#2672",
+      "kind": "contract",
+      "name": "RocketDAOProtocol"
+    },
+    {
+      "file": "contracts/contract/dao/protocol/RocketDAOProtocolActions.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/protocol/RocketDAOProtocolActions.sol#7283",
+      "kind": "contract",
+      "name": "RocketDAOProtocolActions"
+    },
+    {
+      "file": "contracts/contract/dao/protocol/RocketDAOProtocolProposal.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/protocol/RocketDAOProtocolProposal.sol#4540",
+      "kind": "contract",
+      "name": "RocketDAOProtocolProposal"
+    },
+    {
+      "file": "contracts/contract/dao/protocol/RocketDAOProtocolProposals.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/protocol/RocketDAOProtocolProposals.sol#5266",
+      "kind": "contract",
+      "name": "RocketDAOProtocolProposals"
+    },
+    {
+      "file": "contracts/contract/dao/protocol/RocketDAOProtocolVerifier.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/protocol/RocketDAOProtocolVerifier.sol#8411",
+      "kind": "contract",
+      "name": "RocketDAOProtocolVerifier"
+    },
+    {
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettings.sol",
+      "is_abstract": true,
+      "key": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettings.sol#8724",
+      "kind": "contract",
+      "name": "RocketDAOProtocolSettings"
+    },
+    {
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsAuction.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsAuction.sol#9019",
+      "kind": "contract",
+      "name": "RocketDAOProtocolSettingsAuction"
+    },
+    {
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsDeposit.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsDeposit.sol#9311",
+      "kind": "contract",
+      "name": "RocketDAOProtocolSettingsDeposit"
+    },
+    {
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsInflation.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsInflation.sol#9527",
+      "kind": "contract",
+      "name": "RocketDAOProtocolSettingsInflation"
+    },
+    {
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsMegapool.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsMegapool.sol#9969",
+      "kind": "contract",
+      "name": "RocketDAOProtocolSettingsMegapool"
+    },
+    {
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsMinipool.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsMinipool.sol#10385",
+      "kind": "contract",
+      "name": "RocketDAOProtocolSettingsMinipool"
+    },
+    {
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsNetwork.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsNetwork.sol#11379",
+      "kind": "contract",
+      "name": "RocketDAOProtocolSettingsNetwork"
+    },
+    {
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsNode.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsNode.sol#11793",
+      "kind": "contract",
+      "name": "RocketDAOProtocolSettingsNode"
+    },
+    {
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsProposals.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsProposals.sol#12225",
+      "kind": "contract",
+      "name": "RocketDAOProtocolSettingsProposals"
+    },
+    {
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsRewards.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsRewards.sol#12621",
+      "kind": "contract",
+      "name": "RocketDAOProtocolSettingsRewards"
+    },
+    {
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsSecurity.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsSecurity.sol#13142",
+      "kind": "contract",
+      "name": "RocketDAOProtocolSettingsSecurity"
+    },
+    {
+      "file": "contracts/contract/dao/security/RocketDAOSecurity.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/security/RocketDAOSecurity.sol#13342",
+      "kind": "contract",
+      "name": "RocketDAOSecurity"
+    },
+    {
+      "file": "contracts/contract/dao/security/RocketDAOSecurityActions.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/security/RocketDAOSecurityActions.sol#13832",
+      "kind": "contract",
+      "name": "RocketDAOSecurityActions"
+    },
+    {
+      "file": "contracts/contract/dao/security/RocketDAOSecurityProposals.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/security/RocketDAOSecurityProposals.sol#14623",
+      "kind": "contract",
+      "name": "RocketDAOSecurityProposals"
+    },
+    {
+      "file": "contracts/contract/dao/security/RocketDAOSecurityUpgrade.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/dao/security/RocketDAOSecurityUpgrade.sol#14967",
+      "kind": "contract",
+      "name": "RocketDAOSecurityUpgrade"
+    },
+    {
+      "file": "contracts/contract/deposit/RocketDepositPool.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/deposit/RocketDepositPool.sol#17610",
+      "kind": "contract",
+      "name": "RocketDepositPool"
+    },
+    {
+      "file": "contracts/contract/helper/BeaconStateVerifierMock.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/helper/BeaconStateVerifierMock.sol#17834",
+      "kind": "contract",
+      "name": "BeaconStateVerifierMock"
+    },
+    {
+      "file": "contracts/contract/helper/MegapoolUpgradeHelper.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/helper/MegapoolUpgradeHelper.sol#17876",
+      "kind": "contract",
+      "name": "MegapoolUpgradeHelper"
+    },
+    {
+      "file": "contracts/contract/helper/PenaltyTest.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/helper/PenaltyTest.sol#7322",
+      "kind": "contract",
+      "name": "PenaltyTest"
+    },
+    {
+      "file": "contracts/contract/helper/RevertOnTransfer.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/helper/RevertOnTransfer.sol#48",
+      "kind": "contract",
+      "name": "RevertOnTransfer"
+    },
+    {
+      "file": "contracts/contract/helper/SnapshotTest.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/helper/SnapshotTest.sol#18056",
+      "kind": "contract",
+      "name": "SnapshotTest"
+    },
+    {
+      "file": "contracts/contract/helper/SnapshotTimeTest.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/helper/SnapshotTimeTest.sol#18236",
+      "kind": "contract",
+      "name": "SnapshotTimeTest"
+    },
+    {
+      "file": "contracts/contract/helper/StakeHelper.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/helper/StakeHelper.sol#18491",
+      "kind": "contract",
+      "name": "StakeHelper"
+    },
+    {
+      "file": "contracts/contract/helper/StorageHelper.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/helper/StorageHelper.sol#18868",
+      "kind": "contract",
+      "name": "StorageHelper"
+    },
+    {
+      "file": "contracts/contract/megapool/RocketMegapoolDelegate.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/megapool/RocketMegapoolDelegate.sol#21639",
+      "kind": "contract",
+      "name": "RocketMegapoolDelegate"
+    },
+    {
+      "file": "contracts/contract/megapool/RocketMegapoolDelegateBase.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/megapool/RocketMegapoolDelegateBase.sol#21837",
+      "kind": "contract",
+      "name": "RocketMegapoolDelegateBase"
+    },
+    {
+      "file": "contracts/contract/megapool/RocketMegapoolFactory.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/megapool/RocketMegapoolFactory.sol#22344",
+      "kind": "contract",
+      "name": "RocketMegapoolFactory"
+    },
+    {
+      "file": "contracts/contract/megapool/RocketMegapoolManager.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/megapool/RocketMegapoolManager.sol#23375",
+      "kind": "contract",
+      "name": "RocketMegapoolManager"
+    },
+    {
+      "file": "contracts/contract/megapool/RocketMegapoolPenalties.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/megapool/RocketMegapoolPenalties.sol#23979",
+      "kind": "contract",
+      "name": "RocketMegapoolPenalties"
+    },
+    {
+      "file": "contracts/contract/megapool/RocketMegapoolProxy.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/megapool/RocketMegapoolProxy.sol#24471",
+      "kind": "contract",
+      "name": "RocketMegapoolProxy"
+    },
+    {
+      "file": "contracts/contract/megapool/RocketMegapoolStorageLayout.sol",
+      "is_abstract": true,
+      "key": "contracts/contract/megapool/RocketMegapoolStorageLayout.sol#24561",
+      "kind": "contract",
+      "name": "RocketMegapoolStorageLayout"
+    },
+    {
+      "file": "contracts/contract/minipool/RocketMinipoolBase.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/minipool/RocketMinipoolBase.sol#7768",
+      "kind": "contract",
+      "name": "RocketMinipoolBase"
+    },
+    {
+      "file": "contracts/contract/minipool/RocketMinipoolBondReducer.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/minipool/RocketMinipoolBondReducer.sol#24820",
+      "kind": "contract",
+      "name": "RocketMinipoolBondReducer"
+    },
+    {
+      "file": "contracts/contract/minipool/RocketMinipoolDelegate.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/minipool/RocketMinipoolDelegate.sol#10243",
+      "kind": "contract",
+      "name": "RocketMinipoolDelegate"
+    },
+    {
+      "file": "contracts/contract/minipool/RocketMinipoolFactory.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/minipool/RocketMinipoolFactory.sol#10395",
+      "kind": "contract",
+      "name": "RocketMinipoolFactory"
+    },
+    {
+      "file": "contracts/contract/minipool/RocketMinipoolManager.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/minipool/RocketMinipoolManager.sol#27159",
+      "kind": "contract",
+      "name": "RocketMinipoolManager"
+    },
+    {
+      "file": "contracts/contract/minipool/RocketMinipoolPenalty.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/minipool/RocketMinipoolPenalty.sol#10513",
+      "kind": "contract",
+      "name": "RocketMinipoolPenalty"
+    },
+    {
+      "file": "contracts/contract/minipool/RocketMinipoolQueue.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/minipool/RocketMinipoolQueue.sol#11382",
+      "kind": "contract",
+      "name": "RocketMinipoolQueue"
+    },
+    {
+      "file": "contracts/contract/minipool/RocketMinipoolStorageLayout.sol",
+      "is_abstract": true,
+      "key": "contracts/contract/minipool/RocketMinipoolStorageLayout.sol#11458",
+      "kind": "contract",
+      "name": "RocketMinipoolStorageLayout"
+    },
+    {
+      "file": "contracts/contract/network/RocketNetworkBalances.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/network/RocketNetworkBalances.sol#27841",
+      "kind": "contract",
+      "name": "RocketNetworkBalances"
+    },
+    {
+      "file": "contracts/contract/network/RocketNetworkFees.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/network/RocketNetworkFees.sol#11712",
+      "kind": "contract",
+      "name": "RocketNetworkFees"
+    },
+    {
+      "file": "contracts/contract/network/RocketNetworkPenalties.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/network/RocketNetworkPenalties.sol#28491",
+      "kind": "contract",
+      "name": "RocketNetworkPenalties"
+    },
+    {
+      "file": "contracts/contract/network/RocketNetworkPrices.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/network/RocketNetworkPrices.sol#28942",
+      "kind": "contract",
+      "name": "RocketNetworkPrices"
+    },
+    {
+      "file": "contracts/contract/network/RocketNetworkRevenues.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/network/RocketNetworkRevenues.sol#29975",
+      "kind": "contract",
+      "name": "RocketNetworkRevenues"
+    },
+    {
+      "file": "contracts/contract/network/RocketNetworkSnapshots.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/network/RocketNetworkSnapshots.sol#30738",
+      "kind": "contract",
+      "name": "RocketNetworkSnapshots"
+    },
+    {
+      "file": "contracts/contract/network/RocketNetworkSnapshotsTime.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/network/RocketNetworkSnapshotsTime.sol#31481",
+      "kind": "contract",
+      "name": "RocketNetworkSnapshotsTime"
+    },
+    {
+      "file": "contracts/contract/network/RocketNetworkVoting.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/network/RocketNetworkVoting.sol#31945",
+      "kind": "contract",
+      "name": "RocketNetworkVoting"
+    },
+    {
+      "file": "contracts/contract/node/RocketNodeDeposit.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/node/RocketNodeDeposit.sol#32997",
+      "kind": "contract",
+      "name": "RocketNodeDeposit"
+    },
+    {
+      "file": "contracts/contract/node/RocketNodeDistributor.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/node/RocketNodeDistributor.sol#11765",
+      "kind": "contract",
+      "name": "RocketNodeDistributor"
+    },
+    {
+      "file": "contracts/contract/node/RocketNodeDistributorDelegate.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/node/RocketNodeDistributorDelegate.sol#33292",
+      "kind": "contract",
+      "name": "RocketNodeDistributorDelegate"
+    },
+    {
+      "file": "contracts/contract/node/RocketNodeDistributorFactory.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/node/RocketNodeDistributorFactory.sol#11897",
+      "kind": "contract",
+      "name": "RocketNodeDistributorFactory"
+    },
+    {
+      "file": "contracts/contract/node/RocketNodeDistributorStorageLayout.sol",
+      "is_abstract": true,
+      "key": "contracts/contract/node/RocketNodeDistributorStorageLayout.sol#11908",
+      "kind": "contract",
+      "name": "RocketNodeDistributorStorageLayout"
+    },
+    {
+      "file": "contracts/contract/node/RocketNodeManager.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/node/RocketNodeManager.sol#35647",
+      "kind": "contract",
+      "name": "RocketNodeManager"
+    },
+    {
+      "file": "contracts/contract/node/RocketNodeStaking.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/node/RocketNodeStaking.sol#37866",
+      "kind": "contract",
+      "name": "RocketNodeStaking"
+    },
+    {
+      "file": "contracts/contract/rewards/RocketClaimDAO.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/rewards/RocketClaimDAO.sol#38897",
+      "kind": "contract",
+      "name": "RocketClaimDAO"
+    },
+    {
+      "file": "contracts/contract/rewards/RocketMerkleDistributorMainnet.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/rewards/RocketMerkleDistributorMainnet.sol#39993",
+      "kind": "contract",
+      "name": "RocketMerkleDistributorMainnet"
+    },
+    {
+      "file": "contracts/contract/rewards/RocketRewardsPool.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/rewards/RocketRewardsPool.sol#41254",
+      "kind": "contract",
+      "name": "RocketRewardsPool"
+    },
+    {
+      "file": "contracts/contract/rewards/RocketSmoothingPool.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/rewards/RocketSmoothingPool.sol#11996",
+      "kind": "contract",
+      "name": "RocketSmoothingPool"
+    },
+    {
+      "file": "contracts/contract/token/RocketTokenRETH.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/token/RocketTokenRETH.sol#12553",
+      "kind": "contract",
+      "name": "RocketTokenRETH"
+    },
+    {
+      "file": "contracts/contract/token/RocketTokenRPL.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/token/RocketTokenRPL.sol#13041",
+      "kind": "contract",
+      "name": "RocketTokenRPL"
+    },
+    {
+      "file": "contracts/contract/token/temp/RocketTokenDummyRPL.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/token/temp/RocketTokenDummyRPL.sol#13148",
+      "kind": "contract",
+      "name": "RocketTokenDummyRPL"
+    },
+    {
+      "file": "contracts/contract/util/AddressQueueStorage.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/util/AddressQueueStorage.sol#13688",
+      "kind": "contract",
+      "name": "AddressQueueStorage"
+    },
+    {
+      "file": "contracts/contract/util/AddressSetStorage.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/util/AddressSetStorage.sol#13997",
+      "kind": "contract",
+      "name": "AddressSetStorage"
+    },
+    {
+      "file": "contracts/contract/util/BeaconStateVerifier.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/util/BeaconStateVerifier.sol#42170",
+      "kind": "contract",
+      "name": "BeaconStateVerifier"
+    },
+    {
+      "file": "contracts/contract/util/Context.sol",
+      "is_abstract": true,
+      "key": "contracts/contract/util/Context.sol#14023",
+      "kind": "contract",
+      "name": "Context"
+    },
+    {
+      "file": "contracts/contract/util/ERC20.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/util/ERC20.sol#14526",
+      "kind": "contract",
+      "name": "ERC20"
+    },
+    {
+      "file": "contracts/contract/util/ERC20Burnable.sol",
+      "is_abstract": true,
+      "key": "contracts/contract/util/ERC20Burnable.sol#14585",
+      "kind": "contract",
+      "name": "ERC20Burnable"
+    },
+    {
+      "file": "contracts/contract/util/LinkedListStorage.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/util/LinkedListStorage.sol#43468",
+      "kind": "contract",
+      "name": "LinkedListStorage"
+    },
+    {
+      "file": "contracts/contract/util/LinkedListStorageHelper.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/util/LinkedListStorageHelper.sol#43566",
+      "kind": "contract",
+      "name": "LinkedListStorageHelper"
+    },
+    {
+      "file": "contracts/contract/util/SSZ.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/util/SSZ.sol#44001",
+      "kind": "library",
+      "name": "SSZ"
+    },
+    {
+      "file": "contracts/contract/util/SafeERC20.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/util/SafeERC20.sol#14798",
+      "kind": "library",
+      "name": "SafeERC20"
+    },
+    {
+      "file": "contracts/contract/util/SafeMath.sol",
+      "is_abstract": false,
+      "key": "contracts/contract/util/SafeMath.sol#15153",
+      "kind": "library",
+      "name": "SafeMath"
+    },
+    {
+      "file": "contracts/interface/RocketStorageInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/RocketStorageInterface.sol#15349",
+      "kind": "interface",
+      "name": "RocketStorageInterface"
+    },
+    {
+      "file": "contracts/interface/RocketVaultInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/RocketVaultInterface.sol#15411",
+      "kind": "interface",
+      "name": "RocketVaultInterface"
+    },
+    {
+      "file": "contracts/interface/RocketVaultWithdrawerInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/RocketVaultWithdrawerInterface.sol#15417",
+      "kind": "interface",
+      "name": "RocketVaultWithdrawerInterface"
+    },
+    {
+      "file": "contracts/interface/auction/RocketAuctionManagerInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/auction/RocketAuctionManagerInterface.sol#15574",
+      "kind": "interface",
+      "name": "RocketAuctionManagerInterface"
+    },
+    {
+      "file": "contracts/interface/casper/DepositInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/casper/DepositInterface.sol#15588",
+      "kind": "interface",
+      "name": "DepositInterface"
+    },
+    {
+      "file": "contracts/interface/dao/RocketDAOProposalInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/RocketDAOProposalInterface.sol#15764",
+      "kind": "interface",
+      "name": "RocketDAOProposalInterface"
+    },
+    {
+      "file": "contracts/interface/dao/node/RocketDAONodeTrustedActionsInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/node/RocketDAONodeTrustedActionsInterface.sol#15797",
+      "kind": "interface",
+      "name": "RocketDAONodeTrustedActionsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/node/RocketDAONodeTrustedInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/node/RocketDAONodeTrustedInterface.sol#15952",
+      "kind": "interface",
+      "name": "RocketDAONodeTrustedInterface"
+    },
+    {
+      "file": "contracts/interface/dao/node/RocketDAONodeTrustedProposalsInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/node/RocketDAONodeTrustedProposalsInterface.sol#16031",
+      "kind": "interface",
+      "name": "RocketDAONodeTrustedProposalsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/node/RocketDAONodeTrustedUpgradeInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/node/RocketDAONodeTrustedUpgradeInterface.sol#16132",
+      "kind": "interface",
+      "name": "RocketDAONodeTrustedUpgradeInterface"
+    },
+    {
+      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsInterface.sol#16163",
+      "kind": "interface",
+      "name": "RocketDAONodeTrustedSettingsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsMembersInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsMembersInterface.sol#16201",
+      "kind": "interface",
+      "name": "RocketDAONodeTrustedSettingsMembersInterface"
+    },
+    {
+      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsMinipoolInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsMinipoolInterface.sol#16246",
+      "kind": "interface",
+      "name": "RocketDAONodeTrustedSettingsMinipoolInterface"
+    },
+    {
+      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsProposalsInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsProposalsInterface.sol#16274",
+      "kind": "interface",
+      "name": "RocketDAONodeTrustedSettingsProposalsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsRewardsInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsRewardsInterface.sol#16284",
+      "kind": "interface",
+      "name": "RocketDAONodeTrustedSettingsRewardsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/RocketDAOProtocolActionsInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/protocol/RocketDAOProtocolActionsInterface.sol#16287",
+      "kind": "interface",
+      "name": "RocketDAOProtocolActionsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/RocketDAOProtocolInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/protocol/RocketDAOProtocolInterface.sol#44909",
+      "kind": "interface",
+      "name": "RocketDAOProtocolInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/RocketDAOProtocolProposalInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/protocol/RocketDAOProtocolProposalInterface.sol#45167",
+      "kind": "interface",
+      "name": "RocketDAOProtocolProposalInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/RocketDAOProtocolProposalsInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/protocol/RocketDAOProtocolProposalsInterface.sol#45298",
+      "kind": "interface",
+      "name": "RocketDAOProtocolProposalsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/RocketDAOProtocolVerifierInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/protocol/RocketDAOProtocolVerifierInterface.sol#45328",
+      "kind": "interface",
+      "name": "Types"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/RocketDAOProtocolVerifierInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/protocol/RocketDAOProtocolVerifierInterface.sol#45432",
+      "kind": "interface",
+      "name": "RocketDAOProtocolVerifierInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsAuctionInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsAuctionInterface.sol#16325",
+      "kind": "interface",
+      "name": "RocketDAOProtocolSettingsAuctionInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsDepositInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsDepositInterface.sol#45518",
+      "kind": "interface",
+      "name": "RocketDAOProtocolSettingsDepositInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsInflationInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsInflationInterface.sol#16338",
+      "kind": "interface",
+      "name": "RocketDAOProtocolSettingsInflationInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsInterface.sol#45592",
+      "kind": "interface",
+      "name": "RocketDAOProtocolSettingsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsMegapoolInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsMegapoolInterface.sol#45638",
+      "kind": "interface",
+      "name": "RocketDAOProtocolSettingsMegapoolInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsMinipoolInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsMinipoolInterface.sol#16423",
+      "kind": "interface",
+      "name": "RocketDAOProtocolSettingsMinipoolInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsNetworkInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsNetworkInterface.sol#16574",
+      "kind": "interface",
+      "name": "RocketDAOProtocolSettingsNetworkInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsNodeInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsNodeInterface.sol#16628",
+      "kind": "interface",
+      "name": "RocketDAOProtocolSettingsNodeInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsProposalsInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsProposalsInterface.sol#45982",
+      "kind": "interface",
+      "name": "RocketDAOProtocolSettingsProposalsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsRewardsInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsRewardsInterface.sol#16686",
+      "kind": "interface",
+      "name": "RocketDAOProtocolSettingsRewardsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsSecurityInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsSecurityInterface.sol#46078",
+      "kind": "interface",
+      "name": "RocketDAOProtocolSettingsSecurityInterface"
+    },
+    {
+      "file": "contracts/interface/dao/security/RocketDAOSecurityActionsInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/security/RocketDAOSecurityActionsInterface.sol#46101",
+      "kind": "interface",
+      "name": "RocketDAOSecurityActionsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/security/RocketDAOSecurityInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/security/RocketDAOSecurityInterface.sol#46151",
+      "kind": "interface",
+      "name": "RocketDAOSecurityInterface"
+    },
+    {
+      "file": "contracts/interface/dao/security/RocketDAOSecurityProposalsInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/security/RocketDAOSecurityProposalsInterface.sol#46236",
+      "kind": "interface",
+      "name": "RocketDAOSecurityProposalsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/security/RocketDAOSecurityUpgradeInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/dao/security/RocketDAOSecurityUpgradeInterface.sol#46272",
+      "kind": "interface",
+      "name": "RocketDAOSecurityUpgradeInterface"
+    },
+    {
+      "file": "contracts/interface/deposit/RocketDepositPoolInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/deposit/RocketDepositPoolInterface.sol#16842",
+      "kind": "interface",
+      "name": "RocketDepositPoolInterface"
+    },
+    {
+      "file": "contracts/interface/megapool/RocketMegapoolDelegateBaseInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/megapool/RocketMegapoolDelegateBaseInterface.sol#46440",
+      "kind": "interface",
+      "name": "RocketMegapoolDelegateBaseInterface"
+    },
+    {
+      "file": "contracts/interface/megapool/RocketMegapoolDelegateInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/megapool/RocketMegapoolDelegateInterface.sol#46668",
+      "kind": "interface",
+      "name": "RocketMegapoolDelegateInterface"
+    },
+    {
+      "file": "contracts/interface/megapool/RocketMegapoolFactoryInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/megapool/RocketMegapoolFactoryInterface.sol#46714",
+      "kind": "interface",
+      "name": "RocketMegapoolFactoryInterface"
+    },
+    {
+      "file": "contracts/interface/megapool/RocketMegapoolInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/megapool/RocketMegapoolInterface.sol#46725",
+      "kind": "interface",
+      "name": "RocketMegapoolInterface"
+    },
+    {
+      "file": "contracts/interface/megapool/RocketMegapoolManagerInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/megapool/RocketMegapoolManagerInterface.sol#46866",
+      "kind": "interface",
+      "name": "RocketMegapoolManagerInterface"
+    },
+    {
+      "file": "contracts/interface/megapool/RocketMegapoolPenaltiesInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/megapool/RocketMegapoolPenaltiesInterface.sol#46915",
+      "kind": "interface",
+      "name": "RocketMegapoolPenaltiesInterface"
+    },
+    {
+      "file": "contracts/interface/megapool/RocketMegapoolProxyInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/megapool/RocketMegapoolProxyInterface.sol#46952",
+      "kind": "interface",
+      "name": "RocketMegapoolProxyInterface"
+    },
+    {
+      "file": "contracts/interface/minipool/RocketMinipoolBaseInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/minipool/RocketMinipoolBaseInterface.sol#16883",
+      "kind": "interface",
+      "name": "RocketMinipoolBaseInterface"
+    },
+    {
+      "file": "contracts/interface/minipool/RocketMinipoolBondReducerInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/minipool/RocketMinipoolBondReducerInterface.sol#16953",
+      "kind": "interface",
+      "name": "RocketMinipoolBondReducerInterface"
+    },
+    {
+      "file": "contracts/interface/minipool/RocketMinipoolFactoryInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/minipool/RocketMinipoolFactoryInterface.sol#16975",
+      "kind": "interface",
+      "name": "RocketMinipoolFactoryInterface"
+    },
+    {
+      "file": "contracts/interface/minipool/RocketMinipoolInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/minipool/RocketMinipoolInterface.sol#17185",
+      "kind": "interface",
+      "name": "RocketMinipoolInterface"
+    },
+    {
+      "file": "contracts/interface/minipool/RocketMinipoolManagerInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/minipool/RocketMinipoolManagerInterface.sol#17435",
+      "kind": "interface",
+      "name": "RocketMinipoolManagerInterface"
+    },
+    {
+      "file": "contracts/interface/minipool/RocketMinipoolPenaltyInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/minipool/RocketMinipoolPenaltyInterface.sol#17462",
+      "kind": "interface",
+      "name": "RocketMinipoolPenaltyInterface"
+    },
+    {
+      "file": "contracts/interface/minipool/RocketMinipoolQueueInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/minipool/RocketMinipoolQueueInterface.sol#17549",
+      "kind": "interface",
+      "name": "RocketMinipoolQueueInterface"
+    },
+    {
+      "file": "contracts/interface/network/RocketNetworkBalancesInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/network/RocketNetworkBalancesInterface.sol#17609",
+      "kind": "interface",
+      "name": "RocketNetworkBalancesInterface"
+    },
+    {
+      "file": "contracts/interface/network/RocketNetworkFeesInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/network/RocketNetworkFeesInterface.sol#17629",
+      "kind": "interface",
+      "name": "RocketNetworkFeesInterface"
+    },
+    {
+      "file": "contracts/interface/network/RocketNetworkPenaltiesInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/network/RocketNetworkPenaltiesInterface.sol#47737",
+      "kind": "interface",
+      "name": "RocketNetworkPenaltiesInterface"
+    },
+    {
+      "file": "contracts/interface/network/RocketNetworkPricesInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/network/RocketNetworkPricesInterface.sol#17660",
+      "kind": "interface",
+      "name": "RocketNetworkPricesInterface"
+    },
+    {
+      "file": "contracts/interface/network/RocketNetworkRevenuesInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/network/RocketNetworkRevenuesInterface.sol#47846",
+      "kind": "interface",
+      "name": "RocketNetworkRevenuesInterface"
+    },
+    {
+      "file": "contracts/interface/network/RocketNetworkSnapshotsInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/network/RocketNetworkSnapshotsInterface.sol#47927",
+      "kind": "interface",
+      "name": "RocketNetworkSnapshotsInterface"
+    },
+    {
+      "file": "contracts/interface/network/RocketNetworkSnapshotsTimeInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/network/RocketNetworkSnapshotsTimeInterface.sol#48008",
+      "kind": "interface",
+      "name": "RocketNetworkSnapshotsTimeInterface"
+    },
+    {
+      "file": "contracts/interface/network/RocketNetworkVotingInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/network/RocketNetworkVotingInterface.sol#48048",
+      "kind": "interface",
+      "name": "RocketNetworkVotingInterface"
+    },
+    {
+      "file": "contracts/interface/node/RocketNodeDepositInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/node/RocketNodeDepositInterface.sol#17769",
+      "kind": "interface",
+      "name": "RocketNodeDepositInterface"
+    },
+    {
+      "file": "contracts/interface/node/RocketNodeDistributorFactoryInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/node/RocketNodeDistributorFactoryInterface.sol#17789",
+      "kind": "interface",
+      "name": "RocketNodeDistributorFactoryInterface"
+    },
+    {
+      "file": "contracts/interface/node/RocketNodeDistributorInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/node/RocketNodeDistributorInterface.sol#48194",
+      "kind": "interface",
+      "name": "RocketNodeDistributorInterface"
+    },
+    {
+      "file": "contracts/interface/node/RocketNodeManagerInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/node/RocketNodeManagerInterface.sol#48439",
+      "kind": "interface",
+      "name": "RocketNodeManagerInterface"
+    },
+    {
+      "file": "contracts/interface/node/RocketNodeStakingInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/node/RocketNodeStakingInterface.sol#18023",
+      "kind": "interface",
+      "name": "RocketNodeStakingInterface"
+    },
+    {
+      "file": "contracts/interface/rewards/RocketMerkleDistributorMainnetInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/rewards/RocketMerkleDistributorMainnetInterface.sol#48692",
+      "kind": "interface",
+      "name": "RocketMerkleDistributorMainnetInterface"
+    },
+    {
+      "file": "contracts/interface/rewards/RocketRewardsPoolInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/rewards/RocketRewardsPoolInterface.sol#48814",
+      "kind": "interface",
+      "name": "RocketRewardsPoolInterface"
+    },
+    {
+      "file": "contracts/interface/rewards/RocketRewardsRelayInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/rewards/RocketRewardsRelayInterface.sol#48872",
+      "kind": "interface",
+      "name": "RocketRewardsRelayInterface"
+    },
+    {
+      "file": "contracts/interface/rewards/RocketSmoothingPoolInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/rewards/RocketSmoothingPoolInterface.sol#18034",
+      "kind": "interface",
+      "name": "RocketSmoothingPoolInterface"
+    },
+    {
+      "file": "contracts/interface/rewards/claims/RocketClaimDAOInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/rewards/claims/RocketClaimDAOInterface.sol#48976",
+      "kind": "interface",
+      "name": "RocketClaimDAOInterface"
+    },
     {
       "file": "contracts/interface/rewards/claims/RocketClaimNodeInterface.sol",
       "is_abstract": false,
       "key": "contracts/interface/rewards/claims/RocketClaimNodeInterface.sol#38",
       "kind": "interface",
       "name": "RocketClaimNodeInterface"
+    },
+    {
+      "file": "contracts/interface/rewards/claims/RocketClaimTrustedNodeInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/rewards/claims/RocketClaimTrustedNodeInterface.sol#18073",
+      "kind": "interface",
+      "name": "RocketClaimTrustedNodeInterface"
+    },
+    {
+      "file": "contracts/interface/token/RocketTokenRETHInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/token/RocketTokenRETHInterface.sol#18126",
+      "kind": "interface",
+      "name": "RocketTokenRETHInterface"
+    },
+    {
+      "file": "contracts/interface/token/RocketTokenRPLInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/token/RocketTokenRPLInterface.sol#18177",
+      "kind": "interface",
+      "name": "RocketTokenRPLInterface"
+    },
+    {
+      "file": "contracts/interface/util/AddressQueueStorageInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/util/AddressQueueStorageInterface.sol#18226",
+      "kind": "interface",
+      "name": "AddressQueueStorageInterface"
+    },
+    {
+      "file": "contracts/interface/util/AddressSetStorageInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/util/AddressSetStorageInterface.sol#18268",
+      "kind": "interface",
+      "name": "AddressSetStorageInterface"
+    },
+    {
+      "file": "contracts/interface/util/BeaconStateVerifierInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/util/BeaconStateVerifierInterface.sol#49260",
+      "kind": "interface",
+      "name": "BeaconStateVerifierInterface"
+    },
+    {
+      "file": "contracts/interface/util/IERC20.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/util/IERC20.sol#18346",
+      "kind": "interface",
+      "name": "IERC20"
+    },
+    {
+      "file": "contracts/interface/util/IERC20Burnable.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/util/IERC20Burnable.sol#18364",
+      "kind": "interface",
+      "name": "IERC20Burnable"
+    },
+    {
+      "file": "contracts/interface/util/LinkedListStorageInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/util/LinkedListStorageInterface.sol#49455",
+      "kind": "interface",
+      "name": "LinkedListStorageInterface"
+    },
+    {
+      "file": "contracts/thirdparty/EthBalanceChecker/EthBalanceChecker.sol",
+      "is_abstract": false,
+      "key": "contracts/thirdparty/EthBalanceChecker/EthBalanceChecker.sol#217",
+      "kind": "contract",
+      "name": "EthBalanceChecker"
+    },
+    {
+      "file": "contracts/thirdparty/EthBalanceChecker/EthBalanceChecker.sol",
+      "is_abstract": false,
+      "key": "contracts/thirdparty/EthBalanceChecker/EthBalanceChecker.sol#58",
+      "kind": "interface",
+      "name": "Token"
+    },
+    {
+      "file": "contracts/thirdparty/Multicall2/Multicall2.sol",
+      "is_abstract": false,
+      "key": "contracts/thirdparty/Multicall2/Multicall2.sol#526",
+      "kind": "contract",
+      "name": "Multicall2"
+    },
+    {
+      "file": "contracts/thirdparty/RocketSignerRegistry/RocketSignerRegistry.sol",
+      "is_abstract": false,
+      "key": "contracts/thirdparty/RocketSignerRegistry/RocketSignerRegistry.sol#49669",
+      "kind": "contract",
+      "name": "RocketSignerRegistry"
+    },
+    {
+      "file": "contracts/thirdparty/RocketSignerRegistry/interface/RocketSignerRegistryInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/thirdparty/RocketSignerRegistry/interface/RocketSignerRegistryInterface.sol#49700",
+      "kind": "interface",
+      "name": "RocketSignerRegistryInterface"
+    },
+    {
+      "file": "contracts/thirdparty/UniswapOracleMock/UniswapOracleMock.sol",
+      "is_abstract": false,
+      "key": "contracts/thirdparty/UniswapOracleMock/UniswapOracleMock.sol#581",
+      "kind": "contract",
+      "name": "UniswapOracleMock"
+    },
+    {
+      "file": "node_modules/@openzeppelin/contracts/access/Ownable.sol",
+      "is_abstract": true,
+      "key": "node_modules/@openzeppelin/contracts/access/Ownable.sol#18537",
+      "kind": "contract",
+      "name": "Ownable"
+    },
+    {
+      "file": "node_modules/@openzeppelin/contracts/math/SafeMath.sol",
+      "is_abstract": false,
+      "key": "node_modules/@openzeppelin/contracts/math/SafeMath.sol#18892",
+      "kind": "library",
+      "name": "SafeMath"
+    },
+    {
+      "file": "node_modules/@openzeppelin/contracts/math/SignedSafeMath.sol",
+      "is_abstract": false,
+      "key": "node_modules/@openzeppelin/contracts/math/SignedSafeMath.sol#19071",
+      "kind": "library",
+      "name": "SignedSafeMath"
+    },
+    {
+      "file": "node_modules/@openzeppelin/contracts/proxy/Clones.sol",
+      "is_abstract": false,
+      "key": "node_modules/@openzeppelin/contracts/proxy/Clones.sol#19151",
+      "kind": "library",
+      "name": "Clones"
+    },
+    {
+      "file": "node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol",
+      "is_abstract": false,
+      "key": "node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol#19654",
+      "kind": "contract",
+      "name": "ERC20"
+    },
+    {
+      "file": "node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol",
+      "is_abstract": false,
+      "key": "node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol#19732",
+      "kind": "interface",
+      "name": "IERC20"
+    },
+    {
+      "file": "node_modules/@openzeppelin/contracts/utils/Address.sol",
+      "is_abstract": false,
+      "key": "node_modules/@openzeppelin/contracts/utils/Address.sol#20028",
+      "kind": "library",
+      "name": "Address"
+    },
+    {
+      "file": "node_modules/@openzeppelin/contracts/utils/Context.sol",
+      "is_abstract": true,
+      "key": "node_modules/@openzeppelin/contracts/utils/Context.sol#20051",
+      "kind": "contract",
+      "name": "Context"
+    },
+    {
+      "file": "node_modules/@openzeppelin/contracts/utils/SafeCast.sol",
+      "is_abstract": false,
+      "key": "node_modules/@openzeppelin/contracts/utils/SafeCast.sol#20364",
+      "kind": "library",
+      "name": "SafeCast"
+    },
+    {
+      "file": "node_modules/@openzeppelin4/contracts/proxy/Clones.sol",
+      "is_abstract": false,
+      "key": "node_modules/@openzeppelin4/contracts/proxy/Clones.sol#49938",
+      "kind": "library",
+      "name": "Clones"
+    },
+    {
+      "file": "node_modules/@openzeppelin4/contracts/utils/Strings.sol",
+      "is_abstract": false,
+      "key": "node_modules/@openzeppelin4/contracts/utils/Strings.sol#50167",
+      "kind": "library",
+      "name": "Strings"
+    },
+    {
+      "file": "node_modules/@openzeppelin4/contracts/utils/cryptography/MerkleProof.sol",
+      "is_abstract": false,
+      "key": "node_modules/@openzeppelin4/contracts/utils/cryptography/MerkleProof.sol#50695",
+      "kind": "library",
+      "name": "MerkleProof"
+    },
+    {
+      "file": "node_modules/@openzeppelin4/contracts/utils/math/Math.sol",
+      "is_abstract": false,
+      "key": "node_modules/@openzeppelin4/contracts/utils/math/Math.sol#51561",
+      "kind": "library",
+      "name": "Math"
+    },
+    {
+      "file": "node_modules/@openzeppelin4/contracts/utils/math/SafeCast.sol",
+      "is_abstract": false,
+      "key": "node_modules/@openzeppelin4/contracts/utils/math/SafeCast.sol#53102",
+      "kind": "library",
+      "name": "SafeCast"
+    },
+    {
+      "file": "node_modules/@openzeppelin4/contracts/utils/math/SignedMath.sol",
+      "is_abstract": false,
+      "key": "node_modules/@openzeppelin4/contracts/utils/math/SignedMath.sol#53207",
+      "kind": "library",
+      "name": "SignedMath"
     }
   ],
   "error_count": 0,
-  "eth_transfer_count": 0,
-  "event_count": 0,
-  "external_call_count": 0,
+  "eth_transfer_count": 50,
+  "event_count": 169,
+  "external_call_count": 1084,
   "fact_status_counts": {
-    "observed": 34
+    "derived": 2632,
+    "observed": 37005,
+    "partial": 291,
+    "unknown": 9395
   },
   "fact_type_counts": {
-    "contract_exists": 1,
-    "function_body": 6,
-    "function_exists": 6,
-    "function_mutability": 6,
-    "function_parameter": 5,
-    "function_return": 4,
-    "function_visibility": 6
+    "access_controlled_function": 160,
+    "arithmetic_operation": 2157,
+    "asset_operation": 17,
+    "authorization_check": 73,
+    "bitshift_operation": 106,
+    "builtin_call": 861,
+    "call_argument_dataflow": 8911,
+    "call_argument_origin_chain": 8911,
+    "call_options": 46,
+    "call_unresolved": 1710,
+    "capability": 202,
+    "computational_complexity_indicator": 51,
+    "contract_creation": 22,
+    "contract_exists": 191,
+    "control_flow_structure": 655,
+    "decode_operation": 10,
+    "digest_construction_operation": 856,
+    "division_operation": 101,
+    "encode_operation": 769,
+    "eth_transfer": 50,
+    "event_definition": 169,
+    "event_emission": 176,
+    "external_call": 1055,
+    "external_call_surface": 1084,
+    "function_body": 834,
+    "function_exists": 2261,
+    "function_mutability": 2261,
+    "function_parameter": 2681,
+    "function_return": 1463,
+    "function_visibility": 2261,
+    "inheritance": 104,
+    "input_origin": 583,
+    "interface_implementation": 67,
+    "internal_call": 1265,
+    "library_usage": 31,
+    "local_variable_origin": 1857,
+    "loop_nesting_depth": 59,
+    "low_level_call": 29,
+    "mev_exposure_indicator": 38,
+    "modifier_definition": 45,
+    "modifier_usage": 560,
+    "post_call_state_effect": 364,
+    "randomness_source_usage": 293,
+    "repeated_randomness_consumer": 56,
+    "require_statement": 747,
+    "revert_site": 17,
+    "security_relationship_chain": 1029,
+    "signature_recovery_operation": 1,
+    "special_evm_feature": 31,
+    "state_dependent_constraint": 314,
+    "state_read": 1164,
+    "state_variable": 236,
+    "state_write": 246,
+    "unguarded_capability_hypothesis": 83
   },
-  "function_count": 6,
+  "function_count": 2261,
   "graph_statistics": {
-    "edge_count": 6,
+    "edge_count": 7018,
     "edges_by_type": {
-      "DECLARES": 6
+      "CALLS": 2345,
+      "CREATES": 22,
+      "DECLARES": 2711,
+      "DELEGATES_TO": 4,
+      "EMITS": 176,
+      "IMPLEMENTS": 67,
+      "INHERITS": 49,
+      "READS": 1129,
+      "USES_MODIFIER": 269,
+      "WRITES": 246
     },
-    "node_count": 7,
+    "node_count": 4008,
     "nodes_by_kind": {
-      "contract": 1,
-      "function": 6
+      "contract": 191,
+      "creation_target": 22,
+      "event": 169,
+      "external_target": 1084,
+      "function": 2261,
+      "modifier": 45,
+      "state_variable": 236
     }
   },
   "interfaces": [
     {
+      "file": "contracts/interface/RocketStorageInterface.sol",
+      "key": "contracts/interface/RocketStorageInterface.sol#15349",
+      "name": "RocketStorageInterface"
+    },
+    {
+      "file": "contracts/interface/RocketVaultInterface.sol",
+      "key": "contracts/interface/RocketVaultInterface.sol#15411",
+      "name": "RocketVaultInterface"
+    },
+    {
+      "file": "contracts/interface/RocketVaultWithdrawerInterface.sol",
+      "key": "contracts/interface/RocketVaultWithdrawerInterface.sol#15417",
+      "name": "RocketVaultWithdrawerInterface"
+    },
+    {
+      "file": "contracts/interface/auction/RocketAuctionManagerInterface.sol",
+      "key": "contracts/interface/auction/RocketAuctionManagerInterface.sol#15574",
+      "name": "RocketAuctionManagerInterface"
+    },
+    {
+      "file": "contracts/interface/casper/DepositInterface.sol",
+      "key": "contracts/interface/casper/DepositInterface.sol#15588",
+      "name": "DepositInterface"
+    },
+    {
+      "file": "contracts/interface/dao/RocketDAOProposalInterface.sol",
+      "key": "contracts/interface/dao/RocketDAOProposalInterface.sol#15764",
+      "name": "RocketDAOProposalInterface"
+    },
+    {
+      "file": "contracts/interface/dao/node/RocketDAONodeTrustedActionsInterface.sol",
+      "key": "contracts/interface/dao/node/RocketDAONodeTrustedActionsInterface.sol#15797",
+      "name": "RocketDAONodeTrustedActionsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/node/RocketDAONodeTrustedInterface.sol",
+      "key": "contracts/interface/dao/node/RocketDAONodeTrustedInterface.sol#15952",
+      "name": "RocketDAONodeTrustedInterface"
+    },
+    {
+      "file": "contracts/interface/dao/node/RocketDAONodeTrustedProposalsInterface.sol",
+      "key": "contracts/interface/dao/node/RocketDAONodeTrustedProposalsInterface.sol#16031",
+      "name": "RocketDAONodeTrustedProposalsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/node/RocketDAONodeTrustedUpgradeInterface.sol",
+      "key": "contracts/interface/dao/node/RocketDAONodeTrustedUpgradeInterface.sol#16132",
+      "name": "RocketDAONodeTrustedUpgradeInterface"
+    },
+    {
+      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsInterface.sol",
+      "key": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsInterface.sol#16163",
+      "name": "RocketDAONodeTrustedSettingsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsMembersInterface.sol",
+      "key": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsMembersInterface.sol#16201",
+      "name": "RocketDAONodeTrustedSettingsMembersInterface"
+    },
+    {
+      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsMinipoolInterface.sol",
+      "key": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsMinipoolInterface.sol#16246",
+      "name": "RocketDAONodeTrustedSettingsMinipoolInterface"
+    },
+    {
+      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsProposalsInterface.sol",
+      "key": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsProposalsInterface.sol#16274",
+      "name": "RocketDAONodeTrustedSettingsProposalsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsRewardsInterface.sol",
+      "key": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsRewardsInterface.sol#16284",
+      "name": "RocketDAONodeTrustedSettingsRewardsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/RocketDAOProtocolActionsInterface.sol",
+      "key": "contracts/interface/dao/protocol/RocketDAOProtocolActionsInterface.sol#16287",
+      "name": "RocketDAOProtocolActionsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/RocketDAOProtocolInterface.sol",
+      "key": "contracts/interface/dao/protocol/RocketDAOProtocolInterface.sol#44909",
+      "name": "RocketDAOProtocolInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/RocketDAOProtocolProposalInterface.sol",
+      "key": "contracts/interface/dao/protocol/RocketDAOProtocolProposalInterface.sol#45167",
+      "name": "RocketDAOProtocolProposalInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/RocketDAOProtocolProposalsInterface.sol",
+      "key": "contracts/interface/dao/protocol/RocketDAOProtocolProposalsInterface.sol#45298",
+      "name": "RocketDAOProtocolProposalsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/RocketDAOProtocolVerifierInterface.sol",
+      "key": "contracts/interface/dao/protocol/RocketDAOProtocolVerifierInterface.sol#45328",
+      "name": "Types"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/RocketDAOProtocolVerifierInterface.sol",
+      "key": "contracts/interface/dao/protocol/RocketDAOProtocolVerifierInterface.sol#45432",
+      "name": "RocketDAOProtocolVerifierInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsAuctionInterface.sol",
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsAuctionInterface.sol#16325",
+      "name": "RocketDAOProtocolSettingsAuctionInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsDepositInterface.sol",
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsDepositInterface.sol#45518",
+      "name": "RocketDAOProtocolSettingsDepositInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsInflationInterface.sol",
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsInflationInterface.sol#16338",
+      "name": "RocketDAOProtocolSettingsInflationInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsInterface.sol",
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsInterface.sol#45592",
+      "name": "RocketDAOProtocolSettingsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsMegapoolInterface.sol",
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsMegapoolInterface.sol#45638",
+      "name": "RocketDAOProtocolSettingsMegapoolInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsMinipoolInterface.sol",
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsMinipoolInterface.sol#16423",
+      "name": "RocketDAOProtocolSettingsMinipoolInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsNetworkInterface.sol",
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsNetworkInterface.sol#16574",
+      "name": "RocketDAOProtocolSettingsNetworkInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsNodeInterface.sol",
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsNodeInterface.sol#16628",
+      "name": "RocketDAOProtocolSettingsNodeInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsProposalsInterface.sol",
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsProposalsInterface.sol#45982",
+      "name": "RocketDAOProtocolSettingsProposalsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsRewardsInterface.sol",
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsRewardsInterface.sol#16686",
+      "name": "RocketDAOProtocolSettingsRewardsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsSecurityInterface.sol",
+      "key": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsSecurityInterface.sol#46078",
+      "name": "RocketDAOProtocolSettingsSecurityInterface"
+    },
+    {
+      "file": "contracts/interface/dao/security/RocketDAOSecurityActionsInterface.sol",
+      "key": "contracts/interface/dao/security/RocketDAOSecurityActionsInterface.sol#46101",
+      "name": "RocketDAOSecurityActionsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/security/RocketDAOSecurityInterface.sol",
+      "key": "contracts/interface/dao/security/RocketDAOSecurityInterface.sol#46151",
+      "name": "RocketDAOSecurityInterface"
+    },
+    {
+      "file": "contracts/interface/dao/security/RocketDAOSecurityProposalsInterface.sol",
+      "key": "contracts/interface/dao/security/RocketDAOSecurityProposalsInterface.sol#46236",
+      "name": "RocketDAOSecurityProposalsInterface"
+    },
+    {
+      "file": "contracts/interface/dao/security/RocketDAOSecurityUpgradeInterface.sol",
+      "key": "contracts/interface/dao/security/RocketDAOSecurityUpgradeInterface.sol#46272",
+      "name": "RocketDAOSecurityUpgradeInterface"
+    },
+    {
+      "file": "contracts/interface/deposit/RocketDepositPoolInterface.sol",
+      "key": "contracts/interface/deposit/RocketDepositPoolInterface.sol#16842",
+      "name": "RocketDepositPoolInterface"
+    },
+    {
+      "file": "contracts/interface/megapool/RocketMegapoolDelegateBaseInterface.sol",
+      "key": "contracts/interface/megapool/RocketMegapoolDelegateBaseInterface.sol#46440",
+      "name": "RocketMegapoolDelegateBaseInterface"
+    },
+    {
+      "file": "contracts/interface/megapool/RocketMegapoolDelegateInterface.sol",
+      "key": "contracts/interface/megapool/RocketMegapoolDelegateInterface.sol#46668",
+      "name": "RocketMegapoolDelegateInterface"
+    },
+    {
+      "file": "contracts/interface/megapool/RocketMegapoolFactoryInterface.sol",
+      "key": "contracts/interface/megapool/RocketMegapoolFactoryInterface.sol#46714",
+      "name": "RocketMegapoolFactoryInterface"
+    },
+    {
+      "file": "contracts/interface/megapool/RocketMegapoolInterface.sol",
+      "key": "contracts/interface/megapool/RocketMegapoolInterface.sol#46725",
+      "name": "RocketMegapoolInterface"
+    },
+    {
+      "file": "contracts/interface/megapool/RocketMegapoolManagerInterface.sol",
+      "key": "contracts/interface/megapool/RocketMegapoolManagerInterface.sol#46866",
+      "name": "RocketMegapoolManagerInterface"
+    },
+    {
+      "file": "contracts/interface/megapool/RocketMegapoolPenaltiesInterface.sol",
+      "key": "contracts/interface/megapool/RocketMegapoolPenaltiesInterface.sol#46915",
+      "name": "RocketMegapoolPenaltiesInterface"
+    },
+    {
+      "file": "contracts/interface/megapool/RocketMegapoolProxyInterface.sol",
+      "key": "contracts/interface/megapool/RocketMegapoolProxyInterface.sol#46952",
+      "name": "RocketMegapoolProxyInterface"
+    },
+    {
+      "file": "contracts/interface/minipool/RocketMinipoolBaseInterface.sol",
+      "key": "contracts/interface/minipool/RocketMinipoolBaseInterface.sol#16883",
+      "name": "RocketMinipoolBaseInterface"
+    },
+    {
+      "file": "contracts/interface/minipool/RocketMinipoolBondReducerInterface.sol",
+      "key": "contracts/interface/minipool/RocketMinipoolBondReducerInterface.sol#16953",
+      "name": "RocketMinipoolBondReducerInterface"
+    },
+    {
+      "file": "contracts/interface/minipool/RocketMinipoolFactoryInterface.sol",
+      "key": "contracts/interface/minipool/RocketMinipoolFactoryInterface.sol#16975",
+      "name": "RocketMinipoolFactoryInterface"
+    },
+    {
+      "file": "contracts/interface/minipool/RocketMinipoolInterface.sol",
+      "key": "contracts/interface/minipool/RocketMinipoolInterface.sol#17185",
+      "name": "RocketMinipoolInterface"
+    },
+    {
+      "file": "contracts/interface/minipool/RocketMinipoolManagerInterface.sol",
+      "key": "contracts/interface/minipool/RocketMinipoolManagerInterface.sol#17435",
+      "name": "RocketMinipoolManagerInterface"
+    },
+    {
+      "file": "contracts/interface/minipool/RocketMinipoolPenaltyInterface.sol",
+      "key": "contracts/interface/minipool/RocketMinipoolPenaltyInterface.sol#17462",
+      "name": "RocketMinipoolPenaltyInterface"
+    },
+    {
+      "file": "contracts/interface/minipool/RocketMinipoolQueueInterface.sol",
+      "key": "contracts/interface/minipool/RocketMinipoolQueueInterface.sol#17549",
+      "name": "RocketMinipoolQueueInterface"
+    },
+    {
+      "file": "contracts/interface/network/RocketNetworkBalancesInterface.sol",
+      "key": "contracts/interface/network/RocketNetworkBalancesInterface.sol#17609",
+      "name": "RocketNetworkBalancesInterface"
+    },
+    {
+      "file": "contracts/interface/network/RocketNetworkFeesInterface.sol",
+      "key": "contracts/interface/network/RocketNetworkFeesInterface.sol#17629",
+      "name": "RocketNetworkFeesInterface"
+    },
+    {
+      "file": "contracts/interface/network/RocketNetworkPenaltiesInterface.sol",
+      "key": "contracts/interface/network/RocketNetworkPenaltiesInterface.sol#47737",
+      "name": "RocketNetworkPenaltiesInterface"
+    },
+    {
+      "file": "contracts/interface/network/RocketNetworkPricesInterface.sol",
+      "key": "contracts/interface/network/RocketNetworkPricesInterface.sol#17660",
+      "name": "RocketNetworkPricesInterface"
+    },
+    {
+      "file": "contracts/interface/network/RocketNetworkRevenuesInterface.sol",
+      "key": "contracts/interface/network/RocketNetworkRevenuesInterface.sol#47846",
+      "name": "RocketNetworkRevenuesInterface"
+    },
+    {
+      "file": "contracts/interface/network/RocketNetworkSnapshotsInterface.sol",
+      "key": "contracts/interface/network/RocketNetworkSnapshotsInterface.sol#47927",
+      "name": "RocketNetworkSnapshotsInterface"
+    },
+    {
+      "file": "contracts/interface/network/RocketNetworkSnapshotsTimeInterface.sol",
+      "key": "contracts/interface/network/RocketNetworkSnapshotsTimeInterface.sol#48008",
+      "name": "RocketNetworkSnapshotsTimeInterface"
+    },
+    {
+      "file": "contracts/interface/network/RocketNetworkVotingInterface.sol",
+      "key": "contracts/interface/network/RocketNetworkVotingInterface.sol#48048",
+      "name": "RocketNetworkVotingInterface"
+    },
+    {
+      "file": "contracts/interface/node/RocketNodeDepositInterface.sol",
+      "key": "contracts/interface/node/RocketNodeDepositInterface.sol#17769",
+      "name": "RocketNodeDepositInterface"
+    },
+    {
+      "file": "contracts/interface/node/RocketNodeDistributorFactoryInterface.sol",
+      "key": "contracts/interface/node/RocketNodeDistributorFactoryInterface.sol#17789",
+      "name": "RocketNodeDistributorFactoryInterface"
+    },
+    {
+      "file": "contracts/interface/node/RocketNodeDistributorInterface.sol",
+      "key": "contracts/interface/node/RocketNodeDistributorInterface.sol#48194",
+      "name": "RocketNodeDistributorInterface"
+    },
+    {
+      "file": "contracts/interface/node/RocketNodeManagerInterface.sol",
+      "key": "contracts/interface/node/RocketNodeManagerInterface.sol#48439",
+      "name": "RocketNodeManagerInterface"
+    },
+    {
+      "file": "contracts/interface/node/RocketNodeStakingInterface.sol",
+      "key": "contracts/interface/node/RocketNodeStakingInterface.sol#18023",
+      "name": "RocketNodeStakingInterface"
+    },
+    {
+      "file": "contracts/interface/rewards/RocketMerkleDistributorMainnetInterface.sol",
+      "key": "contracts/interface/rewards/RocketMerkleDistributorMainnetInterface.sol#48692",
+      "name": "RocketMerkleDistributorMainnetInterface"
+    },
+    {
+      "file": "contracts/interface/rewards/RocketRewardsPoolInterface.sol",
+      "key": "contracts/interface/rewards/RocketRewardsPoolInterface.sol#48814",
+      "name": "RocketRewardsPoolInterface"
+    },
+    {
+      "file": "contracts/interface/rewards/RocketRewardsRelayInterface.sol",
+      "key": "contracts/interface/rewards/RocketRewardsRelayInterface.sol#48872",
+      "name": "RocketRewardsRelayInterface"
+    },
+    {
+      "file": "contracts/interface/rewards/RocketSmoothingPoolInterface.sol",
+      "key": "contracts/interface/rewards/RocketSmoothingPoolInterface.sol#18034",
+      "name": "RocketSmoothingPoolInterface"
+    },
+    {
+      "file": "contracts/interface/rewards/claims/RocketClaimDAOInterface.sol",
+      "key": "contracts/interface/rewards/claims/RocketClaimDAOInterface.sol#48976",
+      "name": "RocketClaimDAOInterface"
+    },
+    {
       "file": "contracts/interface/rewards/claims/RocketClaimNodeInterface.sol",
       "key": "contracts/interface/rewards/claims/RocketClaimNodeInterface.sol#38",
       "name": "RocketClaimNodeInterface"
+    },
+    {
+      "file": "contracts/interface/rewards/claims/RocketClaimTrustedNodeInterface.sol",
+      "key": "contracts/interface/rewards/claims/RocketClaimTrustedNodeInterface.sol#18073",
+      "name": "RocketClaimTrustedNodeInterface"
+    },
+    {
+      "file": "contracts/interface/token/RocketTokenRETHInterface.sol",
+      "key": "contracts/interface/token/RocketTokenRETHInterface.sol#18126",
+      "name": "RocketTokenRETHInterface"
+    },
+    {
+      "file": "contracts/interface/token/RocketTokenRPLInterface.sol",
+      "key": "contracts/interface/token/RocketTokenRPLInterface.sol#18177",
+      "name": "RocketTokenRPLInterface"
+    },
+    {
+      "file": "contracts/interface/util/AddressQueueStorageInterface.sol",
+      "key": "contracts/interface/util/AddressQueueStorageInterface.sol#18226",
+      "name": "AddressQueueStorageInterface"
+    },
+    {
+      "file": "contracts/interface/util/AddressSetStorageInterface.sol",
+      "key": "contracts/interface/util/AddressSetStorageInterface.sol#18268",
+      "name": "AddressSetStorageInterface"
+    },
+    {
+      "file": "contracts/interface/util/BeaconStateVerifierInterface.sol",
+      "key": "contracts/interface/util/BeaconStateVerifierInterface.sol#49260",
+      "name": "BeaconStateVerifierInterface"
+    },
+    {
+      "file": "contracts/interface/util/IERC20.sol",
+      "key": "contracts/interface/util/IERC20.sol#18346",
+      "name": "IERC20"
+    },
+    {
+      "file": "contracts/interface/util/IERC20Burnable.sol",
+      "key": "contracts/interface/util/IERC20Burnable.sol#18364",
+      "name": "IERC20Burnable"
+    },
+    {
+      "file": "contracts/interface/util/LinkedListStorageInterface.sol",
+      "key": "contracts/interface/util/LinkedListStorageInterface.sol#49455",
+      "name": "LinkedListStorageInterface"
+    },
+    {
+      "file": "contracts/thirdparty/EthBalanceChecker/EthBalanceChecker.sol",
+      "key": "contracts/thirdparty/EthBalanceChecker/EthBalanceChecker.sol#58",
+      "name": "Token"
+    },
+    {
+      "file": "contracts/thirdparty/RocketSignerRegistry/interface/RocketSignerRegistryInterface.sol",
+      "key": "contracts/thirdparty/RocketSignerRegistry/interface/RocketSignerRegistryInterface.sol#49700",
+      "name": "RocketSignerRegistryInterface"
+    },
+    {
+      "file": "node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol",
+      "key": "node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol#19732",
+      "name": "IERC20"
     }
   ],
-  "libraries": [],
-  "state_variable_count": 0,
+  "libraries": [
+    {
+      "file": "contracts/contract/util/SSZ.sol",
+      "key": "contracts/contract/util/SSZ.sol#44001",
+      "name": "SSZ"
+    },
+    {
+      "file": "contracts/contract/util/SafeERC20.sol",
+      "key": "contracts/contract/util/SafeERC20.sol#14798",
+      "name": "SafeERC20"
+    },
+    {
+      "file": "contracts/contract/util/SafeMath.sol",
+      "key": "contracts/contract/util/SafeMath.sol#15153",
+      "name": "SafeMath"
+    },
+    {
+      "file": "node_modules/@openzeppelin/contracts/math/SafeMath.sol",
+      "key": "node_modules/@openzeppelin/contracts/math/SafeMath.sol#18892",
+      "name": "SafeMath"
+    },
+    {
+      "file": "node_modules/@openzeppelin/contracts/math/SignedSafeMath.sol",
+      "key": "node_modules/@openzeppelin/contracts/math/SignedSafeMath.sol#19071",
+      "name": "SignedSafeMath"
+    },
+    {
+      "file": "node_modules/@openzeppelin/contracts/proxy/Clones.sol",
+      "key": "node_modules/@openzeppelin/contracts/proxy/Clones.sol#19151",
+      "name": "Clones"
+    },
+    {
+      "file": "node_modules/@openzeppelin/contracts/utils/Address.sol",
+      "key": "node_modules/@openzeppelin/contracts/utils/Address.sol#20028",
+      "name": "Address"
+    },
+    {
+      "file": "node_modules/@openzeppelin/contracts/utils/SafeCast.sol",
+      "key": "node_modules/@openzeppelin/contracts/utils/SafeCast.sol#20364",
+      "name": "SafeCast"
+    },
+    {
+      "file": "node_modules/@openzeppelin4/contracts/proxy/Clones.sol",
+      "key": "node_modules/@openzeppelin4/contracts/proxy/Clones.sol#49938",
+      "name": "Clones"
+    },
+    {
+      "file": "node_modules/@openzeppelin4/contracts/utils/Strings.sol",
+      "key": "node_modules/@openzeppelin4/contracts/utils/Strings.sol#50167",
+      "name": "Strings"
+    },
+    {
+      "file": "node_modules/@openzeppelin4/contracts/utils/cryptography/MerkleProof.sol",
+      "key": "node_modules/@openzeppelin4/contracts/utils/cryptography/MerkleProof.sol#50695",
+      "name": "MerkleProof"
+    },
+    {
+      "file": "node_modules/@openzeppelin4/contracts/utils/math/Math.sol",
+      "key": "node_modules/@openzeppelin4/contracts/utils/math/Math.sol#51561",
+      "name": "Math"
+    },
+    {
+      "file": "node_modules/@openzeppelin4/contracts/utils/math/SafeCast.sol",
+      "key": "node_modules/@openzeppelin4/contracts/utils/math/SafeCast.sol#53102",
+      "name": "SafeCast"
+    },
+    {
+      "file": "node_modules/@openzeppelin4/contracts/utils/math/SignedMath.sol",
+      "key": "node_modules/@openzeppelin4/contracts/utils/math/SignedMath.sol#53207",
+      "name": "SignedMath"
+    }
+  ],
+  "state_variable_count": 236,
   "warnings": [
     {
-      "duration_seconds": 0.069,
+      "duration_seconds": 0.221,
       "message": "phase duration",
       "phase": "file_discovery_and_reading"
     },
     {
-      "duration_seconds": 0.691,
+      "count": 15,
+      "files": [
+        "node_modules/@openzeppelin/contracts/access/Ownable.sol",
+        "node_modules/@openzeppelin/contracts/math/SafeMath.sol",
+        "node_modules/@openzeppelin/contracts/math/SignedSafeMath.sol",
+        "node_modules/@openzeppelin/contracts/proxy/Clones.sol",
+        "node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "node_modules/@openzeppelin/contracts/utils/Address.sol",
+        "node_modules/@openzeppelin/contracts/utils/Context.sol",
+        "node_modules/@openzeppelin/contracts/utils/SafeCast.sol",
+        "node_modules/@openzeppelin4/contracts/proxy/Clones.sol",
+        "node_modules/@openzeppelin4/contracts/utils/Strings.sol",
+        "node_modules/@openzeppelin4/contracts/utils/cryptography/MerkleProof.sol",
+        "node_modules/@openzeppelin4/contracts/utils/math/Math.sol",
+        "node_modules/@openzeppelin4/contracts/utils/math/SafeCast.sol",
+        "node_modules/@openzeppelin4/contracts/utils/math/SignedMath.sol"
+      ],
+      "message": "dependency sources added to compilation universe"
+    },
+    {
+      "duration_seconds": 2.779,
       "message": "phase duration",
       "phase": "dependency_expansion"
     },
     {
-      "compiler_version": null,
-      "file": "contracts/contract/RocketBase.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/RocketStorage.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/RocketVault.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/auction/RocketAuctionManager.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/RocketDAOProposal.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/node/RocketDAONodeTrusted.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/node/RocketDAONodeTrustedActions.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/node/RocketDAONodeTrustedProposals.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/node/RocketDAONodeTrustedUpgrade.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettings.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsMembers.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsMinipool.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsProposals.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsRewards.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/protocol/RocketDAOProtocol.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/protocol/RocketDAOProtocolActions.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/protocol/RocketDAOProtocolProposal.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/protocol/RocketDAOProtocolProposals.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/protocol/RocketDAOProtocolVerifier.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettings.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsAuction.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsDeposit.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsInflation.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsMegapool.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsMinipool.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsNetwork.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsNode.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsProposals.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsRewards.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsSecurity.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/security/RocketDAOSecurity.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/security/RocketDAOSecurityActions.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/security/RocketDAOSecurityProposals.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/dao/security/RocketDAOSecurityUpgrade.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/deposit/RocketDepositPool.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/helper/BeaconStateVerifierMock.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/helper/MegapoolUpgradeHelper.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/helper/PenaltyTest.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/helper/SnapshotTest.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/helper/SnapshotTimeTest.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/helper/StakeHelper.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/helper/StorageHelper.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/megapool/RocketMegapoolDelegate.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/megapool/RocketMegapoolDelegateBase.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/megapool/RocketMegapoolFactory.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/megapool/RocketMegapoolManager.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/megapool/RocketMegapoolPenalties.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/megapool/RocketMegapoolProxy.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/megapool/RocketMegapoolStorageLayout.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/minipool/RocketMinipoolBase.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/minipool/RocketMinipoolBondReducer.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/minipool/RocketMinipoolDelegate.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/minipool/RocketMinipoolFactory.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/minipool/RocketMinipoolManager.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/minipool/RocketMinipoolPenalty.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/minipool/RocketMinipoolQueue.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/minipool/RocketMinipoolStorageLayout.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/network/RocketNetworkBalances.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/network/RocketNetworkFees.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/network/RocketNetworkPenalties.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/network/RocketNetworkPrices.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/network/RocketNetworkRevenues.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/network/RocketNetworkSnapshots.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/network/RocketNetworkSnapshotsTime.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/network/RocketNetworkVoting.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/node/RocketNodeDeposit.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/node/RocketNodeDistributor.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/node/RocketNodeDistributorDelegate.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/node/RocketNodeDistributorFactory.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/node/RocketNodeDistributorStorageLayout.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/node/RocketNodeManager.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/node/RocketNodeStaking.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/rewards/RocketClaimDAO.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/rewards/RocketMerkleDistributorMainnet.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/rewards/RocketRewardsPool.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/rewards/RocketSmoothingPool.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/token/RocketTokenRETH.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/token/RocketTokenRPL.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/util/AddressQueueStorage.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/util/AddressSetStorage.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/util/BeaconStateVerifier.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/util/Context.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/util/ERC20.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/util/ERC20Burnable.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/util/LinkedListStorage.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/util/LinkedListStorageHelper.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/util/SSZ.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/util/SafeERC20.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/util/SafeMath.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/RocketStorageInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/RocketVaultInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/RocketVaultWithdrawerInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/auction/RocketAuctionManagerInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/casper/DepositInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/RocketDAOProposalInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/node/RocketDAONodeTrustedActionsInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/node/RocketDAONodeTrustedInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/node/RocketDAONodeTrustedProposalsInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/node/RocketDAONodeTrustedUpgradeInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsMembersInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsMinipoolInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsProposalsInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsRewardsInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/protocol/RocketDAOProtocolActionsInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/protocol/RocketDAOProtocolInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/protocol/RocketDAOProtocolProposalInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/protocol/RocketDAOProtocolProposalsInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/protocol/RocketDAOProtocolVerifierInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsAuctionInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsDepositInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsInflationInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsMegapoolInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsMinipoolInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsNetworkInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsNodeInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsProposalsInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsRewardsInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsSecurityInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/security/RocketDAOSecurityActionsInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/security/RocketDAOSecurityInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/security/RocketDAOSecurityProposalsInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/dao/security/RocketDAOSecurityUpgradeInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/deposit/RocketDepositPoolInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/megapool/RocketMegapoolDelegateBaseInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/megapool/RocketMegapoolDelegateInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/megapool/RocketMegapoolFactoryInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/megapool/RocketMegapoolInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/megapool/RocketMegapoolManagerInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/megapool/RocketMegapoolPenaltiesInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/megapool/RocketMegapoolProxyInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/minipool/RocketMinipoolBaseInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/minipool/RocketMinipoolBondReducerInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/minipool/RocketMinipoolFactoryInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/minipool/RocketMinipoolInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/minipool/RocketMinipoolManagerInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/minipool/RocketMinipoolPenaltyInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/minipool/RocketMinipoolQueueInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/network/RocketNetworkBalancesInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/network/RocketNetworkFeesInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/network/RocketNetworkPenaltiesInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/network/RocketNetworkPricesInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/network/RocketNetworkRevenuesInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/network/RocketNetworkSnapshotsInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/network/RocketNetworkSnapshotsTimeInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/network/RocketNetworkVotingInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/node/RocketNodeDepositInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/node/RocketNodeDistributorFactoryInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/node/RocketNodeDistributorInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/node/RocketNodeManagerInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/node/RocketNodeStakingInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/rewards/RocketMerkleDistributorMainnetInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/rewards/RocketRewardsPoolInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/rewards/RocketRewardsRelayInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/rewards/RocketSmoothingPoolInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/rewards/claims/RocketClaimDAOInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/rewards/claims/RocketClaimTrustedNodeInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/token/RocketTokenRETHInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/token/RocketTokenRPLInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/util/AddressQueueStorageInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/util/AddressSetStorageInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/util/BeaconStateVerifierInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/util/IERC20.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/util/IERC20Burnable.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/interface/util/LinkedListStorageInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/types/MinipoolDeposit.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/types/MinipoolDetails.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/types/MinipoolStatus.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/types/NodeDetails.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/types/RewardSubmission.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/types/SettingType.sol",
-      "message": "file failed to produce AST"
+      "files": [
+        "contracts/contract/RocketBase.sol",
+        "contracts/contract/RocketStorage.sol",
+        "contracts/contract/RocketVault.sol",
+        "contracts/contract/auction/RocketAuctionManager.sol",
+        "contracts/contract/dao/RocketDAOProposal.sol",
+        "contracts/contract/dao/node/RocketDAONodeTrusted.sol",
+        "contracts/contract/dao/node/RocketDAONodeTrustedActions.sol",
+        "contracts/contract/dao/node/RocketDAONodeTrustedProposals.sol",
+        "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettings.sol",
+        "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsMembers.sol",
+        "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsMinipool.sol",
+        "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsProposals.sol",
+        "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsRewards.sol",
+        "contracts/contract/dao/protocol/RocketDAOProtocolActions.sol",
+        "contracts/contract/helper/PenaltyTest.sol",
+        "contracts/contract/minipool/RocketMinipoolBase.sol",
+        "contracts/contract/minipool/RocketMinipoolDelegate.sol",
+        "contracts/contract/minipool/RocketMinipoolFactory.sol",
+        "contracts/contract/minipool/RocketMinipoolPenalty.sol",
+        "contracts/contract/minipool/RocketMinipoolQueue.sol",
+        "contracts/contract/minipool/RocketMinipoolStorageLayout.sol",
+        "contracts/contract/network/RocketNetworkFees.sol",
+        "contracts/contract/node/RocketNodeDistributor.sol",
+        "contracts/contract/node/RocketNodeDistributorFactory.sol",
+        "contracts/contract/node/RocketNodeDistributorStorageLayout.sol",
+        "contracts/contract/rewards/RocketSmoothingPool.sol",
+        "contracts/contract/token/RocketTokenRETH.sol",
+        "contracts/contract/token/RocketTokenRPL.sol",
+        "contracts/contract/token/temp/RocketTokenDummyRPL.sol",
+        "contracts/contract/util/AddressQueueStorage.sol",
+        "contracts/contract/util/AddressSetStorage.sol",
+        "contracts/contract/util/Context.sol",
+        "contracts/contract/util/ERC20.sol",
+        "contracts/contract/util/ERC20Burnable.sol",
+        "contracts/contract/util/SafeERC20.sol",
+        "contracts/contract/util/SafeMath.sol",
+        "contracts/interface/RocketStorageInterface.sol",
+        "contracts/interface/RocketVaultInterface.sol",
+        "contracts/interface/RocketVaultWithdrawerInterface.sol",
+        "contracts/interface/auction/RocketAuctionManagerInterface.sol",
+        "contracts/interface/casper/DepositInterface.sol",
+        "contracts/interface/dao/RocketDAOProposalInterface.sol",
+        "contracts/interface/dao/node/RocketDAONodeTrustedActionsInterface.sol",
+        "contracts/interface/dao/node/RocketDAONodeTrustedInterface.sol",
+        "contracts/interface/dao/node/RocketDAONodeTrustedProposalsInterface.sol",
+        "contracts/interface/dao/node/RocketDAONodeTrustedUpgradeInterface.sol",
+        "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsInterface.sol",
+        "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsMembersInterface.sol",
+        "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsMinipoolInterface.sol",
+        "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsProposalsInterface.sol",
+        "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsRewardsInterface.sol",
+        "contracts/interface/dao/protocol/RocketDAOProtocolActionsInterface.sol",
+        "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsAuctionInterface.sol",
+        "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsInflationInterface.sol",
+        "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsMinipoolInterface.sol",
+        "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsNetworkInterface.sol",
+        "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsNodeInterface.sol",
+        "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsRewardsInterface.sol",
+        "contracts/interface/deposit/RocketDepositPoolInterface.sol",
+        "contracts/interface/minipool/RocketMinipoolBaseInterface.sol",
+        "contracts/interface/minipool/RocketMinipoolBondReducerInterface.sol",
+        "contracts/interface/minipool/RocketMinipoolFactoryInterface.sol",
+        "contracts/interface/minipool/RocketMinipoolInterface.sol",
+        "contracts/interface/minipool/RocketMinipoolManagerInterface.sol",
+        "contracts/interface/minipool/RocketMinipoolPenaltyInterface.sol",
+        "contracts/interface/minipool/RocketMinipoolQueueInterface.sol",
+        "contracts/interface/network/RocketNetworkBalancesInterface.sol",
+        "contracts/interface/network/RocketNetworkFeesInterface.sol",
+        "contracts/interface/network/RocketNetworkPricesInterface.sol",
+        "contracts/interface/node/RocketNodeDepositInterface.sol",
+        "contracts/interface/node/RocketNodeDistributorFactoryInterface.sol",
+        "contracts/interface/node/RocketNodeStakingInterface.sol",
+        "contracts/interface/rewards/RocketSmoothingPoolInterface.sol",
+        "contracts/interface/rewards/claims/RocketClaimTrustedNodeInterface.sol",
+        "contracts/interface/token/RocketTokenRETHInterface.sol",
+        "contracts/interface/token/RocketTokenRPLInterface.sol",
+        "contracts/interface/util/AddressQueueStorageInterface.sol",
+        "contracts/interface/util/AddressSetStorageInterface.sol",
+        "contracts/interface/util/IERC20.sol",
+        "contracts/interface/util/IERC20Burnable.sol",
+        "contracts/types/MinipoolDeposit.sol",
+        "contracts/types/MinipoolDetails.sol",
+        "contracts/types/MinipoolStatus.sol",
+        "node_modules/@openzeppelin/contracts/access/Ownable.sol",
+        "node_modules/@openzeppelin/contracts/math/SafeMath.sol",
+        "node_modules/@openzeppelin/contracts/math/SignedSafeMath.sol",
+        "node_modules/@openzeppelin/contracts/proxy/Clones.sol",
+        "node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "node_modules/@openzeppelin/contracts/utils/Address.sol",
+        "node_modules/@openzeppelin/contracts/utils/Context.sol",
+        "node_modules/@openzeppelin/contracts/utils/SafeCast.sol"
+      ],
+      "message": "constraint 0.7.6 AND >0.5.0 <0.9.0 AND >=0.6.0 <0.8.0 AND >=0.6.2 <0.8.0 not satisfied by the bundled compiler; resolved compatible solc 0.7.6 via cache_compatible"
+    },
+    {
+      "files": [
+        "contracts/contract/RocketBase.sol",
+        "contracts/contract/dao/node/RocketDAONodeTrustedUpgrade.sol",
+        "contracts/contract/dao/protocol/RocketDAOProtocol.sol",
+        "contracts/contract/dao/protocol/RocketDAOProtocolProposal.sol",
+        "contracts/contract/dao/protocol/RocketDAOProtocolProposals.sol",
+        "contracts/contract/dao/protocol/RocketDAOProtocolVerifier.sol",
+        "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettings.sol",
+        "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsAuction.sol",
+        "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsDeposit.sol",
+        "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsInflation.sol",
+        "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsMegapool.sol",
+        "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsMinipool.sol",
+        "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsNetwork.sol",
+        "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsNode.sol",
+        "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsProposals.sol",
+        "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsRewards.sol",
+        "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsSecurity.sol",
+        "contracts/contract/dao/security/RocketDAOSecurity.sol",
+        "contracts/contract/dao/security/RocketDAOSecurityActions.sol",
+        "contracts/contract/dao/security/RocketDAOSecurityProposals.sol",
+        "contracts/contract/dao/security/RocketDAOSecurityUpgrade.sol",
+        "contracts/contract/deposit/RocketDepositPool.sol",
+        "contracts/contract/helper/BeaconStateVerifierMock.sol",
+        "contracts/contract/helper/MegapoolUpgradeHelper.sol",
+        "contracts/contract/helper/SnapshotTest.sol",
+        "contracts/contract/helper/SnapshotTimeTest.sol",
+        "contracts/contract/helper/StakeHelper.sol",
+        "contracts/contract/helper/StorageHelper.sol",
+        "contracts/contract/megapool/RocketMegapoolDelegate.sol",
+        "contracts/contract/megapool/RocketMegapoolDelegateBase.sol",
+        "contracts/contract/megapool/RocketMegapoolFactory.sol",
+        "contracts/contract/megapool/RocketMegapoolManager.sol",
+        "contracts/contract/megapool/RocketMegapoolPenalties.sol",
+        "contracts/contract/megapool/RocketMegapoolProxy.sol",
+        "contracts/contract/megapool/RocketMegapoolStorageLayout.sol",
+        "contracts/contract/minipool/RocketMinipoolBondReducer.sol",
+        "contracts/contract/minipool/RocketMinipoolManager.sol",
+        "contracts/contract/network/RocketNetworkBalances.sol",
+        "contracts/contract/network/RocketNetworkPenalties.sol",
+        "contracts/contract/network/RocketNetworkPrices.sol",
+        "contracts/contract/network/RocketNetworkRevenues.sol",
+        "contracts/contract/network/RocketNetworkSnapshots.sol",
+        "contracts/contract/network/RocketNetworkSnapshotsTime.sol",
+        "contracts/contract/network/RocketNetworkVoting.sol",
+        "contracts/contract/node/RocketNodeDeposit.sol",
+        "contracts/contract/node/RocketNodeDistributorDelegate.sol",
+        "contracts/contract/node/RocketNodeDistributorStorageLayout.sol",
+        "contracts/contract/node/RocketNodeManager.sol",
+        "contracts/contract/node/RocketNodeStaking.sol",
+        "contracts/contract/rewards/RocketClaimDAO.sol",
+        "contracts/contract/rewards/RocketMerkleDistributorMainnet.sol",
+        "contracts/contract/rewards/RocketRewardsPool.sol",
+        "contracts/contract/util/BeaconStateVerifier.sol",
+        "contracts/contract/util/LinkedListStorage.sol",
+        "contracts/contract/util/LinkedListStorageHelper.sol",
+        "contracts/contract/util/SSZ.sol",
+        "contracts/interface/RocketStorageInterface.sol",
+        "contracts/interface/RocketVaultInterface.sol",
+        "contracts/interface/RocketVaultWithdrawerInterface.sol",
+        "contracts/interface/casper/DepositInterface.sol",
+        "contracts/interface/dao/RocketDAOProposalInterface.sol",
+        "contracts/interface/dao/node/RocketDAONodeTrustedInterface.sol",
+        "contracts/interface/dao/node/RocketDAONodeTrustedUpgradeInterface.sol",
+        "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsMinipoolInterface.sol",
+        "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsRewardsInterface.sol",
+        "contracts/interface/dao/protocol/RocketDAOProtocolInterface.sol",
+        "contracts/interface/dao/protocol/RocketDAOProtocolProposalInterface.sol",
+        "contracts/interface/dao/protocol/RocketDAOProtocolProposalsInterface.sol",
+        "contracts/interface/dao/protocol/RocketDAOProtocolVerifierInterface.sol",
+        "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsAuctionInterface.sol",
+        "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsDepositInterface.sol",
+        "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsInflationInterface.sol",
+        "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsInterface.sol",
+        "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsMegapoolInterface.sol",
+        "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsMinipoolInterface.sol",
+        "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsNetworkInterface.sol",
+        "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsNodeInterface.sol",
+        "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsProposalsInterface.sol",
+        "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsRewardsInterface.sol",
+        "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsSecurityInterface.sol",
+        "contracts/interface/dao/security/RocketDAOSecurityActionsInterface.sol",
+        "contracts/interface/dao/security/RocketDAOSecurityInterface.sol",
+        "contracts/interface/dao/security/RocketDAOSecurityProposalsInterface.sol",
+        "contracts/interface/dao/security/RocketDAOSecurityUpgradeInterface.sol",
+        "contracts/interface/deposit/RocketDepositPoolInterface.sol",
+        "contracts/interface/megapool/RocketMegapoolDelegateBaseInterface.sol",
+        "contracts/interface/megapool/RocketMegapoolDelegateInterface.sol",
+        "contracts/interface/megapool/RocketMegapoolFactoryInterface.sol",
+        "contracts/interface/megapool/RocketMegapoolInterface.sol",
+        "contracts/interface/megapool/RocketMegapoolManagerInterface.sol",
+        "contracts/interface/megapool/RocketMegapoolPenaltiesInterface.sol",
+        "contracts/interface/megapool/RocketMegapoolProxyInterface.sol",
+        "contracts/interface/minipool/RocketMinipoolBondReducerInterface.sol",
+        "contracts/interface/minipool/RocketMinipoolFactoryInterface.sol",
+        "contracts/interface/minipool/RocketMinipoolInterface.sol",
+        "contracts/interface/minipool/RocketMinipoolManagerInterface.sol",
+        "contracts/interface/minipool/RocketMinipoolPenaltyInterface.sol",
+        "contracts/interface/minipool/RocketMinipoolQueueInterface.sol",
+        "contracts/interface/network/RocketNetworkBalancesInterface.sol",
+        "contracts/interface/network/RocketNetworkPenaltiesInterface.sol",
+        "contracts/interface/network/RocketNetworkPricesInterface.sol",
+        "contracts/interface/network/RocketNetworkRevenuesInterface.sol",
+        "contracts/interface/network/RocketNetworkSnapshotsInterface.sol",
+        "contracts/interface/network/RocketNetworkSnapshotsTimeInterface.sol",
+        "contracts/interface/network/RocketNetworkVotingInterface.sol",
+        "contracts/interface/node/RocketNodeDepositInterface.sol",
+        "contracts/interface/node/RocketNodeDistributorFactoryInterface.sol",
+        "contracts/interface/node/RocketNodeDistributorInterface.sol",
+        "contracts/interface/node/RocketNodeManagerInterface.sol",
+        "contracts/interface/node/RocketNodeStakingInterface.sol",
+        "contracts/interface/rewards/RocketMerkleDistributorMainnetInterface.sol",
+        "contracts/interface/rewards/RocketRewardsPoolInterface.sol",
+        "contracts/interface/rewards/RocketRewardsRelayInterface.sol",
+        "contracts/interface/rewards/RocketSmoothingPoolInterface.sol",
+        "contracts/interface/rewards/claims/RocketClaimDAOInterface.sol",
+        "contracts/interface/token/RocketTokenRETHInterface.sol",
+        "contracts/interface/token/RocketTokenRPLInterface.sol",
+        "contracts/interface/util/AddressQueueStorageInterface.sol",
+        "contracts/interface/util/AddressSetStorageInterface.sol",
+        "contracts/interface/util/BeaconStateVerifierInterface.sol",
+        "contracts/interface/util/IERC20.sol",
+        "contracts/interface/util/IERC20Burnable.sol",
+        "contracts/interface/util/LinkedListStorageInterface.sol",
+        "contracts/thirdparty/RocketSignerRegistry/RocketSignerRegistry.sol",
+        "contracts/thirdparty/RocketSignerRegistry/interface/RocketSignerRegistryInterface.sol",
+        "contracts/types/MinipoolDeposit.sol",
+        "contracts/types/MinipoolDetails.sol",
+        "contracts/types/MinipoolStatus.sol",
+        "contracts/types/NodeDetails.sol",
+        "contracts/types/RewardSubmission.sol",
+        "contracts/types/SettingType.sol",
+        "node_modules/@openzeppelin4/contracts/proxy/Clones.sol",
+        "node_modules/@openzeppelin4/contracts/utils/Strings.sol",
+        "node_modules/@openzeppelin4/contracts/utils/cryptography/MerkleProof.sol",
+        "node_modules/@openzeppelin4/contracts/utils/math/Math.sol",
+        "node_modules/@openzeppelin4/contracts/utils/math/SafeCast.sol",
+        "node_modules/@openzeppelin4/contracts/utils/math/SignedMath.sol"
+      ],
+      "message": "constraint 0.8.30 AND >0.5.0 <0.9.0 AND ^0.8.0 AND ^0.8.13 not satisfied by the bundled compiler; resolved compatible solc 0.8.30 via cache_compatible"
     },
     {
       "files": [
@@ -938,70 +2221,295 @@
         "contracts/thirdparty/Multicall2/Multicall2.sol",
         "contracts/thirdparty/UniswapOracleMock/UniswapOracleMock.sol"
       ],
-      "message": "constraint 0.8.30 not satisfied by the bundled compiler; resolved compatible solc 0.8.36 via cache_compatible"
+      "message": "constraint 0.8.30 not satisfied by the bundled compiler; resolved compatible solc 0.8.30 via cache_compatible"
     },
     {
-      "compiler_version": "0.8.36",
-      "file": "contracts/contract/helper/RevertOnTransfer.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": "0.8.36",
-      "file": "contracts/thirdparty/EthBalanceChecker/EthBalanceChecker.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": "0.8.36",
-      "file": "contracts/thirdparty/Multicall2/Multicall2.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": "0.8.36",
-      "file": "contracts/thirdparty/UniswapOracleMock/UniswapOracleMock.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/contract/token/temp/RocketTokenDummyRPL.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/thirdparty/RocketSignerRegistry/RocketSignerRegistry.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "compiler_version": null,
-      "file": "contracts/thirdparty/RocketSignerRegistry/interface/RocketSignerRegistryInterface.sol",
-      "message": "file failed to produce AST"
-    },
-    {
-      "duration_seconds": 2.131,
+      "duration_seconds": 18.788,
       "message": "phase duration",
       "phase": "compilation"
     },
     {
-      "duration_seconds": 0.002,
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:e7dc75a69fdb39b4-2",
+      "original_id": "fact:e7dc75a69fdb39b4"
+    },
+    {
+      "existing": {
+        "fact_ids": [
+          "fact:e7dc75a69fdb39b4"
+        ],
+        "id": "edge:30c70c7d84349323",
+        "properties": {},
+        "source": "node:3a29e90c3018fdd1",
+        "status": "observed",
+        "target": "node:a08b08fa927b9caa",
+        "type": "USES_MODIFIER"
+      },
+      "message": "graph edge id collision disambiguated",
+      "new": {
+        "fact_ids": [
+          "fact:e7dc75a69fdb39b4-2"
+        ],
+        "id": "edge:30c70c7d84349323-2",
+        "properties": {},
+        "source": "node:3a29e90c3018fdd1",
+        "status": "observed",
+        "target": "node:a08b08fa927b9caa",
+        "type": "USES_MODIFIER"
+      },
+      "new_id": "edge:30c70c7d84349323-2",
+      "original_id": "edge:30c70c7d84349323"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:ab18e5a42a750bd3-2",
+      "original_id": "fact:ab18e5a42a750bd3"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:6b36ce3b1255d0ee-2",
+      "original_id": "fact:6b36ce3b1255d0ee"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:25e1608e06e859ee-2",
+      "original_id": "fact:25e1608e06e859ee"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:6c78034cf7122341-2",
+      "original_id": "fact:6c78034cf7122341"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:8a7e46f99044a8b1-2",
+      "original_id": "fact:8a7e46f99044a8b1"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:5b460927a30294d0-2",
+      "original_id": "fact:5b460927a30294d0"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:ca5c620b90936351-2",
+      "original_id": "fact:ca5c620b90936351"
+    },
+    {
+      "existing": {
+        "fact_ids": [
+          "fact:ca5c620b90936351"
+        ],
+        "id": "edge:42168a6e5ceb5937",
+        "properties": {},
+        "source": "node:b73e32b22e868461",
+        "status": "observed",
+        "target": "node:a08b08fa927b9caa",
+        "type": "USES_MODIFIER"
+      },
+      "message": "graph edge id collision disambiguated",
+      "new": {
+        "fact_ids": [
+          "fact:ca5c620b90936351-2"
+        ],
+        "id": "edge:42168a6e5ceb5937-2",
+        "properties": {},
+        "source": "node:b73e32b22e868461",
+        "status": "observed",
+        "target": "node:a08b08fa927b9caa",
+        "type": "USES_MODIFIER"
+      },
+      "new_id": "edge:42168a6e5ceb5937-2",
+      "original_id": "edge:42168a6e5ceb5937"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:0d5871267fdc49be-2",
+      "original_id": "fact:0d5871267fdc49be"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:3efc89535a74175c-2",
+      "original_id": "fact:3efc89535a74175c"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:15ba7ea337361dc5-2",
+      "original_id": "fact:15ba7ea337361dc5"
+    },
+    {
+      "existing": {
+        "fact_ids": [
+          "fact:15ba7ea337361dc5"
+        ],
+        "id": "edge:ef8831c7849560b3",
+        "properties": {},
+        "source": "node:4403f80cfc60aeb2",
+        "status": "observed",
+        "target": "node:a08b08fa927b9caa",
+        "type": "USES_MODIFIER"
+      },
+      "message": "graph edge id collision disambiguated",
+      "new": {
+        "fact_ids": [
+          "fact:15ba7ea337361dc5-2"
+        ],
+        "id": "edge:ef8831c7849560b3-2",
+        "properties": {},
+        "source": "node:4403f80cfc60aeb2",
+        "status": "observed",
+        "target": "node:a08b08fa927b9caa",
+        "type": "USES_MODIFIER"
+      },
+      "new_id": "edge:ef8831c7849560b3-2",
+      "original_id": "edge:ef8831c7849560b3"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:a155e9b7bb39e894-2",
+      "original_id": "fact:a155e9b7bb39e894"
+    },
+    {
+      "existing": {
+        "fact_ids": [
+          "fact:a155e9b7bb39e894"
+        ],
+        "id": "edge:4df99ce0a4ec248d",
+        "properties": {},
+        "source": "node:78f919f892f8bdfb",
+        "status": "observed",
+        "target": "node:a08b08fa927b9caa",
+        "type": "USES_MODIFIER"
+      },
+      "message": "graph edge id collision disambiguated",
+      "new": {
+        "fact_ids": [
+          "fact:a155e9b7bb39e894-2"
+        ],
+        "id": "edge:4df99ce0a4ec248d-2",
+        "properties": {},
+        "source": "node:78f919f892f8bdfb",
+        "status": "observed",
+        "target": "node:a08b08fa927b9caa",
+        "type": "USES_MODIFIER"
+      },
+      "new_id": "edge:4df99ce0a4ec248d-2",
+      "original_id": "edge:4df99ce0a4ec248d"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:81afc67d60d8c80e-2",
+      "original_id": "fact:81afc67d60d8c80e"
+    },
+    {
+      "existing": {
+        "fact_ids": [
+          "fact:81afc67d60d8c80e"
+        ],
+        "id": "edge:0be11f92268b16a2",
+        "properties": {},
+        "source": "node:5a799c37b614d7ab",
+        "status": "observed",
+        "target": "node:a08b08fa927b9caa",
+        "type": "USES_MODIFIER"
+      },
+      "message": "graph edge id collision disambiguated",
+      "new": {
+        "fact_ids": [
+          "fact:81afc67d60d8c80e-2"
+        ],
+        "id": "edge:0be11f92268b16a2-2",
+        "properties": {},
+        "source": "node:5a799c37b614d7ab",
+        "status": "observed",
+        "target": "node:a08b08fa927b9caa",
+        "type": "USES_MODIFIER"
+      },
+      "new_id": "edge:0be11f92268b16a2-2",
+      "original_id": "edge:0be11f92268b16a2"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:581e80aa4c9e3000-2",
+      "original_id": "fact:581e80aa4c9e3000"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:51fa21c49445e840-2",
+      "original_id": "fact:51fa21c49445e840"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:f281f0cae06d8b6d-2",
+      "original_id": "fact:f281f0cae06d8b6d"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:533f3daac89d973b-2",
+      "original_id": "fact:533f3daac89d973b"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:64d50362f4487644-2",
+      "original_id": "fact:64d50362f4487644"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:487cbd7890ed0750-2",
+      "original_id": "fact:487cbd7890ed0750"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:077aa51855b55b6d-2",
+      "original_id": "fact:077aa51855b55b6d"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:33e37d46ee038d69-2",
+      "original_id": "fact:33e37d46ee038d69"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:d10e434196fe5e27-2",
+      "original_id": "fact:d10e434196fe5e27"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:9e43d888680b4d45-2",
+      "original_id": "fact:9e43d888680b4d45"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:6eb58e40372404c0-2",
+      "original_id": "fact:6eb58e40372404c0"
+    },
+    {
+      "message": "fact id collision disambiguated",
+      "new_id": "fact:d6e8cff46278ed1c-2",
+      "original_id": "fact:d6e8cff46278ed1c"
+    },
+    {
+      "duration_seconds": 0.702,
       "message": "phase duration",
       "phase": "inventory"
     },
     {
-      "duration_seconds": 0.0,
+      "duration_seconds": 0.024,
       "message": "phase duration",
       "phase": "modifier_analysis"
     },
     {
-      "duration_seconds": 0.0,
+      "duration_seconds": 8.361,
       "message": "phase duration",
       "phase": "function_analysis"
     },
     {
-      "duration_seconds": 0.0,
+      "duration_seconds": 16.988,
       "message": "phase duration",
       "phase": "capability_and_relationship_derivation"
     },
     {
-      "duration_seconds": 2.908,
+      "duration_seconds": 47.9,
       "message": "phase duration",
       "phase": "total"
     }

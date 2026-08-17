@@ -1,0 +1,1 @@
+emit ProposalVoted(_proposalID, _member, _support, block.timestamp)

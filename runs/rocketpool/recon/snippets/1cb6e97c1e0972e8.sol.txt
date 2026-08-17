@@ -1,0 +1,1 @@
+_setSettingBool("network.submit.balances.enabled", true)

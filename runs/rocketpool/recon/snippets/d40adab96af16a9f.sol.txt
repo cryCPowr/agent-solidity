@@ -1,0 +1,3 @@
+function getRPLLockingAllowed(address _nodeAddress) external view returns (bool) {
+        return getBool(keccak256(abi.encodePacked("rpl.locking.allowed", _nodeAddress)));
+    }

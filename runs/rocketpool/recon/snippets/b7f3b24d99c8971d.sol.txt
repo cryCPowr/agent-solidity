@@ -1,0 +1,10 @@
+function setSettingRewardsClaimers(uint256 _trustedNodePercent, uint256 _protocolPercent, uint256 _nodePercent) override external onlyDAOProtocolProposal {
+        // Check total
+        require(_trustedNodePercent + _protocolPercent + _nodePercent == 1 ether, "Total does not equal 100%");
+        // Update now
+        setUint(keccak256(abi.encodePacked(settingNameSpace, "rewards.claims", "group.amount", "rocketClaimTrustedNode")), _trustedNodePercent);
+        setUint(keccak256(abi.encodePacked(settingNameSpace, "rewards.claims", "group.amount", "rocketClaimDAO")), _protocolPercent);
+        setUint(keccak256(abi.encodePacked(settingNameSpace, "rewards.claims", "group.amount", "rocketClaimNode")), _nodePercent);
+        // Set time last updated
+        setUint(keccak256(abi.encodePacked(s
+/* … truncated … */

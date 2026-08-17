@@ -1,0 +1,4 @@
+function setPenaltyRate(address _minipoolAddress, uint256 _rate) external {
+        RocketMinipoolPenaltyInterface rocketMinipoolPenalty = RocketMinipoolPenaltyInterface(getContractAddress("rocketMinipoolPenalty"));
+        rocketMinipoolPenalty.setPenaltyRate(_minipoolAddress, _rate);
+    }

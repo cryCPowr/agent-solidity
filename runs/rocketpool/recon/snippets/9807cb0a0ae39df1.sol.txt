@@ -1,0 +1,4 @@
+if (value >> 8 > 0) {
+                value >>= 8;
+                result += 8;
+            }

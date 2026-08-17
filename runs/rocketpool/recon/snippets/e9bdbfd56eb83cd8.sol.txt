@@ -1,0 +1,10 @@
+if (settingKey == keccak256(bytes("user.distribute.delay"))) {
+                require(_value >= 225 && _value <= 13500, "Value must be >= 225 & <= 13500 epochs");
+                require(_value <= getSettingUint("user.distribute.delay.shortfall"), "Value must be <= user.distribute.delay.shortfall");
+            } else if (settingKey == keccak256(bytes("user.distribute.delay.shortfall"))) {
+                require(_value >= 6750 && _value <= 40500, "Value must be >= 6750 & <= 40500 epochs");
+                require(_value >= getSettingUint("user.distribute.delay"), "Value must be >= user.distribute.delay");
+            } else if (settingKey == keccak256(bytes("megapool.penalty.threshold"))) {
+                require(_value >= 0.51 ether, "Penalty threshold must be 51% or higher");
+        
+/* … truncated … */

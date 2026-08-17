@@ -1,0 +1,1 @@
+require(_getChallengeState(state) == Types.ChallengeState.Challenged, "Challenge does not exist")

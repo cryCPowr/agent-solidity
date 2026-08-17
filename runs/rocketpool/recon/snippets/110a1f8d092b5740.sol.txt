@@ -1,0 +1,1 @@
+getState(_upgradeProposalID) == UpgradeProposalState.Succeeded

@@ -1,0 +1,4 @@
+modifier notSelf() {
+        require(address(this) != self);
+        _;
+    }

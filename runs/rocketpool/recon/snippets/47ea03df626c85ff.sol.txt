@@ -1,0 +1,3 @@
+if (_submission.smoothingPoolETH > 0) {
+            rocketSmoothingPool.withdrawEther(address(this), _submission.smoothingPoolETH);
+        }

@@ -1,0 +1,6 @@
+if (_sinceTime == block.timestamp) {
+           return _getCurrentShare(rocketNetworkSnapshotsTime, key, true);
+        } else {
+            require(_sinceTime < block.timestamp, "Time must be in the past");
+            return _getAverageSince(rocketNetworkSnapshotsTime, _sinceTime, key, true);
+        }

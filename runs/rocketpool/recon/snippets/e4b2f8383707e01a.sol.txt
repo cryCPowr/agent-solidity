@@ -1,0 +1,1 @@
+_rplBondAmountPaid > 0

@@ -1,0 +1,1 @@
+require(proposalState == RocketDAOProtocolProposalInterface.ProposalState.Pending, "Can not submit root for a valid proposal")

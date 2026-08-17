@@ -1,0 +1,1 @@
+require(contractExists(delegateContract), "Delegate contract does not exist")

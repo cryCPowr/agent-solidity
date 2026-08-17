@@ -1,0 +1,5 @@
+function proposalSettingAddressList(string memory _settingContractName, string memory _settingPath, address[] calldata _value) override public onlyExecutingContracts() {
+        RocketDAOProtocolSettingsInterface rocketDAOProtocolSettings = RocketDAOProtocolSettingsInterface(getContractAddress(_settingContractName));
+        rocketDAOProtocolSettings.setSettingAddressList(_settingPath, _value);
+        emit ProposalSettingAddressList(_settingContractName, _settingPath, _value, block.timestamp);
+    }

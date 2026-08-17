@@ -1,0 +1,4 @@
+if (minipool.getStatus() == MinipoolStatus.Dissolved) {
+            bytes memory pubkey = getMinipoolPubkey(msg.sender);
+            deleteAddress(keccak256(abi.encodePacked("validator.minipool", pubkey)));
+        }

@@ -1,0 +1,4 @@
+function unlockRPL(address _nodeAddress, uint256 _amount) external {
+        RocketNodeStakingInterface rocketNodeStakingInterface = RocketNodeStakingInterface(getContractAddress("rocketNodeStaking"));
+        rocketNodeStakingInterface.unlockRPL(_nodeAddress, _amount);
+    }

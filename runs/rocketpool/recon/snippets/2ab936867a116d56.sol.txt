@@ -1,0 +1,6 @@
+function _increaseETHBonded(address _nodeAddress, uint256 _amount) internal {
+        RocketNetworkSnapshotsInterface rocketNetworkSnapshots = RocketNetworkSnapshotsInterface(getContractAddress("rocketNetworkSnapshots"));
+        bytes32 key = keccak256(abi.encodePacked("megapool.eth.provided.node.amount", _nodeAddress));
+        uint256 ethBonded = uint256(rocketNetworkSnapshots.latestValue(key)) + _amount;
+        rocketNetworkSnapshots.push(key, uint224(ethBonded));
+    }

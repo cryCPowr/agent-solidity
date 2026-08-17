@@ -1,0 +1,1 @@
+function getNodeDemand() external view returns (int256);

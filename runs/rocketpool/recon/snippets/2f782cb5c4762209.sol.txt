@@ -1,0 +1,13 @@
+function _decreaseNodeRPLStake(address _nodeAddress, uint256 _amount) internal {
+        RocketNetworkSnapshotsInterface rocketNetworkSnapshots = RocketNetworkSnapshotsInterface(getContractAddress("rocketNetworkSnapshots"));
+        bytes32 key = keccak256(abi.encodePacked("rpl.staked.node.amount", _nodeAddress));
+        (,, uint224 totalStakedRPL) = rocketNetworkSnapshots.latest(key);
+        _migrateLegacy(_nodeAddress, uint256(totalStakedRPL));
+        // Take from megapool amount if not enough legacy
+        uint256 legacyStakedRPL = getNodeLegacyStakedRPL(_nodeAddress);
+        uint256 legacyAmount = _amount;
+        if (legacyAmount > legacyStakedRPL) {
+            uint256 megapoolAmount = legacyAmount - legacyStakedRPL;
+            legacyAmount -= megapoolAmount;
+            // Dec
+/* … truncated … */

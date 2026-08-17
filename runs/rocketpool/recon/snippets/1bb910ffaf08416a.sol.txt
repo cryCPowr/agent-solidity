@@ -1,0 +1,11 @@
+function _updateBalances(uint256 _block, uint256 _slotTimestamp, uint256 _totalEth, uint256 _stakingEth, uint256 _rethSupply) internal {
+        // Check enough time has passed (RPIP-61)
+        RocketDAOProtocolSettingsNetworkInterface rocketDAOProtocolSettingsNetwork = RocketDAOProtocolSettingsNetworkInterface(getContractAddress("rocketDAOProtocolSettingsNetwork"));
+        uint256 frequency = rocketDAOProtocolSettingsNetwork.getSubmitBalancesFrequency();
+        uint256 lastTimestamp = getBalancesTimestamp();
+        uint256 minimumTimestamp = lastTimestamp + (frequency * 95 / 100);
+        require(block.timestamp >= minimumTimestamp, "Not enough time has passed");
+        _setBalancesTimestamp(block.timestamp);
+        // Check rETH delta is within allowed range (RPIP-61)
+        uint2
+/* … truncated … */

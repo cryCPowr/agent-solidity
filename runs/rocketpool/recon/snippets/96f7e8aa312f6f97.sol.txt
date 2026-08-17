@@ -1,0 +1,1 @@
+abi.encodePacked("network.balances.submitted.count", _block, _slotTimestamp, _totalEth, _stakingEth, _rethSupply)

@@ -1,0 +1,1 @@
+rocketDAONodeTrustedUpgradeInterface.upgrade(_type, _name, _contractAbi, _contractAddress)

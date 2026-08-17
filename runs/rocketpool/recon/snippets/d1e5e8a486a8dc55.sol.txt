@@ -1,0 +1,1 @@
+abi.encodePacked("megapool.eth.matched.node.amount", _nodeAddress)

@@ -1,0 +1,7 @@
+function contractExists(address _contractAddress) private view returns (bool) {
+        uint32 codeSize;
+        assembly {
+            codeSize := extcodesize(_contractAddress)
+        }
+        return codeSize > 0;
+    }

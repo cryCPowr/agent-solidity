@@ -1,0 +1,1 @@
+SSZ.concat(path, SSZ.from(0, 1))

@@ -1,0 +1,1 @@
+function fundsReturned(address _nodeAddress, uint256 _nodeAmount, uint256 _userAmount) external;

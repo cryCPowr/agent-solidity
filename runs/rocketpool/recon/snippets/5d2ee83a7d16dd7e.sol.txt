@@ -1,0 +1,1 @@
+require(!daoSecurity.getMemberIsValid(_memberAddress), "This node is already part of the security council")

@@ -1,0 +1,1 @@
+event RewardsDistributed(uint256 nodeAmount, uint256 voterAmount, uint256 rethAmount, uint256 protocolDaoAmount, uint256 time);

@@ -1,0 +1,1 @@
+abi.encodePacked("dao.security.allowed.setting", "auction", "auction.lot.create.enabled")

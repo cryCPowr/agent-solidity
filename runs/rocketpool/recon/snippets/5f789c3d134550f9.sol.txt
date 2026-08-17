@@ -1,0 +1,6 @@
+function execute(uint256 _proposalID) override external onlyLatestContract("rocketDAOSecurityProposals", address(this)) {
+        // Load contracts
+        RocketDAOProposalInterface daoProposal = RocketDAOProposalInterface(getContractAddress("rocketDAOProposal"));
+        // Execute now
+        daoProposal.execute(_proposalID);
+    }

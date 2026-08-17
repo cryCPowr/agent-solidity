@@ -1,0 +1,1 @@
+function getVoteCount(address _minipool, uint256 _block) external view returns (uint256);

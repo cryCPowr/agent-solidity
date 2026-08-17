@@ -1,0 +1,3 @@
+function getBidOnLotEnabled() override external view returns (bool) {
+        return getSettingBool("auction.lot.bidding.enabled");
+    }

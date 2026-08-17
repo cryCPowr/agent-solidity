@@ -1,0 +1,1 @@
+function getDelegateExpired() external view returns (bool);

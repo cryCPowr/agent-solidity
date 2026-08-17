@@ -1,0 +1,1 @@
+uint256 private inflationCalcTime = 0

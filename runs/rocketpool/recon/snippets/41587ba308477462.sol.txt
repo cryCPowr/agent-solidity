@@ -1,0 +1,1 @@
+calcBase.mul(rocketAuctionSettings.getLotMinimumEthValue()).div(rplPrice)

@@ -1,0 +1,9 @@
+constructor(RocketStorageInterface _rocketStorageAddress) RocketMegapoolDelegateBase(_rocketStorageAddress, 1) {
+        // Precompute static storage keys
+        rocketDepositPoolKey = keccak256(abi.encodePacked("contract.address", "rocketDepositPool"));
+        rocketMegapoolManagerKey = keccak256(abi.encodePacked("contract.address", "rocketMegapoolManager"));
+        rocketNodeDepositKey = keccak256(abi.encodePacked("contract.address", "rocketNodeDeposit"));
+        // Prefetch immutable contracts
+        rocketTokenRETH = payable(getContractAddress("rocketTokenRETH"));
+        casperDeposit = DepositInterface(getContractAddress("casperDeposit"));
+    }

@@ -1,0 +1,1 @@
+function getCollateralRate() external view returns (uint256);

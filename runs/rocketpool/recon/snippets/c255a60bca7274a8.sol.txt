@@ -1,0 +1,1 @@
+require(networkRelayAddress != address(0), "Snapshot contains rewards for invalid network")

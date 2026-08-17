@@ -1,0 +1,3 @@
+function deleteBytes32(bytes32 _key) external onlyGuardian {
+        rocketStorage.deleteBytes32(_key);
+    }

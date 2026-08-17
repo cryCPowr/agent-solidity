@@ -1,0 +1,3 @@
+function getMessage(uint256 _proposalID) override external view returns (string memory) {
+        return getString(keccak256(abi.encodePacked(daoProposalNameSpace, "message", _proposalID)));
+    }

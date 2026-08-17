@@ -1,0 +1,3 @@
+function increaseAllottedRPLBalance(uint256 _amount) private {
+        addUint(keccak256(abi.encodePacked("auction.rpl.allotted")), _amount);
+    }

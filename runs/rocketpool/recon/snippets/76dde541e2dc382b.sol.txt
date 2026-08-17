@@ -1,0 +1,1 @@
+function getNodeETHBorrowed(address _nodeAddress) external view returns (uint256);

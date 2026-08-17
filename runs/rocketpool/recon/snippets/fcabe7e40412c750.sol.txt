@@ -1,0 +1,1 @@
+signerToNode[_signer] == address(0)

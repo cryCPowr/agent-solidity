@@ -1,0 +1,1 @@
+rplInflationContract.allowance(_nodeAddress, address(this))

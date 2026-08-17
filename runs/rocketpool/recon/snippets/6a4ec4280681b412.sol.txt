@@ -1,0 +1,4 @@
+if (withdrawalAddress == address(0)) {
+            // Defaults to current withdrawal address if unset
+            return rocketStorage.getNodeWithdrawalAddress(_nodeAddress);
+        }

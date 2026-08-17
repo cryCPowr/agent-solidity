@@ -1,0 +1,4 @@
+function getCurrentNodeShare() external override view returns (uint256) {
+        RocketNetworkSnapshotsTimeInterface rocketNetworkSnapshotsTime = RocketNetworkSnapshotsTimeInterface(getContractAddress("rocketNetworkSnapshotsTime"));
+        return _getCurrentShare(rocketNetworkSnapshotsTime, nodeShareKey, false);
+    }

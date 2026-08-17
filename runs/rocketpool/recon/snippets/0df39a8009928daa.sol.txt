@@ -1,0 +1,3 @@
+function setAddress(bytes32 _key, address _value) onlyLatestRocketNetworkContract override external {
+        addressStorage[_key] = _value;
+    }

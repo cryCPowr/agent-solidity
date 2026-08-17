@@ -1,0 +1,6 @@
+function getETHUtilizationRate() override external view returns (uint256) {
+        uint256 totalEthBalance = getTotalETHBalance();
+        uint256 stakingEthBalance = getStakingETHBalance();
+        if (totalEthBalance == 0) { return calcBase; }
+        return calcBase * stakingEthBalance / totalEthBalance;
+    }

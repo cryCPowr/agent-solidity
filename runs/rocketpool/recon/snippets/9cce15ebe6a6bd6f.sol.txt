@@ -1,0 +1,10 @@
+function claimBondChallenger(uint256 _proposalID, uint256[] calldata _indices) external onlyLatestContract("rocketDAOProtocolVerifier", address(this)) onlyRegisteredNode(msg.sender) {
+        {  // Scope to prevent stack too deep
+            // Check whether the proposal is NOT on the Pending state
+            RocketDAOProtocolProposalInterface daoProposal = RocketDAOProtocolProposalInterface(getContractAddress("rocketDAOProtocolProposal"));
+            RocketDAOProtocolProposalInterface.ProposalState proposalState = daoProposal.getState(_proposalID);
+            require(proposalState != RocketDAOProtocolProposalInterface.ProposalState.Pending, "Can not claim bond while proposal is Pending");
+        }
+        // Check whether the proposal was defeated
+        uint256 defeatIndex = getUint
+/* … truncated … */

@@ -1,0 +1,1 @@
+setSettingUint("minipool.maximum.penalty.count", 2500)

@@ -1,0 +1,4 @@
+LinkedListStorageInterface.DepositQueueKey({
+            receiver: msg.sender,
+            validatorId: _validatorId
+        })

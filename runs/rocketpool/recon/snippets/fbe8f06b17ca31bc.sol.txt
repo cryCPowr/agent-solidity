@@ -1,0 +1,9 @@
+if (debt > 0) {
+            if (debt > amountToSend) {
+                _repayDebt(amountToSend);
+                amountToSend = 0;
+            } else {
+                amountToSend -= debt;
+                _repayDebt(debt);
+            }
+        }

@@ -1,0 +1,1 @@
+_startTime + _phase1Duration + _phase2Duration + _expires

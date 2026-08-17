@@ -1,0 +1,1 @@
+getSettingUint("node.minimum.legacy.staked.rpl")

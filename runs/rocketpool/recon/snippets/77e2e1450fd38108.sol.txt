@@ -1,0 +1,1 @@
+event RPLStaked(address indexed node, address from, uint256 amount, uint256 time);

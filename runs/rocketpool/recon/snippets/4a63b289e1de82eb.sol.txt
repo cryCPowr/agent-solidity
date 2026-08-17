@@ -1,0 +1,10 @@
+function getClaimingContractsPerc(string[] memory _claimingContracts) override external view returns (uint256[] memory) {
+        // Load contract
+        RocketDAOProtocolSettingsRewardsInterface daoSettingsRewards = RocketDAOProtocolSettingsRewardsInterface(getContractAddress("rocketDAOProtocolSettingsRewards"));
+        // Get the % amount allocated to this claim contract
+        uint256[] memory percentages = new uint256[](_claimingContracts.length);
+        for (uint256 i = 0; i < _claimingContracts.length; ++i) {
+            percentages[i] = daoSettingsRewards.getRewardsClaimerPerc(_claimingContracts[i]);
+        }
+        return percentages;
+    }

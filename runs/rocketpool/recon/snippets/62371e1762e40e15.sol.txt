@@ -1,0 +1,3 @@
+function setNodeShare(uint256 _newShare) external override onlyProtocolOrSecurityDAO {
+        _setShare(nodeShareKey, _newShare);
+    }

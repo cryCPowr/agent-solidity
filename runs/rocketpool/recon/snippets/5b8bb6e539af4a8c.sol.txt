@@ -1,0 +1,1 @@
+_valueAt(_key, len - 1)

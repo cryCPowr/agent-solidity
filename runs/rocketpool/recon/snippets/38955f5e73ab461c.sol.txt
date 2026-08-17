@@ -1,0 +1,1 @@
+setBool(keccak256(abi.encodePacked("auction.lot.exists", lotIndex)), true)

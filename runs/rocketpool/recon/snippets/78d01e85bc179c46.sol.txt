@@ -1,0 +1,1 @@
+address(uint160(encoded >> 96))

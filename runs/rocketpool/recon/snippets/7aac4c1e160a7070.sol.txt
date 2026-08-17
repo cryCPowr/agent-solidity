@@ -1,0 +1,15 @@
+if (getExecuted(_proposalID)) {
+            return ProposalState.Executed;
+            // Is the proposal pending? Eg. waiting to be voted on
+        } else if (block.timestamp < getStart(_proposalID)) {
+            return ProposalState.Pending;
+            // Vote was successful, is now awaiting execution
+        } else if (votesFor >= getVotesRequired(_proposalID) && block.timestamp < getExpires(_proposalID)) {
+            return ProposalState.Succeeded;
+            // The proposal is active and can be voted on
+        } else if (block.timestamp < getEnd(_proposalID)) {
+            return ProposalState.Active;
+            // Check the votes, was it defeated?
+        } else if (votesFor <= votesAgainst || votesFor < getVotesRequired(_proposalID)) {
+            return ProposalState.Defeate
+/* … truncated … */

@@ -1,0 +1,3 @@
+if (express && expressQueueLength == 0) {
+            express = false;
+        }

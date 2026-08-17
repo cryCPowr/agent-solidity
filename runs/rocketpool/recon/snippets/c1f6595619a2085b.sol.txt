@@ -1,0 +1,9 @@
+if (status == MinipoolStatus.Staking) {
+                stakingCount++;
+            }
+            else if (status == MinipoolStatus.Withdrawable) {
+                withdrawableCount++;
+            }
+            else if (status == MinipoolStatus.Dissolved) {
+                dissolvedCount++;
+            }

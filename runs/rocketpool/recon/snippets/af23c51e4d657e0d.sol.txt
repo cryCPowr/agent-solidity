@@ -1,0 +1,5 @@
+function deprecate() external override onlyLatestNetworkContract {
+        // Expiry is only used on the delegate contract itself
+        require(!storageState);
+        expirationTime = block.timestamp + upgradeBuffer;
+    }

@@ -1,0 +1,1 @@
+totalChallenges <= 50

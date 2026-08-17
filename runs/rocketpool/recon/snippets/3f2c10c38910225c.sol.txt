@@ -1,0 +1,15 @@
+function newValidator(uint256 _bondAmount, bool _useExpressTicket, bytes calldata _validatorPubkey, bytes calldata _validatorSignature, bytes32 _depositDataRoot) external onlyRocketNodeDeposit {
+        // Check bond and debt requirements
+        require(_bondAmount == getNewValidatorBondRequirement(), "Bond requirement not met");
+        require(debt == 0, "Cannot create validator while debt exists");
+        // Setup new validator
+        RocketDepositPoolInterface rocketDepositPool = _getRocketDepositPool();
+        uint32 validatorId = numValidators;
+        unchecked { // Infeasible overflow
+            numValidators += 1;
+        }
+        {
+            ValidatorInfo memory validator;
+            validator.inQueue = true;
+            validator.lastRequestedBond = SafeCast.toUint32(_b
+/* … truncated … */

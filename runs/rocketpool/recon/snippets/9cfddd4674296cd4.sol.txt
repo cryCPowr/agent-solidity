@@ -1,0 +1,17 @@
+contract RocketMegapoolPenalties is RocketBase, RocketMegapoolPenaltiesInterface {
+    // Constants
+    uint256 constant internal penaltyMaximumPeriod = 7 days;
+    bytes32 constant internal penaltyKey = keccak256(abi.encodePacked("megapool.running.penalty"));
+
+    // Events
+    event PenaltySubmitted(address indexed from, address megapool, uint256 block, uint256 amount, uint256 time);
+    event PenaltyApplied(address indexed megapool, uint256 block, uint256 amount, uint256 time);
+
+    constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
+        version = 1;
+    }
+
+    /// @notice Returns the number of votes in favour of the given penalty
+    /// @param _megapool Address of the accused megapool
+    /// @param _block Block that the theft occurred (us
+/* … truncated … */

@@ -1,0 +1,1 @@
+function executeUpdatePrices(uint256 _block, uint256 _slotTimestamp, uint256 _rplPrice) external;

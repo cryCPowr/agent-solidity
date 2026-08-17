@@ -1,0 +1,1 @@
+function getRPLBond() external view returns(uint256);

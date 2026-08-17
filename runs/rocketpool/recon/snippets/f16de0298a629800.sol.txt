@@ -1,0 +1,14 @@
+function setWithdrawalAddress(address _nodeAddress, address _newWithdrawalAddress, bool _confirm) external override {
+        // Check new withdrawal address
+        require(_newWithdrawalAddress != address(0x0), "Invalid withdrawal address");
+        // Confirm the transaction is from the node's current withdrawal address
+        address withdrawalAddress = getNodeWithdrawalAddress(_nodeAddress);
+        require(withdrawalAddress == msg.sender, "Only a tx from a node's withdrawal address can update it");
+        // Update immediately if confirmed
+        if (_confirm) {
+            updateWithdrawalAddress(_nodeAddress, _newWithdrawalAddress);
+        }
+        // Set pending withdrawal address if not confirmed
+        else {
+            pendingWithdrawalAddresses[_nodeAddress] = _newWithd
+/* … truncated … */

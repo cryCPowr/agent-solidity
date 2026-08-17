@@ -1,0 +1,5 @@
+function _withdrawRPLFor(address nodeAddress) internal {
+        uint256 amount = _withdrawUnstakingRPL(nodeAddress);
+        require(amount > 0, "No available unstaking RPL to withdraw");
+        emit RPLWithdrawn(nodeAddress, amount, block.timestamp);
+    }

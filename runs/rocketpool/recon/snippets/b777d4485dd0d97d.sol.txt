@@ -1,0 +1,1 @@
+setUint(valueKey, _initialNodeShare / shareScale)

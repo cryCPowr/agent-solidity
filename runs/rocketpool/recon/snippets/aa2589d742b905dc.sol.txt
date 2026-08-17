@@ -1,0 +1,8 @@
+function calculateNodeShare(uint256 _balance) override public view returns (uint256) {
+        // Sub 8 ether balance is treated as rewards
+        if (_balance < 8 ether) {
+            return calculateNodeRewards(nodeDepositBalance, getUserDepositBalance(), _balance);
+        } else {
+            return _calculateNodeShare(_balance);
+        }
+    }

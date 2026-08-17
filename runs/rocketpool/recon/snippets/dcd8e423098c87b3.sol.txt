@@ -1,0 +1,1 @@
+function getSubmitWithdrawableEnabled() external view returns (bool);

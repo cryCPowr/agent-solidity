@@ -1,0 +1,1 @@
+require(challengeTime > 0, "Member hasn't been challenged or they have successfully responded to the challenge already")

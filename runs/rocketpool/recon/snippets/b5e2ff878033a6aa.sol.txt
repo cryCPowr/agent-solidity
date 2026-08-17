@@ -1,0 +1,3 @@
+function getMinipoolPubkey(address _minipoolAddress) override public view returns (bytes memory) {
+        return getBytes(keccak256(abi.encodePacked("minipool.pubkey", _minipoolAddress)));
+    }

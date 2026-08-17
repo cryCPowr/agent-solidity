@@ -1,0 +1,9 @@
+function delegateUpgrade() public override notSelf {
+        // Only owner can upgrade if delegate hasn't expired
+        if (!getDelegateExpired()) {
+            address withdrawalAddress = rocketStorage.getNodeWithdrawalAddress(nodeAddress);
+            require(msg.sender == nodeAddress || msg.sender == withdrawalAddress, "Only the node operator can access this method");
+        }
+        // Perform upgrade
+        _delegateUpgrade();
+    }

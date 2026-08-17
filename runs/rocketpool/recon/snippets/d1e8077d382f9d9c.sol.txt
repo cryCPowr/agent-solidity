@@ -1,0 +1,5 @@
+if (_submission.treasuryETH > 0) {
+            address payable rocketClaimDAO = payable(getContractAddress("rocketClaimDAO"));
+            (bool result,) = rocketClaimDAO.call{value: _submission.treasuryETH}("");
+            require(result, "Failed to send pDAO rewards");
+        }

@@ -1,0 +1,6 @@
+function proposalSettingBool(string memory _settingContractName, string memory _settingPath, bool _value) override external onlyExecutingContracts() {
+        // Load contracts
+        RocketDAONodeTrustedSettingsInterface rocketDAONodeTrustedSettings = RocketDAONodeTrustedSettingsInterface(getContractAddress(_settingContractName));
+        // Lets update
+        rocketDAONodeTrustedSettings.setSettingBool(_settingPath, _value);
+    }

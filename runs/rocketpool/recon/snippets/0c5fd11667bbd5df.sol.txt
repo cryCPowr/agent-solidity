@@ -1,0 +1,1 @@
+require(status == MinipoolStatus.Dissolved, "The minipool can only be closed while dissolved")

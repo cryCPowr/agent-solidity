@@ -1,0 +1,4 @@
+modifier onlyLowMemberMode() {
+        require(getMemberCount() < daoMemberMinCount, "Low member mode not engaged");
+        _;
+    }

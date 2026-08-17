@@ -1,0 +1,3 @@
+function deleteUint(bytes32 _key) onlyLatestRocketNetworkContract override external {
+        delete uintStorage[_key];
+    }

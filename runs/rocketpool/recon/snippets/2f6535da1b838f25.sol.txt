@@ -1,0 +1,1 @@
+require(_witness.length == getDepthFromIndex(_index) - getDepthFromIndex(previousIndex), "Invalid proof length")

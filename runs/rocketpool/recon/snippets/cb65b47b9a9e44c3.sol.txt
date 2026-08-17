@@ -1,0 +1,1 @@
+require(rocketVaultAddress != address(0x0), "rocketVault address not set")

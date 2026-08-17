@@ -1,0 +1,1 @@
+function setInt(bytes32 _key, int _value) internal { rocketStorage.setInt(_key, _value); }

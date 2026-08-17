@@ -1,0 +1,9 @@
+function getNodeMinimumLegacyRPLStake(address _nodeAddress) public view returns (uint256) {
+        // Load contracts
+        RocketNetworkPricesInterface rocketNetworkPrices = RocketNetworkPricesInterface(getContractAddress("rocketNetworkPrices"));
+        RocketDAOProtocolSettingsNodeInterface rocketDAOProtocolSettingsNode = RocketDAOProtocolSettingsNodeInterface(getContractAddress("rocketDAOProtocolSettingsNode"));
+        // Calculate and return minimum
+        uint256 minimumRPLStakePercent = rocketDAOProtocolSettingsNode.getMinimumLegacyRPLStake();
+        uint256 borrowedETH = getNodeMinipoolETHBorrowed(_nodeAddress);
+        return borrowedETH * minimumRPLStakePercent / rocketNetworkPrices.getRPLPrice();
+    }

@@ -1,0 +1,1 @@
+event DelegateRolledBack(address oldDelegate, address newDelegate, uint256 time);

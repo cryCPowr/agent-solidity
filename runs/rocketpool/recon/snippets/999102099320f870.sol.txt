@@ -1,0 +1,8 @@
+function _snapshotCapitalRatio() internal {
+        // Try to distribute rewards before updating capital ratio
+        if (numExitingValidators == 0 && numLockedValidators == 0) {
+            _distributeAmount(getPendingRewards());
+        }
+        // Snapshot capital ratio
+        _calculateAndSaveCapitalRatio();
+    }

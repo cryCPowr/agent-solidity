@@ -1,0 +1,1 @@
+require(_block >= lastBalancesBlock, "Network balances for a higher block are set")

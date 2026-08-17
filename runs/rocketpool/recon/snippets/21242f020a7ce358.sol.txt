@@ -1,0 +1,3 @@
+if (isRewardedIndex(defeatIndex, _indices[i])) {
+                rewardedIndices++;
+            }

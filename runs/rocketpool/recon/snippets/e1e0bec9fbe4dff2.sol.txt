@@ -1,0 +1,9 @@
+function proposalSettingUint(string memory _settingNameSpace, string memory _settingPath, uint256 _value) override public onlyExecutingContracts() onlyValidSetting(_settingNameSpace, _settingPath) {
+        bytes32 namespace = keccak256(abi.encodePacked(protocolDaoSettingNamespace, _settingNameSpace));
+        setUint(keccak256(abi.encodePacked(namespace, _settingPath)), _value);
+
+        // Security council adder requires additional processing
+        if (keccak256(bytes(_settingNameSpace)) == keccak256(bytes("network"))) {
+            if (keccak256(bytes(_settingPath)) == keccak256(bytes("network.node.commission.share.security.council.adder"))) {
+                RocketDAOProtocolSettingsNetworkInterface rocketDAOProtocolSettingsNetwork = RocketDAOProtocolSettingsNetworkInterface(getContr
+/* … truncated … */

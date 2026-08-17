@@ -1,0 +1,4 @@
+if (msg.sender != rocketStorage.getAddress(rocketMegapoolManagerKey)) {
+            uint256 timeBeforeDissolve = rocketDAOProtocolSettingsMegapool.getTimeBeforeDissolve();
+            require(block.timestamp > validator.lastAssignmentTime + timeBeforeDissolve, "Not enough time has passed");
+        }

@@ -1,0 +1,4 @@
+if (index > 0) {
+            uint256 previousIndex = getUint(keccak256(abi.encodePacked(_namespace, ".prev", index)));
+            previousItem = _unpackItem(getUint(keccak256(abi.encodePacked(_namespace, ".item", previousIndex))));
+        }

@@ -1,0 +1,1 @@
+prevIndex << endOffset

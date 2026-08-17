@@ -1,0 +1,3 @@
+function getNodePendingWithdrawalAddress(address _nodeAddress) external override view returns (address) {
+        return pendingWithdrawalAddresses[_nodeAddress];
+    }

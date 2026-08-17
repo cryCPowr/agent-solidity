@@ -1,0 +1,6 @@
+function getEffectiveDelegate() external override view returns (address) {
+        if (useLatestDelegate || getDelegateExpired()) {
+            return getContractAddress("rocketMegapoolDelegate");
+        }
+        return rocketMegapoolDelegate;
+    }

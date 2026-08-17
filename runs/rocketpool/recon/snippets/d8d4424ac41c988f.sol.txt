@@ -1,0 +1,1 @@
+len == 0 ? 0 : _valueAt(_key, len - 1)

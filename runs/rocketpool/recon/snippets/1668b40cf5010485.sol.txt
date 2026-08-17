@@ -1,0 +1,1 @@
+event BootstrapTreasuryUpdateContract(string contractName, address recipientAddress, uint256 amountPerPeriod, uint256 periodLength, uint256 numPeriods, uint256 time);

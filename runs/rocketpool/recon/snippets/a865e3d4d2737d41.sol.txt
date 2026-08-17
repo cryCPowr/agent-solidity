@@ -1,0 +1,4 @@
+function getVoteCount(address _minipool, uint256 _block) override external view returns (uint256) {
+        bytes32 submissionCountKey = keccak256(abi.encodePacked("minipool.penalty.submission", _minipool, _block));
+        return getUint(submissionCountKey);
+    }

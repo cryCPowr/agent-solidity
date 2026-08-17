@@ -1,0 +1,1 @@
+function getNodeFeeByDemand(int256 _nodeDemand) external view returns (uint256);

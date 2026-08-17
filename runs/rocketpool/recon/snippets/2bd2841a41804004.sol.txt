@@ -1,0 +1,3 @@
+function getChallengeTimestamp(uint256 _data) internal pure returns (uint64) {
+        return uint64(_data >> timestampOffset);
+    }

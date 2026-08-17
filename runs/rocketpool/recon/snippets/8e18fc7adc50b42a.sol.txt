@@ -1,0 +1,3 @@
+function getLotRPLRecovered(uint256 _index) override public view returns (bool) {
+        return getBool(keccak256(abi.encodePacked("auction.lot.rpl.recovered", _index)));
+    }

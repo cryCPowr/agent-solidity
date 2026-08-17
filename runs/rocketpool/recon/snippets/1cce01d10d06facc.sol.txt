@@ -1,0 +1,10 @@
+function _callerAllowedFor(address _nodeAddress) internal view returns (bool) {
+        RocketNodeManagerInterface rocketNodeManager = RocketNodeManagerInterface(getContractAddress("rocketNodeManager"));
+        if (rocketNodeManager.getNodeRPLWithdrawalAddressIsSet(_nodeAddress)) {
+            address rplWithdrawalAddress = rocketNodeManager.getNodeRPLWithdrawalAddress(_nodeAddress);
+            return msg.sender == rplWithdrawalAddress;
+        } else {
+            address withdrawalAddress = rocketStorage.getNodeWithdrawalAddress(_nodeAddress);
+            return (msg.sender == _nodeAddress) || (msg.sender == withdrawalAddress);
+        }
+    }

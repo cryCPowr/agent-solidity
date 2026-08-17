@@ -1,0 +1,3 @@
+function setPricesBlock(uint256 _value) private {
+        setUint(blockKey, _value);
+    }

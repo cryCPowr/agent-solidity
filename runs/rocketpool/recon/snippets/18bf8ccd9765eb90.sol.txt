@@ -1,0 +1,1 @@
+rocketNetworkSnapshotsTime.push(voterShareKey, 0)

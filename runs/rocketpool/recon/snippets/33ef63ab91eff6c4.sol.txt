@@ -1,0 +1,10 @@
+if (_balance < userCapital) {
+            // Only slash on first call to distribute
+            if (withdrawalBlock == 0) {
+                // Record shortfall for slashing
+                nodeSlashBalance = userCapital.sub(_balance);
+            }
+        } else {
+            // Calculate node's share of the balance
+            nodeAmount = _calculateNodeShare(_balance);
+        }

@@ -1,0 +1,1 @@
+function getActionTime() external view returns (uint256);

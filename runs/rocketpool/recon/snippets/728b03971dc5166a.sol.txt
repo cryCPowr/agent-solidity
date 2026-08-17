@@ -1,0 +1,5 @@
+function getValidatorInfoAndPubkey(uint32 _validatorId) override external view returns (ValidatorInfo memory info, bytes memory pubkey) {
+        require(_validatorId < numValidators, "Validator does not exist");
+        info = validators[_validatorId];
+        pubkey = pubkeys[_validatorId];
+    }

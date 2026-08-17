@@ -1,0 +1,3 @@
+function withdrawRPL() override external {
+        withdrawRPLFor(msg.sender);
+    }

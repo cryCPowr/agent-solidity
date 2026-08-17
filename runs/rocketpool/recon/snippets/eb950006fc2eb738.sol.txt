@@ -1,0 +1,6 @@
+function getLotCurrentPrice(uint256 _index) override public view returns (uint256) {
+        uint256 blockPrice = getLotPriceAtCurrentBlock(_index);
+        uint256 bidPrice = getLotPriceByTotalBids(_index);
+        if (bidPrice > blockPrice) { return bidPrice; }
+        else { return blockPrice; }
+    }

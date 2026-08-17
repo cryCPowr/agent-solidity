@@ -1,0 +1,1 @@
+function spend(string memory _invoiceID, address _recipientAddress, uint256 _amount) external;

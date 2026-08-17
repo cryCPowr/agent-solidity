@@ -1,0 +1,1 @@
+addressSetStorage.getCount(keccak256(abi.encodePacked(daoNameSpace, "member.index")))

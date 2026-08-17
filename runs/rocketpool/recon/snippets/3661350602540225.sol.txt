@@ -1,0 +1,3 @@
+function getLotMaximumEthValue() override external view returns (uint256) {
+        return getSettingUint("auction.lot.value.maximum");
+    }

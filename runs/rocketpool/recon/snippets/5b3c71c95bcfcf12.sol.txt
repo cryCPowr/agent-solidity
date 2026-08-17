@@ -1,0 +1,3 @@
+function getVacantMinipoolsEnabled() override external view returns (bool) {
+        return getSettingBool("node.vacant.minipools.enabled");
+    }

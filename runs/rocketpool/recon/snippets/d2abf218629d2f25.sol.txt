@@ -1,0 +1,20 @@
+contract RocketNodeDistributor is RocketNodeDistributorStorageLayout {
+    bytes32 immutable distributorStorageKey;
+
+    constructor(address _nodeAddress, address _rocketStorage) {
+        rocketStorage = RocketStorageInterface(_rocketStorage);
+        nodeAddress = _nodeAddress;
+
+        // Precompute storage key for rocketNodeDistributorDelegate
+        distributorStorageKey = keccak256(abi.encodePacked("contract.address", "rocketNodeDistributorDelegate"));
+    }
+
+    // Allow contract to receive ETH without making a delegated call
+    receive() external payable {}
+
+    // Delegates all transactions to the target supplied during creation
+    fallback() external payable {
+        address _target = rocketStorage.getAddress(distributorStorageKey);
+        assembly {
+            calldatacopy
+/* … truncated … */

@@ -1,0 +1,12 @@
+function initialise(address _nodeAddress) external override notSelf {
+        // Check input
+        require(_nodeAddress != address(0), "Invalid node address");
+        require(!storageState, "Already initialised");
+        // Flag storage state as initialised and record node address
+        storageState = true;
+        nodeAddress = _nodeAddress;
+        // Set the current delegate (checking it exists)
+        address delegateAddress = getContractAddress("rocketMegapoolDelegate");
+        require(contractExists(delegateAddress), "Delegate contract does not exist");
+        rocketMegapoolDelegate = delegateAddress;
+    }

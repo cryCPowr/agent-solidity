@@ -1,0 +1,11 @@
+function overrideVote(uint256 _proposalID, VoteDirection _voteDirection) override external onlyRegisteredNode(msg.sender) onlyLatestContract("rocketDAOProtocolProposal", address(this)) {
+        // Check valid vote
+        require(_voteDirection != VoteDirection.NoVote, "Invalid vote");
+        // Check the proposal is in a state that can be voted on
+        require(getState(_proposalID) == ProposalState.ActivePhase2, "Phase 2 voting is not active");
+        // Load contracts
+        RocketNetworkVotingInterface rocketNetworkVoting = RocketNetworkVotingInterface(getContractAddress("rocketNetworkVoting"));
+        // Get caller's voting power and direction of their delegate
+        uint32 blockNumber = uint32(getProposalBlock(_proposalID));
+        uint256 votingPower = rocketNetworkVoting.
+/* … truncated … */

@@ -1,0 +1,7 @@
+if (!result) {
+                        // If the withdrawal address cannot accept the ETH with 10000 gas, add it to their balance to be claimed later at their own expense
+                        bytes32 balanceKey = keccak256(abi.encodePacked('rewards.eth.balance', withdrawalAddress));
+                        addUint(balanceKey, totalAmountSmoothingPoolETH);
+                        // Return the ETH to the vault
+                        rocketVault.depositEther{value: totalAmountSmoothingPoolETH}();
+                    }

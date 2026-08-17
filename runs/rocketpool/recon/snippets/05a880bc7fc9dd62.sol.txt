@@ -1,0 +1,3 @@
+function getInt(bytes32 _key) override external view returns (int r) {
+        return intStorage[_key];
+    }

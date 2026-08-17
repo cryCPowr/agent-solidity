@@ -1,0 +1,1 @@
+totalAmountSmoothingPoolETH + _claims[i].amountSmoothingPoolETH

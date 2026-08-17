@@ -1,0 +1,1 @@
+rocketStorage.setBytes32(key, _encode(_item))

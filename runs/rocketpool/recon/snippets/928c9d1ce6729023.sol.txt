@@ -1,0 +1,1 @@
+_initialiseFeeDistributor(msg.sender)

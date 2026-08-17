@@ -1,0 +1,1 @@
+function clearSigner() external;

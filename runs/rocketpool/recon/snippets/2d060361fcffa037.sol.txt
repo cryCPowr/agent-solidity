@@ -1,0 +1,1 @@
+getSettingUint("minipool.user.distribute.window.length")

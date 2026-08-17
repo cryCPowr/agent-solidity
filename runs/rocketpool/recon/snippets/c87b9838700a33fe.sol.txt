@@ -1,0 +1,1 @@
+function getVotePhase2Time() external view returns(uint256);

@@ -1,0 +1,9 @@
+function _maybeApplyPenalty(address _megapool, uint256 _block, uint256 _amount, uint256 _submissionCount) internal {
+        // Check this penalty hasn't already reach majority and been applied
+        bytes32 penaltyAppliedKey = keccak256(abi.encodePacked("megapool.penalty.submission.applied", _megapool, _block, _amount));
+        require(!getBool(penaltyAppliedKey), "Penalty already applied");
+        // Check for majority
+        RocketDAONodeTrustedInterface rocketDAONodeTrusted = RocketDAONodeTrustedInterface(getContractAddress("rocketDAONodeTrusted"));
+        RocketDAOProtocolSettingsMegapoolInterface rocketDAOProtocolSettingsMegapool = RocketDAOProtocolSettingsMegapoolInterface(getContractAddress("rocketDAOProtocolSettingsMegapool"));
+        if (calcBase * _submissionCount / rocke
+/* … truncated … */

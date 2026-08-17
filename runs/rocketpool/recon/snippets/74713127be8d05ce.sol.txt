@@ -1,0 +1,1 @@
+require(preLaunchValue == 0, "Pre-deposit already performed")

@@ -1,0 +1,1 @@
+_callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance))

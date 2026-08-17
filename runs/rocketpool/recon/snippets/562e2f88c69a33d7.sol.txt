@@ -1,0 +1,1 @@
+snapshots.lookup(key, _block)

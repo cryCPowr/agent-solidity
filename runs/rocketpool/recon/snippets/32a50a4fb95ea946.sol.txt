@@ -1,0 +1,1 @@
+abi.encodePacked("node.minipools.staking.count", nodeAddress, _newBond)

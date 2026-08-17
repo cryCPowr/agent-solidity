@@ -1,0 +1,1 @@
+standardHeadMoved ? uint128(block.number) : uint128(packed >> 128)

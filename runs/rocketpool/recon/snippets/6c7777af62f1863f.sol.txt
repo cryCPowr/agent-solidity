@@ -1,0 +1,8 @@
+function getExpectedAddress(address _nodeOperator, uint256 _salt) external override view returns (address) {
+        // Ensure rocketMinipoolBase is setAddress
+        address rocketMinipoolBase = rocketStorage.getAddress(keccak256(abi.encodePacked("contract.address", "rocketMinipoolBase")));
+        // Calculate node specific salt value
+        bytes32 salt = keccak256(abi.encodePacked(_nodeOperator, _salt));
+        // Return expected address
+        return rocketMinipoolBase.predictDeterministicAddress(salt, address(this));
+    }

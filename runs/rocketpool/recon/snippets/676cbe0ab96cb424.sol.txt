@@ -1,0 +1,22 @@
+contract SnapshotTimeTest is RocketBase {
+
+    RocketNetworkSnapshotsTimeInterface snapshots;
+
+    // Construct
+    constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
+        snapshots = RocketNetworkSnapshotsTimeInterface(getContractAddress("rocketNetworkSnapshotsTime"));
+    }
+
+    function push(string calldata _key, uint192 _value) external {
+        bytes32 key = keccak256(abi.encodePacked(_key));
+
+        snapshots.push(key, _value);
+    }
+
+    function lookup(string calldata _key, uint64 _time) external view returns (uint192){
+        bytes32 key = keccak256(abi.encodePacked(_key));
+        return snapshots.lookup(key, _time);
+    }
+
+    function lookupRecent(string calldata _key, uint64 _time, uint256 _recency) external view returns (uint19
+/* … truncated … */

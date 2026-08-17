@@ -1,0 +1,1 @@
+rocketDAOSecurity.getMemberProposalExecutedTime("invited", _nodeAddress)

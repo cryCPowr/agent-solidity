@@ -1,0 +1,1 @@
+function getPromotionScrubPeriod() external view returns(uint256);

@@ -1,0 +1,19 @@
+contract RocketRewardsPool is RocketBase, RocketRewardsPoolInterface, RocketVaultWithdrawerInterface {
+    // Constants
+    uint256 constant internal treeVersion = 1;
+
+    // Events
+    event RewardSnapshotSubmitted(address indexed from, uint256 indexed rewardIndex, RewardSubmission submission, uint256 time);
+    event RewardSnapshot(uint256 indexed rewardIndex, RewardSubmission submission, uint256 intervalStartTime, uint256 intervalEndTime, uint256 time);
+
+    // Construct
+    constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
+        version = 5;
+    }
+
+    /// @dev Needs to freely accept ETH withdrawn from the smoothing pool
+    receive() payable external {}
+
+    /// @dev Callback required to receive ETH withdrawal from the vault
+    function r
+/* … truncated … */

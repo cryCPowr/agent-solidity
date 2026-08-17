@@ -1,0 +1,1 @@
+abi.encodePacked("minipool.penalty.submission", _minipool, _block)

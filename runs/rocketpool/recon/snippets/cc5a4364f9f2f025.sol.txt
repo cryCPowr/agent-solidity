@@ -1,0 +1,3 @@
+function getUpgradeABI(uint256 _upgradeProposalID) override public view returns (string memory) {
+        return getString(keccak256(abi.encodePacked(daoUpgradeNameSpace, "abi", _upgradeProposalID)));
+    }

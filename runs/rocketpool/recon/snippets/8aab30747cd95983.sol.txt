@@ -1,0 +1,1 @@
+function dequeueMinipools(uint256 _maxToDequeue) external returns (address[] memory minipoolAddress);

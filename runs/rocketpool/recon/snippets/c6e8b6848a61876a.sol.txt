@@ -1,0 +1,13 @@
+function _beforeTokenTransfer(address from, address, uint256) internal override {
+        // Don't run check if this is a mint transaction
+        if (from != address(0)) {
+            // Check which block the user's last deposit was
+            bytes32 key = keccak256(abi.encodePacked("user.deposit.block", from));
+            uint256 lastDepositBlock = getUint(key);
+            if (lastDepositBlock > 0) {
+                // Ensure enough blocks have passed
+                uint256 depositDelay = getUint(keccak256(abi.encodePacked(keccak256("dao.protocol.setting.network"), "network.reth.deposit.delay")));
+                uint256 blocksPassed = block.number.sub(lastDepositBlock);
+                require(blocksPassed > depositDelay, "Not enough time has passed since deposit");
+               
+/* … truncated … */

@@ -1,0 +1,1 @@
+event NodeRegistered(address indexed node, uint256 time);

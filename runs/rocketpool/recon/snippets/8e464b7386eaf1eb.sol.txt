@@ -1,0 +1,1 @@
+calcBase * _submissionCount / rocketDAONodeTrusted.getMemberCount() >= rocketDAOProtocolSettingsMegapool.getPenaltyThreshold()

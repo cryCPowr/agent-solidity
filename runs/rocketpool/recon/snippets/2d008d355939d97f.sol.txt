@@ -1,0 +1,1 @@
+require(totalRewardsETH <= smoothingPoolBalance + getPendingVoterShare(), "Invalid ETH rewards")

@@ -1,0 +1,1 @@
+deleteBytes(keccak256(abi.encodePacked("minipool.pubkey", msg.sender)))

@@ -1,0 +1,12 @@
+function _memberRemove(address _nodeAddress) private {
+        // Load contracts
+        AddressSetStorageInterface addressSetStorage = AddressSetStorageInterface(getContractAddress("addressSetStorage"));
+        // Remove their membership now
+        deleteBool(keccak256(abi.encodePacked(daoNameSpace, "member", _nodeAddress)));
+        deleteAddress(keccak256(abi.encodePacked(daoNameSpace, "member.address", _nodeAddress)));
+        deleteString(keccak256(abi.encodePacked(daoNameSpace, "member.id", _nodeAddress)));
+        deleteUint(keccak256(abi.encodePacked(daoNameSpace, "member.joined.time", _nodeAddress)));
+        // Clean up the invited/leave proposals
+        deleteUint(keccak256(abi.encodePacked(daoNameSpace, "member.executed.time", "invited", _nodeAddress)));
+        deleteUint(k
+/* … truncated … */

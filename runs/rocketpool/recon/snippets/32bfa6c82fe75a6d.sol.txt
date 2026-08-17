@@ -1,0 +1,13 @@
+function _withdrawUnstakingRPL(address _nodeAddress) internal returns (uint256) {
+        // Get contracts
+        RocketDAOProtocolSettingsNodeInterface rocketDAOProtocolSettingsNode = RocketDAOProtocolSettingsNodeInterface(getContractAddress("rocketDAOProtocolSettingsNode"));
+        // Check unstaking period condition
+        uint256 lastUnstakeTime = getNodeLastUnstakeTime(_nodeAddress);
+        uint256 unstakingPeriod = rocketDAOProtocolSettingsNode.getUnstakingPeriod();
+        uint256 timeSinceLastUnstake = block.timestamp - lastUnstakeTime;
+        if (timeSinceLastUnstake <= unstakingPeriod) {
+            return 0;
+        }
+        // Check withdrawal cooldown
+        if (block.timestamp - getNodeRPLStakedTime(_nodeAddress) < rocketDAOProtocolSettingsNode.getWithdrawalCooldown())
+/* … truncated … */

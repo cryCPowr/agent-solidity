@@ -1,0 +1,1 @@
+function getReduceBondValue(address _minipoolAddress) external view returns (uint256);

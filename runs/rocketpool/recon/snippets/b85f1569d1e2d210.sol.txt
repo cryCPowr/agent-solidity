@@ -1,0 +1,4 @@
+function intoList(uint248 _index, uint8 _log2Length) internal pure returns (Path memory) {
+        require(_index < 2 ** _log2Length, "Index exceeds length");
+        return Path((uint256(_index) << 8) | uint256(_log2Length + 1));
+    }

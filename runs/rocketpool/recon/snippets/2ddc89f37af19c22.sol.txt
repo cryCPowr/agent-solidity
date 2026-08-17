@@ -1,0 +1,3 @@
+function deleteInt(bytes32 _key) onlyLatestRocketNetworkContract override external {
+        delete intStorage[_key];
+    }

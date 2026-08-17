@@ -1,0 +1,4 @@
+if (legacyAmount > 0) {
+            bytes32 legacyKey = keccak256(abi.encodePacked("rpl.legacy.staked.node.amount", _nodeAddress));
+            subUint(legacyKey, legacyAmount);
+        }

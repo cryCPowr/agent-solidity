@@ -1,0 +1,13 @@
+if (!rocketStorage.getDeployedStatus()) {
+            // Set defaults
+            setSettingBool("node.registration.enabled", false);
+            setSettingBool("node.smoothing.pool.registration.enabled", true);
+            setSettingBool("node.deposit.enabled", false);
+            setSettingBool("node.vacant.minipools.enabled", false);
+            _setSettingUint("reduced.bond", 4 ether);                           // 4 ETH (RPIP-42)
+            _setSettingUint("node.unstaking.period", 28 days);                  // 28 days (RPIP-30)
+            _setSettingUint("node.withdrawal.cooldown", 0);                     // No cooldown (RPIP-30)
+            _setSettingUint("node.minimum.legacy.staked.rpl", 0.15 ether);      // 15% of borrowed ETH (RPIP-30)
+            // Update deployed flag
+       
+/* … truncated … */

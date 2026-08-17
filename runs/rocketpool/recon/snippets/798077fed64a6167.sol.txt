@@ -1,0 +1,1 @@
+rplContractAddress != address(0x0)

@@ -1,0 +1,1 @@
+uint256 constant calcBase = 1 ether

@@ -1,0 +1,12 @@
+function setDelegate(address _newDelegate) external override onlyRegisteredNode(msg.sender) onlyRegisteredNode(_newDelegate) {
+        // Get contracts
+        RocketNetworkSnapshotsInterface rocketNetworkSnapshots = RocketNetworkSnapshotsInterface(getContractAddress("rocketNetworkSnapshots"));
+        // Prevent setting to same value
+        bytes32 key = keccak256(abi.encodePacked("node.delegate", msg.sender));
+        address existingDelegate = address(uint160(rocketNetworkSnapshots.latestValue(key)));
+        require(_newDelegate != existingDelegate, "Delegate already set to value");
+        // Record new delegate
+        rocketNetworkSnapshots.push(key, uint224(uint160(_newDelegate)));
+        // Emit event
+        emit DelegateSet(msg.sender, _newDelegate, block.timestamp);
+    }

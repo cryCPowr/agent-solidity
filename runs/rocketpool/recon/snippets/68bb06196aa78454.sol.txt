@@ -1,0 +1,5 @@
+if (settingKey == keccak256(bytes("megapool.penalty.threshold"))) {
+                require(_value >= 0.51 ether, "Penalty threshold must be 51% or higher");
+            } else if (settingKey == keccak256(bytes("megapool.dissolve.penalty"))) {
+                require(_value >= 0.01 ether, "Value must be >= 0.01 ETH");
+            }

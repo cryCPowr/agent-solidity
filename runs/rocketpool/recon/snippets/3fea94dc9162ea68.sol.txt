@@ -1,0 +1,7 @@
+if (addressQueueStorage.getLength(queueKeyMinipoolVariable) > 0) {
+            RocketMinipoolQueueInterface rocketMinipoolQueue = RocketMinipoolQueueInterface(getContractAddress("rocketMinipoolQueue"));
+            _assignMinipoolsByDeposit(rocketMinipoolQueue, rocketDAOProtocolSettingsDeposit);
+        } else {
+            // Then assign megapools
+            _assignMegapoolsByDeposit(rocketDAOProtocolSettingsDeposit);
+        }

@@ -1,0 +1,1 @@
+require(totalEthBalance > 0, "Cannot calculate rETH token amount while total network balance is zero")

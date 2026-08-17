@@ -1,0 +1,1 @@
+baseBondArray.length - 1

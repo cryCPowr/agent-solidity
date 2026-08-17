@@ -1,0 +1,1 @@
+function proposalKickMulti(address[] calldata _memberAddresses) external;

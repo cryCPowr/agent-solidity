@@ -1,0 +1,1 @@
+uintStorage[_key].sub(_amount)

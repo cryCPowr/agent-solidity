@@ -1,0 +1,1 @@
+_setSettingUint("network.consensus.threshold", 0.51 ether)

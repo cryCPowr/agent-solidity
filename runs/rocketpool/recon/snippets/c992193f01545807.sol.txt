@@ -1,0 +1,1 @@
+abi.encodePacked(contractCode, abi.encode(_nodeAddress, rocketStorage))

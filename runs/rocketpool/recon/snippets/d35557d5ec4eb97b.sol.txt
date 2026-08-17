@@ -1,0 +1,17 @@
+function notifyExit(uint32 _validatorId, uint64 _withdrawableEpoch, uint64 _recentEpoch) override external onlyRocketMegapoolManager {
+        ValidatorInfo memory validator = validators[_validatorId];
+        // Check required state
+        require(validator.staked || validator.dissolved, "Not staking or dissolved");
+        require(!validator.exiting, "Already notified");
+        require(!validator.exited, "Already exited");
+        // Update validator state to exiting
+        validator.exiting = true;
+        // Setup distribution lock
+        unchecked { // Infeasible overflow
+            numExitingValidators += 1;
+        }
+        // If validator was locked, notifying exit unlocks it
+        if (validator.locked) {
+            validator.locked = false;
+            validator.lockedTim
+/* … truncated … */

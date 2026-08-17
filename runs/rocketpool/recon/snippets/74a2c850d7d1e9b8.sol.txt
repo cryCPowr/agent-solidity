@@ -1,0 +1,1 @@
+require(rocketDAOProtocolSettingsDeposit.getAssignDepositsEnabled(), "Deposit assignments are disabled")

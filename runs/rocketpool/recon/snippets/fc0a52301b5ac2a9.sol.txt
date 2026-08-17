@@ -1,0 +1,1 @@
+rocketMinipoolBase != address(0)

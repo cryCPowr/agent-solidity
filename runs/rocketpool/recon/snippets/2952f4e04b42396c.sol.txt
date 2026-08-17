@@ -1,0 +1,1 @@
+require(_validatorProof.validator.activationEligibilityEpoch == farFutureEpoch, "Validator is activating")

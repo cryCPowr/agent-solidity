@@ -1,0 +1,9 @@
+function _setNodeCommissionShare(uint256 _value) internal {
+        // Make setting change
+        _setSettingUint("network.node.commission.share", _value);
+        // Sanity check value
+        require(getRethCommission() <= 1 ether, "rETH Commission must be <= 100%");
+        // Notify change of UARS parameter for snapshot
+        RocketNetworkRevenuesInterface rocketNetworkRevenues = RocketNetworkRevenuesInterface(getContractAddress("rocketNetworkRevenues"));
+        rocketNetworkRevenues.setNodeShare(getEffectiveNodeShare());
+    }

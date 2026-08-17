@@ -1,0 +1,1 @@
+depositSizes[i] == 16 ether

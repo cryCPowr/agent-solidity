@@ -1,0 +1,1 @@
+require(block.timestamp > statusTime + scrubPeriod, "Not enough time has passed to promote")

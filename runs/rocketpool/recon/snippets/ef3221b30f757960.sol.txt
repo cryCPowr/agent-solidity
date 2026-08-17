@@ -1,0 +1,3 @@
+if (useLatestDelegate || getDelegateExpired()) {
+            return getContractAddress("rocketMegapoolDelegate");
+        }

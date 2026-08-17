@@ -1,0 +1,10 @@
+function execute(uint256 _proposalID) override external onlyLatestContract("rocketDAOProtocolProposal", address(this)) {
+        // Firstly make sure this proposal has passed
+        require(getState(_proposalID) == ProposalState.Succeeded, "Proposal has not succeeded, has expired or has already been executed");
+        // Set as executed now before running payload
+        setBool(keccak256(abi.encodePacked(daoProposalNameSpace, "executed", _proposalID)), true);
+        // Get the proposals contract
+        address daoProtocolProposalsAddress = getContractAddress("rocketDAOProtocolProposals");
+        // Ok all good, lets run the payload on the dao contract that the proposal relates too, it should execute one of the methods on this contract
+        (bool success, bytes memory response) = d
+/* … truncated … */

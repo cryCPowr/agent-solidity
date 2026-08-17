@@ -1,0 +1,5 @@
+function proposalSecurityKick(address _memberAddress) override external onlyExecutingContracts() {
+        RocketDAOSecurityProposalsInterface rocketDAOSecurityProposals = RocketDAOSecurityProposalsInterface(getContractAddress("rocketDAOSecurityProposals"));
+        rocketDAOSecurityProposals.proposalKick(_memberAddress);
+        emit ProposalSecurityKick(_memberAddress, block.timestamp);
+    }

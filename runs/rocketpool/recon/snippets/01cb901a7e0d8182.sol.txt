@@ -1,0 +1,1 @@
+require(signerToNode[_signer] == address(0), "Signer address already in use")

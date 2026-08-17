@@ -1,0 +1,4 @@
+function latestValue(bytes32 _key) external view returns (uint224) {
+        uint256 len = length(_key);
+        return len == 0 ? 0 : _valueAt(_key, len - 1);
+    }

@@ -1,0 +1,3 @@
+function getClaimIntervalExecutionAddress(uint256 _interval) override external view returns (address) {
+        return getAddress(keccak256(abi.encodePacked("rewards.pool.interval.execution.address", _interval)));
+    }

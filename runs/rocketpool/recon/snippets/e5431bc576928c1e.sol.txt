@@ -1,0 +1,1 @@
+function push(bytes32 _key, uint192 _value) external;

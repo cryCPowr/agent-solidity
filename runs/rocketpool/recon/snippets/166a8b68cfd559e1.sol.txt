@@ -1,0 +1,4 @@
+function unstakeRPLFor(address _nodeAddress, uint256 _amount) override public onlyRegisteredNode(_nodeAddress) {
+        require(_callerAllowedFor(_nodeAddress), "Not allowed to unstake for");
+        _unstakeRPLFor(_nodeAddress, _amount);
+    }

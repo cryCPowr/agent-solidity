@@ -1,0 +1,1 @@
+_valueAt(_key, pos - 1)

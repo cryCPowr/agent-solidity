@@ -1,0 +1,9 @@
+if (ownerCalling) {
+                // Finalise the minipool if the owner is calling
+                _finalise();
+            } else {
+                // Require user wait period to pass before allowing user to distribute
+                require(userDistributeAllowed(), "Only owner can distribute right now");
+                // Mark this minipool as having been distributed by a user
+                userDistributed = true;
+            }

@@ -1,0 +1,5 @@
+function dequeueMinipoolByDepositLegacy(MinipoolDeposit _depositType) override external onlyLatestContract("rocketMinipoolQueue", address(this)) onlyLatestContract("rocketDepositPool", msg.sender) returns (address minipoolAddress) {
+        if (_depositType == MinipoolDeposit.Half) { return dequeueMinipool(queueKeyHalf); }
+        if (_depositType == MinipoolDeposit.Full) { return dequeueMinipool(queueKeyFull); }
+        require(false, "No minipools are available");
+    }

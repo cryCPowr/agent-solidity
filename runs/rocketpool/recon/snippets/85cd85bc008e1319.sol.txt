@@ -1,0 +1,1 @@
+require(rplStake - lockedRPL >= _amount, "Not enough staked RPL")

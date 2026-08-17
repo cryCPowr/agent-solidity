@@ -1,0 +1,1 @@
+function getSubmissionFromNodeExists(address _trustedNodeAddress, RewardSubmission calldata _submission) external view returns (bool);

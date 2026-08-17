@@ -1,0 +1,1 @@
+rocketNodeStakingInterface.burnRPL(_from, _amount)

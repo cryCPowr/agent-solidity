@@ -1,0 +1,1 @@
+function getLastBondReductionTime(address _minipoolAddress) external view returns (uint256);

@@ -1,0 +1,3 @@
+function getUint(bytes32 _key) override external view returns (uint256 r) {
+        return uintStorage[_key];
+    }

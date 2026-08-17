@@ -1,0 +1,1 @@
+require(!finalised, "Minipool has already been finalised")

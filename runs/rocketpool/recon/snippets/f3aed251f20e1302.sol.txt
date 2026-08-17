@@ -1,0 +1,12 @@
+for (uint256 i = 0; i < _leaves.length; ++i) {
+            // The leaf nodes are a 2d array of voting power in the form of [delegateIndex][nodeIndex] where both
+            // arrays are padded out to the closest power of 2 with zeros
+            uint256 nodeIndex = (_offset + i) % nodeCount;
+            uint256 delegateIndex = (_offset + i) / nodeCount;
+            // Determine the correct voting power for this leaf (fill with zero if > node count)
+            uint256 actual = 0;
+            if (nodeIndex < _nodeCount && delegateIndex < _nodeCount) {
+                // Calculate the node and the delegate referred to by this leaf node
+                address nodeAddress = rocketNodeManager.getNodeAt(nodeIndex);
+                address actualDelegate = rocketNetworkVoting.getDelegate(nodeAd
+/* … truncated … */

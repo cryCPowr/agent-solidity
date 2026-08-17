@@ -1,0 +1,5 @@
+function proposalSecurityKickMulti(address[] calldata _memberAddresses) override external onlyExecutingContracts() {
+        RocketDAOSecurityProposalsInterface rocketDAOSecurityProposals = RocketDAOSecurityProposalsInterface(getContractAddress("rocketDAOSecurityProposals"));
+        rocketDAOSecurityProposals.proposalKickMulti(_memberAddresses);
+        emit ProposalSecurityKickMulti(_memberAddresses, block.timestamp);
+    }

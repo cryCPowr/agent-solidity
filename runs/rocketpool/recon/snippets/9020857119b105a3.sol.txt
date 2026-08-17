@@ -1,0 +1,12 @@
+function withdrawEth(address _nodeAddress, uint256 _amount) external onlyLatestContract("rocketNodeDeposit", address(this)) onlyRegisteredNode(_nodeAddress) {
+        // Check valid caller
+        address withdrawalAddress = rocketStorage.getNodeWithdrawalAddress(_nodeAddress);
+        require(msg.sender == withdrawalAddress, "Only withdrawal address can withdraw ETH");
+        // Check balance and update
+        uint256 balance = getNodeEthBalance(_nodeAddress);
+        require(balance >= _amount, "Insufficient balance");
+        setUint(keccak256(abi.encodePacked("node.eth.balance", _nodeAddress)), balance - _amount);
+        // Withdraw the funds
+        RocketVaultInterface rocketVault = RocketVaultInterface(getContractAddress("rocketVault"));
+        rocketVault.withdrawEther(_amount)
+/* … truncated … */

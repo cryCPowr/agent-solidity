@@ -1,0 +1,1 @@
+abi.encodePacked("minipool.bond.reduction.time", _minipoolAddress)

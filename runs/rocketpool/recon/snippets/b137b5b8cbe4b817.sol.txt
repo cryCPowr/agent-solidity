@@ -1,0 +1,1 @@
+RocketNetworkVotingInterface(getContractAddress("rocketNetworkVoting"))

@@ -1,0 +1,3 @@
+if (_numValidators - 1 < baseBondArray.length) {
+            return baseBondArray[_numValidators - 1];
+        }

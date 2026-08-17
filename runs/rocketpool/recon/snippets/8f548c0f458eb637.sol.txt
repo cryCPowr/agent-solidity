@@ -1,0 +1,1 @@
+function setRPLLockingAllowed(address _nodeAddress, bool _allowed) external;

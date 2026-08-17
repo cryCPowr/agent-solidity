@@ -1,0 +1,1 @@
+function getDelegate(address _nodeAddress, uint32 _block) external view returns (address);

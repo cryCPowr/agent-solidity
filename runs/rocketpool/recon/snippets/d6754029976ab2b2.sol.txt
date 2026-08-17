@@ -1,0 +1,1 @@
+emit ActionJoined(msg.sender, block.timestamp)

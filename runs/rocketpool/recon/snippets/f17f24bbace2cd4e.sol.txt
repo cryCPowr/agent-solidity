@@ -1,0 +1,1 @@
+daoSecurity.getMemberQuorumVotesRequired()

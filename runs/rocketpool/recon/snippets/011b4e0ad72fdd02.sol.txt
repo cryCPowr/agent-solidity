@@ -1,0 +1,10 @@
+function submitRewardSnapshot(RewardSubmission calldata _submission) override external onlyLatestContract("rocketRewardsPool", address(this)) onlyTrustedNode(msg.sender) {
+        // Get contracts
+        RocketDAOProtocolSettingsNetworkInterface rocketDAOProtocolSettingsNetwork = RocketDAOProtocolSettingsNetworkInterface(getContractAddress("rocketDAOProtocolSettingsNetwork"));
+        // Check submission is currently enabled
+        require(rocketDAOProtocolSettingsNetwork.getSubmitRewardsEnabled(), "Submitting rewards is currently disabled");
+        // Validate inputs
+        uint256 rewardIndex = getRewardIndex();
+        require(_submission.rewardIndex <= rewardIndex, "Can only submit snapshot for periods up to next");
+        require(_submission.intervalsPassed > 0, "Invalid number o
+/* … truncated … */

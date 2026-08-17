@@ -1,0 +1,5 @@
+interface RocketNodeDistributorInterface {
+    function getNodeShare() external view returns (uint256);
+    function getUserShare() external view returns (uint256);
+    function distribute() external;
+}

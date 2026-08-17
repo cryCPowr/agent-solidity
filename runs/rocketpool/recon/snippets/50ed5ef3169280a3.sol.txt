@@ -1,0 +1,13 @@
+function propose(string memory _proposalMessage, bytes calldata _payload, uint32 _blockNumber, Types.Node[] calldata _treeNodes) override external onlyRegisteredNode(msg.sender) onlyLatestContract("rocketDAOProtocolProposal", address(this)) returns (uint256) {
+        // Check on-chain governance has been enabled
+        {
+            uint256 enabledBlock = getUint(keccak256(abi.encodePacked("protocol.dao.enabled.block")));
+            require(enabledBlock != 0 && _blockNumber >= enabledBlock, "DAO has not been enabled");
+        }
+        // Calculate total voting power by summing the pollard
+        uint256 totalVotingPower = 0;
+        uint256 treeNodesLength = _treeNodes.length;
+        for (uint256 i = 0; i < treeNodesLength; ++i) {
+            totalVotingPower += _treeNodes[i].sum;
+ 
+/* … truncated … */

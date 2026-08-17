@@ -1,0 +1,3 @@
+if (assignments > maxAssignments) {
+            assignments = maxAssignments;
+        }

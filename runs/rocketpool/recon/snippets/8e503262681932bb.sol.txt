@@ -1,0 +1,3 @@
+if (nodeShare > 0) {
+                nodeBond -= nodeShare;
+            }

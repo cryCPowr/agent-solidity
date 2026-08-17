@@ -1,0 +1,1 @@
+emit NodeTimezoneLocationSet(msg.sender, block.timestamp)

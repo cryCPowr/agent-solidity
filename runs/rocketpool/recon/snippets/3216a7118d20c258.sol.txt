@@ -1,0 +1,6 @@
+receive() payable external {
+        // Transfer incoming ETH directly to the vault
+        RocketVaultInterface rocketVault = RocketVaultInterface(getContractAddress("rocketVault"));
+        rocketVault.depositEther{value: msg.value}();
+        // Note: There is currently no way to spend this ETH
+    }

@@ -1,0 +1,8 @@
+function _slotToFork(uint64 _slot) internal view returns (Fork) {
+        if (_slot >= slotElectra) return Fork.ELECTRA;
+        if (_slot >= slotDeneb) return Fork.DENEB;
+        if (_slot >= slotCapella) return Fork.CAPELLA;
+        if (_slot >= slotBellatrix) return Fork.BELLATRIX;
+        if (_slot >= slotAltair) return Fork.ALTAIR;
+        return Fork.PHASE_0;
+    }

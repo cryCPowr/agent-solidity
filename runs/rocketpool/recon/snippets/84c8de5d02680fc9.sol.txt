@@ -1,0 +1,3 @@
+if (calcBase * submissionCount / rocketDAONodeTrusted.getMemberCount() >= rocketDAOProtocolSettingsNetwork.getNodeConsensusThreshold()) {
+            _executeRewardSnapshot(_submission);
+        }

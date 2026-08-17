@@ -1,0 +1,11 @@
+if(settingKey == keccak256(bytes("rpl.inflation.interval.rate"))) {
+                // No greater than 1e16 more than the previous value. (RPIP-33)
+                require(_value <= getSettingUint("rpl.inflation.interval.rate") + 0.01 ether, "No greater than 1e16 more than the previous value");
+                require(_value >= 1, "Inflation can't be negative");
+                // RPL contract address
+                address rplContractAddress = getContractAddressUnsafe("rocketTokenRPL");
+                if(rplContractAddress != address(0x0)) {
+                    // Force inflation at old rate before updating inflation rate
+                    RocketTokenRPLInterface rplContract = RocketTokenRPLInterface(rplContractAddress);
+                    // Mint any new tokens from the RPL inflatio
+/* … truncated … */

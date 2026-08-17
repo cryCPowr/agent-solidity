@@ -1,0 +1,9 @@
+function getLotClaimedRPLAmount(uint256 _index) override public view returns (uint256) {
+        uint256 claimed = calcBase.mul(getLotTotalBidAmount(_index)).div(getLotCurrentPrice(_index));
+        uint256 total = getLotTotalRPLAmount(_index);
+        // Due to integer arithmetic, the calculated claimed amount may be slightly greater than the total
+        if (claimed > total) {
+            return total;
+        }
+        return claimed;
+    }

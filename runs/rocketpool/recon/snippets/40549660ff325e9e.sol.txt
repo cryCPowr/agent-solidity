@@ -1,0 +1,1 @@
+IERC20Burnable(address(rplToken)).burn(_amount)

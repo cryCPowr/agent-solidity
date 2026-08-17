@@ -1,0 +1,1 @@
+function setString(bytes32 _key, string memory _value) internal { rocketStorage.setString(_key, _value); }

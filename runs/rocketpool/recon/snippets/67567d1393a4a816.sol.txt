@@ -1,0 +1,1 @@
+if (nNodeDemandSign) { return maxFee; }

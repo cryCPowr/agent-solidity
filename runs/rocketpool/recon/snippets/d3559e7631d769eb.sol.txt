@@ -1,0 +1,1 @@
+daoProposal.add(msg.sender, "rocketDAONodeTrustedProposals", _proposalMessage, block.timestamp.add(rocketDAONodeTrustedSettingsProposals.getVoteDelayTime()), rocketDAONodeTrustedSettingsProposals.getVoteTime(), rocketDAONodeTrustedSettingsProposals.getExecuteTime(), daoNodeTrusted.getMemberQuorumVotesRequired(), _payload)

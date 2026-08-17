@@ -1,0 +1,4 @@
+function getValidatorPubkey(uint32 _validatorId) override external view returns (bytes memory) {
+        require(_validatorId < numValidators, "Validator does not exist");
+        return pubkeys[_validatorId];
+    }

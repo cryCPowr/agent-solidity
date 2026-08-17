@@ -1,0 +1,1 @@
+require(rootFromWitness.hash == _expected.hash, "Invalid hash")

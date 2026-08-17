@@ -1,0 +1,11 @@
+if(!getBool(keccak256(abi.encodePacked(settingNameSpace, "deployed")))) {
+            // Apply settings
+            setSettingBool("minipool.submit.withdrawable.enabled", false);
+            setSettingBool("minipool.bond.reduction.enabled", false);
+            setSettingUint("minipool.launch.timeout", 72 hours);
+            setSettingUint("minipool.maximum.count", 14);
+            setSettingUint("minipool.user.distribute.window.length", 2 days);
+            setSettingUint("minipool.maximum.penalty.count", 2500);                 // Max number of penalties oDAO can apply in rolling 1 week window (RPIP-52)
+            // Settings initialised
+            setBool(keccak256(abi.encodePacked(settingNameSpace, "deployed")), true);
+        }

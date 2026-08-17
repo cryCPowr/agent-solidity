@@ -1,0 +1,1 @@
+SSZ.concat(path, _pathBeaconStateToPastBlockRoot(_slot, _proof.withdrawalSlot))

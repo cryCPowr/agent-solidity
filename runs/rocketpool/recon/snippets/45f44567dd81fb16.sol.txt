@@ -1,0 +1,3 @@
+function getProposer(uint256 _proposalID) override public view returns (address) {
+        return getAddress(keccak256(abi.encodePacked(daoProposalNameSpace, "proposer", _proposalID))); 
+    }

@@ -1,0 +1,1 @@
+function getLockedValidatorCount() external view returns (uint32);

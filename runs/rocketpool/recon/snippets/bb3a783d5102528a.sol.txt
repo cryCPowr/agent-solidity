@@ -1,0 +1,1 @@
+increaseLotAddressBidAmount(_lotIndex, msg.sender, bidAmount)

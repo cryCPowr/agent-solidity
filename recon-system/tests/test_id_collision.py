@@ -117,10 +117,15 @@ def _node(node_id: str, label: str) -> GraphNode:
     return GraphNode(id=node_id, kind="dummy", label=label, properties={})
 
 
-def _edge(edge_id: str, target: str) -> GraphEdge:
+def _edge(edge_id: str, target: str, *, properties=None, fact_ids=None) -> GraphEdge:
     return GraphEdge(
-        id=edge_id, type="DUMMY", source="node:aaaa", target=target,
-        status="observed", properties={}, fact_ids=[],
+        id=edge_id,
+        type="DUMMY",
+        source="node:aaaa",
+        target=target,
+        status="observed",
+        properties=properties or {},
+        fact_ids=fact_ids or [],
     )
 
 
@@ -142,19 +147,56 @@ def test_add_node_reinsert_of_identical_payload_is_idempotent(tmp_path):
     assert len(ctx.graph_nodes) == 1
 
 
-def test_add_edge_collision_with_different_payload_raises(tmp_path):
+def test_add_edge_collision_with_different_payload_is_disambiguated_not_dropped(tmp_path):
     ctx = _ctx(tmp_path)
-    ctx.add_edge(_edge("edge:deadbeefdeadbeef", "node:bbbb"))
-    with pytest.raises(IdCollisionError):
-        ctx.add_edge(_edge("edge:deadbeefdeadbeef", "node:cccc"))
-    assert ctx.graph_edges["edge:deadbeefdeadbeef"].target == "node:bbbb"
+    first = ctx.add_edge(_edge("edge:deadbeefdeadbeef", "node:bbbb"))
+    second = ctx.add_edge(_edge("edge:deadbeefdeadbeef", "node:cccc"))
+
+    assert first.id == "edge:deadbeefdeadbeef"
+    assert second.id != first.id, "distinct colliding edges must get unique stored ids"
+    assert len(ctx.graph_edges) == 2, "both distinct edges must be retained"
+    assert {e.target for e in ctx.graph_edges.values()} == {"node:bbbb", "node:cccc"}
+    assert any("graph edge id collision disambiguated" == w["message"] for w in ctx.warnings), (
+        "edge collisions must be surfaced explicitly, not silently ignored"
+    )
 
 
 def test_add_edge_reinsert_of_identical_payload_is_idempotent(tmp_path):
     ctx = _ctx(tmp_path)
-    ctx.add_edge(_edge("edge:cafecafecafecafe", "node:bbbb"))
-    ctx.add_edge(_edge("edge:cafecafecafecafe", "node:bbbb"))
+    first = ctx.add_edge(_edge("edge:cafecafecafecafe", "node:bbbb", properties={"x": 1}, fact_ids=["fact:1"]))
+    second = ctx.add_edge(_edge("edge:cafecafecafecafe", "node:bbbb", properties={"x": 1}, fact_ids=["fact:1"]))
     assert len(ctx.graph_edges) == 1
+    assert second.id == first.id
+
+
+def test_add_edge_hash_collision_keeps_semantic_dedup_for_identical_edge(tmp_path):
+    ctx = _ctx(tmp_path)
+    first = ctx.add_edge(_edge("edge:feedfeedfeedfeed", "node:bbbb", properties={"call_type": "internal"}, fact_ids=["fact:abc"]))
+    second = ctx.add_edge(_edge("edge:feedfeedfeedfeed-2", "node:bbbb", properties={"call_type": "internal"}, fact_ids=["fact:abc"]))
+
+    assert len(ctx.graph_edges) == 1, "same semantic edge must still dedupe even if proposed ids differ"
+    assert second.id == first.id
+
+
+def test_add_edge_hash_collision_with_two_distinct_edges_that_share_same_id(tmp_path):
+    """Regression guard for recon/context.py edge-id collisions.
+
+    Simulates two distinct graph edges that arrive at add_edge with the same
+    truncated hashed id. This used to raise and abort the run; the fix must
+    retain both edges under globally unique stored ids while keeping semantic
+    deduplication for true duplicates.
+    """
+    ctx = _ctx(tmp_path)
+    first = ctx.add_edge(_edge("edge:0123456789abcdef", "node:bbbb", fact_ids=["fact:read"]))
+    second = ctx.add_edge(_edge("edge:0123456789abcdef", "node:cccc", fact_ids=["fact:write"]))
+
+    assert first.id == "edge:0123456789abcdef"
+    assert second.id == "edge:0123456789abcdef-2"
+    assert ctx.graph_edges[first.id].target == "node:bbbb"
+    assert ctx.graph_edges[second.id].target == "node:cccc"
+    assert len(ctx.graph_edges) == 2
+    assert len(ctx.warnings) == 1
+    assert ctx.warnings[0]["message"] == "graph edge id collision disambiguated"
 
 
 def test_node_collision_is_never_silently_swallowed_no_matter_the_order(tmp_path):

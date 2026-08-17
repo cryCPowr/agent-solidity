@@ -1,0 +1,3 @@
+function deleteBool(bytes32 _key) onlyLatestRocketNetworkContract override external {
+        delete booleanStorage[_key];
+    }

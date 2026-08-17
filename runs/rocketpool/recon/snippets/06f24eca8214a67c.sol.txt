@@ -1,0 +1,1 @@
+function getMaximumDepositPoolSize() external view returns (uint256);

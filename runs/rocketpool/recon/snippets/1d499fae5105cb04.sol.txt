@@ -1,0 +1,1 @@
+event MultiDepositReceived(address indexed from, uint256 numberOfValidators, uint256 totalBond, uint256 time);

@@ -1,0 +1,3 @@
+if (_count > maxPossible) {
+            _count = maxPossible;
+        }

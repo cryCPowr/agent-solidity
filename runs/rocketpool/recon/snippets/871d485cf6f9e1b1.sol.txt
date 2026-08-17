@@ -1,0 +1,4 @@
+for (uint256 i = 0; i < count; i++) {
+            RocketMinipoolInterface minipool = RocketMinipoolInterface(dequeueMinipool(queueKeyVariable));
+            minipoolAddresses[i] = address(minipool);
+        }

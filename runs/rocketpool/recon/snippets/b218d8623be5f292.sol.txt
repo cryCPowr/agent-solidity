@@ -1,0 +1,1 @@
+actual.sum == expected.sum && actual.hash == expected.hash

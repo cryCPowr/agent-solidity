@@ -1,0 +1,12 @@
+function getRethValue(uint256 _ethAmount) override public view returns (uint256) {
+        // Get network balances
+        RocketNetworkBalancesInterface rocketNetworkBalances = RocketNetworkBalancesInterface(getContractAddress("rocketNetworkBalances"));
+        uint256 totalEthBalance = rocketNetworkBalances.getTotalETHBalance();
+        uint256 rethSupply = rocketNetworkBalances.getTotalRETHSupply();
+        // Use 1:1 ratio if no rETH is minted
+        if (rethSupply == 0) { return _ethAmount; }
+        // Check network ETH balance
+        require(totalEthBalance > 0, "Cannot calculate rETH token amount while total network balance is zero");
+        // Calculate and return
+        return _ethAmount.mul(rethSupply).div(totalEthBalance);
+    }

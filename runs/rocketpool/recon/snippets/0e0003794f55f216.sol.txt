@@ -1,0 +1,1 @@
+_allowances[sender][_msgSender()].sub(amount, "ERC20: transfer amount exceeds allowance")

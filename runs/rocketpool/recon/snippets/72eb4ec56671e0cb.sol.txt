@@ -1,0 +1,1 @@
+rocketNodeStaking.getNodeETHCollateralisationRatio(nodeAddress)

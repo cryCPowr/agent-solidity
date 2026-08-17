@@ -1,0 +1,8 @@
+if (expiry == 0 || block.timestamp < expiry) {
+                // This delegate is still "in-use" so set the expiry block into the future
+                delegate.deprecate();
+                deprecatedOne = true;
+            } else if (!deprecatedOne) {
+                // This delegate has already expired so no longer considered "in-use", advance the head
+                head += 1;
+            }

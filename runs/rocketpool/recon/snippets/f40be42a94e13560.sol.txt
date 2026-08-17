@@ -1,0 +1,3 @@
+function deleteUint(bytes32 _key) external onlyGuardian {
+        rocketStorage.deleteUint(_key);
+    }

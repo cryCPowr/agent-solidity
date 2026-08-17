@@ -1,0 +1,12 @@
+function _assignByDeposit() internal {
+        // Get contracts
+        RocketDAOProtocolSettingsDepositInterface rocketDAOProtocolSettingsDeposit = RocketDAOProtocolSettingsDepositInterface(getContractAddress("rocketDAOProtocolSettingsDeposit"));
+        // Check if assigning deposits is enabled
+        if (!rocketDAOProtocolSettingsDeposit.getAssignDepositsEnabled()) {
+            return;
+        }
+        // Continue processing legacy minipool queue until empty
+        AddressQueueStorageInterface addressQueueStorage = AddressQueueStorageInterface(getContractAddress("addressQueueStorage"));
+        if (addressQueueStorage.getLength(queueKeyMinipoolVariable) > 0) {
+            RocketMinipoolQueueInterface rocketMinipoolQueue = RocketMinipoolQueueInterface(getContractAddress("rocketMinipo
+/* … truncated … */

@@ -1,0 +1,13 @@
+function _vote(address _nodeOperator, uint256 _votes, uint256 _proposalID, VoteDirection _voteDirection, bool _phase1) internal {
+        // Check for non-zero voting power
+        require(_votes > 0, "Cannot vote with 0 voting power");
+        // Has this node already voted on this proposal?
+        require(!getReceiptHasVoted(_proposalID, _nodeOperator), "Node operator has already voted on proposal");
+        // Add votes to proposal
+        if (_voteDirection == VoteDirection.For) {
+            addUint(keccak256(abi.encodePacked(daoProposalNameSpace, "votes.for", _proposalID)), _votes);
+        } else if(_voteDirection == VoteDirection.Abstain) {
+            addUint(keccak256(abi.encodePacked(daoProposalNameSpace, "votes.abstained", _proposalID)), _votes);
+        } else {
+            i
+/* … truncated … */

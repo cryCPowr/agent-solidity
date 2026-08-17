@@ -1,0 +1,10 @@
+if (_confirm) {
+            // Delete any existing pending update
+            deleteAddress(keccak256(abi.encodePacked("node.pending.rpl.withdrawal.address", _nodeAddress)));
+            // Perform the update
+            updateRPLWithdrawalAddress(_nodeAddress, _newRPLWithdrawalAddress);
+        }
+        else {
+            // Set pending withdrawal address immediately
+            setAddress(keccak256(abi.encodePacked("node.pending.rpl.withdrawal.address", _nodeAddress)), _newRPLWithdrawalAddress);
+        }

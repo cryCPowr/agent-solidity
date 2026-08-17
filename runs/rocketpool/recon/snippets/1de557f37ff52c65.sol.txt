@@ -1,0 +1,1 @@
+function getQueueIndex() external view returns (uint256);

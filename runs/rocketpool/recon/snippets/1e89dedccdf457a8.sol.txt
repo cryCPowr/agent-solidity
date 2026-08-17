@@ -1,0 +1,1 @@
+rocketDAOProtocolSettings.setSettingAddressList(_settingPath, _value)

@@ -1,0 +1,1 @@
+require(rocketMegapoolProxy != address(0), "Invalid proxy")

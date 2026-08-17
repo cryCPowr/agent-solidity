@@ -1,0 +1,19 @@
+contract RocketAuctionManager is RocketBase, RocketAuctionManagerInterface {
+
+    // Libs
+    using SafeMath for uint;
+
+    // Events
+    event LotCreated(uint256 indexed lotIndex, address indexed by, uint256 rplAmount, uint256 time);
+    event BidPlaced(uint256 indexed lotIndex, address indexed by, uint256 bidAmount, uint256 time);
+    event BidClaimed(uint256 indexed lotIndex, address indexed by, uint256 bidAmount, uint256 rplAmount, uint256 time);
+    event RPLRecovered(uint256 indexed lotIndex, address indexed by, uint256 rplAmount, uint256 time);
+
+    // Construct
+    constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
+        version = 1;
+    }
+
+    // Get the total RPL balance of the contract
+    function getTotalRPLBalance() override public
+/* … truncated … */

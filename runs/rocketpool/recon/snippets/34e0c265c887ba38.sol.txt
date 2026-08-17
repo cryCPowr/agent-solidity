@@ -1,0 +1,1 @@
+getSettingUint("minipool.promotion.scrub.period")

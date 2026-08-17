@@ -1,0 +1,10 @@
+function _memberAdd(address _nodeAddress, uint256 _rplBondAmountPaid) private onlyRegisteredNode(_nodeAddress) {
+        // Load contracts
+        RocketDAONodeTrustedInterface rocketDAONode = RocketDAONodeTrustedInterface(getContractAddress("rocketDAONodeTrusted"));
+        AddressSetStorageInterface addressSetStorage = AddressSetStorageInterface(getContractAddress("addressSetStorage"));
+        // Check current node status
+        require(rocketDAONode.getMemberIsValid(_nodeAddress) != true, "This node is already part of the trusted node DAO");
+        // Flag them as a member now that they have accepted the invitation and record the size of the bond they paid
+        setBool(keccak256(abi.encodePacked(daoNameSpace, "member", _nodeAddress)), true);
+        // Add the bond amount they hav
+/* … truncated … */

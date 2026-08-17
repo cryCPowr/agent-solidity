@@ -1,0 +1,1 @@
+function submitBalances(uint256 _block, uint256 _slotTimestamp, uint256 _total, uint256 _staking, uint256 _rethSupply) external;

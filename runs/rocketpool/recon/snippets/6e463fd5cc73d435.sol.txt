@@ -1,0 +1,1 @@
+getNodeShare() + getNodeShareSecurityCouncilAdder()

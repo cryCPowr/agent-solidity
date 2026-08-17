@@ -1,0 +1,1 @@
+event RPLTreasuryContractUpdated(string indexed contractName, address indexed recipient, uint256 amountPerPeriod, uint256 periodLength, uint256 numPeriods);

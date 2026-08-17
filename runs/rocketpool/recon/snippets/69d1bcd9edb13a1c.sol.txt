@@ -1,0 +1,1 @@
+RPLFixedSupplyBurn(msg.sender, _amount, block.timestamp)

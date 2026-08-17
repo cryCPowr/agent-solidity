@@ -1,0 +1,1 @@
+currentRunningTotal + SafeCast.toUint192(_amount)

@@ -1,0 +1,3 @@
+function getCreateLotEnabled() override external view returns (bool) {
+        return getSettingBool("auction.lot.create.enabled");
+    }

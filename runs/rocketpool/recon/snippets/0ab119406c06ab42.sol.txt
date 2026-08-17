@@ -1,0 +1,7 @@
+if (express) {
+                    expressQueueLength -= 1;
+                    expressHeadMoved = true;
+                } else {
+                    standardQueueLength -= 1;
+                    standardHeadMoved = true;
+                }

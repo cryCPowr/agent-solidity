@@ -1,0 +1,1 @@
+SignedMath.abs(value)

@@ -1,0 +1,1 @@
+require(status == MinipoolStatus.Initialised, "The node deposit can only be assigned while initialised")

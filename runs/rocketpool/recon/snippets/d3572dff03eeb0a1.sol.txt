@@ -1,0 +1,18 @@
+contract RocketNetworkFees is RocketBase, RocketNetworkFeesInterface {
+
+    // Libs
+    using SafeMath for uint;
+    using SafeCast for uint;
+
+    constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
+        version = 2;
+    }
+
+    /// @notice Returns the current RP network node demand in ETH
+    ///         Node demand is equal to deposit pool balance minus available minipool capacity
+    function getNodeDemand() override public view returns (int256) {
+        // Load contracts
+        RocketDepositPoolInterface rocketDepositPool = RocketDepositPoolInterface(getContractAddress("rocketDepositPool"));
+        RocketMinipoolQueueInterface rocketMinipoolQueue = RocketMinipoolQueueInterface(getContractAddress("rocketMinipoolQueue"));
+        // Calculat
+/* … truncated … */

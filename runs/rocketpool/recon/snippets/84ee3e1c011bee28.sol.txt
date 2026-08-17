@@ -1,0 +1,1 @@
+_voteDirection == VoteDirection.AgainstWithVeto

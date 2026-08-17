@@ -1,0 +1,1 @@
+daoProposal.getCreated(_proposalID)

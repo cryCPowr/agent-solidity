@@ -1,0 +1,5 @@
+if (block.timestamp < getEnd(_upgradeProposalID)) {
+            return UpgradeProposalState.Pending;
+        } else {
+            return UpgradeProposalState.Succeeded;
+        }

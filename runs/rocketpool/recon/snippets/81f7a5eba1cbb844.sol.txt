@@ -1,0 +1,6 @@
+LinkedListStorageInterface.DepositQueueValue({
+            receiver: msg.sender,                                        // Megapool address
+            validatorId: _validatorId,                                   // Incrementing id per validator in a megapool
+            suppliedValue: SafeCast.toUint32(_bondAmount / milliToWei),  // NO bond amount
+            requestedValue: SafeCast.toUint32(_amount / milliToWei)      // Amount being requested
+        })

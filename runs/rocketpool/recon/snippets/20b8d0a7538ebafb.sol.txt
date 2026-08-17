@@ -1,0 +1,1 @@
+require(_amount > 0, "No valid amount of tokens given to withdraw")

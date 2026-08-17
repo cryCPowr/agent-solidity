@@ -1,0 +1,1 @@
+rocketMinipoolManager.getMinipoolPubkey(address(this))

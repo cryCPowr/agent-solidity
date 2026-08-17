@@ -1,0 +1,12 @@
+if(settingKey == keccak256(bytes("members.leave.time"))) {
+                require(_value < 14 days, "Value must be < 14 days");
+            } else if(settingKey == keccak256(bytes("proposal.vote.time"))) {
+                require(_value >= 1 days, "Value must be >= 1 day");
+            } else if(settingKey == keccak256(bytes("proposal.execute.time"))) {
+                require(_value >= 1 days, "Value must be >= 1 day");
+            } else if(settingKey == keccak256(bytes("proposal.action.time"))) {
+                require(_value >= 1 days, "Value must be >= 1 day");
+            } else if(settingKey == keccak256(bytes("upgradeveto.quorum"))) {
+                require(_value >= 0.33 ether && _value <= 1 ether, "Quorum setting must be >= 33% & <= 100%");
+            } else if(settingKey == 
+/* … truncated … */

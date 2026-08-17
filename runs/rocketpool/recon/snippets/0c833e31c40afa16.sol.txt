@@ -1,0 +1,1 @@
+RocketMegapoolProxyInterface(proxy).initialise(_nodeAddress)

@@ -1,0 +1,1 @@
+getCancelled(_proposalID)

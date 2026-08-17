@@ -1,0 +1,1 @@
+require(block.number < getLotEndBlock(_lotIndex), "Lot bidding period has concluded")

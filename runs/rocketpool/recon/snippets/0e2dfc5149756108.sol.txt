@@ -1,0 +1,1 @@
+rocketMinipoolManager.setMinipoolPubkey(_validatorPubkey)

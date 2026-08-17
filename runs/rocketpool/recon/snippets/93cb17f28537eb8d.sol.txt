@@ -1,0 +1,3 @@
+function enqueueItem(bytes32 _namespace, DepositQueueValue memory _item) public override {
+        _enqueueItem(_namespace, _item);
+    }

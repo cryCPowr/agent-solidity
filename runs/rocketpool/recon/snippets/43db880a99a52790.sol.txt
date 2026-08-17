@@ -1,0 +1,1 @@
+abi.encodePacked(daoProposalNameSpace, "receipt.direction", _proposalID, _nodeAddress)

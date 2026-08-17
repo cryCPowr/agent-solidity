@@ -1,0 +1,11 @@
+function beginUserDistribute() override external onlyInitialised {
+        require(status == MinipoolStatus.Staking, "Minipool must be staking");
+        uint256 totalBalance = address(this).balance.sub(nodeRefundBalance);
+        require (totalBalance >= 8 ether, "Balance too low");
+        // Prevent calls resetting distribute time before window has passed
+        RocketDAOProtocolSettingsMinipoolInterface rocketDAOProtocolSettingsMinipool = RocketDAOProtocolSettingsMinipoolInterface(getContractAddress("rocketDAOProtocolSettingsMinipool"));
+        uint256 timeElapsed = block.timestamp.sub(userDistributeTime);
+        require(rocketDAOProtocolSettingsMinipool.hasUserDistributeWindowPassed(timeElapsed), "User distribution already pending");
+        // Store current time
+        userDistri
+/* … truncated … */

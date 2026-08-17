@@ -1,0 +1,1 @@
+rocketDAONodeTrustedSettingsMinipool.getScrubPeriod()

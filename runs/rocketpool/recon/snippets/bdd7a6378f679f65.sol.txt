@@ -1,0 +1,1 @@
+predictDeterministicAddress(master, salt, address(this))

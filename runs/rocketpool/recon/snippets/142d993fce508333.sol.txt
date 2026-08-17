@@ -1,0 +1,1 @@
+setSettingUint("proposal.execute.time", 4 weeks)

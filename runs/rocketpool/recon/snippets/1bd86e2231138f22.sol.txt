@@ -1,0 +1,4 @@
+function getPendingVoterShare() override public view returns (uint256) {
+        RocketVaultInterface rocketVault = RocketVaultInterface(getContractAddress("rocketVault"));
+        return rocketVault.balanceOf("rocketRewardsPool");
+    }

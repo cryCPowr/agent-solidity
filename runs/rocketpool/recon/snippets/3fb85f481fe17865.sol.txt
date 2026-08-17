@@ -1,0 +1,5 @@
+function _encode(Checkpoint224 memory _item) internal pure returns (bytes32) {
+        return bytes32(
+            uint256(_item._block) << 224 | uint256(_item._value)
+        );
+    }

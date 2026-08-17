@@ -1,0 +1,1 @@
+subUint(numeratorKey, _previousFee)

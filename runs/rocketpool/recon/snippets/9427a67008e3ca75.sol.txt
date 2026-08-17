@@ -1,0 +1,1 @@
+rocketDAONode.getMemberIsValid(msg.sender)

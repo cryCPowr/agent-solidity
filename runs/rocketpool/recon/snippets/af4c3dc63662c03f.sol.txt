@@ -1,0 +1,1 @@
+function reduceBond(uint256 _amount) external;

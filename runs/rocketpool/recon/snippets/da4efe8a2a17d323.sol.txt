@@ -1,0 +1,13 @@
+function getQueueTop() override external view returns (address receiver, bool assignmentPossible, uint256 headMovedBlock) {
+        // If legacy queue is still being processed, return null address
+        AddressQueueStorageInterface addressQueueStorage = AddressQueueStorageInterface(getContractAddress("addressQueueStorage"));
+        if (addressQueueStorage.getLength(queueKeyMinipoolVariable) > 0) {
+            return (address(0x0), false, 0);
+        }
+
+        // Get contracts
+        LinkedListStorageInterface linkedListStorage = LinkedListStorageInterface(getContractAddress("linkedListStorage"));
+        RocketDAOProtocolSettingsDepositInterface rocketDAOProtocolSettingsDeposit = RocketDAOProtocolSettingsDepositInterface(getContractAddress("rocketDAOProtocolSettingsDeposit"));
+
+      
+/* … truncated … */

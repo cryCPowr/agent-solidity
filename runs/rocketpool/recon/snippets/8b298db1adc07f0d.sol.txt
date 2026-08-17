@@ -1,0 +1,1 @@
+require(state == Types.ChallengeState.Challenged, "Invalid challenge state")

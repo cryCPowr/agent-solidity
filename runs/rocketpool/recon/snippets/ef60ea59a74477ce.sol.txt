@@ -1,0 +1,3 @@
+if (minipool.getStatus() == MinipoolStatus.Staking) {
+                    numerator = numerator + minipool.getNodeFee();
+                }

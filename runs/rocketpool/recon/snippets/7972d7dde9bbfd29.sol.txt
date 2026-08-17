@@ -1,0 +1,1 @@
+require(nodeBond + nodeQueuedBond >= newBondRequirement, "Bond requirement not met")

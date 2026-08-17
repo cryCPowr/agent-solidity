@@ -1,0 +1,3 @@
+if (_numValidators == 0) {
+            return 0;
+        }

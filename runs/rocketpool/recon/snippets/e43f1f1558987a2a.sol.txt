@@ -1,0 +1,12 @@
+if (rewardedIndices > 0) {
+            uint256 proposalBond = getUint(bytes32(proposalKey + proposalBondOffset));
+            // Calculate the number of challenges involved in defeating the proposal
+            uint256 nodeCount = getUint(bytes32(proposalKey + nodeCountOffset));
+            uint256 totalDefeatingIndices = getRoundsFromIndex(defeatIndex, nodeCount);
+            uint256 totalReward = proposalBond * rewardedIndices / totalDefeatingIndices;
+            uint256 burnAmount = totalReward * bondBurnPercent / calcBase;
+            // Unlock the reward amount from the proposer and transfer it to the challenger
+            address proposer = getAddress(bytes32(proposalKey + proposerOffset));
+            rocketNodeStaking.unlockRPL(proposer, totalReward);
+            rocketNodeStaking
+/* … truncated … */

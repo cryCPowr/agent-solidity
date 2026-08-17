@@ -1,0 +1,3 @@
+if (newBondRequirement < effectiveBond) {
+            _nodeShare = effectiveBond - newBondRequirement;
+        }

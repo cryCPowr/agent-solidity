@@ -1,0 +1,7 @@
+if (penaltyRate > 0) {
+            uint256 penaltyAmount = nodeShare.mul(penaltyRate).div(calcBase);
+            if (penaltyAmount > nodeShare) {
+                penaltyAmount = nodeShare;
+            }
+            nodeShare = nodeShare.sub(penaltyAmount);
+        }

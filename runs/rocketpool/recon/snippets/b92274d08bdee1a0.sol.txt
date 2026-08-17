@@ -1,0 +1,1 @@
+function getExcessBalance() external view returns (uint256);

@@ -1,0 +1,1 @@
+require(_value >= getSettingUint("user.distribute.delay"), "Value must be >= user.distribute.delay")

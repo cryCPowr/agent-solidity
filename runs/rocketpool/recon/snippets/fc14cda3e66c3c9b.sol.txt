@@ -1,0 +1,1 @@
+userPortion.mul(nodeFee).div(calcBase)

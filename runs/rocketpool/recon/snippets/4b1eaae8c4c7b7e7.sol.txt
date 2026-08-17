@@ -1,0 +1,3 @@
+try minipoolInterface.version() returns (uint8 tryVersion) {
+            version = tryVersion;
+        } catch (bytes memory /*lowLevelData*/) {}

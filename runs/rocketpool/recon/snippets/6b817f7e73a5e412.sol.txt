@@ -1,0 +1,4 @@
+function call(address _address, bytes calldata _payload) external payable {
+        (bool success,) = _address.call{value: msg.value}(_payload);
+        require(success, "Failed to transfer");
+    }

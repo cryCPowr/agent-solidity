@@ -1,0 +1,1 @@
+getVotingPowerAbstained(_proposalID)

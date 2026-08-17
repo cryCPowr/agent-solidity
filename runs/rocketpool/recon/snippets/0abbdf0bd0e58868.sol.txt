@@ -1,0 +1,1 @@
+function version() external view returns (uint8);

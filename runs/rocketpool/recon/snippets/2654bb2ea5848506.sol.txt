@@ -1,0 +1,3 @@
+function getMaximumEthPenalty() override external view returns (uint256) {
+        return getSettingUint("maximum.megapool.eth.penalty");
+    }

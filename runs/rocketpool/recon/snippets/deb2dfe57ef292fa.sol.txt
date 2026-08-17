@@ -1,0 +1,1 @@
+getBool(keccak256(abi.encodePacked("node.smoothing.pool.state", _nodeAddress)))

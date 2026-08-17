@@ -1,0 +1,1 @@
+defeatIndex == 0

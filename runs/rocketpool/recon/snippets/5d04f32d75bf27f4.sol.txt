@@ -1,0 +1,3 @@
+if (currentDepth < maxDepth) {
+                return maxDepth;
+            }

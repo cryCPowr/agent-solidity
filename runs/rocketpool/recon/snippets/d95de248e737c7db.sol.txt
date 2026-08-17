@@ -1,0 +1,17 @@
+function getPollardRootIndex(uint256 _index, uint256 _nodeCount) internal pure returns (uint256) {
+        require(_index > 1, "Invalid index");
+
+        uint256 indexDepth = Math.log2(_index, Math.Rounding.Down);
+        uint256 maxDepth = Math.log2(_nodeCount, Math.Rounding.Up);
+
+        if (indexDepth < maxDepth) {
+            // Index is leaf of phase 1 tree
+            uint256 remainder = indexDepth % depthPerRound;
+            require(remainder == 0, "Invalid index");
+            return _index / (2 ** depthPerRound);
+        } else if (indexDepth == maxDepth) {
+            // Index is a network tree leaf
+            uint256 remainder = indexDepth % depthPerRound;
+            return _index / (2 ** (remainder == 0 ? depthPerRound : remainder));
+        } else if (indexDepth < maxDepth 
+/* … truncated … */

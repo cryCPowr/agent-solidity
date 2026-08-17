@@ -1,0 +1,1 @@
+totalRewardsRPL + _submission.nodeRPL[i]

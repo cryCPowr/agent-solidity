@@ -1,0 +1,1 @@
+SSZ.toLittleEndian(uint256(_validator.activationEligibilityEpoch))

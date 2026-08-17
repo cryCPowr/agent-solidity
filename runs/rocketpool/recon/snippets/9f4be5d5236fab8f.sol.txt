@@ -1,0 +1,1 @@
+block.number.add(rocketAuctionSettings.getLotDuration())

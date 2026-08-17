@@ -1,0 +1,1 @@
+require(_block >= lastPricesBlock, "Network prices for a higher block are set")

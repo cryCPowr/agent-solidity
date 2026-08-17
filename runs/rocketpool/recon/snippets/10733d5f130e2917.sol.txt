@@ -1,0 +1,4 @@
+require(
+                legacyStakedRPL >= _amount + minimumLegacyStakedRPL,
+                "Insufficient legacy staked RPL"
+            )

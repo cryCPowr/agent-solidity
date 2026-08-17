@@ -1,0 +1,9 @@
+function actionRequestLeave() override external onlyLatestContract("rocketDAOSecurityActions", address(this)) {
+        // Load contracts
+        RocketDAOSecurityInterface rocketDAOSecurity = RocketDAOSecurityInterface(getContractAddress("rocketDAOSecurity"));
+        RocketDAOProtocolSettingsSecurityInterface rocketDAOProtocolSettingsSecurity = RocketDAOProtocolSettingsSecurityInterface(getContractAddress("rocketDAOProtocolSettingsSecurity"));
+        // Check they are currently a member
+        require(rocketDAOSecurity.getMemberIsValid(msg.sender), "Not a current member");
+        // Update the leave time to include the required notice period set by the protocol DAO
+        setUint(keccak256(abi.encodePacked(daoNameSpace, "member.executed.time", "leave", msg.sender)), block.timestamp +
+/* … truncated … */

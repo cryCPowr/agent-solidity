@@ -1,0 +1,10 @@
+for (uint256 i = _offset; i < max; ++i) {
+            // Get the minipool at index i
+            RocketMinipoolInterface minipool = RocketMinipoolInterface(addressSetStorage.getItem(minipoolKey, i));
+            // Get the minipool's status, and to array if it's in prelaunch
+            MinipoolStatus status = minipool.getStatus();
+            if (status == MinipoolStatus.Prelaunch) {
+                minipools[total] = address(minipool);
+                total++;
+            }
+        }

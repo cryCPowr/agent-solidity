@@ -1,0 +1,1 @@
+emit MaxPenaltyRateUpdated(_rate, block.timestamp)

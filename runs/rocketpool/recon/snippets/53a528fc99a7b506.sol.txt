@@ -1,0 +1,1 @@
+processMultiProofCalldata(proof, proofFlags, leaves) == root

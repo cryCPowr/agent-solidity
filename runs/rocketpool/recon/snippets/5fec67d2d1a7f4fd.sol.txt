@@ -1,0 +1,1 @@
+emit TokensBurned(msg.sender, _rethAmount, ethAmount, block.timestamp)

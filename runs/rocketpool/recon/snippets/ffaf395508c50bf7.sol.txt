@@ -1,0 +1,1 @@
+require(_value >= 1 ether && _value <= 5 ether, "Value must be >= 100% & <= 500%")

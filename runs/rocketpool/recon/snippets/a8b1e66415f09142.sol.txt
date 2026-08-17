@@ -1,0 +1,1 @@
+_validateBytes(deposit.validatorPubkey, pubKeyLength)

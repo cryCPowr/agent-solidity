@@ -1,0 +1,1 @@
+rocketStorage.addUint(_key, _amount)

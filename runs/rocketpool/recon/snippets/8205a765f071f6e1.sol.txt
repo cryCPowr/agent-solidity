@@ -1,0 +1,8 @@
+for (uint256 i = 0; i < contractNamesLength; ++i) {
+            // Payout contract
+            _payOutContract(_contractNames[i]);
+            // Withdraw to contract recipient
+            uint256 contractKey = uint256(keccak256(abi.encodePacked("dao.protocol.treasury.contract", _contractNames[i])));
+            address recipient = getAddress(bytes32(contractKey + recipientOffset));
+            withdrawBalance(recipient);
+        }

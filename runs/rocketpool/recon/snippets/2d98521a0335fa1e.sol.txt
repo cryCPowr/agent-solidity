@@ -1,0 +1,6 @@
+function _checkDepositsEnabled() internal {
+        // Get contracts
+        RocketDAOProtocolSettingsNodeInterface rocketDAOProtocolSettingsNode = RocketDAOProtocolSettingsNodeInterface(getContractAddress("rocketDAOProtocolSettingsNode"));
+        // Check node settings
+        require(rocketDAOProtocolSettingsNode.getDepositEnabled(), "Node deposits are currently disabled");
+    }

@@ -1,0 +1,1 @@
+setSettingUint("members.challenge.cooldown", 7 days)

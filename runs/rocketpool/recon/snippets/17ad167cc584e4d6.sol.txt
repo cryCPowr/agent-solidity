@@ -1,0 +1,4 @@
+modifier onlyRegisteredMinipool(address _minipoolAddress) {
+        require(getBool(keccak256(abi.encodePacked("minipool.exists", _minipoolAddress))), "Invalid minipool");
+        _;
+    }

@@ -1,0 +1,12 @@
+function verifySlot(uint64 _slotTimestamp, SlotProof calldata _proof) override external view returns(bool) {
+        // Only support post-electra state proofs
+        require(_proof.slot >= slotElectra, "Invalid proof");
+        /**
+          * genesisWitness represents the merkleised root of genesis_time ++ genesis_validators_root
+          * By checking it against a known-value for the chain we are on, we are protecting from a future hard fork
+          * which modifies the gindex of `slot` which would allow someone to prove an invalid `slot` value.
+          *
+          *         genesisWitness (witness[1])                          ...
+          *           /                    \                        /            \
+          *     genesis_time       genesis_validators_root        slot
+/* … truncated … */

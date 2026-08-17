@@ -1,0 +1,8 @@
+function _load(bytes32 _key, uint256 _pos) internal view returns (Checkpoint192 memory) {
+        bytes32 key = bytes32(uint256(_key) + _pos);
+        bytes32 raw = rocketStorage.getBytes32(key);
+        Checkpoint192 memory result;
+        result._time = uint64(uint256(raw) >> 192);
+        result._value = uint192(uint256(raw));
+        return result;
+    }

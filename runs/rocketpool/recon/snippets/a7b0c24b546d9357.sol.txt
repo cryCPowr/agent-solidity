@@ -1,0 +1,1 @@
+RocketNetworkBalancesInterface(getContractAddress("rocketNetworkBalances"))

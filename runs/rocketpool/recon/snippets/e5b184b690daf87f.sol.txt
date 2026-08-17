@@ -1,0 +1,1 @@
+require(_block > getBalancesBlock(), "Network balances for an equal or higher block are set")

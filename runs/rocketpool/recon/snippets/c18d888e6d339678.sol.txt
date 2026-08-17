@@ -1,0 +1,15 @@
+function merkleisePubkey(bytes memory pubkey) internal view returns (bytes32 ret) {
+        require(pubkey.length == 48, "Invalid pubkey length");
+        assembly {
+            mstore(0x00, mload(add(0x20, pubkey)))
+            let right := and(0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000000000000000000000000000, mload(add(0x40, pubkey)))
+            mstore(0x20, right)
+
+            let result := staticcall(gas(), 0x02, 0x00, 0x40, 0x00, 0x20)
+            if iszero(result) {
+                revert(0,0)
+            }
+
+            ret := mload(0x00)
+        }
+    }

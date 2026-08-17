@@ -1,0 +1,1 @@
+(activeMinipools * 32 ether)

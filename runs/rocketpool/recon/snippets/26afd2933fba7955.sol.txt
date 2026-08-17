@@ -1,0 +1,1 @@
+event MintToken(address _minter, address _address, uint256 _value);

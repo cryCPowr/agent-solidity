@@ -1,0 +1,4 @@
+modifier onlyMegapoolOwner() {
+        require(isNodeCalling(msg.sender), "Not allowed");
+        _;
+    }

@@ -1,0 +1,11 @@
+function concat(Path memory _left, Path memory _right) internal pure returns (Path memory) {
+        uint8 lenA = uint8(_left._data);
+        uint8 lenB = uint8(_right._data);
+        unchecked {
+            // Prevent overflow of length into path
+            require(lenA + lenB <= 248, "Path too long");
+            _left._data = (_left._data - lenA) << lenB;
+            _left._data += _right._data + lenA;
+        }
+        return _left;
+    }

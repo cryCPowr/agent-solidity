@@ -1,0 +1,13 @@
+function getMinipoolCountPerStatus(uint256 _offset, uint256 _limit) override external view
+    returns (uint256 initialisedCount, uint256 prelaunchCount, uint256 stakingCount, uint256 withdrawableCount, uint256 dissolvedCount) {
+        // Get contracts
+        AddressSetStorageInterface addressSetStorage = AddressSetStorageInterface(getContractAddress("addressSetStorage"));
+        // Precompute minipool key
+        bytes32 minipoolKey = keccak256(abi.encodePacked("minipools.index"));
+        // Iterate over the requested minipool range
+        uint256 totalMinipools = getMinipoolCount();
+        uint256 max = _offset + _limit;
+        if (max > totalMinipools || _limit == 0) { max = totalMinipools; }
+        for (uint256 i = _offset; i < max; ++i) {
+            // Get the minipool at ind
+/* … truncated … */

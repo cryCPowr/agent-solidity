@@ -1,0 +1,20 @@
+function getMinipoolPosition(address _minipool) override external view returns (int256) {
+        AddressQueueStorageInterface addressQueueStorage = AddressQueueStorageInterface(getContractAddress("addressQueueStorage"));
+        int256 position;
+
+        // Check in half queue
+        position = addressQueueStorage.getIndexOf(queueKeyHalf, _minipool);
+        if (position != -1) {
+            return position;
+        }
+        int256 offset = SafeCast.toInt256(addressQueueStorage.getLength(queueKeyHalf));
+
+        // Check in full queue
+        position = addressQueueStorage.getIndexOf(queueKeyFull, _minipool);
+        if (position != -1) {
+            return offset.add(position);
+        }
+        offset = offset.add(SafeCast.toInt256(addressQueueStorage.getLength(queueKeyFull)));
+
+     
+/* … truncated … */

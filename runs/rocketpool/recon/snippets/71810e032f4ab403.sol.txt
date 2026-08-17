@@ -1,0 +1,1 @@
+require(nodeSlashBalance > 0, "No balance to slash")

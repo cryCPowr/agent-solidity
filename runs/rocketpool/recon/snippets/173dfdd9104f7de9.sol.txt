@@ -1,0 +1,1 @@
+require(_value >= 1 hours && _value <= 7 days, "Value must be >= 1 hour & <= 7 days")

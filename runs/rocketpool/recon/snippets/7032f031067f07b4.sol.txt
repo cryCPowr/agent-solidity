@@ -1,0 +1,1 @@
+function getNextDepositLegacy() external view returns (MinipoolDeposit, uint256);

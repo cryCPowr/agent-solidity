@@ -1,0 +1,13 @@
+function getPenaltyRate(address _minipoolAddress) external override view returns(uint256) {
+        // Quick out which avoids a call to RocketStorage
+        if (maxPenaltyRate == 0) {
+             return 0;
+        }
+        // Retrieve penalty rate for this minipool
+        uint256 penaltyRate = getUint(keccak256(abi.encodePacked("minipool.penalty.rate", _minipoolAddress)));
+        // min(maxPenaltyRate, penaltyRate)
+        if (penaltyRate > maxPenaltyRate) {
+            return maxPenaltyRate;
+        }
+        return penaltyRate;
+    }

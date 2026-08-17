@@ -1,0 +1,1 @@
+nodeShare + voterShare + protocolDAOShare

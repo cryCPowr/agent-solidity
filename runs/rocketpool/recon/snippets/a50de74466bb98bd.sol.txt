@@ -1,0 +1,8 @@
+if (indexDepth <= subTreeDepth) {
+            return (indexDepth - 1) / depthPerRound + 1;
+        } else {
+            uint256 phase2Depth = indexDepth - subTreeDepth;
+            uint256 phase1Rounds = (subTreeDepth - 1) / depthPerRound + 1;
+            uint256 phase2Rounds = (phase2Depth - 1) / depthPerRound + 1;
+            return phase1Rounds + phase2Rounds;
+        }

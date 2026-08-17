@@ -1,0 +1,1 @@
+votesFor >= getVotesRequired(_proposalID)

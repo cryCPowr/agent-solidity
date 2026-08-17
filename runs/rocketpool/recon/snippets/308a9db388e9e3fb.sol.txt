@@ -1,0 +1,1 @@
+require(_value >= 7200, "Value must be >= 7200")

@@ -1,0 +1,1 @@
+function getProtocolDAOShare() external view returns (uint256);

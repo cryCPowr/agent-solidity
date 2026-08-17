@@ -1,0 +1,1 @@
+require (!getBool(keccak256(abi.encodePacked(settingNameSpace, "deployed"))), "Already initialised")

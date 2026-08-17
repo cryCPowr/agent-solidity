@@ -1,0 +1,1 @@
+function setMinipoolPubkey(bytes calldata _pubkey) external;

@@ -1,0 +1,1 @@
+function verifySlot(uint64 _slotTimestamp, SlotProof calldata _proof) external view returns (bool);

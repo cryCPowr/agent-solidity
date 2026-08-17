@@ -1,0 +1,1 @@
+function proposeVeto(string memory _proposalMessage, uint256 _upgradeProposalId) external returns (uint256);

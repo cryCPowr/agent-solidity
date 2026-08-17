@@ -1,0 +1,1 @@
+require(_block <= block.number, "Block must be in the past")

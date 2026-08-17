@@ -1,0 +1,1 @@
+require(_submission.rewardIndex == getRewardIndex(), "Can only execute snapshot for next period")

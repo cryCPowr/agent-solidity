@@ -1,0 +1,3 @@
+function getItem(bytes32 _key, uint _index) override external view returns (address) {
+        return getAddress(keccak256(abi.encodePacked(_key, ".item", _index)));
+    }

@@ -1,0 +1,5 @@
+function getDelegate(address _nodeAddress, uint32 _block) external override view returns (address) {
+        RocketNetworkSnapshotsInterface rocketNetworkSnapshots = RocketNetworkSnapshotsInterface(getContractAddress("rocketNetworkSnapshots"));
+        bytes32 key = keccak256(abi.encodePacked("node.delegate", _nodeAddress));
+        return address(uint160(rocketNetworkSnapshots.lookupRecent(key, _block, 10)));
+    }

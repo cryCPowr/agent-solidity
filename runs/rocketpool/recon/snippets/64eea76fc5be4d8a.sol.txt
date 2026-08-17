@@ -1,0 +1,3 @@
+function getEffectiveDelegate() external override view returns (address) {
+        return useLatestDelegate ? getContractAddress("rocketMinipoolDelegate") : rocketMinipoolDelegate;
+    }

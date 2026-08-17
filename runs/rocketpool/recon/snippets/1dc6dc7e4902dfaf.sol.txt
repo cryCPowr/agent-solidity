@@ -1,0 +1,11 @@
+function dissolveValidator(uint32 _validatorId) override external {
+        // Retrieve validator from storage
+        ValidatorInfo memory validator = validators[_validatorId];
+        // Check current status
+        require(validator.inPrestake, "Validator not prestaked");
+        // Ensure time-before-dissolve period has passed before allowing proof-less dissolution
+        RocketDAOProtocolSettingsMegapoolInterface rocketDAOProtocolSettingsMegapool = RocketDAOProtocolSettingsMegapoolInterface(getContractAddress("rocketDAOProtocolSettingsMegapool"));
+        if (msg.sender != rocketStorage.getAddress(rocketMegapoolManagerKey)) {
+            uint256 timeBeforeDissolve = rocketDAOProtocolSettingsMegapool.getTimeBeforeDissolve();
+            require(block.timestamp > validator.lastAssignme
+/* … truncated … */

@@ -1,0 +1,1 @@
+getNodeStakedRPL(_nodeAddress) - getUint(legacyKey)

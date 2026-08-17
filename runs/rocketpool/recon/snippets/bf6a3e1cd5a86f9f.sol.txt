@@ -1,0 +1,1 @@
+RocketMegapoolDelegateBaseInterface(_delegateAddress)

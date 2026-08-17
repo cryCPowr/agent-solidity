@@ -1,0 +1,1 @@
+_trustedNodePercent + _protocolPercent + _nodePercent

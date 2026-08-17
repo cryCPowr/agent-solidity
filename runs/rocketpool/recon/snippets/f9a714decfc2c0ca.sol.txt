@@ -1,0 +1,1 @@
+getVotingPowerAgainst(_proposalID)

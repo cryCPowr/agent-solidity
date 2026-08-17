@@ -1,0 +1,5 @@
+if (_typeHash == typeUpgradeContract) _upgradeContract(_name, _contractAddress, _contractAbi);
+        else if (_typeHash == typeAddContract) _addContract(_name, _contractAddress, _contractAbi);
+        else if (_typeHash == typeUpgradeABI) _upgradeABI(_name, _contractAbi);
+        else if (_typeHash == typeAddABI) _addABI(_name, _contractAbi);
+        else revert("Invalid upgrade type")

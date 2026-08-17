@@ -1,0 +1,1 @@
+getLengthLegacy(queueKeyFull).add(getLengthLegacy(queueKeyHalf)) > 0

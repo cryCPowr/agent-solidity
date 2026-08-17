@@ -1,0 +1,1 @@
+challengeState == Types.ChallengeState.Responded

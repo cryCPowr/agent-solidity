@@ -1,0 +1,1 @@
+RocketNetworkRevenuesInterface(getContractAddress("rocketNetworkRevenues"))

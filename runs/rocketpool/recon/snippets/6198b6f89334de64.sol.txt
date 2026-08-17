@@ -1,0 +1,4 @@
+if (value >> 128 > 0) {
+                value >>= 128;
+                result += 16;
+            }

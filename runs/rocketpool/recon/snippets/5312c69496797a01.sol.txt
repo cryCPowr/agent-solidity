@@ -1,0 +1,3 @@
+function predictDeterministicAddress(address master, bytes32 salt) internal view returns (address predicted) {
+        return predictDeterministicAddress(master, salt, address(this));
+    }

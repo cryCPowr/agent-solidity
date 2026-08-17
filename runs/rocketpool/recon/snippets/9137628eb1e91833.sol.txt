@@ -1,0 +1,3 @@
+function getScrubPenaltyEnabled() override external view returns (bool) {
+        return getSettingBool("minipool.scrub.penalty.enabled");
+    }

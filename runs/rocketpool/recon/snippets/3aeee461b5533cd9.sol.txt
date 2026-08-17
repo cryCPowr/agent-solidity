@@ -1,0 +1,4 @@
+function balanceOfToken(string memory _networkContractName, IERC20 _tokenAddress) override external view returns (uint256) {
+        // Return balance
+        return tokenBalances[keccak256(abi.encodePacked(_networkContractName, _tokenAddress))];
+    }

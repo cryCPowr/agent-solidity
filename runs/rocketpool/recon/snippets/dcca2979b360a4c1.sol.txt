@@ -1,0 +1,13 @@
+if (currentTotalEthBalance > 0) {
+            uint256 currentRethSupply = getTotalRETHSupply();
+            uint256 currentRatio = calcBase * currentTotalEthBalance / currentRethSupply;
+            uint256 newRatio = calcBase * _totalEth / _rethSupply;
+            uint256 maxChangePercent = rocketDAOProtocolSettingsNetwork.getMaxRethDelta();
+            uint256 maxChange = currentRatio * maxChangePercent / calcBase;
+            // Limit change per RPIP-61
+            if (newRatio > currentRatio) {
+                require(newRatio - currentRatio <= maxChange, "Change exceeds maximum");
+            } else {
+                require(currentRatio - newRatio <= maxChange, "Change exceeds maximum");
+            }
+        }

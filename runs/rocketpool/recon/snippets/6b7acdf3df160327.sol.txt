@@ -1,0 +1,3 @@
+function recycleDissolvedDeposit() override external payable onlyThisLatestContract onlyRegisteredMinipoolOrMegapool(msg.sender) {
+        _recycleValue();
+    }

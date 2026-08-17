@@ -1,0 +1,1 @@
+function peekItem(bytes32 _namespace) external view returns (DepositQueueValue memory);

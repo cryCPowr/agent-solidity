@@ -1,0 +1,1 @@
+function proposalKick(address _nodeAddress, uint256 _rplFine) external;

@@ -1,0 +1,12 @@
+function recoverUnclaimedRPL(uint256 _lotIndex) override external onlyLatestContract("rocketAuctionManager", address(this)) {
+        // Check lot exists and has not already had RPL recovered
+        require(getLotExists(_lotIndex), "Lot does not exist");
+        require(!getLotRPLRecovered(_lotIndex), "Unclaimed RPL has already been recovered from the lot");
+        // Check RPL can be reclaimed from lot
+        require(block.number >= getLotEndBlock(_lotIndex), "Lot bidding period has not concluded yet");
+        // Get & check remaining RPL amount
+        uint256 remainingRplAmount = getLotRemainingRPLAmount(_lotIndex);
+        require(remainingRplAmount > 0, "No unclaimed RPL is available to recover");
+        // Decrease allotted RPL balance & set RPL recovered status
+        decrease
+/* … truncated … */

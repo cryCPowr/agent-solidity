@@ -1,0 +1,1 @@
+function claim(address _nodeAddress, Claim[] calldata _claims) external;

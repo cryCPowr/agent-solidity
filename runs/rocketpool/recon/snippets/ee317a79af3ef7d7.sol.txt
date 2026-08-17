@@ -1,0 +1,1 @@
+emit ActionJoined(_nodeAddress, rplBondAmount, block.timestamp)

@@ -1,0 +1,3 @@
+function getMinipoolWithdrawalCredentials(address _minipoolAddress) override public pure returns (bytes memory) {
+        return abi.encodePacked(bytes1(0x01), bytes11(0x0), address(_minipoolAddress));
+    }

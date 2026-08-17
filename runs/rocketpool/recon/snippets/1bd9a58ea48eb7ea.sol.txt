@@ -1,0 +1,1 @@
+function setNodeCommissionShare(uint256 _value) external;

@@ -1,0 +1,14 @@
+if (_expressQueue) {
+            // Refund express ticket
+            RocketNodeManagerInterface rocketNodeManager = RocketNodeManagerInterface(getContractAddress("rocketNodeManager"));
+            rocketNodeManager.refundExpressTicket(_nodeAddress);
+            // Update head moved block
+            if (isAtHead) {
+                _setQueueMoved(true, false);
+            }
+        } else {
+            // Update head moved block
+            if (isAtHead) {
+                _setQueueMoved(false, true);
+            }
+        }

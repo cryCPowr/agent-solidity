@@ -1,0 +1,1 @@
+settingKey == keccak256(abi.encodePacked("auction.price.start"))

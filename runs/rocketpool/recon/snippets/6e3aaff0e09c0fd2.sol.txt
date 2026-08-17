@@ -1,0 +1,12 @@
+function burnRPL(address _from, uint256 _amount) override external onlyLatestNetworkContract() onlyRegisteredNode(_from) {
+        // Check sender has enough RPL
+        require(getNodeStakedRPL(_from) >= _amount, "Node has insufficient RPL");
+        // Decrease the stake amount
+        _decreaseNodeRPLStake(_from, _amount);
+        // Withdraw the RPL to this contract
+        rocketVault.withdrawToken(address(this), rplToken, _amount);
+        // Execute the token burn
+        IERC20Burnable(address(rplToken)).burn(_amount);
+        // Emit event
+        emit RPLBurned(_from, _amount, block.timestamp);
+    }

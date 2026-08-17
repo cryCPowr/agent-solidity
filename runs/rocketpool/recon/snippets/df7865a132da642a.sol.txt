@@ -1,0 +1,1 @@
+_challenges[i].megapool.challengeExit(_challenges[i].validatorIds[j])

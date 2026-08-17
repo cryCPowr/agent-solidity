@@ -1,0 +1,3 @@
+function _getRocketNodeDeposit() internal view returns (RocketNodeDepositInterface) {
+        return RocketNodeDepositInterface(rocketStorage.getAddress(rocketNodeDepositKey));
+    }

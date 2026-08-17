@@ -1,0 +1,1 @@
+daoActionsContract.actionKick(_memberAddress)

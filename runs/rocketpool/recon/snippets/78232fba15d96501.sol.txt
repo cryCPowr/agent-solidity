@@ -1,0 +1,13 @@
+function removeItem(bytes32 _key, address _value) override external onlyLatestContract("addressQueueStorage", address(this)) onlyLatestNetworkContract {
+        uint index = getUint(keccak256(abi.encodePacked(_key, ".index", _value)));
+        require(index-- > 0, "Item does not exist in queue");
+        uint lastIndex = getUint(keccak256(abi.encodePacked(_key, ".end")));
+        if (lastIndex == 0) lastIndex = capacity;
+        lastIndex = lastIndex.sub(1);
+        if (index != lastIndex) {
+            address lastItem = getAddress(keccak256(abi.encodePacked(_key, ".item", lastIndex)));
+            setAddress(keccak256(abi.encodePacked(_key, ".item", index)), lastItem);
+            setUint(keccak256(abi.encodePacked(_key, ".index", lastItem)), index.add(1));
+        }
+        setUint(kecc
+/* … truncated … */

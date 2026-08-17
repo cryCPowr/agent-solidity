@@ -1,0 +1,1 @@
+emit ScrubVoted(msg.sender, block.timestamp)

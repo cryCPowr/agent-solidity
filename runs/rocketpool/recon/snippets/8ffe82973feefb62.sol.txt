@@ -1,0 +1,4 @@
+function getContractExists(string calldata _contractName) external view returns (bool) {
+        uint256 contractKey = uint256(keccak256(abi.encodePacked("dao.protocol.treasury.contract", _contractName)));
+        return getBool(bytes32(contractKey + existsOffset));
+    }

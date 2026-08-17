@@ -1,0 +1,9 @@
+function setSettingUint(string memory _settingPath, uint256 _value) override public onlyDAOProtocolProposal {
+        // Some safety guards for certain settings
+        if(getBool(keccak256(abi.encodePacked(settingNameSpace, "deployed")))) {
+            bytes32 settingKey = keccak256(abi.encodePacked(_settingPath));
+            if(settingKey == keccak256(bytes("minipool.launch.timeout"))) {
+                RocketDAONodeTrustedSettingsMinipoolInterface rocketDAONodeTrustedSettingsMinipool = RocketDAONodeTrustedSettingsMinipoolInterface(getContractAddress("rocketDAONodeTrustedSettingsMinipool"));
+                require(_value >= (rocketDAONodeTrustedSettingsMinipool.getScrubPeriod() + 1 hours), "Launch timeout must be greater than scrub period");
+                require(_value >= 12 hours, 
+/* … truncated … */

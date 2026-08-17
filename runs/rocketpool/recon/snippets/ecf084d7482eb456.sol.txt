@@ -1,0 +1,1 @@
+MegapoolBondReduced(_amount, block.timestamp)

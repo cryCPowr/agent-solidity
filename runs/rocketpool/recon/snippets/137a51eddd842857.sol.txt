@@ -1,0 +1,3 @@
+interface RocketSmoothingPoolInterface {
+    function withdrawEther(address _to, uint256 _amount) external;
+}

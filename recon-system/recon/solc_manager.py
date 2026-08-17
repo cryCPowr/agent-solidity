@@ -94,7 +94,9 @@ _BUNDLED_VERSION = _bundled_version()
 # form (legal and common in real repositories; npm/solidity treat the
 # missing patch component as .0 for range purposes, so "^0.8" means
 # ">=0.8.0 <0.9.0"). The operator is optional; a bare version is treated
-# the same way solidity treats it -- like `^version`.
+# the same way solc treats it -- like `=version` (exact match).
+# This is confirmed by solc's actual behavior: `pragma solidity 0.8.30;`
+# compiles only with exactly 0.8.30, not 0.8.36 or anything else.
 _CLAUSE_RE = re.compile(r"(\^|~|>=|<=|>|<|=)?\s*(\d+)\.(\d+)(?:\.(\d+))?")
 
 # Hard cap on how many *distinct* non-bundled solc versions a single run is
@@ -112,8 +114,9 @@ _MAX_INSTALLS_PER_RUN = 5
 # strings that are syntactically valid semver but nonsensical/non-existent
 # (which would otherwise still cost a full npm-install network round trip
 # before failing).
+# Expanded to include newer major.minor families as encountered in real-world repos.
 _KNOWN_SOLC_MINOR_FAMILIES = {
-    (0, 4), (0, 5), (0, 6), (0, 7), (0, 8),
+    (0, 4), (0, 5), (0, 6), (0, 7), (0, 8), (0, 9),
 }
 
 
@@ -171,7 +174,7 @@ def _parse_or_groups(constraint_expr: str) -> list[list[tuple[str, tuple[int, in
             continue
         clauses = [
             (
-                m.group(1) or "^",
+                m.group(1) or "=",
                 (int(m.group(2)), int(m.group(3)), int(m.group(4) or "0")),
             )
             for m in _CLAUSE_RE.finditer(group_text)
@@ -242,6 +245,144 @@ class CompileGroup:
     cycles: list[list[str]] = field(default_factory=list)
 
 
+def _can_coexist(constraint_a: str | None, constraint_b: str | None) -> bool:
+    """True if two pragma constraints can be satisfied by the same compiler.
+    
+    Returns True when at least one available compiler (bundled, cached, or
+    installable from the known families) satisfies both constraints
+    simultaneously. This is used to split import-connected components into
+    pragma-compatible subgroups.
+    """
+    if constraint_a is None or constraint_b is None:
+        return True  # no-pragma files can compile with any versioned file
+    
+    # Quick check: if constraints are identical, they trivially coexist
+    if constraint_a == constraint_b:
+        return True
+    
+    # Check if any locally available compiler satisfies both
+    local_candidates = {_BUNDLED_VERSION, *_cached_versions()}
+    for v in sorted(local_candidates, key=_ver_tuple):
+        if version_satisfies(v, constraint_a) and version_satisfies(v, constraint_b):
+            return True
+    
+    # Check if any version from known solc families could satisfy both
+    # This allows splitting even when the exact compiler isn't cached yet
+    # Example: `0.7.6` and `>0.5.0 <0.9.0` can coexist via 0.7.6
+    for major, minor in _KNOWN_SOLC_MINOR_FAMILIES:
+        # Try a few patch versions (0, 6, 20) to sample the family
+        for patch in [0, 6, 20]:
+            v = f"{major}.{minor}.{patch}"
+            try:
+                if version_satisfies(v, constraint_a) and version_satisfies(v, constraint_b):
+                    return True
+            except Exception:
+                continue
+    
+    return False
+
+
+def _split_by_pragma_compatibility(
+    comp_files: list[str],
+    member_constraints: dict[str, str | None],
+    graph,
+) -> list[list[str]]:
+    """Split an import-connected component into pragma-compatible subgroups.
+
+    Solidity repos often have multiple compiler generations (e.g., 0.7.6 and
+    0.8.30) sharing interfaces with broad pragmas (>0.5.0 <0.9.0). A single
+    compiler cannot satisfy all constraints simultaneously, so they need
+    separate compilation passes.
+
+    Algorithm
+    ---------
+    1. Compute, for each file, the set of locally-available compilers that
+       satisfy its pragma constraint.
+    2. Attempt a universal satisfier: if one local compiler satisfies every
+       file in the component, return the component as-is (no split needed).
+    3. Identify "hard generations": files whose pragma can only be satisfied
+       by exactly ONE local compiler. These are the split boundaries.
+    4. For each hard generation, grow a subgroup via transitive import
+       expansion, but only follow edges whose target files the generation's
+       compiler can handle (pragma-compatible). Flexible files (satisfied by
+       multiple compilers) get pulled into whichever generation imports them.
+    5. Return the subgroups. A flexible file may appear in multiple subgroups
+       (overlap is intentional and handled by the caller).
+
+    Caller responsibility: pipeline.py must deduplicate — first successful
+    AST for a given relpath wins; later groups that also produce AST for an
+    already-seen relpath are silently skipped.
+    """
+    local_candidates = sorted({_BUNDLED_VERSION, *_cached_versions()}, key=_ver_tuple)
+
+    # Step 1: compiler affinity for each file
+    file_satisfying: dict[str, frozenset[str]] = {}
+    for f in comp_files:
+        constraint = member_constraints[f]
+        if constraint is None:
+            file_satisfying[f] = frozenset(local_candidates)
+        else:
+            file_satisfying[f] = frozenset(
+                v for v in local_candidates if version_satisfies(v, constraint)
+            )
+
+    # Step 2: universal satisfier → no split needed
+    universal = frozenset(local_candidates)
+    for s in file_satisfying.values():
+        universal = universal & s
+    if universal:
+        return [comp_files]
+
+    # Step 3: hard-pinned generations — constraints only satisfiable by one
+    # specific local compiler version
+    hard_gen: dict[str, list[str]] = {}  # compiler_version -> seed files
+    for f in comp_files:
+        satisfying = file_satisfying[f]
+        if len(satisfying) == 1:
+            compiler = next(iter(satisfying))
+            hard_gen.setdefault(compiler, []).append(f)
+
+    if len(hard_gen) <= 1:
+        # At most one hard generation — cannot split meaningfully
+        return [comp_files]
+
+    comp_set = set(comp_files)
+
+    # Step 4: grow each generation via import closure, restricted to
+    # files the generation's compiler can handle
+    subgroups: list[list[str]] = []
+    for compiler in sorted(hard_gen):  # deterministic order
+        seed = hard_gen[compiler]
+        subgroup: set[str] = set(seed)
+        worklist = list(seed)
+        visited: set[str] = set(seed)
+
+        while worklist:
+            f = worklist.pop()
+            for imported in graph.edges.get(f, set()):
+                if imported not in comp_set or imported in visited:
+                    continue
+                # Include only if the generation compiler can compile this file
+                imported_constraint = member_constraints[imported]
+                if imported_constraint is None or version_satisfies(compiler, imported_constraint):
+                    visited.add(imported)
+                    subgroup.add(imported)
+                    worklist.append(imported)
+
+        if subgroup:
+            subgroups.append(sorted(subgroup))
+
+    # Step 5: any file not covered by any generation (e.g. isolated flexible
+    # files with no hard-generation importers) falls through; group them
+    # separately so they are still compiled rather than silently dropped.
+    covered = set().union(*subgroups) if subgroups else set()
+    leftover = comp_set - covered
+    if leftover:
+        subgroups.append(sorted(leftover))
+
+    return subgroups if len(subgroups) > 1 else [comp_files]
+
+
 def group_sources_by_version(
     sources: dict[str, str], prefix_aliases: dict[str, str] | None = None
 ) -> list[CompileGroup]:
@@ -255,26 +396,27 @@ def group_sources_by_version(
 
     Pipeline: resolve every `import` in `sources` -> build the import graph
     -> compute weakly-connected components (the transitive dependency
-    closure -- if A imports B, directly or transitively, or through a
-    cycle, they land in the same component no matter what either one's
-    pragma says) -> merge components that need an identical, non-conflicting
-    compiler constraint into one solc invocation, purely to cut down on the
-    number of subprocess calls for otherwise-unrelated files.
+    closure) -> **split each component by pragma compatibility** (Bug B fix)
+    -> merge subgroups that share identical, compatible constraints.
 
     Compiling import-connected files in isolation (grouping by pragma
     alone) silently breaks: whichever file's group didn't happen to
     include its import partner's content produces a spurious "file not
     found" from solc, even though the file exists in the repo. Grouping by
     connected component fixes that structurally.
+    
+    However, a connected component may contain files with *incompatible*
+    pragma constraints (e.g., 0.7.6 and 0.8.30 connected via imports). These
+    must be split into pragma-compatible subgroups, each compiled separately
+    with the appropriate compiler while preserving import resolution.
 
-    Within one component, every member's pragma constraint must hold
+    Within one subgroup, every member's pragma constraint must hold
     *simultaneously* -- see `resolve_compiler_for_constraints`, which
     checks each member's constraint independently rather than
-    string-concatenating them (naively joining two constraints that each
-    contain `||` would parse as the wrong logical expression). A component
-    whose members' constraints can't be simultaneously satisfied gets its
-    combined constraint_expr as an ` AND `-joined label for reporting, and
-    `compile_group()` will report it as unresolved rather than guessing.
+    string-concatenating them. A subgroup whose members' constraints can't
+    be simultaneously satisfied gets its combined constraint_expr as an
+    ` AND `-joined label for reporting, and `compile_group()` will report
+    it as unresolved rather than guessing.
 
     A component with an import that couldn't be resolved to any file in
     `sources` at all (missing dependency) carries that in
@@ -290,23 +432,30 @@ def group_sources_by_version(
     for comp_files in components:
         comp_set = set(comp_files)
         member_constraints = {f: extract_pragma_constraint(sources[f]) for f in comp_files}
-        distinct = sorted({c for c in member_constraints.values() if c is not None})
-        combined_label = " AND ".join(distinct) if distinct else None
+        
+        # Split component by pragma compatibility (Bug B fix)
+        subgroups = _split_by_pragma_compatibility(comp_files, member_constraints, graph)
+        
+        for subgroup_files in subgroups:
+            subgroup_set = set(subgroup_files)
+            subgroup_constraints = {f: member_constraints[f] for f in subgroup_files}
+            distinct = sorted({c for c in subgroup_constraints.values() if c is not None})
+            combined_label = " AND ".join(distinct) if distinct else None
 
-        unresolved = [
-            {"importing_file": u.importing_file, "raw_path": u.raw_path, "line": u.line}
-            for u in graph.unresolved
-            if u.importing_file in comp_set
-        ]
-        cycles = [c for c in all_cycles if set(c) <= comp_set]
+            unresolved = [
+                {"importing_file": u.importing_file, "raw_path": u.raw_path, "line": u.line}
+                for u in graph.unresolved
+                if u.importing_file in subgroup_set
+            ]
+            cycles = [c for c in all_cycles if set(c) <= subgroup_set]
 
-        prelim.append(CompileGroup(
-            constraint_expr=combined_label,
-            files=list(comp_files),
-            member_constraints=member_constraints,
-            unresolved_imports=unresolved,
-            cycles=cycles,
-        ))
+            prelim.append(CompileGroup(
+                constraint_expr=combined_label,
+                files=list(subgroup_files),
+                member_constraints=subgroup_constraints,
+                unresolved_imports=unresolved,
+                cycles=cycles,
+            ))
 
     # Merge components that don't carry unresolved-import provenance and
     # share an identical combined constraint label -- this is the same

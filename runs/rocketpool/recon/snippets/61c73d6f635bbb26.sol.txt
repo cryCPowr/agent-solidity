@@ -1,0 +1,3 @@
+if (maxPossible == 0) {
+            return;
+        }

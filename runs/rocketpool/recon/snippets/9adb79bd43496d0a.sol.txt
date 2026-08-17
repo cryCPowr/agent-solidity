@@ -1,0 +1,1 @@
+function getBondReductionWindowLength() external view returns (uint256);

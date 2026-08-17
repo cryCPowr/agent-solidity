@@ -1,0 +1,1 @@
+require(!_mustExist || exists, "Snapshot does not exist")

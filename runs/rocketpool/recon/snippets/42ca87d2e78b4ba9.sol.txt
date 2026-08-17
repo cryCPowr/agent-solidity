@@ -1,0 +1,1 @@
+setBytes32(bytes32(challengeKey + hashOffset), _node.hash)

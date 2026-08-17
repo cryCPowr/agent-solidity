@@ -1,0 +1,1 @@
+function getScrubPeriod() external view returns(uint256);

@@ -1,0 +1,20 @@
+contract RocketDAOSecurityUpgrade is RocketBase, RocketDAOSecurityUpgradeInterface {
+
+    // The namespace for any data stored in the security DAO (do not change)
+    string constant internal daoNameSpace = "dao.security.";
+
+    /// @dev Only allow certain contracts to execute methods
+    modifier onlyExecutingContracts() {
+        // Methods are executed by people executing passed proposals in rocketDAOProposal
+        require(msg.sender == getContractAddress("rocketDAOProposal"), "Sender is not permitted to access executing methods");
+        _;
+    }
+
+    /// @dev Only allow security councils to vote
+    modifier onlySecurityMember() {
+        require(getBool(keccak256(abi.encodePacked(daoNameSpace, "member", msg.sender))), "Sender is not a security council member");
+        _;
+    }
+
+ 
+/* … truncated … */

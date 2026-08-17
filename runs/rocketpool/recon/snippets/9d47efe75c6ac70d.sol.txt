@@ -1,0 +1,1 @@
+setSettingUint("proposal.cooldown.time", 2 days)

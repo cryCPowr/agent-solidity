@@ -1,0 +1,1 @@
+require(getAddress(keccak256(abi.encodePacked("contract.address", _name))) == address(0x0), "ABI name is already in use")

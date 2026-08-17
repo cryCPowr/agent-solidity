@@ -1,0 +1,1 @@
+_hashPair(computedHash, proof[i])

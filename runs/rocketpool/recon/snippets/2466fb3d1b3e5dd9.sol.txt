@@ -1,0 +1,1 @@
+(_left._data - lenA) << lenB

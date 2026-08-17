@@ -1,0 +1,1 @@
+function inflationMintTokens() external returns (uint256);

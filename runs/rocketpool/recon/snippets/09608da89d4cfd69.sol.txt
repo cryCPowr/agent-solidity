@@ -1,0 +1,4 @@
+modifier onlyGuardian() {
+        require(msg.sender == rocketStorage.getGuardian(), "Account is not a temporary guardian");
+        _;
+    }

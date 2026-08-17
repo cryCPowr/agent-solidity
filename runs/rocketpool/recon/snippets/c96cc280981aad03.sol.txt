@@ -1,0 +1,1 @@
+require(getProposer(_proposalID) == _member, "Proposal can only be cancelled by the proposer")

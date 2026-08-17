@@ -1,0 +1,1 @@
+getBool(keccak256(abi.encodePacked("megapool.exists", getExpectedAddress(_nodeAddress))))

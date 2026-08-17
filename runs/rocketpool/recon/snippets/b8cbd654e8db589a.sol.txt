@@ -1,0 +1,13 @@
+if (!rocketStorage.getDeployedStatus()) {
+            // Set defaults
+            _setSettingUint("network.consensus.threshold", 0.51 ether);      // 51%
+            _setSettingBool("network.submit.balances.enabled", true);
+            _setSettingUint("network.submit.balances.frequency", 1 days);
+            _setSettingBool("network.submit.prices.enabled", true);
+            _setSettingUint("network.submit.prices.frequency", 1 days);
+            _setSettingUint("network.node.fee.minimum", 0.15 ether);         // 15%
+            _setSettingUint("network.node.fee.target", 0.15 ether);          // 15%
+            _setSettingUint("network.node.fee.maximum", 0.15 ether);         // 15%
+            _setSettingUint("network.node.fee.demand.range", 160 ether);
+            _setSettingUint("network.
+/* … truncated … */

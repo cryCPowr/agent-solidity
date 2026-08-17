@@ -1,0 +1,11 @@
+function setNodeCapitalRatio(address _nodeAddress, uint256 _value) external override onlyRegisteredMegapool(msg.sender) onlyLatestContract("rocketNetworkRevenues", address(this)) {
+        // Sanity check that ratio should be between 0 and 1
+        require(_value <= 1 ether, "Invalid capital ratio");
+        // Compute the key
+        bytes32 key = keccak256(abi.encodePacked("node.capital.ratio", _nodeAddress));
+        // Get the existing value
+        RocketNetworkSnapshotsTimeInterface rocketNetworkSnapshotsTime = RocketNetworkSnapshotsTimeInterface(getContractAddress("rocketNetworkSnapshotsTime"));
+        uint256 storedValue = _getCurrentShare(rocketNetworkSnapshotsTime, key, false) / shareScale;
+        // Don't store an entry if the capital ratio hasn't changed
+        if (storedVa
+/* … truncated … */

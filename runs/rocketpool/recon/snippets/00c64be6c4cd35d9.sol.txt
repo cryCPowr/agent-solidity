@@ -1,0 +1,1 @@
+abi.encodePacked("network.penalties.penalty", _minipool)

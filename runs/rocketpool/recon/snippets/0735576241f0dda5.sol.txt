@@ -1,0 +1,1 @@
+require(_treeNodes.length == leafCount, "Invalid node count")

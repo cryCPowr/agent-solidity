@@ -1,0 +1,1 @@
+function getEffectiveNodeShare() external view returns (uint256);

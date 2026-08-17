@@ -1,0 +1,16 @@
+for (uint256 i = 0; i < _indices.length; ++i) {
+            // Check the challenge of the given index was responded to
+            bytes32 challengeKey = keccak256(abi.encodePacked("dao.protocol.proposal.challenge", _proposalID, _indices[i]));
+            uint256 state = getUint(challengeKey);
+
+            // Proposer can only claim the reward on indices they responded to
+            require(_getChallengeState(state) == Types.ChallengeState.Responded, "Invalid challenge state");
+
+            // Mark index as paid
+            state = setChallengeState(state, Types.ChallengeState.Paid);
+            setUint(challengeKey, state);
+
+            // If claiming the root at this stage, then we return the proposal bond
+            if (_indices[i] == 1) {
+                rocketNodeStaking.unlockRPL(p
+/* … truncated … */

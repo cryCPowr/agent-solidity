@@ -1,0 +1,4 @@
+modifier onlyRocketNodeDeposit() {
+        require(msg.sender == rocketStorage.getAddress(rocketNodeDepositKey), "Invalid or outdated contract");
+        _;
+    }

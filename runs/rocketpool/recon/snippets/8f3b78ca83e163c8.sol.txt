@@ -1,0 +1,1 @@
+updatePrices(_block, _slotTimestamp, _rplPrice)

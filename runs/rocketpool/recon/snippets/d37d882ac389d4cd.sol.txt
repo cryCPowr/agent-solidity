@@ -1,0 +1,1 @@
+SSZ.merkleisePubkey(_validator.pubkey)

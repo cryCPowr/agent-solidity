@@ -1,0 +1,1 @@
+block.timestamp > validator.lastAssignmentTime + timeBeforeDissolve

@@ -1,0 +1,1 @@
+function getBool(bytes32 _key) internal view returns (bool) { return rocketStorage.getBool(_key); }

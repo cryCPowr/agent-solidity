@@ -1,0 +1,3 @@
+if (isNodeCalling(msg.sender)) {
+            _claim();
+        }

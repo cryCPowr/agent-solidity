@@ -1,0 +1,1 @@
+function nodeDeposit(uint256 _totalAmount) external payable;

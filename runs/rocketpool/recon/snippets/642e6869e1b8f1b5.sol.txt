@@ -1,0 +1,1 @@
+rplContract.inflationMintTokens()

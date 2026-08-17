@@ -1,0 +1,8 @@
+constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
+        // Set contract version
+        version = 4;
+
+        // Precompute keys
+        priceKey = keccak256("network.prices.rpl");
+        blockKey = keccak256("network.prices.updated.block");
+    }

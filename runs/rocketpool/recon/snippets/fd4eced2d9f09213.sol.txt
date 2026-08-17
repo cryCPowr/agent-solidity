@@ -1,0 +1,3 @@
+function _validateBytes(bytes memory _data, uint256 _length) pure internal {
+        require(_data.length == _length, "Invalid bytes length");
+    }

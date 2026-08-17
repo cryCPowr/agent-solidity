@@ -1,0 +1,1 @@
+require(rocketDAOSecurity.getMemberIsValid(_nodeAddress) != true, "This node is already part of the security council")

@@ -1,0 +1,1 @@
+require(_votesRequired > 0, "Proposal cannot have a 0 votes required to be successful")

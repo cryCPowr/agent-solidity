@@ -1,0 +1,13 @@
+function dequeue(uint32 _validatorId) external onlyMegapoolOwner {
+        ValidatorInfo memory validator = validators[_validatorId];
+        // Validate validator status
+        require(validator.inQueue, "Validator must be in queue");
+        uint256 requestedValue = uint256(validator.lastRequestedValue) * milliToWei;
+        uint256 nodeValue = uint256(validator.lastRequestedBond) * milliToWei;
+        uint256 userValue = requestedValue - nodeValue;
+        // Dequeue validator from the deposit pool and issue credit
+        RocketDepositPoolInterface rocketDepositPool = _getRocketDepositPool();
+        rocketDepositPool.exitQueue(nodeAddress, _validatorId, validator.expressUsed);
+        rocketDepositPool.fundsReturned(nodeAddress, nodeValue, userValue);
+        rocketDepositPool.applyC
+/* … truncated … */

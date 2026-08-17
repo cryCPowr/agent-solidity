@@ -1,0 +1,6 @@
+function memberJoinRequired(string memory _id, string memory _url) override external onlyLowMemberMode onlyRegisteredNode(msg.sender) onlyLatestContract("rocketDAONodeTrusted", address(this)) {
+        // Ok good to go, lets update the settings 
+        RocketDAONodeTrustedProposalsInterface(getContractAddress("rocketDAONodeTrustedProposals")).proposalInvite(_id, _url, msg.sender);
+        // Get the to automatically join as a member (by a regular proposal, they would have to manually accept, but this is no ordinary situation)
+        RocketDAONodeTrustedActionsInterface(getContractAddress("rocketDAONodeTrustedActions")).actionJoinRequired(msg.sender);
+    }

@@ -1,0 +1,1 @@
+daoActionsContract.actionKickMulti(_memberAddresses)

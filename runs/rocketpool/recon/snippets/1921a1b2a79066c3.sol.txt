@@ -1,0 +1,3 @@
+function getSettingAddress(string memory _settingPath) external view override returns (address) {
+        return getAddress(keccak256(abi.encodePacked(settingNameSpace, _settingPath)));
+    }

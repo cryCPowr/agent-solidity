@@ -1,0 +1,1 @@
+rplToken.approve(address(rocketVault), _amount)

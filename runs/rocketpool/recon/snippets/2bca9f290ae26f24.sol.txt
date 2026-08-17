@@ -1,0 +1,1 @@
+uint256(rocketNetworkSnapshots.lookupRecent(key, _block, 5))

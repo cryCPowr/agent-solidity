@@ -1,0 +1,1 @@
+function getContract(string calldata _contractName) external view returns (PaymentContract memory);

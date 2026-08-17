@@ -1,0 +1,13 @@
+function initialiseFeeDistributor() override external onlyLatestContract("rocketNodeManager", address(this)) onlyRegisteredNode(msg.sender) {
+        // Prevent multiple calls
+        require(!getFeeDistributorInitialised(msg.sender), "Already initialised");
+        // Load contracts
+        RocketMinipoolManagerInterface rocketMinipoolManager = RocketMinipoolManagerInterface(getContractAddress("rocketMinipoolManager"));
+        // Calculate and set current average fee numerator
+        uint256 count = rocketMinipoolManager.getNodeMinipoolCount(msg.sender);
+        if (count > 0) {
+            uint256 numerator = 0;
+            // Note: this loop is safe as long as all current node operators at the time of upgrade have few enough minipools
+            for (uint256 i = 0; i < count; ++i) {
+
+/* … truncated … */

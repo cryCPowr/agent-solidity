@@ -1,0 +1,1 @@
+emit ProposalAdded(_member, _dao, proposalID, _payload, block.timestamp)

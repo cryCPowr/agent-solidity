@@ -44,6 +44,8 @@ def write_metadata_json(ctx: ProjectContext, path: str, run_meta: dict) -> None:
         "files_analyzed": run_meta.get("files_analyzed", []),
         "files_partially_analyzed": run_meta.get("files_partially_analyzed", []),
         "files_failed": run_meta.get("files_failed", []),
+        "file_diagnostics": run_meta.get("file_diagnostics", {}),
+        "coverage": run_meta.get("coverage", {}),
         "dependency_files_added": run_meta.get("dependency_files_added", []),
         "import_prefix_aliases": run_meta.get("import_prefix_aliases", {}),
         "build_metadata_hints": run_meta.get("build_metadata_hints", {}),

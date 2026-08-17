@@ -1,0 +1,3 @@
+function setBool(bytes32 _key, bool _value) onlyLatestRocketNetworkContract override external {
+        booleanStorage[_key] = _value;
+    }

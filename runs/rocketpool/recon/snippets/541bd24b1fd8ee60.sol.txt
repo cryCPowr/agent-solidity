@@ -1,0 +1,3 @@
+if (settingKey == keccak256(bytes("express.queue.rate"))) {
+                require(_value > 0, "Rate must be greater than 0");
+            }

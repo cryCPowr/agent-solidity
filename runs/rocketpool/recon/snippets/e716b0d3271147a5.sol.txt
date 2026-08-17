@@ -1,0 +1,7 @@
+if (_stakeAmount > 0) {
+            RocketTokenRPLInterface rocketTokenRPL = RocketTokenRPLInterface(rocketTokenRPLAddress);
+            RocketNodeStakingInterface rocketNodeStaking = RocketNodeStakingInterface(getContractAddress("rocketNodeStaking"));
+            rocketVault.withdrawToken(address(this), IERC20(rocketTokenRPLAddress), _stakeAmount);
+            rocketTokenRPL.approve(address(rocketNodeStaking), _stakeAmount);
+            rocketNodeStaking.stakeRPLFor(_nodeAddress, _stakeAmount);
+        }

@@ -1,0 +1,4 @@
+function getStandardQueueLength() override public view returns (uint256) {
+        LinkedListStorageInterface linkedListStorage = LinkedListStorageInterface(getContractAddress("linkedListStorage"));
+        return linkedListStorage.getLength(standardQueueNamespace);
+    }

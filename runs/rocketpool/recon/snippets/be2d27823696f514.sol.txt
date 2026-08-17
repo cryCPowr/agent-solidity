@@ -1,0 +1,1 @@
+relay.relayRewards(_submission.rewardIndex, treeVersion, _submission.merkleRoot, rewardsRPL, rewardsETH)

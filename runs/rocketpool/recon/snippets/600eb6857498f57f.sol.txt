@@ -1,0 +1,1 @@
+abi.encodePacked(settingNameSpace, "rewards.network.enabled", _network)

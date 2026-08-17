@@ -1,0 +1,1 @@
+setUint(bytes32(challengeKey + sumOffset), _node.sum)

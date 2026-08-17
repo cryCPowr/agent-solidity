@@ -1,0 +1,13 @@
+function verifyWithdrawal(uint64 _slotTimestamp, uint64 _slot, WithdrawalProof calldata _proof) override external view returns(bool) {
+        // Only support post-electra state proofs
+        require(_slot >= slotElectra, "Invalid proof");
+        require(_proof.withdrawalSlot >= slotElectra, "Invalid proof");
+        // Construct gindex
+        SSZ.Path memory path = _pathBeaconBlockHeaderToStateRoot();
+        path = SSZ.concat(path, _pathBeaconStateToPastBlockRoot(_slot, _proof.withdrawalSlot));
+        path = SSZ.concat(path, _pathBlockToWithdrawal(_proof.withdrawalNum));
+        // Merkleise the withdrawal struct
+        bytes32 leaf = _merkleiseWithdrawal(_proof.withdrawal);
+        // Restore the block root for the supplied slot
+        require(SSZ.length(path) == _proof.witnesses.
+/* … truncated … */

@@ -1,0 +1,1 @@
+uint256 constant internal addressOffset = (256 - 8 - 64 - 160)

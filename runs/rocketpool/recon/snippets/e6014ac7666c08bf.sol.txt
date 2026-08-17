@@ -1,0 +1,1 @@
+delegateAddress.delegatecall(abi.encodeWithSignature('initialise(address)', _nodeAddress))

@@ -1,0 +1,10 @@
+function addUnclaimedRewards(address _nodeAddress) external payable onlyRegisteredNode(_nodeAddress) {
+        // Only a node's distributor can add unclaimed rewards
+        RocketNodeDistributorFactoryInterface rocketNodeDistributorFactor = RocketNodeDistributorFactoryInterface(getContractAddress("rocketNodeDistributorFactory"));
+        address proxyAddress = rocketNodeDistributorFactor.getProxyAddress(_nodeAddress);
+        require(msg.sender == proxyAddress, "Only distributor can add unclaimed rewards");
+        // Deposit funds into vault and increase balance
+        RocketVaultInterface rocketVault = RocketVaultInterface(getContractAddress("rocketVault"));
+        rocketVault.depositEther{value: msg.value}();
+        addUint(keccak256(abi.encodePacked("node.unclaimed.rewards", _nodeA
+/* … truncated … */

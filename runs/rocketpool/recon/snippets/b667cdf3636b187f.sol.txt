@@ -1,0 +1,1 @@
+addUint(keccak256(abi.encodePacked("rpl.megapool.unstaking.amount", _nodeAddress)), _amount)

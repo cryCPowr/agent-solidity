@@ -1,0 +1,4 @@
+function proposalTreasuryOneTimeSpend(string memory _invoiceID, address _recipientAddress, uint256 _amount) override external onlyExecutingContracts() {
+        RocketClaimDAOInterface rocketDAOTreasury = RocketClaimDAOInterface(getContractAddress("rocketClaimDAO"));
+        rocketDAOTreasury.spend(_invoiceID, _recipientAddress, _amount);
+    }

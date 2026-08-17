@@ -1,0 +1,1 @@
+event RPLInflationLog(address sender, uint256 value, uint256 inflationCalcTime);

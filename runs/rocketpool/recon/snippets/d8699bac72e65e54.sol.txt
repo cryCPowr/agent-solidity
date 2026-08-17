@@ -1,0 +1,4 @@
+unchecked { // Impossible underflow given effectiveBond > newBondRequirement
+            uint256 maxReduce = effectiveBond - newBondRequirement;
+            require(_amount <= maxReduce, "New bond is too low");
+        }

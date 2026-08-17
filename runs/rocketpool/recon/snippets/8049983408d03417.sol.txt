@@ -1,0 +1,1 @@
+function getWithdrawalCredentials() external view returns (bytes32);

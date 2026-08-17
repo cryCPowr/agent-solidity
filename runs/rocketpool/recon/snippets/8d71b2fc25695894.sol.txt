@@ -1,0 +1,1 @@
+function getMaximumNodeFee() external view returns (uint256);

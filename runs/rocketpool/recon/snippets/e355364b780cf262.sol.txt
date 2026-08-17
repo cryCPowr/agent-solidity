@@ -1,0 +1,10 @@
+function executeUpdateBalances(uint256 _block, uint256 _slotTimestamp, uint256 _totalEth, uint256 _stakingEth, uint256 _rethSupply) override external onlyLatestContract("rocketNetworkBalances", address(this)) {
+        // Check settings
+        RocketDAOProtocolSettingsNetworkInterface rocketDAOProtocolSettingsNetwork = RocketDAOProtocolSettingsNetworkInterface(getContractAddress("rocketDAOProtocolSettingsNetwork"));
+        require(rocketDAOProtocolSettingsNetwork.getSubmitBalancesEnabled(), "Submitting balances is currently disabled");
+        // Check block
+        require(_block < block.number, "Balances can not be submitted for a future block");
+        require(_block > getBalancesBlock(), "Network balances for an equal or higher block are set");
+        // Check balances
+        requ
+/* … truncated … */

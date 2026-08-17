@@ -1,0 +1,1 @@
+function getHalfDepositUserAmount() external view returns (uint256);

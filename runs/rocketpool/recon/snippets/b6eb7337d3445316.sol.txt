@@ -1,0 +1,1 @@
+require(_phase2Duration > 0, "Proposal cannot have a duration of 0")

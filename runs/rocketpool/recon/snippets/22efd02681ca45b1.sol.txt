@@ -1,0 +1,1 @@
+abi.encodePacked(settingNameSpace, "rewards.claims", "group.amount", "rocketClaimDAO")

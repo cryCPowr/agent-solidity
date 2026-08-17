@@ -1,0 +1,7 @@
+function userDistributeAllowed() override public view returns (bool) {
+        // Get contracts
+        RocketDAOProtocolSettingsMinipoolInterface rocketDAOProtocolSettingsMinipool = RocketDAOProtocolSettingsMinipoolInterface(getContractAddress("rocketDAOProtocolSettingsMinipool"));
+        // Calculate if time elapsed since call to `beginUserDistribute` is within the allowed window
+        uint256 timeElapsed = block.timestamp.sub(userDistributeTime);
+        return(rocketDAOProtocolSettingsMinipool.isWithinUserDistributeWindow(timeElapsed));
+    }

@@ -1,0 +1,3 @@
+function blockAndAggregate(Call[] memory calls) public returns (uint256 blockNumber, bytes32 blockHash, Result[] memory returnData) {
+        (blockNumber, blockHash, returnData) = tryBlockAndAggregate(true, calls);
+    }

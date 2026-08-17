@@ -1,0 +1,1 @@
+function bootstrapSettingClaimers(uint256 _trustedNodePerc, uint256 _protocolPerc, uint256 _nodePerc) external;

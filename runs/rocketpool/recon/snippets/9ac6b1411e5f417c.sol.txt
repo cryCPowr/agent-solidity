@@ -1,0 +1,1 @@
+require(!exists, "Already initialised")

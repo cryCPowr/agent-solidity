@@ -1,0 +1,10 @@
+function removeVacantMinipool() override external onlyLatestContract("rocketMinipoolManager", address(this)) onlyRegisteredMinipool(msg.sender) {
+        // Remove from vacant set
+        AddressSetStorageInterface addressSetStorage = AddressSetStorageInterface(getContractAddress("addressSetStorage"));
+        addressSetStorage.removeItem(keccak256(abi.encodePacked("minipools.vacant.index")), msg.sender);
+        // If minipool was dissolved, remove mapping of pubkey to minipool to allow NO to try again in future
+        RocketMinipoolInterface minipool = RocketMinipoolInterface(msg.sender);
+        if (minipool.getStatus() == MinipoolStatus.Dissolved) {
+            bytes memory pubkey = getMinipoolPubkey(msg.sender);
+            deleteAddress(keccak256(abi.encodePacked("validator.minipool
+/* … truncated … */

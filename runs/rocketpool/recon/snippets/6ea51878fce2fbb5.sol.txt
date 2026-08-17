@@ -1,0 +1,3 @@
+proofFlags[i]
+                ? (leafPos < leavesLen ? leaves[leafPos++] : hashes[hashPos++])
+                : proof[proofPos++]

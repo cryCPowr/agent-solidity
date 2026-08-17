@@ -1,0 +1,1 @@
+event ScrubVoted(address indexed member, uint256 time);

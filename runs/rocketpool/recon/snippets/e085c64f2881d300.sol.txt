@@ -1,0 +1,3 @@
+function getUserBalance() override public view returns (int256) {
+        return int256(getBalance()) - int256(getNodeBalance());
+    }

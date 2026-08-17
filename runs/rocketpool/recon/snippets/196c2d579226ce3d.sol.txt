@@ -1,0 +1,2 @@
+_validatorProof.validator.withdrawalCredentials == withdrawalCredentials &&
+            _validatorProof.validator.withdrawableEpoch == farFutureEpoch

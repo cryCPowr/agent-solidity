@@ -1,0 +1,7 @@
+function withdrawCreditFor(address _nodeAddress, uint256 _amount) override public onlyRegisteredNode(_nodeAddress) onlyThisLatestContract {
+        // Check caller
+        address withdrawalAddress = rocketStorage.getNodeWithdrawalAddress(_nodeAddress);
+        require(msg.sender == withdrawalAddress, "Must be called from withdrawal address");
+        // Withdraw credit
+        _withdrawCreditFor(_nodeAddress, withdrawalAddress, _amount);
+    }

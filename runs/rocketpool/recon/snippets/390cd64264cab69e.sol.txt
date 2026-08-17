@@ -1,0 +1,11 @@
+if (toNode > 0 && debt > 0) {
+                    if (toNode > debt) {
+                        toNode -= debt;
+                        toUser += debt;
+                        _reduceDebt(debt);
+                    } else {
+                        toUser += toNode;
+                        _reduceDebt(toNode);
+                        toNode = 0;
+                    }
+                }

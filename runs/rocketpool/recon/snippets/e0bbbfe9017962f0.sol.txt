@@ -1,0 +1,5 @@
+function _timeAt(bytes32 _key, uint256 _pos) internal view returns (uint64) {
+        bytes32 key = bytes32(uint256(_key) + _pos);
+        bytes32 raw = rocketStorage.getBytes32(key);
+        return uint64(uint256(raw) >> 192);
+    }

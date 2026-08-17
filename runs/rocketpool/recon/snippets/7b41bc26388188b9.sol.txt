@@ -1,0 +1,1 @@
+function setBool(bytes32 _key, bool _value) internal { rocketStorage.setBool(_key, _value); }

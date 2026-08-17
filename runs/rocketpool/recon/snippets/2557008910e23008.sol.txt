@@ -1,0 +1,1 @@
+function getTimeBeforeDissolve() external view returns (uint256);

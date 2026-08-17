@@ -1,0 +1,10 @@
+function calculateRewards(uint256 _amount) public view returns (uint256 nodeRewards, uint256 voterRewards, uint256 protocolDAORewards, uint256 rethRewards) {
+        // Early out for edge cases
+        if (_amount == 0) return (0, 0, 0, 0);
+        if (lastDistributionTime == 0) return (_amount, 0, 0, 0);
+        // Calculate split based on capital ratio and average commission since last distribute
+        RocketNetworkRevenuesInterface rocketNetworkRevenues = RocketNetworkRevenuesInterface(getContractAddress("rocketNetworkRevenues"));
+        uint64 lastDistributionTime64 = SafeCast.toUint64(lastDistributionTime);
+        (, uint256 voterShare, uint256 protocolDAOShare, uint256 rethShare) = rocketNetworkRevenues.calculateSplit(lastDistributionTime64);
+        uint256 averageCapitalRatio =
+/* … truncated … */

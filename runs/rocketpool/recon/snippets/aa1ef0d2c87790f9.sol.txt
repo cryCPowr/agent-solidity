@@ -1,0 +1,1 @@
+require(enabledBlock != 0 && _blockNumber >= enabledBlock, "DAO has not been enabled")

@@ -1,0 +1,6 @@
+function setMaxPenaltyRate(uint256 _rate) external override onlyGuardian {
+        // Update rate
+        maxPenaltyRate = _rate;
+        // Emit event
+        emit MaxPenaltyRateUpdated(_rate, block.timestamp);
+    }

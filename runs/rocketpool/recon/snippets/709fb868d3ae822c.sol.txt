@@ -1,0 +1,9 @@
+function _withdrawCreditFor(address _nodeAddress, address _recipient, uint256 _amount) internal {
+        // Check deposits are enabled
+        RocketDAOProtocolSettingsDepositInterface rocketDAOProtocolSettingsDeposit = RocketDAOProtocolSettingsDepositInterface(getContractAddress("rocketDAOProtocolSettingsDeposit"));
+        require(rocketDAOProtocolSettingsDeposit.getDepositEnabled(), "Deposits into Rocket Pool are currently disabled");
+        // Ensure no debt exists on the node operator's megapool
+        RocketMegapoolFactoryInterface rocketMegapoolFactory = RocketMegapoolFactoryInterface(getContractAddress("rocketMegapoolFactory"));
+        require(rocketMegapoolFactory.getMegapoolDeployed(_nodeAddress), "Megapool must be deployed");
+        RocketMegapoolDelegateInterface megapool 
+/* … truncated … */

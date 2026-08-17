@@ -8,7 +8,7 @@ on *what* to extract rather than *how* to serialize it.
 from __future__ import annotations
 
 import os
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from typing import Optional
 
 from . import ast_utils, ids
@@ -59,6 +59,8 @@ class ProjectContext:
 
     _fact_ids_seen: set = field(default_factory=set)
     _fact_id_collision_counts: dict = field(default_factory=dict)
+    _edge_semantic_ids: dict = field(default_factory=dict)
+    _edge_id_collision_counts: dict = field(default_factory=dict)
 
     # ---- source / evidence -------------------------------------------------
 
@@ -159,13 +161,38 @@ class ProjectContext:
         return node
 
     def add_edge(self, edge: GraphEdge) -> GraphEdge:
+        semantic_key = (
+            edge.type,
+            edge.source,
+            edge.target,
+            edge.status,
+            tuple(sorted(edge.properties.items())),
+            tuple(sorted(set(edge.fact_ids))),
+        )
+        existing_id = self._edge_semantic_ids.get(semantic_key)
+        if existing_id is not None:
+            return self.graph_edges[existing_id]
+
         existing = self.graph_edges.get(edge.id)
         if existing is not None and existing.to_dict() != edge.to_dict():
-            raise IdCollisionError(
-                f"graph edge id collision on {edge.id!r}: "
-                f"existing={existing.to_dict()!r} new={edge.to_dict()!r}"
+            n = self._edge_id_collision_counts.get(edge.id, 1) + 1
+            self._edge_id_collision_counts[edge.id] = n
+            edge = replace(edge, id=f"{edge.id}-{n}")
+            if edge.id in self.graph_edges:
+                raise IdCollisionError(
+                    f"graph edge id collision disambiguation reused existing id {edge.id!r}: "
+                    f"new={edge.to_dict()!r}"
+                )
+            self.warn(
+                "graph edge id collision disambiguated",
+                original_id=existing.id,
+                new_id=edge.id,
+                existing=existing.to_dict(),
+                new=edge.to_dict(),
             )
+
         self.graph_edges[edge.id] = edge
+        self._edge_semantic_ids[semantic_key] = edge.id
         return edge
 
     def warn(self, message: str, **extra) -> None:

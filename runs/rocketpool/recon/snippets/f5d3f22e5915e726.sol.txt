@@ -1,0 +1,3 @@
+if (maxPenaltyRate == 0) {
+             return 0;
+        }

@@ -1,0 +1,1 @@
+keccak256(abi.encodePacked("network.prices.submitted.count", _block, _slotTimestamp, _rplPrice))

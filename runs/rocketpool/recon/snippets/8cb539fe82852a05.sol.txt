@@ -1,0 +1,4 @@
+function _pathBeaconStateToSlot() internal view returns (SSZ.Path memory) {
+        SSZ.Path memory path = SSZ.from(2, 6); // 0b000010 (BeaconState -> slot)
+        return path;
+    }

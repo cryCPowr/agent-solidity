@@ -1,0 +1,1 @@
+function setSettingAddress(string memory _settingPath, address _value) external;

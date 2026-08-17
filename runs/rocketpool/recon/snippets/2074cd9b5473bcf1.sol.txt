@@ -1,0 +1,26 @@
+interface Types {
+    enum ChallengeState {
+        Unchallenged,
+        Challenged,
+        Responded,
+        Paid
+    }
+
+    struct Proposal {
+        address proposer;
+        uint32 blockNumber;
+        uint128 nodeCount;
+        bytes32 hash;
+        uint256 sum;
+    }
+
+    struct Node {
+        uint256 sum;
+        bytes32 hash;
+    }
+
+    struct Leaf {
+        address nodeAddress;
+        uint256 effectiveRpl;
+    }
+}

@@ -1,0 +1,1 @@
+function getBaseBondArray() external view returns (uint256[] memory);

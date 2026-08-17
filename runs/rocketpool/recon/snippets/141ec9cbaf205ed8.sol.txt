@@ -1,0 +1,3 @@
+if (_index < fullLength) {
+            return addressQueueStorage.getItem(queueKeyFull, _index);
+        }

@@ -1,0 +1,20 @@
+function computeRootFromWitness(uint256 _index, Types.Node memory _leaf, Types.Node[] calldata _witness) internal pure returns (Types.Node memory) {
+        Types.Node memory root = _leaf;
+        for (uint256 i = 0; i < _witness.length; ++i) {
+            if (_index % 2 == 1) {
+                root.hash = keccak256(abi.encodePacked(
+                        _witness[i].hash, _witness[i].sum,
+                        root.hash, root.sum
+                    ));
+            } else {
+                root.hash = keccak256(abi.encodePacked(
+                        root.hash, root.sum,
+                        _witness[i].hash, _witness[i].sum
+                    ));
+            }
+
+            root.sum += _witness[i].sum;
+            _index = _index / 2;
+        }
+        return root;
+    }

@@ -1,0 +1,11 @@
+function _unstakeLegacyRPL(address _nodeAddress, uint256 _amount) internal {
+        // Withdraw any RPL that has been unstaking long enough
+        _withdrawUnstakingRPL(_nodeAddress);
+        // Move RPL from staking to unstaking
+        _decreaseNodeLegacyRPLStake(_nodeAddress, _amount, true);
+        addUint(keccak256(abi.encodePacked("rpl.megapool.unstaking.amount", _nodeAddress)), _amount);
+        // Reset the unstake time
+        _setNodeLastUnstakeTime(_nodeAddress);
+        // Emit event
+        emit RPLLegacyUnstaked(_nodeAddress, _amount, block.timestamp);
+    }

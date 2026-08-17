@@ -1,0 +1,1 @@
+function getMaximumCount() external view returns (uint256);

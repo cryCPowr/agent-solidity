@@ -1,0 +1,1 @@
+remainingRplAmount.mul(getLotPriceAtCurrentBlock(_lotIndex)).div(calcBase)

@@ -1,0 +1,3 @@
+function getGuardian() external override view returns (address) {
+        return guardian;
+    }

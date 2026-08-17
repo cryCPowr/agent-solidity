@@ -1,0 +1,1 @@
+getUint(keccak256(abi.encodePacked(daoNameSpace, "node.challenge.created.time", msg.sender))).add(rocketDAONodeTrustedSettingsMembers.getChallengeCooldown())

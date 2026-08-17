@@ -1,0 +1,1 @@
+rocketNodeStaking.lockRPL(_proposer, proposalBond)

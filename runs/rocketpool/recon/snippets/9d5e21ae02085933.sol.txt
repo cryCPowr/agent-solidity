@@ -1,0 +1,8 @@
+function bootstrapDisable(bool _confirmDisableBootstrapMode) override external onlyGuardian onlyBootstrapMode onlyLatestContract("rocketDAOProtocol", address(this)) {
+        // Prevent disabling bootstrap if on-chain governance has not been enabled
+        require(getUint(keccak256(abi.encodePacked("protocol.dao.enabled.block"))) > 0, "On-chain governance must be enabled first");
+        // Disable bootstrap
+        require(_confirmDisableBootstrapMode == true, "You must confirm disabling bootstrap mode, it can only be done once!");
+        setBool(keccak256(abi.encodePacked(daoNameSpace, "bootstrapmode.disabled")), true);
+        emit BootstrapDisabled(block.timestamp);
+    }

@@ -1,0 +1,1 @@
+function getContainsLegacy() external view returns (bool);

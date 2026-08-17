@@ -1,0 +1,18 @@
+contract RocketVault is RocketBase, RocketVaultInterface {
+
+    // Libs
+    using SafeMath for uint;
+    using SafeERC20 for IERC20;
+
+    // Network contract balances
+    mapping(string => uint256) etherBalances;
+    mapping(bytes32 => uint256) tokenBalances;
+
+    // Events
+    event EtherDeposited(string indexed by, uint256 amount, uint256 time);
+    event EtherWithdrawn(string indexed by, uint256 amount, uint256 time);
+    event TokenDeposited(bytes32 indexed by, address indexed tokenAddress, uint256 amount, uint256 time);
+    event TokenWithdrawn(bytes32 indexed by, address indexed tokenAddress, uint256 amount, uint256 time);
+    event TokenBurned(bytes32 indexed by, address indexed tokenAddress, uint256 amount, uint256 time);
+    event TokenTransfer(bytes32 indexed by, bytes32 indexed 
+/* … truncated … */

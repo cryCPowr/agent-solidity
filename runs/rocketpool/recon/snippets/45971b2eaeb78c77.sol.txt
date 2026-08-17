@@ -1,0 +1,3 @@
+function getIndexOf(bytes32 _namespace, DepositQueueKey memory _key) override external view returns (uint256) {
+        return getUint(keccak256(abi.encodePacked(_namespace, ".index", _key.receiver, _key.validatorId)));
+    }

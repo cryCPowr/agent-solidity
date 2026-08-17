@@ -1,0 +1,3 @@
+if (intervalsSinceLastMint == 0) {
+            return 0;
+        }

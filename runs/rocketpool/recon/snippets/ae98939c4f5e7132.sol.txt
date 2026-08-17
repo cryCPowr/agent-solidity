@@ -1,0 +1,9 @@
+if (nextIndex > 0) {
+            // Not the last item
+            setUint(keccak256(abi.encodePacked(_namespace, ".prev", nextIndex)), prevIndex);
+        } else {
+            // Last item
+            // clear the 64 bits used to stored the 'end' pointer
+            data &= ~(uint256(ones64Bits) << endOffset);
+            data |= prevIndex << endOffset;
+        }

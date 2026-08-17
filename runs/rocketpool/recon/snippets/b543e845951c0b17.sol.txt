@@ -1,0 +1,1 @@
+rocketNetworkSnapshotsTime.push(penaltyKey, currentRunningTotal + SafeCast.toUint192(_amount))

@@ -1,0 +1,1 @@
+ProposalAdded(_proposer, proposalID, _payload, block.timestamp)

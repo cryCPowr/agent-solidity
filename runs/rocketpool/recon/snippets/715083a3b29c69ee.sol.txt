@@ -1,0 +1,14 @@
+function _enqueueItem(bytes32 _namespace, DepositQueueValue memory _item) internal {
+        require(getUint(keccak256(abi.encodePacked(_namespace, ".index", _item.receiver, _item.validatorId))) == 0, "Item already exists in queue");
+        uint256 data = getUint(keccak256(abi.encodePacked(_namespace, ".data")));
+        uint256 endIndex = uint64(data >> endOffset);
+        uint256 newIndex = endIndex + 1;
+
+        if (endIndex > 0) {
+            setUint(keccak256(abi.encodePacked(_namespace, ".next", endIndex)), newIndex);
+            setUint(keccak256(abi.encodePacked(_namespace, ".prev", newIndex)), endIndex);
+        } else {
+            // clear the 64 bits used to stored the 'start' pointer
+            data &= ~(uint256(ones64Bits) << startOffset);
+            data |= newIndex << st
+/* … truncated … */

@@ -1,0 +1,1 @@
+function getBondRequirement(uint256 _numValidators) external view returns (uint256);

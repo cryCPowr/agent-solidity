@@ -1,0 +1,4 @@
+modifier onlyMinipoolOwner(address _nodeAddress) {
+        require(_nodeAddress == nodeAddress, "Invalid minipool owner");
+        _;
+    }

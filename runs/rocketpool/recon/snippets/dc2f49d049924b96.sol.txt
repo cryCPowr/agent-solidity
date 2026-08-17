@@ -1,0 +1,1 @@
+function getBalancesBlock() external view returns (uint256);

@@ -1,0 +1,6 @@
+modifier onlyValidSetting(string memory _settingNameSpace, string memory _settingPath) {
+        if (!getBool(keccak256(abi.encodePacked("dao.security.allowed.setting", _settingNameSpace, _settingPath)))) {
+            revert("Setting is not modifiable by security council");
+        }
+        _;
+    }

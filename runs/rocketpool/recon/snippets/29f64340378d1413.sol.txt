@@ -1,0 +1,1 @@
+setSettingBool("rewards.network.enabled", true)

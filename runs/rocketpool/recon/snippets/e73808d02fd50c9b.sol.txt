@@ -1,0 +1,1 @@
+if (getLotPriceByTotalBids(_index) >= getLotPriceAtCurrentBlock(_index)) { return true; }

@@ -1,0 +1,1 @@
+function getChallengeCost() external view returns(uint256);

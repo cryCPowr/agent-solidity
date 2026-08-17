@@ -1,0 +1,1 @@
+setUint(keccak256(abi.encodePacked(settingNameSpace, "rewards.claims", "group.amount", "rocketClaimDAO")), 0.1 ether)

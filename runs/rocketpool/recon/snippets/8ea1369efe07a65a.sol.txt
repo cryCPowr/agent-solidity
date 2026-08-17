@@ -1,0 +1,5 @@
+function getRewardsClaimersPerc() override public view returns (uint256 trustedNodePerc, uint256 protocolPerc, uint256 nodePerc) {
+        trustedNodePerc = getUint(keccak256(abi.encodePacked(settingNameSpace, "rewards.claims", "group.amount", "rocketClaimTrustedNode")));
+        protocolPerc = getUint(keccak256(abi.encodePacked(settingNameSpace, "rewards.claims", "group.amount", "rocketClaimDAO")));
+        nodePerc = getUint(keccak256(abi.encodePacked(settingNameSpace, "rewards.claims", "group.amount", "rocketClaimNode")));
+    }

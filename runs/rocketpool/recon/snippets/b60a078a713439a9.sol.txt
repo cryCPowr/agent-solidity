@@ -1,0 +1,1 @@
+totalActiveMinipoolCount + 1 <= rocketDAOProtocolSettingsMinipool.getMaximumCount()

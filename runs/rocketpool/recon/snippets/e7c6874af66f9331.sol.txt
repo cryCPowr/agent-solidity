@@ -1,0 +1,3 @@
+if (assignments > totalEthCount) {
+            assignments = totalEthCount;
+        }

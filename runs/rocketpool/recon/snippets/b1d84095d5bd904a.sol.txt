@@ -1,0 +1,1 @@
+function proposalSettingUint(string memory _settingContractName, string memory _settingPath, uint256 _value) external;

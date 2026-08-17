@@ -1,0 +1,4 @@
+if (getBool(migratedKey)) {
+            bytes32 legacyKey = keccak256(abi.encodePacked("rpl.legacy.staked.node.amount", _nodeAddress));
+            return getUint(legacyKey);
+        }

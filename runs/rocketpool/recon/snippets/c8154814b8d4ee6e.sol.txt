@@ -1,0 +1,1 @@
+function getAllottedRPLBalance() external view returns (uint256);

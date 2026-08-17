@@ -1,0 +1,1 @@
+uint256 constant internal endOffset = 256 - 128

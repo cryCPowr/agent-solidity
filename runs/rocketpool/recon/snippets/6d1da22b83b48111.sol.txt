@@ -1,0 +1,1 @@
+abi.encodePacked("network.prices.submitted.node", msg.sender, _block)

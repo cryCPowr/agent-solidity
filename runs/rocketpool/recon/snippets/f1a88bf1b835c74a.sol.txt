@@ -1,0 +1,10 @@
+if (_sinceTime == block.timestamp) {
+            nodeShare = _getCurrentShare(rocketNetworkSnapshotsTime, nodeShareKey, true);
+            voterShare = _getCurrentShare(rocketNetworkSnapshotsTime, voterShareKey, true);
+            protocolDAOShare = _getCurrentShare(rocketNetworkSnapshotsTime, protocolDAOShareKey, true);
+        } else {
+            require(_sinceTime < block.timestamp, "Time must be in the past");
+            nodeShare = _getAverageSince(rocketNetworkSnapshotsTime, _sinceTime, nodeShareKey, true);
+            voterShare = _getAverageSince(rocketNetworkSnapshotsTime, _sinceTime, voterShareKey, true);
+            protocolDAOShare = _getAverageSince(rocketNetworkSnapshotsTime, _sinceTime, protocolDAOShareKey, true);
+        }

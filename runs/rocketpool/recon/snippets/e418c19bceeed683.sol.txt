@@ -1,0 +1,1 @@
+event BootstrapSettingMulti(string[] settingContractNames, string[] settingPaths, SettingType[] types, bytes[] values, uint256 time);

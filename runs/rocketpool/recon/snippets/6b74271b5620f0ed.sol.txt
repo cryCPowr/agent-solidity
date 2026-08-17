@@ -1,0 +1,1 @@
+function getMemberMinRequired() external view returns (uint256);

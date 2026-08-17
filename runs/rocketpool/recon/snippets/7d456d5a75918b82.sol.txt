@@ -1,0 +1,1 @@
+functionStaticCall(target, data, "Address: low-level static call failed")

@@ -1,0 +1,1 @@
+require(value < 2**8, "SafeCast: value doesn\'t fit in 8 bits")

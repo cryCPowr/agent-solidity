@@ -1,0 +1,1 @@
+require(beaconStateVerifier.verifySlot(_slotTimestamp, _slotProof), "Invalid slot proof")

@@ -1,0 +1,1 @@
+require(_value > block.timestamp, "Inflation interval start time must be in the future")

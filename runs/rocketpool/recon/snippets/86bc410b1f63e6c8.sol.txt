@@ -1,0 +1,14 @@
+function notifyNotExit(uint32 _validatorId, uint64 _slotTimestamp) override external onlyRocketMegapoolManager {
+        ValidatorInfo memory validator = validators[_validatorId];
+        // Check required state
+        require(validator.locked, "Validator not locked");
+        require(_slotTimestamp >= validator.lockedTime, "Proof is older than challenge");
+        // Update validator state to unlocked
+        validator.locked = false;
+        validator.lockedTime = 0;
+        // Decrement locked validator counter
+        numLockedValidators -= 1;
+        validators[_validatorId] = validator;
+        // Emit event
+        emit MegapoolValidatorUnlocked(_validatorId, block.timestamp);
+    }

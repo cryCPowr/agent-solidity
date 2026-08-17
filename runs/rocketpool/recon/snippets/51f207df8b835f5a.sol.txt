@@ -1,0 +1,1 @@
+msg.value * rocketDAOProtocolSettingsDeposit.getDepositFee() / calcBase

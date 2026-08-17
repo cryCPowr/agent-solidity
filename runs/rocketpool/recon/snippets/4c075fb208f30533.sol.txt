@@ -1,0 +1,3 @@
+function canReduceBondAmount(address _minipoolAddress) override public view returns (bool) {
+        return false;
+    }

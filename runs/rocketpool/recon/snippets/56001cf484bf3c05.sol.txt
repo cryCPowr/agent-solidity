@@ -1,0 +1,3 @@
+if (usableCredit > depositPoolBalance) {
+            usableCredit = depositPoolBalance;
+        }

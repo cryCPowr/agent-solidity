@@ -1,0 +1,1 @@
+function stakeRPLFor(address _nodeAddress, uint256 _amount) external;

@@ -1,0 +1,10 @@
+function stake(bytes calldata _validatorSignature, bytes32 _depositDataRoot) override external onlyMinipoolOwner(msg.sender) onlyInitialised {
+        // Get contracts
+        RocketDAOProtocolSettingsMinipoolInterface rocketDAOProtocolSettingsMinipool = RocketDAOProtocolSettingsMinipoolInterface(getContractAddress("rocketDAOProtocolSettingsMinipool"));
+        {
+            // Get scrub period
+            RocketDAONodeTrustedSettingsMinipoolInterface rocketDAONodeTrustedSettingsMinipool = RocketDAONodeTrustedSettingsMinipoolInterface(getContractAddress("rocketDAONodeTrustedSettingsMinipool"));
+            uint256 scrubPeriod = rocketDAONodeTrustedSettingsMinipool.getScrubPeriod();
+            // Check current status
+            require(status == MinipoolStatus.Prelaunch, "The minipool can
+/* … truncated … */

@@ -1,0 +1,1 @@
+_setSettingUint("network.node.fee.minimum", 0.15 ether)

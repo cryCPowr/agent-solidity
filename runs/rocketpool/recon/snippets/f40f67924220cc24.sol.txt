@@ -1,0 +1,1 @@
+emit ABIAdded(nameHash, block.timestamp)

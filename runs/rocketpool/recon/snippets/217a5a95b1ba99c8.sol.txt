@@ -1,0 +1,1 @@
+require(getBool(daoTrustedBootstrapKey) == false, "Bootstrap mode not engaged")

@@ -1,0 +1,1 @@
+event MegapoolValidatorLocked(uint256 indexed validatorId, uint256 time);

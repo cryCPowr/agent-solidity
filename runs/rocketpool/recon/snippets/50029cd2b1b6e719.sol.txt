@@ -1,0 +1,3 @@
+function subUint(bytes32 _key, uint256 _amount) onlyLatestRocketNetworkContract override external {
+        uintStorage[_key] = uintStorage[_key].sub(_amount);
+    }

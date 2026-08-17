@@ -1,0 +1,1 @@
+function burnRPL(address _from, uint256 _amount) external;

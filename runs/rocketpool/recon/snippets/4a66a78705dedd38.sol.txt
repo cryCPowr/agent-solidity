@@ -1,0 +1,3 @@
+function _setBalancesBlock(uint256 _value) internal {
+        setUint(keccak256("network.balances.updated.block"), _value);
+    }

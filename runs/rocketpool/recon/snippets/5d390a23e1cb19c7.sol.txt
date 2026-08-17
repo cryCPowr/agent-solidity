@@ -1,0 +1,1 @@
+computeRootFromWitness(treeIndex, leaf, _witness)

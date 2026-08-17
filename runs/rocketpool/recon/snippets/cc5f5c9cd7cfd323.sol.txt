@@ -1,0 +1,4 @@
+if (value >= 10 ** 2) {
+                value /= 10 ** 2;
+                result += 2;
+            }

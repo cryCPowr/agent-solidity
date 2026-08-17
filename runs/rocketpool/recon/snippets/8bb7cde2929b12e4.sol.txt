@@ -1,0 +1,1 @@
+rocketMinipoolQueue.removeMinipool(MinipoolDeposit.Full)

@@ -1,0 +1,1 @@
+abi.encodePacked(_nodeOperator, _salt)

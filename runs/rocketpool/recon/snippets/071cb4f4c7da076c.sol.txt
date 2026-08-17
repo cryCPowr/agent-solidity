@@ -1,0 +1,17 @@
+function computeRootFromNodes(Types.Node[] calldata _nodes) internal pure returns (Types.Node memory) {
+        uint256 len = _nodes.length / 2;
+        // Perform first step into a new temporary memory buffer to leave original intact
+        Types.Node[] memory temp = new Types.Node[](len);
+        for (uint256 i = 0; i < len; ++i) {
+            temp[i].hash = keccak256(abi.encodePacked(
+                    _nodes[i * 2].hash, _nodes[i * 2].sum,
+                    _nodes[i * 2 + 1].hash, _nodes[i * 2 + 1].sum
+                ));
+            temp[i].sum = _nodes[i * 2].sum + _nodes[i * 2 + 1].sum;
+        }
+        // Compute the remainder within the temporary buffer
+        while (len > 1) {
+            len /= 2;
+            for (uint256 i = 0; i < len; ++i) {
+                temp[i].has
+/* … truncated … */

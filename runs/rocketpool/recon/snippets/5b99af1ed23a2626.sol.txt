@@ -1,0 +1,3 @@
+function getCreated(uint256 _proposalID) override external view returns (uint256) {
+        return getUint(keccak256(abi.encodePacked(daoProposalNameSpace, "created", _proposalID))); 
+    }

@@ -1,0 +1,3 @@
+if(rocketNodeManager.getNodeAt(_nodeIndex) != _voter) {
+            return false;
+        }

@@ -1,0 +1,1 @@
+rocketDepositPool.reduceBond(nodeAddress, _amount)

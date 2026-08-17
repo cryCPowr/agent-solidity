@@ -1,0 +1,1 @@
+verifier.verifyWithdrawal(_slotTimestamp, _slot, _proof)

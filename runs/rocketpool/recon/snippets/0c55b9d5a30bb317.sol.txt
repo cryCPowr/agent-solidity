@@ -1,0 +1,1 @@
+emit EtherReceived(msg.sender, msg.value, block.timestamp)

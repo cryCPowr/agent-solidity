@@ -1,0 +1,1 @@
+emit MegapoolDebtIncreased(_amount, block.timestamp)

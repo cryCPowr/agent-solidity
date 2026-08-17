@@ -1,0 +1,5 @@
+function depositVoterShare() override payable external {
+        // Transfer incoming ETH directly to the vault
+        RocketVaultInterface rocketVault = RocketVaultInterface(getContractAddress("rocketVault"));
+        rocketVault.depositEther{value: msg.value}();
+    }

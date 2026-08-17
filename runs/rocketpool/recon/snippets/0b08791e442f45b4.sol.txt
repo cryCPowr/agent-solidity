@@ -1,0 +1,1 @@
+rocketVault.depositToken("rocketMerkleDistributorMainnet", rocketTokenRPL, _rewardsRPL)

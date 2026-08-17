@@ -1,0 +1,1 @@
+require(userDistributeAllowed(), "Only owner can distribute right now")

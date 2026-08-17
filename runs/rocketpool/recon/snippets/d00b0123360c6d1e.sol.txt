@@ -1,0 +1,1 @@
+require(getState(_upgradeProposalID) == UpgradeProposalState.Pending, "Proposal has already succeeded, expired, or executed")

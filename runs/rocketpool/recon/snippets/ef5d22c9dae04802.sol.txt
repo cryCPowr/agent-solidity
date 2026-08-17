@@ -1,0 +1,5 @@
+if (_expressQueue) {
+            rocketNodeManager.useExpressTicket(nodeAddress);
+        } else {
+            rocketNodeManager.provisionExpressTickets(nodeAddress);
+        }

@@ -1,0 +1,3 @@
+if (value >> 1 > 0) {
+                result += 1;
+            }

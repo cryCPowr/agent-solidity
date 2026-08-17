@@ -1,0 +1,12 @@
+function preDeposit(uint256 _bondValue, bytes calldata _validatorPubkey, bytes calldata _validatorSignature, bytes32 _depositDataRoot) override external payable onlyLatestContract("rocketNodeDeposit", msg.sender) onlyInitialised {
+        // Check current status & node deposit status
+        require(status == MinipoolStatus.Initialised, "The pre-deposit can only be made while initialised");
+        require(preLaunchValue == 0, "Pre-deposit already performed");
+        // Update node deposit details
+        nodeDepositBalance = _bondValue;
+        preLaunchValue = msg.value;
+        // Emit ether deposited event
+        emit EtherDeposited(msg.sender, preLaunchValue, block.timestamp);
+        // Perform the pre-stake to lock in withdrawal credentials on beacon chain
+        preStake(_valida
+/* … truncated … */

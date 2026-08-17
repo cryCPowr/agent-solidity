@@ -1,0 +1,1 @@
+_overrideVote(delegate, msg.sender, _proposalID, votingPower, delegateVote)

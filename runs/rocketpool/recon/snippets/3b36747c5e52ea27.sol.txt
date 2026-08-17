@@ -1,0 +1,1 @@
+function getMinipoolWithdrawalCredentials(address _minipoolAddress) external pure returns (bytes memory);

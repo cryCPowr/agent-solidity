@@ -1,0 +1,11 @@
+function confirmGuardian() external override {
+        // Check tx came from new guardian address
+        require(msg.sender == newGuardian, "Confirmation must come from new guardian address");
+        // Store old guardian for event
+        address oldGuardian = guardian;
+        // Update guardian and clear storage
+        guardian = newGuardian;
+        delete newGuardian;
+        // Emit event
+        emit GuardianChanged(oldGuardian, guardian);
+    }

@@ -1,0 +1,1 @@
+function getSubmitPricesFrequency() external view returns (uint256);

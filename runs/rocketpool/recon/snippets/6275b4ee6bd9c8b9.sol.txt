@@ -1,0 +1,1 @@
+IERC20 rplFixedSupplyContract = IERC20(address(0))

@@ -1,0 +1,1 @@
+_votesRequired > 0

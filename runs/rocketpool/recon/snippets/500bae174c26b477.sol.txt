@@ -1,0 +1,1 @@
+event GuardianChanged(address oldGuardian, address newGuardian);

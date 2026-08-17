@@ -1,0 +1,1 @@
+getSettingUint("network.max.node.commission.share.council.adder")

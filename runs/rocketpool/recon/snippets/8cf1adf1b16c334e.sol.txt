@@ -1,0 +1,1 @@
+function removeMinipool(MinipoolDeposit _depositType) external;

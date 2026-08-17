@@ -1,0 +1,1 @@
+function overrideVote(uint256 _proposalID, VoteDirection _voteDirection) external;

@@ -1,0 +1,4 @@
+function refundExpressTicket(address _nodeAddress) external override onlyLatestContract("rocketNodeManager", address(this)) onlyLatestContract("rocketDepositPool", msg.sender) {
+        // Refunds can only occur after the use of a ticket which guarantees tickets were provisioned
+        addUint(keccak256(abi.encodePacked("node.express.tickets", _nodeAddress)), 1);
+    }

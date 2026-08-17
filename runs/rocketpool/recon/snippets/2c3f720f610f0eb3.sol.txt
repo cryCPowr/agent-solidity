@@ -1,0 +1,1 @@
+function getCancelBondReductionQuorum() external view returns(uint256);

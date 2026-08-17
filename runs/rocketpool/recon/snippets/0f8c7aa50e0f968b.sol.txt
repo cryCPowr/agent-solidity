@@ -1,0 +1,1 @@
+computeRootFromWitness(_index, _node, _witness)

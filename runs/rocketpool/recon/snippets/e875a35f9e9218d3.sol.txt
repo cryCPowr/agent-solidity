@@ -1,0 +1,3 @@
+function getBytes32(bytes32 _key) override external view returns (bytes32 r) {
+        return bytes32Storage[_key];
+    }

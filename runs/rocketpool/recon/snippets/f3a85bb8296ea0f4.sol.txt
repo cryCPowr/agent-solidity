@@ -1,0 +1,1 @@
+keccak256("megapool.validator.set.count")

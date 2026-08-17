@@ -1,0 +1,12 @@
+function _memberInit(string memory _id, address _memberAddress) private {
+        // Load contracts
+        RocketDAOSecurityInterface daoSecurity = RocketDAOSecurityInterface(getContractAddress("rocketDAOSecurity"));
+        // Check current node status
+        require(!daoSecurity.getMemberIsValid(_memberAddress), "This node is already part of the security council");
+        // Verify the ID is min 3 chars
+        require(bytes(_id).length >= 3, "The ID for this new member must be at least 3 characters");
+        // Member initial data, not official until the bool is flagged as true
+        setBool(keccak256(abi.encodePacked(daoNameSpace, "member", _memberAddress)), false);
+        setAddress(keccak256(abi.encodePacked(daoNameSpace, "member.address", _memberAddress)), _memberAddress);
+  
+/* … truncated … */

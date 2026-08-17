@@ -1,0 +1,1 @@
+_claim[i].rewardIndex % 256

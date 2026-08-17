@@ -1,0 +1,12 @@
+function getNodeShare() override public view returns (uint256) {
+        // Get contracts
+        RocketNodeManagerInterface rocketNodeManager = RocketNodeManagerInterface(rocketStorage.getAddress(rocketNodeManagerKey));
+        RocketNodeStakingInterface rocketNodeStaking = RocketNodeStakingInterface(rocketStorage.getAddress(rocketNodeStakingKey));
+        // Get withdrawal address and the node's average node fee
+        uint256 averageNodeFee = rocketNodeManager.getAverageNodeFee(nodeAddress);
+        // Get node ETH collateral ratio
+        uint256 collateralRatio = rocketNodeStaking.getNodeETHCollateralisationRatio(nodeAddress);
+        // Calculate reward split
+        uint256 nodeBalance = address(this).balance * calcBase / collateralRatio;
+        uint256 userBalance = address(this)
+/* … truncated … */

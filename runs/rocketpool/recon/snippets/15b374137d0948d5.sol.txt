@@ -1,0 +1,10 @@
+if (settingKey == keccak256(bytes("notify.threshold"))) {
+                require(_value >= 19 && _value <= 456, "Value must be >= 19 epochs & <= 456 epochs");
+            } else if (settingKey == keccak256(bytes("late.notify.fine"))) {
+                require(_value >= 0.01 ether && _value <= 0.5 ether, "Value must be >= 0.01 ETH & <= 0.5 ETH");
+            } else if (settingKey == keccak256(bytes("user.distribute.delay"))) {
+                require(_value >= 225 && _value <= 13500, "Value must be >= 225 & <= 13500 epochs");
+                require(_value <= getSettingUint("user.distribute.delay.shortfall"), "Value must be <= user.distribute.delay.shortfall");
+            } else if (settingKey == keccak256(bytes("user.distribute.delay.shortfall"))) {
+                require(_value >= 6750
+/* … truncated … */

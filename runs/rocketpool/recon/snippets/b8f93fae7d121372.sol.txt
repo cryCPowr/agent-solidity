@@ -1,0 +1,1 @@
+function getIndexOf(bytes32 _namespace, DepositQueueKey memory _key) external view returns (uint256);

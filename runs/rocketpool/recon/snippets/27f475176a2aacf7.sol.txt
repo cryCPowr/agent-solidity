@@ -1,0 +1,1 @@
+proposalSettingUint(_settingContractNames[i], _settingPaths[i], value)

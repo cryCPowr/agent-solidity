@@ -1,0 +1,1 @@
+BondReduced(previousBond, newBond, block.timestamp)

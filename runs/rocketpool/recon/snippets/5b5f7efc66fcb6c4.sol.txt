@@ -1,0 +1,1 @@
+setChallengeState(state, Types.ChallengeState.Paid)

@@ -1,0 +1,9 @@
+function dequeueMinipool(bytes32 _key) private returns (address) {
+        // Dequeue
+        AddressQueueStorageInterface addressQueueStorage = AddressQueueStorageInterface(getContractAddress("addressQueueStorage"));
+        address minipool = addressQueueStorage.dequeueItem(_key);
+        // Emit dequeued event
+        emit MinipoolDequeued(minipool, _key, block.timestamp);
+        // Return
+        return minipool;
+    }

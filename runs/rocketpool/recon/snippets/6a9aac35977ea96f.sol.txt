@@ -1,0 +1,3 @@
+interface RocketVaultWithdrawerInterface {
+    function receiveVaultWithdrawalETH() external payable; 
+}

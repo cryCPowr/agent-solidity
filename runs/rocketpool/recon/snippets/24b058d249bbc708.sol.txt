@@ -1,0 +1,1 @@
+require(msg.sender == rocketStorage.getAddress(rocketNodeDepositKey), "Invalid or outdated contract")

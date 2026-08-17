@@ -1,0 +1,1 @@
+_assignMegapools(_max, _rocketDAOProtocolSettingsDeposit)

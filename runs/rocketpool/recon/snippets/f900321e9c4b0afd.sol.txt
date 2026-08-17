@@ -1,0 +1,5 @@
+function setChallengeState(uint256 _data, Types.ChallengeState _newState) internal pure returns (uint256) {
+        _data &= ~(uint256(~uint8(0)) << stateOffset);
+        _data |= uint256(_newState) << stateOffset;
+        return _data;
+    }

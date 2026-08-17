@@ -1,0 +1,1 @@
+if (_block <= startBlock) { return startPrice; }

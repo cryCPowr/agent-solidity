@@ -1,0 +1,1 @@
+nodeQueuedBond == 0

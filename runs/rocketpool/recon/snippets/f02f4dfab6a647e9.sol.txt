@@ -1,0 +1,1 @@
+linkedListStorage.peekItem(namespace)

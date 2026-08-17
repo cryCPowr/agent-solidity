@@ -1,0 +1,1 @@
+function proposalVeto(uint256 _upgradeProposalId) external;

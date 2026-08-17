@@ -1,0 +1,1 @@
+function initialise(address _nodeAddress) external;

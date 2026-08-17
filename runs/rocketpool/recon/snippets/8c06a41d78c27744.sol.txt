@@ -1,0 +1,3 @@
+function getString(bytes32 _key) override external view returns (string memory) {
+        return stringStorage[_key];
+    }

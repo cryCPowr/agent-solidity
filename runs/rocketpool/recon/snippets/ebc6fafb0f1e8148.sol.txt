@@ -1,0 +1,1 @@
+rocketVault.withdrawToken(_recipientAddress, rplToken, amount)

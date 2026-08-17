@@ -1,0 +1,8 @@
+function setStatus(MinipoolStatus _status) private {
+        // Update status
+        status = _status;
+        statusBlock = block.number;
+        statusTime = block.timestamp;
+        // Emit status updated event
+        emit StatusUpdated(uint8(_status), block.timestamp);
+    }

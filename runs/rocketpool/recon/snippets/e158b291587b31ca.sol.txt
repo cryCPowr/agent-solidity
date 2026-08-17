@@ -1,0 +1,1 @@
+function getSubmitPricesEnabled() external view returns (bool);

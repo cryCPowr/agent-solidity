@@ -1,0 +1,5 @@
+interface RocketNodeDistributorFactoryInterface {
+    function getProxyBytecode() external pure returns (bytes memory);
+    function getProxyAddress(address _nodeAddress) external view returns(address);
+    function createProxy(address _nodeAddress) external;
+}

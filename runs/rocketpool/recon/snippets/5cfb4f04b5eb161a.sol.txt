@@ -1,0 +1,1 @@
+setSettingBool("node.smoothing.pool.registration.enabled", true)

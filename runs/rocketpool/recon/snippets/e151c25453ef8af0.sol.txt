@@ -1,0 +1,1 @@
+function initialise(uint256 _initialNodeShare, uint256 _initialVoterShare, uint256 _initialProtocolDAOShare) external;

@@ -1,0 +1,9 @@
+function _getAccumulatorAt(RocketNetworkSnapshotsTimeInterface _rocketNetworkSnapshotsTime, bytes32 _key, uint256 _time, bool _mustExist) internal view returns (uint256) {
+        (bool checkpointExists, uint64 checkpointTime, uint192 checkpointValue) = _rocketNetworkSnapshotsTime.lookupCheckpoint(_key, SafeCast.toUint64(_time));
+        require(!_mustExist || checkpointExists, "Snapshot does not exist");
+        if (!checkpointExists) return 0;
+        bytes32 valueKey = bytes32(uint256(_key) + checkpointTime);
+        uint256 valueAtTime = getUint(valueKey);
+        uint256 timeDuration = (_time - checkpointTime);
+        return uint256(checkpointValue) + (valueAtTime * timeDuration);
+    }

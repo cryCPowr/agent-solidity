@@ -1,0 +1,1 @@
+require(status == MinipoolStatus.Initialised, "The pre-deposit can only be made while initialised")

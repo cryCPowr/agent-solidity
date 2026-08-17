@@ -1,0 +1,1 @@
+require(getInflationIntervalStartTime() > block.timestamp, "Inflation has already started")

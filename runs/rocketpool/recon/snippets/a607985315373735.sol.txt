@@ -1,0 +1,1 @@
+_setSettingUint("maximum.megapool.eth.penalty", 612 ether)

@@ -1,0 +1,14 @@
+function getBondRequirement(uint256 _numValidators) override public view returns (uint256) {
+        if (_numValidators == 0) {
+            return 0;
+        }
+        // Get contracts
+        RocketDAOProtocolSettingsNodeInterface rocketDAOProtocolSettingsNode = RocketDAOProtocolSettingsNodeInterface(getContractAddress("rocketDAOProtocolSettingsNode"));
+        // Calculate bond requirement (per RPIP-42)
+        uint256[] memory baseBondArray = rocketDAOProtocolSettingsNode.getBaseBondArray();
+        if (_numValidators - 1 < baseBondArray.length) {
+            return baseBondArray[_numValidators - 1];
+        }
+        uint256 reducedBond = rocketDAOProtocolSettingsNode.getReducedBond();
+        return baseBondArray[baseBondArray.length - 1] + (_numValidators - baseBondArray.length) * re
+/* … truncated … */

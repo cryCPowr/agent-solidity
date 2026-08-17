@@ -1,0 +1,14 @@
+function distributeBalance(bool _rewardsOnly) override external onlyInitialised {
+        // Get node withdrawal address
+        address nodeWithdrawalAddress = rocketStorage.getNodeWithdrawalAddress(nodeAddress);
+        bool ownerCalling = msg.sender == nodeAddress || msg.sender == nodeWithdrawalAddress;
+        // If dissolved, distribute everything to the owner
+        if (status == MinipoolStatus.Dissolved) {
+            require(ownerCalling, "Only owner can distribute dissolved minipool");
+            distributeToOwner();
+            return;
+        }
+        // Can only be called while in staking status
+        require(status == MinipoolStatus.Staking, "Minipool must be staking");
+        // Get withdrawal amount, we must also account for a possible node refund balance on the contra
+/* … truncated … */

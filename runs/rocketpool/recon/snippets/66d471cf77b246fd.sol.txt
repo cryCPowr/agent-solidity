@@ -1,0 +1,1 @@
+prod0 |= prod1 * twos

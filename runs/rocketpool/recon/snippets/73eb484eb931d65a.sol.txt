@@ -1,0 +1,1 @@
+require(!daoNodeTrusted.getMemberIsValid(_nodeAddress), "This node is already part of the trusted node DAO")

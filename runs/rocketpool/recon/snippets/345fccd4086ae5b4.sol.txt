@@ -1,0 +1,6 @@
+if (_types[i] == SettingType.ADDRESS) {
+                address value = abi.decode(_data[i], (address));
+                proposalSettingAddress(_settingContractNames[i], _settingPaths[i], value);
+            } else {
+                revert("Invalid setting type");
+            }

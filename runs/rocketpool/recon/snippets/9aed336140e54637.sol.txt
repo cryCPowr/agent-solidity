@@ -1,0 +1,14 @@
+function getNodeFeeByDemand(int256 _nodeDemand) override public view returns (uint256) {
+        // Calculation base values
+        uint256 demandDivisor = 1000000000000;
+        // Get settings
+        RocketDAOProtocolSettingsNetworkInterface rocketDAOProtocolSettingsNetwork = RocketDAOProtocolSettingsNetworkInterface(getContractAddress("rocketDAOProtocolSettingsNetwork"));
+        uint256 minFee = rocketDAOProtocolSettingsNetwork.getMinimumNodeFee();
+        uint256 targetFee = rocketDAOProtocolSettingsNetwork.getTargetNodeFee();
+        uint256 maxFee = rocketDAOProtocolSettingsNetwork.getMaximumNodeFee();
+        uint256 demandRange = rocketDAOProtocolSettingsNetwork.getNodeFeeDemandRange();
+        // Normalize node demand
+        uint256 nNodeDemand;
+        bool nNodeDemandSign;
+  
+/* … truncated … */

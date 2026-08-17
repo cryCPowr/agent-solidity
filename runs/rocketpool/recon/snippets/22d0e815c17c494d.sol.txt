@@ -1,0 +1,1 @@
+setSettingBool("deposit.assign.enabled", true)

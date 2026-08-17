@@ -1,0 +1,11 @@
+constructor(RocketStorageInterface _rocketStorageAddress) RocketDAONodeTrustedSettings(_rocketStorageAddress, "rewards") {
+        // Set version
+        version = 2;
+        // Initialize settings on deployment
+        if(!getBool(keccak256(abi.encodePacked(settingNameSpace, "deployed")))) {
+            // Init settings
+            setSettingBool("rewards.network.enabled", true);
+            // Settings initialised
+            setBool(keccak256(abi.encodePacked(settingNameSpace, "deployed")), true);
+        }
+    }

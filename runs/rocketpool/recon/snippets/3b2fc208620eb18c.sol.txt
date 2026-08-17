@@ -1,0 +1,7 @@
+function _push(bytes32 _key, Checkpoint192 memory _item) internal {
+        bytes32 lengthKey = keccak256(abi.encodePacked("snapshot.time.length", _key));
+        uint256 snapshotLength = rocketStorage.getUint(lengthKey);
+        bytes32 key = bytes32(uint256(_key) + snapshotLength);
+        rocketStorage.setUint(lengthKey, snapshotLength + 1);
+        rocketStorage.setBytes32(key, _encode(_item));
+    }

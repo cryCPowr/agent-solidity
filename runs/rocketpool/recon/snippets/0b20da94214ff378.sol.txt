@@ -1,0 +1,3 @@
+function getMinipoolRPLSlashed(address _minipoolAddress) override external view returns (bool) {
+        return getBool(keccak256(abi.encodePacked("minipool.rpl.slashed", _minipoolAddress)));
+    }

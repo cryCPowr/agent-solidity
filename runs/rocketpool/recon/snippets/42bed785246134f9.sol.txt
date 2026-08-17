@@ -1,0 +1,1 @@
+pubkey.length == 48

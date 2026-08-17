@@ -1,0 +1,3 @@
+unchecked { // Infeasible overflow
+            numExitingValidators += 1;
+        }

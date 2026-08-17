@@ -1,0 +1,1 @@
+require(getRethCommission() <= 1 ether, "rETH Commission must be <= 100%")

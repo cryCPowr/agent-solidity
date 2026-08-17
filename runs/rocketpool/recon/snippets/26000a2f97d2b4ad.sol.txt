@@ -1,0 +1,6 @@
+function slash() external override onlyInitialised {
+        // Check there is a slash balance
+        require(nodeSlashBalance > 0, "No balance to slash");
+        // Perform slash
+        _slash();
+    }

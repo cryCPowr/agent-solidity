@@ -1,0 +1,1 @@
+function proposalSecurityKick(address _memberAddress) external;

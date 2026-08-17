@@ -1,0 +1,1 @@
+function bootstrapSettingBool(string memory _settingContractName, string memory _settingPath, bool _value) external;

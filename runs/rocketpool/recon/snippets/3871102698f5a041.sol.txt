@@ -1,0 +1,1 @@
+keccak256("network.balance.reth.supply")

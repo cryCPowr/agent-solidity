@@ -1,0 +1,1 @@
+require(value <= type(uint32).max, "SafeCast: value doesn't fit in 32 bits")

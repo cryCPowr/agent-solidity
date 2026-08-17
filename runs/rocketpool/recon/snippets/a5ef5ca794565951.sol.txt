@@ -1,0 +1,3 @@
+function dequeueItem(bytes32 _namespace) public virtual override onlyLatestContract("linkedListStorage", address(this)) onlyLatestNetworkContract returns (DepositQueueValue memory item) {
+        return _dequeueItem(_namespace);
+    }

@@ -1,0 +1,1 @@
+SafeCast.toUint32(_bondAmount / milliToWei)

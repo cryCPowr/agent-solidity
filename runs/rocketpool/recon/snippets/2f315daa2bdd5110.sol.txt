@@ -1,0 +1,4 @@
+function finalise() override external onlyMinipoolOwnerOrWithdrawalAddress(msg.sender) onlyInitialised {
+        require(userDistributed, "Can only manually finalise after user distribution");
+        _finalise();
+    }

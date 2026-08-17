@@ -1,0 +1,7 @@
+function getMegapoolAddress(address _nodeAddress) override external view returns (address) {
+        RocketMegapoolFactoryInterface rocketMegapoolFactory = RocketMegapoolFactoryInterface(getContractAddress("rocketMegapoolFactory"));
+        if (rocketMegapoolFactory.getMegapoolDeployed(_nodeAddress)) {
+            return rocketMegapoolFactory.getExpectedAddress(_nodeAddress);
+        }
+        return address(0x0);
+    }

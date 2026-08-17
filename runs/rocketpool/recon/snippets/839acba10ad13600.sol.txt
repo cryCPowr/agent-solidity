@@ -1,0 +1,1 @@
+getNextDepth(_index, nodeCount)

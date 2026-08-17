@@ -1,0 +1,3 @@
+function getBondReductionEnabled() override external view returns (bool) {
+        return getSettingBool("minipool.bond.reduction.enabled");
+    }

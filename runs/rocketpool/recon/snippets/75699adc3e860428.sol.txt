@@ -1,0 +1,18 @@
+contract RocketDAOProtocolVerifier is RocketBase, RocketDAOProtocolVerifierInterface {
+
+    uint256 constant internal depthPerRound = 5;
+
+    // Packing constants for packing challenge data into a single uint256
+    uint256 constant internal stateOffset = (256 - 8);
+    uint256 constant internal timestampOffset = (256 - 8 - 64);
+    uint256 constant internal addressOffset = (256 - 8 - 64 - 160);
+
+    // Offsets into storage for proposal details
+    uint256 constant internal proposerOffset = 0;
+    uint256 constant internal blockNumberOffset = 1;
+    uint256 constant internal nodeCountOffset = 2;
+    uint256 constant internal defeatIndexOffset = 3;
+    uint256 constant internal proposalBondOffset = 4;
+    uint256 constant internal challengeBondOffset = 5;
+    uint256 constant internal chall
+/* … truncated … */

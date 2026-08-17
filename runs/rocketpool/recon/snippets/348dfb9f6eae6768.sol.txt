@@ -1,0 +1,12 @@
+function setSettingUint(string memory _settingPath, uint256 _value) override public onlyDAOProtocolProposal {
+        // Some safety guards for certain settings
+        if(getBool(keccak256(abi.encodePacked(settingNameSpace, "deployed")))) {
+            bytes32 settingKey = keccak256(abi.encodePacked(_settingPath));
+            if(settingKey == keccak256(abi.encodePacked("auction.lot.value.minimum"))) {
+                // >= 1 RPL (RPIP-33)
+                require(_value >= 1 ether, "Value must be >= 1 RPL");
+            } else if(settingKey == keccak256(abi.encodePacked("auction.lot.value.maximum"))) {
+                // >= 1 RPL (RPIP-33)
+                require(_value >= 1 ether, "Value must be >= 1 RPL");
+            } else if(settingKey == keccak256(abi.encodePacked("auction.lot.durat
+/* … truncated … */

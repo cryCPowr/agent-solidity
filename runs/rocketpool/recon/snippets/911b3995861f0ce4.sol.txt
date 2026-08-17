@@ -1,0 +1,1 @@
+createMinipool(_nodeAddress, _salt)

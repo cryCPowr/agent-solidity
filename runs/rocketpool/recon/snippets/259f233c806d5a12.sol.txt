@@ -1,0 +1,5 @@
+try minipoolInterface.getDepositType{gas: 30000}() returns (MinipoolDeposit depositType) {
+                return depositType;
+            } catch (bytes memory /*lowLevelData*/) {
+                return MinipoolDeposit.Variable;
+            }

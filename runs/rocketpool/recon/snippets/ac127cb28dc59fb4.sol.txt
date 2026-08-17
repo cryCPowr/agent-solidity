@@ -1,0 +1,5 @@
+function getChallengeState(uint256 _proposalID, uint256 _index) override external view returns (Types.ChallengeState) {
+        bytes32 challengeKey = keccak256(abi.encodePacked("dao.protocol.proposal.challenge", _proposalID, _index));
+        uint256 data = getUint(challengeKey);
+        return _getChallengeState(data);
+    }

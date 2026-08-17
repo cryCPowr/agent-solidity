@@ -1,0 +1,15 @@
+function _assignDeposits(uint256 _max, RocketDAOProtocolSettingsDepositInterface _rocketDAOProtocolSettingsDeposit) internal {
+        // Get contracts
+        AddressQueueStorageInterface addressQueueStorage = AddressQueueStorageInterface(getContractAddress("addressQueueStorage"));
+        // Process minipool queue first
+        uint256 minipoolQueueLength = addressQueueStorage.getLength(queueKeyMinipoolVariable);
+        if (minipoolQueueLength > 0) {
+            if (minipoolQueueLength >= _max) {
+                _assignMinipools(_max, _rocketDAOProtocolSettingsDeposit);
+                return;
+            } else {
+                unchecked { // _max > minipoolQueueLength
+                    _max -= minipoolQueueLength;
+                }
+                _assignMinipools(minipoolQueueLeng
+/* … truncated … */

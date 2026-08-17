@@ -1,0 +1,1 @@
+require(nameHash != keccak256(abi.encodePacked("casperDeposit")), "Cannot upgrade the casper deposit contract")

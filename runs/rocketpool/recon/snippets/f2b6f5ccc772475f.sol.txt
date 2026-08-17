@@ -1,0 +1,1 @@
+function getTargetNodeFee() external view returns (uint256);

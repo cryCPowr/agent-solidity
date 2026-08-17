@@ -1,0 +1,3 @@
+if(getInflationIntervalStartTime() > 0) {
+                    require(getInflationIntervalStartTime() > block.timestamp, "Inflation has already started");
+                }

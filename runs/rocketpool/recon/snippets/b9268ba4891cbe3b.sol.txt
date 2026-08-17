@@ -1,0 +1,1 @@
+require(success, "Node ETH balance was not successfully transferred to node operator")

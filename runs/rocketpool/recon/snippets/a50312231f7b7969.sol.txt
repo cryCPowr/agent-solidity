@@ -1,0 +1,1 @@
+require (totalBalance >= 8 ether, "Balance too low")

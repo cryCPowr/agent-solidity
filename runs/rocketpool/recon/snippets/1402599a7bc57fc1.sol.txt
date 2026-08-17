@@ -1,0 +1,18 @@
+for (uint256 i = 0; i < _count; i++) {
+            if (expressQueueLength == 0 && standardQueueLength == 0) {
+                break;
+            }
+            // Determine if we are assigning an express queue entry
+            bool express = queueIndex % (expressQueueRate + 1) != expressQueueRate;
+            if (express && expressQueueLength == 0) {
+                express = false;
+            }
+            if (!express && standardQueueLength == 0) {
+                express = true;
+            }
+            // Get the entry
+            bytes32 namespace = getQueueNamespace(express);
+            LinkedListStorageInterface.DepositQueueValue memory head = linkedListStorage.peekItem(namespace);
+            uint256 ethRequired = head.requestedValue * milliToWei;
+            // Check if we have
+/* … truncated … */

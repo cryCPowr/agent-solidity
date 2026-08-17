@@ -1,0 +1,1 @@
+require(bytes(existingAbi).length > 0, "ABI does not exist")

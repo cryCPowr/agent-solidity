@@ -1,0 +1,3 @@
+function getString(bytes32 _key) external view returns (string memory) {
+        return rocketStorage.getString(_key);
+    }

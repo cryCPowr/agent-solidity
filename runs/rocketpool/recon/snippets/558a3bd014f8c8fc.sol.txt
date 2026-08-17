@@ -1,0 +1,3 @@
+if (position != -1) {
+            return position;
+        }

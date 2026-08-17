@@ -1,0 +1,1 @@
+_unpackItem(getUint(keccak256(abi.encodePacked(_namespace, ".item", previousIndex))))

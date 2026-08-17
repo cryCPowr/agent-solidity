@@ -1,0 +1,12 @@
+function getMaximumDepositAmount() override external view returns (uint256) {
+        RocketDAOProtocolSettingsDepositInterface rocketDAOProtocolSettingsDeposit = RocketDAOProtocolSettingsDepositInterface(getContractAddress("rocketDAOProtocolSettingsDeposit"));
+        // If deposits are disabled max deposit is 0
+        if (!rocketDAOProtocolSettingsDeposit.getDepositEnabled()) {
+            return 0;
+        }
+        uint256 depositPoolBalance = getBalance();
+        uint256 maxCapacity = rocketDAOProtocolSettingsDeposit.getMaximumDepositPoolSize();
+        // When assignments are enabled, we can accept the max amount plus whatever space is available in the minipool queue
+        if (rocketDAOProtocolSettingsDeposit.getAssignDepositsEnabled()) {
+            RocketMinipoolQueueInterface 
+/* … truncated … */

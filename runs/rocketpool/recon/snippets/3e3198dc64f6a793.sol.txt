@@ -1,0 +1,1 @@
+addUint(keccak256(abi.encodePacked("node.eth.balance", _nodeAddress)), amount)

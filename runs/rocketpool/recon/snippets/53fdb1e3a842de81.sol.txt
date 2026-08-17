@@ -1,0 +1,1 @@
+result + (rounding == Rounding.Up && 1 << (result << 3) < value ? 1 : 0)

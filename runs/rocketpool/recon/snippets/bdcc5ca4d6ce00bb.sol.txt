@@ -1,0 +1,1 @@
+inflationLastCalcTime.add(inflationInterval.mul(intervalsSinceLastMint))

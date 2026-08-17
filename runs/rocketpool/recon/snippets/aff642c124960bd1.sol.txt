@@ -1,0 +1,1 @@
+ProposalSettingRewardsClaimers(_trustedNodePercent, _protocolPercent, _nodePercent, block.timestamp)

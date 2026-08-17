@@ -1,0 +1,1 @@
+keccak256(abi.encodePacked("minipool.rpl.slashed", _minipoolAddress))

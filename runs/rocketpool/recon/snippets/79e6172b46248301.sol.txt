@@ -1,0 +1,3 @@
+constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
+        version = 3;
+    }

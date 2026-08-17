@@ -1,0 +1,5 @@
+if (validator.locked) {
+            validator.locked = false;
+            validator.lockedTime = 0;
+            numLockedValidators -= 1;
+        }

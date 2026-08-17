@@ -1,0 +1,16 @@
+function processDeposit() internal {
+        // Direct deposit ETH to rETH until target collateral is reached
+        uint256 toReth = _getRethCollateralShortfall();
+        if (toReth > msg.value) {
+            toReth = msg.value;
+        }
+        uint256 toVault = msg.value - toReth;
+        if (toReth > 0) {
+            rocketTokenRETH.depositExcess{value: toReth}();
+        }
+        if (toVault > 0) {
+            rocketVault.depositEther{value: toVault}();
+        }
+        // Assign deposits if enabled
+        _assignByDeposit();
+    }

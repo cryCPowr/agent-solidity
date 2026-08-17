@@ -1,0 +1,3 @@
+if (_rplFine > 0) {
+            rocketVault.burnToken(IERC20Burnable(getContractAddress("rocketTokenRPL")), _rplFine);
+        }

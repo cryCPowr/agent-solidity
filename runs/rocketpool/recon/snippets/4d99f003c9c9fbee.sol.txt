@@ -1,0 +1,1 @@
+function getPreLaunchValue() external pure returns (uint256);

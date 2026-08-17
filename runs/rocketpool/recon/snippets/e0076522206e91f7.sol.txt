@@ -1,0 +1,1 @@
+function exitQueue(address _nodeAddress, uint32 _validatorId, bool _expressQueue) external;

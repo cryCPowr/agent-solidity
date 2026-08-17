@@ -1,0 +1,5 @@
+if (rocketDAOProtocolSettingsDeposit.getAssignDepositsEnabled()) {
+            RocketMinipoolQueueInterface rocketMinipoolQueue = RocketMinipoolQueueInterface(getContractAddress("rocketMinipoolQueue"));
+            maxCapacity += rocketMinipoolQueue.getEffectiveCapacity();
+            maxCapacity += getUint(requestedTotalKey);
+        }

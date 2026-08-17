@@ -1,0 +1,1 @@
+function propose(string memory _proposalMessage, bytes memory _payload) external returns (uint256);

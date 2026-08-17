@@ -118,6 +118,7 @@ def run(
     files_analyzed: list[str] = []
     compiler_runs = []
     errors_out = []
+    file_diagnostics: dict[str, dict] = {}  # per-file failure reasons
 
     sources: dict[str, str] = {}
     total_bytes_read = 0
@@ -282,11 +283,64 @@ def run(
             succeeded_files = set(result.ast_by_file.keys())
             for relpath in result.files:
                 if relpath in succeeded_files:
-                    per_file_ast[relpath] = (result.version, result.ast_by_file[relpath])
-                    files_analyzed.append(relpath)
-                else:
+                    # First successful AST for this file wins; later runs that
+                    # also compile it (due to overlapping subgroup membership)
+                    # are silently skipped to prevent duplicate inventory entries
+                    # and graph edge collisions.
+                    if relpath not in per_file_ast:
+                        per_file_ast[relpath] = (result.version, result.ast_by_file[relpath])
+                        files_analyzed.append(relpath)
+                        # Clear any earlier failure diagnostic for this file
+                        file_diagnostics.pop(relpath, None)
+                    # else: already have AST from an earlier compiler run → skip
+                elif relpath not in per_file_ast:
+                    # Only record failure if the file has not already succeeded
+                    # in a previous compiler run (overlap subgroups scenario)
                     files_failed.append(relpath)
-                    ctx.warn(f"file failed to produce AST", file=relpath, compiler_version=result.version)
+                    pragma = solc_manager.extract_pragma_constraint(sources.get(relpath, ""))
+                    diag: dict = {
+                        "pragma": pragma,
+                        "requested_constraint": result.requested_constraint,
+                        "resolved_compiler": result.version,
+                        "resolution_method": result.resolution_method,
+                        "compiler_compatible": result.compatible,
+                        "group_size": len(result.files),
+                        "has_ast": False,
+                    }
+                    if not result.compatible:
+                        diag["failure_reason"] = (
+                            f"compiler resolution failed: {result.resolution_method}"
+                        )
+                        if result.reason:
+                            diag["resolution_failure_detail"] = result.reason[:300]
+                    else:
+                        # Extract per-file solc error messages when available
+                        file_errors = [
+                            e for e in result.errors
+                            if e.get("severity") == "error"
+                            and (relpath in str(e.get("message", ""))
+                                 or relpath in str(e.get("formattedMessage", ""))
+                                 or not e.get("sourceLocation"))
+                        ]
+                        if file_errors:
+                            diag["failure_reason"] = "compiler error"
+                            diag["solc_errors"] = [
+                                (e.get("formattedMessage") or e.get("message") or "")[:300]
+                                for e in file_errors[:5]
+                            ]
+                        else:
+                            diag["failure_reason"] = (
+                                "no AST produced (likely a transitive import error — "
+                                "see group-level errors in compiler.runs)"
+                            )
+                    file_diagnostics[relpath] = diag
+                    ctx.warn(
+                        "file failed to produce AST",
+                        file=relpath,
+                        pragma=pragma,
+                        compiler_version=result.version,
+                        resolution_method=result.resolution_method,
+                    )
         _record_phase("compilation", t_phase)
 
         # ---- Symbol / contract / function inventory --------------------------
@@ -407,11 +461,24 @@ def run(
     phase_durations["total"] = total_duration
     ctx.warn("phase duration", phase="total", duration_seconds=total_duration)
 
+    # Compute coverage metrics
+    files_discovered_count = len(discovered)
+    files_with_ast = len(files_analyzed)
+    coverage_percent = round(100.0 * files_with_ast / files_discovered_count, 1) if files_discovered_count > 0 else 0.0
+
     run_meta = {
         "source_root": repo_root,
         "files_analyzed": files_analyzed,
         "files_partially_analyzed": files_partial,
         "files_failed": files_failed,
+        "file_diagnostics": file_diagnostics,
+        "coverage": {
+            "files_discovered": files_discovered_count,
+            "files_with_ast": files_with_ast,
+            "files_failed": len(files_failed),
+            "files_partial": len(files_partial),
+            "coverage_percent": coverage_percent,
+        },
         "dependency_files_added": expansion.added,
         "import_prefix_aliases": expansion.prefix_aliases,
         "build_metadata_hints": compiler_hints,

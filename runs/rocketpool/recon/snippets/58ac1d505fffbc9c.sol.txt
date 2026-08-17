@@ -1,0 +1,1 @@
+OwnershipTransferred(_owner, address(0))

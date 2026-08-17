@@ -1,0 +1,1 @@
+rocketVault.balanceOfToken("rocketAuctionManager", IERC20(getContractAddress("rocketTokenRPL")))

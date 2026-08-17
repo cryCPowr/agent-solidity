@@ -1,0 +1,1 @@
+function getMegapoolAddress(address _nodeAddress) external view returns (address);

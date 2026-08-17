@@ -1,0 +1,1 @@
+setSettingBool("auction.lot.bidding.enabled", true)

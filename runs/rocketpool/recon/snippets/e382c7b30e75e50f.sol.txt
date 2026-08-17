@@ -1,0 +1,4 @@
+function getNodeValidatingMinipoolAt(address _nodeAddress, uint256 _index) override external view returns (address) {
+        AddressSetStorageInterface addressSetStorage = AddressSetStorageInterface(getContractAddress("addressSetStorage"));
+        return addressSetStorage.getItem(keccak256(abi.encodePacked("node.minipools.validating.index", _nodeAddress)), _index);
+    }

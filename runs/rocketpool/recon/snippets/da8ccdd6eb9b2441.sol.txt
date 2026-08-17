@@ -1,0 +1,7 @@
+function getNextDepositLegacy() override external view returns (MinipoolDeposit, uint256) {
+        uint256 length = getLengthLegacy(queueKeyHalf);
+        if (length > 0) { return (MinipoolDeposit.Half, length); }
+        length = getLengthLegacy(queueKeyFull);
+        if (length > 0) { return (MinipoolDeposit.Full, length); }
+        return (MinipoolDeposit.None, 0);
+    }

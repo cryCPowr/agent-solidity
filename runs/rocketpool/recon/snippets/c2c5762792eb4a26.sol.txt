@@ -1,0 +1,1 @@
+event NodeTimezoneLocationSet(address indexed node, uint256 time);

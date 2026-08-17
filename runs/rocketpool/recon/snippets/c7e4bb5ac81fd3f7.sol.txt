@@ -1,0 +1,1 @@
+function setVoterShare(uint256 _newShare) external;

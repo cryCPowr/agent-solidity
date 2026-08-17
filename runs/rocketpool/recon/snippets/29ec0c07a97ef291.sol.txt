@@ -1,0 +1,1 @@
+function getStatus() override external view returns (MinipoolStatus) { return status; }

@@ -1,0 +1,7 @@
+function actionChallengeMake(address _nodeAddress) override external onlyTrustedNode(_nodeAddress) onlyRegisteredNode(msg.sender) onlyLatestContract("rocketDAONodeTrustedActions", address(this)) payable {
+        // Load contracts
+        RocketDAONodeTrustedInterface rocketDAONode = RocketDAONodeTrustedInterface(getContractAddress("rocketDAONodeTrusted"));
+        RocketDAONodeTrustedSettingsMembersInterface rocketDAONodeTrustedSettingsMembers = RocketDAONodeTrustedSettingsMembersInterface(getContractAddress("rocketDAONodeTrustedSettingsMembers"));
+        // Members can challenge other members for free, but for a regular bonded node to challenge a DAO member, requires non-refundable payment to prevent spamming
+        if(rocketDAONode.getMemberIsValid(msg.sender) != true) require(msg.val
+/* … truncated … */

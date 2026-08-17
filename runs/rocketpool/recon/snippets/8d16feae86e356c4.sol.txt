@@ -1,0 +1,5 @@
+(
+            getLengthLegacy(queueKeyFull)
+        ).add(
+            getLengthLegacy(queueKeyHalf)
+        )

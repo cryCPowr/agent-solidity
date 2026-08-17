@@ -1,0 +1,1 @@
+getNodeMinipoolETHBonded(_nodeAddress)

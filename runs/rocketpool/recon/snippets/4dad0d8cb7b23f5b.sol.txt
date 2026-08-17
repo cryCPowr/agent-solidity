@@ -1,0 +1,7 @@
+if (getReceiptHasVotedPhase1(_proposalID, delegate)) {
+            // Get the vote direction of their delegate
+            VoteDirection delegateVote = getReceiptDirection(_proposalID, delegate);
+            require (delegateVote != _voteDirection, "Vote direction is the same as delegate");
+            // Reverse the delegate's vote
+            _overrideVote(delegate, msg.sender, _proposalID, votingPower, delegateVote);
+        }

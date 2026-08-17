@@ -1,0 +1,5 @@
+if (nodeBond + userCapital > 0) {
+            // Stored as a ratio of node bond / total capital
+            uint256 capitalRatio = nodeBond * calcBase / (userCapital + nodeBond);
+            rocketNetworkRevenues.setNodeCapitalRatio(nodeAddress, capitalRatio);
+        }

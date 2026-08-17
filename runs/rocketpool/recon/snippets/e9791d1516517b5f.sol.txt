@@ -1,0 +1,1 @@
+rocketStorage.setAddress(_key, _value)

@@ -1,0 +1,1 @@
+function canReduceBondAmount(address _minipoolAddress) external view returns (bool);

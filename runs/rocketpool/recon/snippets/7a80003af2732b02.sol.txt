@@ -1,0 +1,7 @@
+if (indexDepth < maxDepth * 2) {
+            // Index is phase 2 pollard
+            uint256 subIndexDepth = indexDepth - maxDepth;
+            uint256 remainder = subIndexDepth % depthPerRound;
+            require(remainder == 0, "Invalid index");
+            return _index / (2 ** depthPerRound);
+        }

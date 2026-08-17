@@ -1,0 +1,1 @@
+function getBondReductionEnabled() external view returns (bool);

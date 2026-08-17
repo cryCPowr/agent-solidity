@@ -1,0 +1,1 @@
+getNodeLegacyStakedRPL(_nodeAddress)

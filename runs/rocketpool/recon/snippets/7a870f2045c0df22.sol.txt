@@ -1,0 +1,1 @@
+require(value <= type(uint64).max, "SafeCast: value doesn't fit in 64 bits")

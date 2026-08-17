@@ -1,0 +1,1 @@
+if (end < start) { end = end.add(capacity); }

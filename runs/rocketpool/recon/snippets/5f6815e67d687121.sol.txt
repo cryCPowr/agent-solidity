@@ -1,0 +1,3 @@
+function recycleExcessCollateral() override external payable onlyThisLatestContract onlyLatestContract("rocketTokenRETH", msg.sender) {
+        _recycleValue();
+    }

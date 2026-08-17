@@ -1,0 +1,1 @@
+setSettingUint("proposal.vote.time", 2 weeks)

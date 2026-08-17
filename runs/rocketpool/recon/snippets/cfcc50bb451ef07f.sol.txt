@@ -1,0 +1,1 @@
+function getCount(bytes32 _key) external view returns (uint);

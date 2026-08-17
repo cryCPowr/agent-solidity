@@ -1,0 +1,4 @@
+function _pathBeaconBlockHeaderToStateRoot() internal view returns (SSZ.Path memory) {
+        SSZ.Path memory path = SSZ.from(3, 3); // 0b011 (BeaconBlockHeader -> state_root)
+        return path;
+    }

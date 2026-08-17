@@ -1,0 +1,1 @@
+rocketMinipoolQueue.dequeueMinipools(_count)

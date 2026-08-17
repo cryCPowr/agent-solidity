@@ -1,0 +1,1 @@
+RocketMinipoolPenaltyInterface(rocketMinipoolPenalty).getPenaltyRate(address(this))

@@ -1,0 +1,1 @@
+function getFinalised() override external view returns (bool) { return finalised; }

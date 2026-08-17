@@ -1,0 +1,10 @@
+function actionChallengeDecide(address _nodeAddress) override external onlyTrustedNode(_nodeAddress) onlyRegisteredNode(msg.sender) onlyLatestContract("rocketDAONodeTrustedActions", address(this)) {
+        // Load contracts
+        RocketDAONodeTrustedSettingsMembersInterface rocketDAONodeTrustedSettingsMembers = RocketDAONodeTrustedSettingsMembersInterface(getContractAddress("rocketDAONodeTrustedSettingsMembers"));
+        // Was the challenge successful?
+        bool challengeSuccess = false;
+        // Get the block the challenge was initiated at
+        bytes32 challengeTimeKey = keccak256(abi.encodePacked(daoNameSpace, "member.challenged.time", _nodeAddress));
+        uint256 challengeTime = getUint(challengeTimeKey);
+        // If challenge time is 0, the member hasn't been challeng
+/* … truncated … */

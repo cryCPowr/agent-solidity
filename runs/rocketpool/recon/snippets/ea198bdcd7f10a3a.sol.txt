@@ -1,0 +1,3 @@
+function getChallengePeriod() override external view returns (uint256) {
+        return getSettingUint("proposal.challenge.period");
+    }

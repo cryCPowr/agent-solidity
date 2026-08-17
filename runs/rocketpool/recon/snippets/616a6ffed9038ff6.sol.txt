@@ -1,0 +1,3 @@
+function deleteAddress(bytes32 _key) onlyLatestRocketNetworkContract override external {
+        delete addressStorage[_key];
+    }

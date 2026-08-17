@@ -1,0 +1,10 @@
+function updateContract(string memory _contractName, address _recipientAddress, uint256 _amountPerPeriod, uint256 _periodLength, uint256 _numPeriods) override external onlyLatestContract("rocketDAOProtocolProposals", msg.sender) onlyLatestContract("rocketClaimDAO", address(this)) {
+        uint256 contractKey = uint256(keccak256(abi.encodePacked("dao.protocol.treasury.contract", _contractName)));
+        // Check it exists
+        require(getBool(bytes32(contractKey + existsOffset)) == true, "Contract does not exist");
+        // Write to storage
+        uint256 lastPaymentTime = getUint(bytes32(contractKey + lastPaymentOffset));
+        // Payout contract per existing parameters if contract has already started
+        if (block.timestamp > lastPaymentTime) {
+            _payOutContract(_c
+/* … truncated … */

@@ -1,0 +1,1 @@
+require(currentTotal < maxPenalty, "Max penalty exceeded")

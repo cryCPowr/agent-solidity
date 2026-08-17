@@ -1,0 +1,1 @@
+function getReducedBond() external view returns (uint256);

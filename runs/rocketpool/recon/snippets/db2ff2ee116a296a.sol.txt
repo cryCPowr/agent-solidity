@@ -1,0 +1,4 @@
+function applyCredit(address _nodeAddress, uint256 _amount) override external onlyRegisteredMegapool(msg.sender) onlyThisLatestContract {
+        // Add to node's credit for the amount supplied
+        addUint(keccak256(abi.encodePacked("node.deposit.credit.balance", _nodeAddress)), _amount);
+    }

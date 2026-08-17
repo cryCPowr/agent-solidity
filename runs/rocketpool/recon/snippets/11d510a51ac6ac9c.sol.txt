@@ -1,0 +1,1 @@
+require(_value <= getSettingUint("rpl.inflation.interval.rate") + 0.01 ether, "No greater than 1e16 more than the previous value")

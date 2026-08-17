@@ -1,0 +1,20 @@
+contract RocketDAOSecurityActions is RocketBase, RocketDAOSecurityActionsInterface {
+
+    // The namespace for any data stored in the network DAO (do not change)
+    string constant internal daoNameSpace = "dao.security.";
+
+    // Events
+    event ActionJoined(address indexed nodeAddress, uint256 time);
+    event ActionLeave(address indexed nodeAddress, uint256 time);
+    event ActionRequestLeave(address indexed nodeAddress, uint256 time);
+    event ActionKick(address indexed nodeAddress, uint256 time);
+
+    constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
+        version = 1;
+    }
+
+    /*** Action Methods ************************/
+
+    /// @notice Removes a member from the security council
+    /// @param _memberAddress The address of the membe
+/* … truncated … */

@@ -1,0 +1,8 @@
+if (len > 5 && len > _recency) {
+            uint256 mid = len - _recency;
+            if (_time < _timeAt(_key, mid)) {
+                high = mid;
+            } else {
+                low = mid + 1;
+            }
+        }

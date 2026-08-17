@@ -1,0 +1,25 @@
+library SSZ {
+    struct Path {
+        uint256 _data;
+    }
+
+    /// @dev Decodes a Path to a full gindex
+    function toIndex(Path memory _path) internal pure returns (uint256) {
+        uint256 pathLength = uint8(_path._data);
+        uint256 anchor = uint256(1) << pathLength;
+        return (_path._data >> 8) | anchor;
+    }
+
+    /// @dev Extracts the length component from a Path
+    function length(Path memory _path) internal pure returns (uint8) {
+        return uint8(_path._data);
+    }
+
+    /// @dev Constructs a Path from a given gindex and length
+    function from(uint248 _gindex, uint8 _length) internal pure returns (Path memory) {
+        require(_gindex < 2 ** _length, "Gindex exceeds length");
+        return Path((uint256(_gindex) << 8) | uint256(_length));
+    }
+
+    /// @dev
+/* … truncated … */

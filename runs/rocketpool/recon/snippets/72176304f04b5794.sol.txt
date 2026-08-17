@@ -1,0 +1,1 @@
+(uint256(uint160(_megapoolAddress)) << 96) | _validatorId

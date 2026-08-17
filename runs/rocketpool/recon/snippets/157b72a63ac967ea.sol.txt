@@ -1,0 +1,1 @@
+function getLength(bytes32 _namespace) external view returns (uint256);

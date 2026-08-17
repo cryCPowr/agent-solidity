@@ -1,0 +1,9 @@
+function stakeRPLFor(address _nodeAddress, uint256 _amount) override external onlyRegisteredNode(_nodeAddress) {
+        // Must be node's RPL withdrawal address if set or the node's address or an allow listed address or rocketMerkleDistributorMainnet
+        if (msg.sender != getAddress(keccak256(abi.encodePacked("contract.address", "rocketMerkleDistributorMainnet")))) {
+            if (!_callerAllowedFor(_nodeAddress)) {
+                require(getBool(keccak256(abi.encodePacked("node.stake.for.allowed", _nodeAddress, msg.sender))), "Not allowed to stake for");
+            }
+        }
+        _stakeRPLFor(_nodeAddress, _amount);
+    }

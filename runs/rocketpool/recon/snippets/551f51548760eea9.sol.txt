@@ -1,0 +1,3 @@
+function _setStakingETHBalance(uint256 _value) internal {
+        setUint(keccak256("network.balance.staking"), _value);
+    }

@@ -1,0 +1,3 @@
+function getChallengeAddress(uint256 _data) internal pure returns (address) {
+        return address(uint160(_data >> addressOffset));
+    }

@@ -1,0 +1,4 @@
+function latestTime(bytes32 _key) external view returns (uint64) {
+        uint256 len = length(_key);
+        return len == 0 ? 0 : _timeAt(_key, len - 1);
+    }

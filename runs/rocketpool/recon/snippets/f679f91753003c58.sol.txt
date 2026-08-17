@@ -1,0 +1,1 @@
+setSettingUint("members.challenge.window", 7 days)

@@ -1,0 +1,12 @@
+function getContract(string calldata _contractName) override external view returns (PaymentContract memory) {
+        // Compute key
+        uint256 contractKey = uint256(keccak256(abi.encodePacked("dao.protocol.treasury.contract", _contractName)));
+        // Retrieve details
+        PaymentContract memory paymentContract;
+        paymentContract.recipient = getAddress(bytes32(contractKey + recipientOffset));
+        paymentContract.amountPerPeriod = getUint(bytes32(contractKey + amountOffset));
+        paymentContract.periodLength = getUint(bytes32(contractKey + periodLengthOffset));
+        paymentContract.lastPaymentTime = getUint(bytes32(contractKey + lastPaymentOffset));
+        paymentContract.numPeriods = getUint(bytes32(contractKey + numPeriodsOffset));
+        paymentContract.per
+/* … truncated … */

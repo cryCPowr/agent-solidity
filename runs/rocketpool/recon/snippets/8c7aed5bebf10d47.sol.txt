@@ -1,0 +1,3 @@
+function getReceiptHasVoted(uint256 _proposalID, address _nodeAddress) override public view returns (bool) {
+        return getReceiptDirection(_proposalID, _nodeAddress) != VoteDirection.NoVote;
+    }

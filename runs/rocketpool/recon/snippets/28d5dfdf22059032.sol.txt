@@ -1,0 +1,3 @@
+if (rocketMegapoolFactory.getMegapoolDeployed(_nodeAddress)) {
+            return rocketMegapoolFactory.getExpectedAddress(_nodeAddress);
+        }

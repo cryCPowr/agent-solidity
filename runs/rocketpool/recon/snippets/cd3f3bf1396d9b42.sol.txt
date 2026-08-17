@@ -1,0 +1,1 @@
+getString(keccak256(abi.encodePacked("contract.abi", _name)))

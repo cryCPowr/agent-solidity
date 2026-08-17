@@ -1,0 +1,1 @@
+RocketDAONodeTrustedSettingsInterface(getContractAddress(_settingContractName))

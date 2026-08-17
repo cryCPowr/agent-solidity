@@ -1,0 +1,1 @@
+function getScrubQuorum() external view returns(uint256);

@@ -1,0 +1,9 @@
+function proposalKick(address _memberAddress) override public onlyLatestContract("rocketDAOProtocolProposals", msg.sender) {
+        // Load contracts
+        RocketDAOSecurityInterface daoSecurity = RocketDAOSecurityInterface(getContractAddress("rocketDAOSecurity"));
+        RocketDAOSecurityActionsInterface daoActionsContract = RocketDAOSecurityActionsInterface(getContractAddress("rocketDAOSecurityActions"));
+        // Check valid member
+        require(daoSecurity.getMemberIsValid(_memberAddress), "This node is not part of the security council");
+        // Kick them now
+        daoActionsContract.actionKick(_memberAddress);
+    }

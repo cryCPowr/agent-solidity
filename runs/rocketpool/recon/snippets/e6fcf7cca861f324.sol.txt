@@ -1,0 +1,1 @@
+uint256 constant internal startOffset = 256 - 64

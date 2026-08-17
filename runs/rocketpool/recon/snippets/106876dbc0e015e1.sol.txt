@@ -1,0 +1,1 @@
+function isAllowListedController(address _address) external view returns (bool);

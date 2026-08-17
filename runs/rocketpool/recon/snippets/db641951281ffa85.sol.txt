@@ -1,0 +1,3 @@
+function getReceiptSupported(uint256 _proposalID, address _nodeAddress) override external view returns (bool) {
+        return getBool(keccak256(abi.encodePacked(daoProposalNameSpace, "receipt.supported", _proposalID, _nodeAddress))); 
+    }

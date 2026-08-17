@@ -1,0 +1,1 @@
+getReceiptHasVoted(_proposalID, _nodeOperator)

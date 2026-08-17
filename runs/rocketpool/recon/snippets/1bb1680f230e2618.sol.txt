@@ -1,0 +1,2 @@
+uint256(totalStakedRPL) >= _amount + lockedRPL &&
+            uint256(totalStakedRPL) >= _amount + legacyStakedRPL

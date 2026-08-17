@@ -1,0 +1,1 @@
+require(rootFromWitness.sum == _expected.sum, "Invalid sum")

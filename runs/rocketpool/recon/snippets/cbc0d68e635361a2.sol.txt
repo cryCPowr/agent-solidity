@@ -1,0 +1,3 @@
+if (_rewardsETH > 0) {
+            rocketVault.depositEther{value: _rewardsETH}();
+        }

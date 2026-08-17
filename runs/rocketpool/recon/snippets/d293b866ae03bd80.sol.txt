@@ -1,0 +1,1 @@
+EtherDeposited(contractName, msg.value, block.timestamp)

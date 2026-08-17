@@ -1,0 +1,4 @@
+function burnRPL(address _from, uint256 _amount) external {
+        RocketNodeStakingInterface rocketNodeStakingInterface = RocketNodeStakingInterface(getContractAddress("rocketNodeStaking"));
+        rocketNodeStakingInterface.burnRPL(_from, _amount);
+    }

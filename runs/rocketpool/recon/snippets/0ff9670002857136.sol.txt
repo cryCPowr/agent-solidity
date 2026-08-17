@@ -1,0 +1,1 @@
+emit ActionKick(_memberAddress, block.timestamp)

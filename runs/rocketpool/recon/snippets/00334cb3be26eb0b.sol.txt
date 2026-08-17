@@ -1,0 +1,18 @@
+contract StakeHelper is RocketBase {
+
+    // Construct
+    constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
+    }
+
+    function lockRPL(address _nodeAddress, uint256 _amount) external {
+        RocketNodeStakingInterface rocketNodeStakingInterface = RocketNodeStakingInterface(getContractAddress("rocketNodeStaking"));
+        rocketNodeStakingInterface.lockRPL(_nodeAddress, _amount);
+    }
+
+    function unlockRPL(address _nodeAddress, uint256 _amount) external {
+        RocketNodeStakingInterface rocketNodeStakingInterface = RocketNodeStakingInterface(getContractAddress("rocketNodeStaking"));
+        rocketNodeStakingInterface.unlockRPL(_nodeAddress, _amount);
+    }
+
+    function transferRPL(address _from, address _to, uint256 _amount) external {
+/* … truncated … */

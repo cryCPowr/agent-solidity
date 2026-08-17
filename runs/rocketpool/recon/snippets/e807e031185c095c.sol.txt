@@ -1,0 +1,15 @@
+function claimBid(uint256 _lotIndex) override external onlyLatestContract("rocketAuctionManager", address(this)) {
+        // Check lot exists
+        require(getLotExists(_lotIndex), "Lot does not exist");
+        // Get lot price info
+        uint256 blockPrice = getLotPriceAtCurrentBlock(_lotIndex);
+        uint256 bidPrice = getLotPriceByTotalBids(_lotIndex);
+        // Check lot can be claimed from
+        require(block.number >= getLotEndBlock(_lotIndex) || bidPrice >= blockPrice, "Lot has not cleared yet");
+        // Get & check address bid amount
+        uint256 bidAmount = getLotAddressBidAmount(_lotIndex, msg.sender);
+        require(bidAmount > 0, "Address has no RPL to claim");
+        // Calculate current lot price
+        uint256 currentPrice;
+        if (bidPrice > blockPri
+/* … truncated … */

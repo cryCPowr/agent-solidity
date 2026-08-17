@@ -1,0 +1,11 @@
+function isNodeCalling(address _caller) internal view returns (bool) {
+        if (_caller == nodeAddress) {
+            return true;
+        } else {
+            address withdrawalAddress = rocketStorage.getNodeWithdrawalAddress(nodeAddress);
+            if (_caller == withdrawalAddress) {
+                return true;
+            }
+        }
+        return false;
+    }

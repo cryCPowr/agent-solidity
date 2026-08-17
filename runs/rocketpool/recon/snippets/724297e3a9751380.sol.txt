@@ -1,0 +1,15 @@
+for (uint256 i = 0; i < _indices.length; ++i) {
+            bytes32 challengeKey = keccak256(abi.encodePacked("dao.protocol.proposal.challenge", _proposalID, _indices[i]));
+            uint256 challengeData = getUint(challengeKey);
+            Types.ChallengeState challengeState = _getChallengeState(challengeData);
+
+            if (defeated) {
+                // Refund all challenges if the proposal was defeated
+                require(challengeState == Types.ChallengeState.Responded || challengeState == Types.ChallengeState.Challenged, "Invalid challenge state");
+            } else {
+                // Only refund non-responded challenges if the proposal wasn't defeated
+                require(challengeState == Types.ChallengeState.Challenged, "Invalid challenge state");
+            }
+
+  
+/* … truncated … */

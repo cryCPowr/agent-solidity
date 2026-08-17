@@ -1,0 +1,1 @@
+require(ethBalance >= ethAmount, "Insufficient ETH balance for exchange")

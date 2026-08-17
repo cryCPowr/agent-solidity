@@ -1,0 +1,1 @@
+require(getUint(keccak256(abi.encodePacked(_namespace, ".index", _item.receiver, _item.validatorId))) == 0, "Item already exists in queue")

@@ -1,0 +1,4 @@
+modifier onlyUninitialised() {
+        require(storageState == StorageState.Uninitialised, "Storage state already initialised");
+        _;
+    }

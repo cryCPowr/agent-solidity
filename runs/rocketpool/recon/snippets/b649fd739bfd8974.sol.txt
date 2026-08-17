@@ -1,0 +1,1 @@
+MerkleProof.verify(_claim.merkleProof, merkleRoot, node)

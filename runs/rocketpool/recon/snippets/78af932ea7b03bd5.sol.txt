@@ -1,0 +1,1 @@
+userQueuedCapital -= userValue

@@ -1,0 +1,1 @@
+rocketDAOSecurityProposals.proposalKickMulti(_memberAddresses)

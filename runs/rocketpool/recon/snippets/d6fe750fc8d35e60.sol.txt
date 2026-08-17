@@ -1,0 +1,3 @@
+function setBlockRoot(uint256 _timestamp, bytes32 _root) external {
+        beaconRoots[_timestamp] = _root;
+    }

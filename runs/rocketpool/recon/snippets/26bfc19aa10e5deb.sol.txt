@@ -1,0 +1,1 @@
+require(msg.sender == getContractAddress("rocketDAOProtocol") || msg.sender == getContractAddress("rocketDAOProtocolProposal"), "Sender is not permitted to access executing methods")

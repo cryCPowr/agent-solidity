@@ -1,0 +1,1 @@
+assembly { tokenCode := extcodesize(token) }

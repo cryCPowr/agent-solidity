@@ -1,0 +1,1 @@
+(result + a / result) >> 1

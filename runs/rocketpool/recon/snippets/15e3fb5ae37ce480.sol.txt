@@ -1,0 +1,14 @@
+function withdrawBalance(address _recipientAddress) override public onlyLatestContract("rocketClaimDAO", address(this)) {
+        // Load contracts
+        RocketVaultInterface rocketVault = RocketVaultInterface(getContractAddress("rocketVault"));
+        // Addresses
+        IERC20 rplToken = IERC20(getContractAddress("rocketTokenRPL"));
+        // Get pending balance
+        bytes32 balanceKey = keccak256(abi.encodePacked("dao.protocol.treasury.balance", _recipientAddress));
+        uint256 amount = getUint(balanceKey);
+        // Zero out pending balance
+        setUint(balanceKey, 0);
+        // Some initial checks
+        require(amount > 0, "No balance to withdraw");
+        require(amount <= rocketVault.balanceOfToken("rocketClaimDAO", rplToken), "Insufficient treasury balance for w
+/* … truncated … */

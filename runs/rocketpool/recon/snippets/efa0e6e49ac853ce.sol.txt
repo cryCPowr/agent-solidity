@@ -1,0 +1,1 @@
+abi.encodePacked("node.average.fee.numerator", _nodeAddress)

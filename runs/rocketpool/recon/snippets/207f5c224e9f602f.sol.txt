@@ -1,0 +1,4 @@
+if (credit < shortFall) {
+            balanceToUse = shortFall - credit;
+            creditToUse = credit;
+        }

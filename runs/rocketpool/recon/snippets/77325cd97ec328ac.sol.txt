@@ -1,0 +1,7 @@
+if (_previousBond == 16 ether){
+            nodeKey = keccak256(abi.encodePacked("node.minipools.staking.count", nodeAddress));
+            numeratorKey = keccak256(abi.encodePacked("node.average.fee.numerator", nodeAddress));
+        } else {
+            nodeKey = keccak256(abi.encodePacked("node.minipools.staking.count", nodeAddress, _previousBond));
+            numeratorKey = keccak256(abi.encodePacked("node.average.fee.numerator", nodeAddress, _previousBond));
+        }

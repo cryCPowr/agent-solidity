@@ -1,0 +1,1 @@
+event BondReduced(uint256 previousBondAmount, uint256 newBondAmount, uint256 time);

@@ -1,0 +1,8 @@
+function isRewardedIndex(uint256 _defeatIndex, uint256 _index) internal pure returns (bool) {
+        for (uint256 i = _defeatIndex; i > 1; i /= 2) {
+            if (_index == i) {
+                return true;
+            }
+        }
+        return false;
+    }

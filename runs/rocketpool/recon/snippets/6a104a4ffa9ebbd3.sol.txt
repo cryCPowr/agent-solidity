@@ -1,0 +1,6 @@
+constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
+        version = 4;
+        // Pre-retrieve non-upgradable contract addresses to save gas
+        rocketVault = RocketVaultInterface(getContractAddress("rocketVault"));
+        rocketTokenRETH = RocketTokenRETHInterface(getContractAddress("rocketTokenRETH"));
+    }

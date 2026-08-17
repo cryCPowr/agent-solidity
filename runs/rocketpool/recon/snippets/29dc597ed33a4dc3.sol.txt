@@ -1,0 +1,1 @@
+AddressQueueStorageInterface(getContractAddress("addressQueueStorage"))

@@ -1,0 +1,1 @@
+nodeBalance + (userBalance * averageNodeFee / calcBase)

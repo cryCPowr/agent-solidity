@@ -1,0 +1,1 @@
+_setSettingUint(_settingPath, _value)

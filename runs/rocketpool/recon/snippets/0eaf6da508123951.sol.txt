@@ -1,0 +1,1 @@
+function getSmoothingPoolRegistrationState(address _nodeAddress) external returns (bool);

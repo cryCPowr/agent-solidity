@@ -1,0 +1,1 @@
+require(getUint(keccak256(abi.encodePacked(daoNameSpace, "node.challenge.created.time", msg.sender))).add(rocketDAONodeTrustedSettingsMembers.getChallengeCooldown()) < block.timestamp, "You must wait for the challenge cooldown to pass before issuing another challenge")

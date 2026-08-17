@@ -1,0 +1,3 @@
+if (_amount == 0) {
+            return;
+        }

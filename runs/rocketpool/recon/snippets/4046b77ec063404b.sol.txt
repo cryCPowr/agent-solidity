@@ -1,0 +1,1 @@
+function assignDeposits(uint256 _max) external;

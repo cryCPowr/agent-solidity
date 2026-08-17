@@ -1,0 +1,1 @@
+allowance(account, _msgSender()).sub(amount, "ERC20: burn amount exceeds allowance")

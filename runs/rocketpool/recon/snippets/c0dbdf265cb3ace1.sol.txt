@@ -1,0 +1,10 @@
+function enqueueItem(bytes32 _key, address _value) override external onlyLatestContract("addressQueueStorage", address(this)) onlyLatestNetworkContract {
+        require(getLength(_key) < capacity.sub(1), "Queue is at capacity");
+        require(getUint(keccak256(abi.encodePacked(_key, ".index", _value))) == 0, "Item already exists in queue");
+        uint index = getUint(keccak256(abi.encodePacked(_key, ".end")));
+        setAddress(keccak256(abi.encodePacked(_key, ".item", index)), _value);
+        setUint(keccak256(abi.encodePacked(_key, ".index", _value)), index.add(1));
+        index = index.add(1);
+        if (index >= capacity) { index = index.sub(capacity); }
+        setUint(keccak256(abi.encodePacked(_key, ".end")), index);
+    }

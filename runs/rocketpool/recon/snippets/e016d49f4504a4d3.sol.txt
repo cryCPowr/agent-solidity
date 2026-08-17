@@ -1,0 +1,1 @@
+function getNodeDepositAssigned() external view returns (bool);

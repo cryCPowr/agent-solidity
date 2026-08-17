@@ -1,0 +1,1 @@
+rocketNetworkRevenues.setNodeShare(rocketDAOProtocolSettingsNetwork.getEffectiveNodeShare())

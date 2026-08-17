@@ -1,0 +1,3 @@
+function _incrementRewardIndex() internal {
+        addUint(keccak256("rewards.snapshot.index"), 1);
+    }

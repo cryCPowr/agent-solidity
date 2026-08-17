@@ -1,0 +1,1 @@
+require(bytes(_name).length > 0, "Invalid contract name")

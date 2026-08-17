@@ -1,0 +1,1 @@
+proposalKick(_existingMemberAddress)

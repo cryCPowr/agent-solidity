@@ -1,0 +1,1 @@
+token.allowance(address(this), spender).sub(value, "SafeERC20: decreased allowance below zero")

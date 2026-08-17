@@ -1,0 +1,5 @@
+if (depositType == MinipoolDeposit.Variable) {
+            depositAmount = launchAmount.sub(preLaunchValue);
+        } else {
+            depositAmount = launchAmount.sub(legacyPrelaunchAmount);
+        }

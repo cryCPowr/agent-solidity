@@ -1,0 +1,3 @@
+if (rewardsRPL == 0 && rewardsETH == 0) {
+                continue;
+            }

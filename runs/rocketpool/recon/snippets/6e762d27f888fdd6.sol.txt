@@ -1,0 +1,1 @@
+rocketDAONode.getMemberProposalExecutedTime("invited", _nodeAddress)

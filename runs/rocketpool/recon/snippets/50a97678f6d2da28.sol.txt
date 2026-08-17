@@ -1,0 +1,1 @@
+function getUint(bytes32 _key) internal view returns (uint) { return rocketStorage.getUint(_key); }

@@ -1,0 +1,7 @@
+for (uint256 i = 0; i < _challenges.length; ++i) {
+            for (uint256 j = 0; j < _challenges[i].validatorIds.length; ++j) {
+                require(getBool(keccak256(abi.encodePacked("megapool.exists", address(_challenges[i].megapool)))), "Invalid megapool");
+                _challenges[i].megapool.challengeExit(_challenges[i].validatorIds[j]);
+                totalChallenges += 1;
+            }
+        }

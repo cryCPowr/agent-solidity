@@ -1,0 +1,3 @@
+function _setSettingBool(string memory _settingPath, bool _value) internal {
+        setBool(keccak256(abi.encodePacked(settingNameSpace, _settingPath)), _value);
+    }

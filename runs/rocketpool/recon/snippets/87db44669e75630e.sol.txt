@@ -1,0 +1,5 @@
+if (_block < _blockAt(_key, mid)) {
+                high = mid;
+            } else {
+                low = mid + 1;
+            }

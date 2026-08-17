@@ -1,0 +1,1 @@
+_value >= 10 days && _value <= 60 days

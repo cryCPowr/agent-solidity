@@ -1,0 +1,1 @@
+linkedListStorage.removeItem(namespace, key)

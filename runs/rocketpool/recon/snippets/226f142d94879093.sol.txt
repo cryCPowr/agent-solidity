@@ -1,0 +1,1 @@
+RocketMinipoolInterface(dequeueMinipool(queueKeyVariable))

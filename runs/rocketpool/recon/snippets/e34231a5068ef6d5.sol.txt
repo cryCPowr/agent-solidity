@@ -1,0 +1,1 @@
+_setMinipoolPubkey(address(minipool), _validatorPubkey)

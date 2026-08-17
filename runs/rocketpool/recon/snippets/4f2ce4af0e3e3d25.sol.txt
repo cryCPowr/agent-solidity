@@ -1,0 +1,1 @@
+rocketDAOProtocolSettings.setSettingBool(_settingPath, _value)

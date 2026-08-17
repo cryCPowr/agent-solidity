@@ -1,0 +1,1 @@
+function getTotalRPLBalance() external view returns (uint256);

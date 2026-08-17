@@ -1,0 +1,18 @@
+for (uint256 i = _offset; i < max; ++i) {
+            address nodeAddress = addressSetStorage.getItem(nodeKey, i);
+            string memory timezone = getString(keccak256(abi.encodePacked("node.timezone.location", nodeAddress)));
+            // Find existing entry in our array
+            bool existing = false;
+            for (uint256 j = 0; j < uniqueTimezoneCount; ++j) {
+                if (keccak256(bytes(counts[j].timezone)) == keccak256(bytes(timezone))) {
+                    existing = true;
+                    // Increment the counter
+                    counts[j].count++;
+                    break;
+                }
+            }
+            // Entry was not found, so create a new one
+            if (!existing) {
+                counts[uniqueTimezoneCount].timezone = timezone;
+  
+/* … truncated … */

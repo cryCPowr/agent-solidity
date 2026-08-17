@@ -1,0 +1,1 @@
+rocketStorage.getAddress(keccak256(abi.encodePacked("contract.address", _contractName)))

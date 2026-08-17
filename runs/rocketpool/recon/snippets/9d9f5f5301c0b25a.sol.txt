@@ -1,0 +1,16 @@
+function getState(uint256 _proposalID) override public view returns (ProposalState) {
+        // Check the proposal ID is legit
+        require(getTotal() >= _proposalID && _proposalID > 0, "Invalid proposal ID");
+        // Get the amount of votes for and against
+        uint256 votesFor = getVotesFor(_proposalID);
+        uint256 votesAgainst = getVotesAgainst(_proposalID);
+        // Now return the state of the current proposal
+        if (getCancelled(_proposalID)) {
+            // Cancelled by the proposer?
+            return ProposalState.Cancelled;
+            // Has it been executed?
+        } else if (getExecuted(_proposalID)) {
+            return ProposalState.Executed;
+            // Is the proposal pending? Eg. waiting to be voted on
+        } else if (block.timestamp < getStar
+/* … truncated … */

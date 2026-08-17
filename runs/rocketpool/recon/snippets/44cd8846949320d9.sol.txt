@@ -1,0 +1,3 @@
+function deleteBytes32(bytes32 _key) onlyLatestRocketNetworkContract override external {
+        delete bytes32Storage[_key];
+    }

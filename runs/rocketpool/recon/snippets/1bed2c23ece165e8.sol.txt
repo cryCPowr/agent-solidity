@@ -1,0 +1,1 @@
+token.staticcall(abi.encodeWithSignature("balanceOf(address)", user))

@@ -1,0 +1,1 @@
+require(memberInvitedTime > 0, "This address has not been invited to join")

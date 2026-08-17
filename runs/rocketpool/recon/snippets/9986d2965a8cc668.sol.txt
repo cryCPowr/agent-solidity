@@ -1,0 +1,1 @@
+require(daoNodeTrusted.getMemberLastProposalTime(msg.sender).add(rocketDAONodeTrustedSettingsProposals.getCooldownTime()) <= block.timestamp, "Member has not waited long enough to make another proposal")

@@ -1,0 +1,1 @@
+function getContractExists(string calldata _contractName) external view returns (bool);

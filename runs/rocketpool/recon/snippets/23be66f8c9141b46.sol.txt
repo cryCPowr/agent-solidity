@@ -1,0 +1,1 @@
+emit MinipoolVacancyPrepared(_bondAmount, _currentBalance, block.timestamp)

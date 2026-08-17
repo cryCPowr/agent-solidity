@@ -1,0 +1,7 @@
+function confirmWithdrawalAddress(address _nodeAddress) external override {
+        // Get node by pending withdrawal address
+        require(pendingWithdrawalAddresses[_nodeAddress] == msg.sender, "Confirmation must come from the pending withdrawal address");
+        delete pendingWithdrawalAddresses[_nodeAddress];
+        // Update withdrawal address
+        updateWithdrawalAddress(_nodeAddress, msg.sender);
+    }

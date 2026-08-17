@@ -1,0 +1,4 @@
+function getMegapoolDeployed(address _nodeAddress) override external view returns (bool) {
+        address contractAddress = getExpectedAddress(_nodeAddress);
+        return getBool(keccak256(abi.encodePacked("megapool.exists", contractAddress)));
+    }

@@ -1,0 +1,4 @@
+modifier onlyRegisteredMegapool(address _megapoolAddress) {
+        require(getBool(keccak256(abi.encodePacked("megapool.exists", _megapoolAddress))), "Invalid megapool");
+        _;
+    }

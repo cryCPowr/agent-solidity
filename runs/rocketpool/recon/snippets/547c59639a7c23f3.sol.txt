@@ -1,0 +1,1 @@
+emit RootSubmitted(_proposalID, getAddress(bytes32(proposalKey + proposerOffset)), uint32(getUint(bytes32(proposalKey + blockNumberOffset))), _index, actual, _nodes, block.timestamp)

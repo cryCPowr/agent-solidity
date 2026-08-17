@@ -1,0 +1,2 @@
+if (_typeHash == typeAddABI) _addABI(_name, _contractAbi);
+        else revert("Invalid upgrade type")

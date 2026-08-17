@@ -1,0 +1,1 @@
+getSettingUint("deposit.pool.maximum")

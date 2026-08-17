@@ -1,0 +1,3 @@
+function getNodeAddress() public override view returns (address) {
+        return nodeAddress;
+    }

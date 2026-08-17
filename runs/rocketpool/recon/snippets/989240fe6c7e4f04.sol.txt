@@ -1,0 +1,1 @@
+_targetSlot + slotsPerHistoricalRoot < _proofSlot

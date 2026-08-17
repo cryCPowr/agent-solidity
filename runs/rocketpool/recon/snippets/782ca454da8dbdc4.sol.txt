@@ -1,0 +1,1 @@
+function getMegapoolDeployed(address _nodeAddress) external view returns (bool);

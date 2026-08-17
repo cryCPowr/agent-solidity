@@ -1,0 +1,3 @@
+if (depositPoolBalance >= maxCapacity) {
+            return 0;
+        }

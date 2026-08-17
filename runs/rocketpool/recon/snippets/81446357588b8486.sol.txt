@@ -1,0 +1,16 @@
+for (uint i = 0; i < _submission.nodeRPL.length; ++i) {
+            // Quick out if no rewards for this network
+            uint256 rewardsRPL = _submission.nodeRPL[i] + _submission.trustedNodeRPL[i];
+            uint256 rewardsETH = _submission.nodeETH[i];
+            if (rewardsRPL == 0 && rewardsETH == 0) {
+                continue;
+            }
+            // Grab the relay address
+            RocketRewardsRelayInterface relay;
+            { // Scope to prevent stack too deep
+                address networkRelayAddress;
+                bytes32 networkRelayKey = keccak256(abi.encodePacked("rewards.relay.address", i));
+                networkRelayAddress = getAddress(networkRelayKey);
+                // Validate network is valid
+                require(networkRelayAddress != address(0),
+/* … truncated … */

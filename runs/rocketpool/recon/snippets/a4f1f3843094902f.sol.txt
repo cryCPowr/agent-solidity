@@ -1,0 +1,1 @@
+setUint(keccak256(abi.encodePacked("auction.lot.bid.address", _index, _bidder)), _amount)

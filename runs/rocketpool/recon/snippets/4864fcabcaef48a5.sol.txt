@@ -1,0 +1,1 @@
+setSettingBool("minipool.bond.reduction.enabled", false)

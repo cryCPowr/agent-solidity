@@ -1,0 +1,17 @@
+function scan(bytes32 _namespace, uint256 _start, uint256 _count) override external view returns (DepositQueueValue[] memory entries, uint256 nextIndex) {
+        entries = new DepositQueueValue[](_count);
+        nextIndex = _start;
+        uint256 total = 0;
+
+        // If nextIndex is 0, begin scan at the start of the list
+        if (nextIndex == 0) {
+            uint256 data = getUint(keccak256(abi.encodePacked(_namespace, ".data")));
+            uint256 start = uint64(data >> startOffset);
+            nextIndex = start;
+        }
+
+        while (total < _count && nextIndex != 0) {
+            uint256 packedValue = getUint(keccak256(abi.encodePacked(_namespace, ".item", nextIndex)));
+            entries[total] = _unpackItem(packedValue);
+            nextIndex = getUint(keccak256(abi.e
+/* … truncated … */

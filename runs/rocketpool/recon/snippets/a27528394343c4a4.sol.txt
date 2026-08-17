@@ -1,0 +1,12 @@
+function _overrideVote(address _delegate, address _voter, uint256 _proposalID, uint256 _votes, VoteDirection _voteDirection) internal {
+        // Check for non-zero voting power
+        require(_votes > 0, "Cannot vote with 0 voting power");
+        // Remove votes from proposal
+        if (_voteDirection == VoteDirection.For) {
+            subUint(keccak256(abi.encodePacked(daoProposalNameSpace, "votes.for", _proposalID)), _votes);
+        } else if(_voteDirection == VoteDirection.Abstain) {
+            subUint(keccak256(abi.encodePacked(daoProposalNameSpace, "votes.abstained", _proposalID)), _votes);
+        } else {
+            if(_voteDirection == VoteDirection.AgainstWithVeto) {
+                subUint(keccak256(abi.encodePacked(daoProposalNameSpace, "votes.veto", _proposalID)), _vot
+/* … truncated … */

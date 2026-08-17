@@ -1,0 +1,3 @@
+if (penaltyAmount > nodeShare) {
+                penaltyAmount = nodeShare;
+            }

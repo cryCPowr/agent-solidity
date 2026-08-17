@@ -1,0 +1,5 @@
+function getVetoed(uint256 _proposalID) override public view returns (bool) {
+        uint256 votesVeto = getVotingPowerVeto(_proposalID);
+        uint256 quorum = getVetoQuorum(_proposalID);
+        return votesVeto >= quorum;
+    }

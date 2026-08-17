@@ -1,0 +1,1 @@
+emit PenaltyUpdated(_minipool, penaltyRate, block.timestamp)

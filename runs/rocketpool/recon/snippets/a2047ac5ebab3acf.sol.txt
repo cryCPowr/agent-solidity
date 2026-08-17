@@ -1,0 +1,3 @@
+function setUint(bytes32 _key, uint _value) onlyLatestRocketNetworkContract override external {
+        uintStorage[_key] = _value;
+    }

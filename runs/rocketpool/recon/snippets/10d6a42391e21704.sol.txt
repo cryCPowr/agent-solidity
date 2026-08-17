@@ -1,0 +1,5 @@
+if (checkpointTime <= _sinceTime) {
+            // Value hasn't changed since _sinceTime, so return current
+            bytes32 valueKey = bytes32(uint256(_key) + checkpointTime);
+            return getUint(valueKey) * shareScale;
+        }

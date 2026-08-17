@@ -1,0 +1,9 @@
+function getTotalLength() override external view returns (uint256) {
+        return (
+            getLengthLegacy(queueKeyFull)
+        ).add(
+            getLengthLegacy(queueKeyHalf)
+        ).add(
+            getLength()
+        );
+    }

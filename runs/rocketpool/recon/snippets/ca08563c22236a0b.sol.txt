@@ -1,0 +1,22 @@
+function _claim() internal {
+        uint256 amountToSend = refundValue;
+        // If node operator has a debt, pay that off first
+        if (debt > 0) {
+            if (debt > amountToSend) {
+                _repayDebt(amountToSend);
+                amountToSend = 0;
+            } else {
+                amountToSend -= debt;
+                _repayDebt(debt);
+            }
+        }
+        // Zero out refund value
+        refundValue = 0;
+        // If there is still an amount to send after debt, do so now
+        if (amountToSend > 0) {
+            address nodeWithdrawalAddress = rocketStorage.getNodeWithdrawalAddress(nodeAddress);
+            (bool success,) = nodeWithdrawalAddress.call{value: amountToSend}("");
+            require(success, "Failed to send ETH");
+        }
+        // 
+/* … truncated … */

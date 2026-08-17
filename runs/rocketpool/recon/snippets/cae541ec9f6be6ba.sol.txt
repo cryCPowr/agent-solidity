@@ -1,0 +1,1 @@
+event StakeRPLForAllowed(address indexed node, address indexed caller, bool allowed, uint256 time);

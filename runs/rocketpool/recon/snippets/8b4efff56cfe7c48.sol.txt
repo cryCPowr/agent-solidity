@@ -1,0 +1,1 @@
+setUint(bytes32(contractKey + periodLengthOffset), _periodLength)

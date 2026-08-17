@@ -1,0 +1,20 @@
+contract RocketNodeDistributorFactory is RocketBase, RocketNodeDistributorFactoryInterface {
+    // Events
+    event ProxyCreated(address _address);
+
+    // Construct
+    constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
+        version = 1;
+    }
+
+    function getProxyBytecode() override public pure returns (bytes memory) {
+        return type(RocketNodeDistributor).creationCode;
+    }
+
+    // Calculates the predetermined distributor contract address from given node address
+    function getProxyAddress(address _nodeAddress) override external view returns(address) {
+        bytes memory contractCode = getProxyBytecode();
+        bytes memory initCode = abi.encodePacked(contractCode, abi.encode(_nodeAddress, rocketStorage));
+
+        bytes32 hash 
+/* … truncated … */

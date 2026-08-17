@@ -1,0 +1,1 @@
+keccak256(abi.encodePacked("rewards.network.enabled", uint256(0)))

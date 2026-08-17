@@ -1,0 +1,11 @@
+function destroyMinipool() override external onlyLatestContract("rocketMinipoolManager", address(this)) onlyRegisteredMinipool(msg.sender) {
+        // Load contracts
+        AddressSetStorageInterface addressSetStorage = AddressSetStorageInterface(getContractAddress("addressSetStorage"));
+        // Initialize minipool & get properties
+        RocketMinipoolInterface minipool = RocketMinipoolInterface(msg.sender);
+        address nodeAddress = minipool.getNodeAddress();
+        // Update ETH matched
+        RocketNetworkSnapshots rocketNetworkSnapshots = RocketNetworkSnapshots(getContractAddress("rocketNetworkSnapshots"));
+        bytes32 key = keccak256(abi.encodePacked("eth.matched.node.amount", nodeAddress));
+        uint256 ethMatched = uint256(rocketNetworkSnapshots.latestValue(key))
+/* … truncated … */

@@ -1,0 +1,1 @@
+removeMinipool(queueKeyVariable, msg.sender)

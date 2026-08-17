@@ -1,0 +1,1 @@
+SSZ.toLittleEndian(_validator.slashed ? 1 : 0)

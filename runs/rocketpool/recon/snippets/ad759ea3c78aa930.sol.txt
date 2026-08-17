@@ -1,0 +1,1 @@
+setUint(keccak256(abi.encodePacked(_namespace, ".prev", nextIndex)), prevIndex)

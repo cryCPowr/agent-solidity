@@ -1,0 +1,1 @@
+_nodes[i * 2].sum + _nodes[i * 2 + 1].sum

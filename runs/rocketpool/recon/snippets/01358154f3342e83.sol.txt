@@ -1,0 +1,3 @@
+if (calcBase * submissionCount / rocketDAONodeTrusted.getMemberCount() >= rocketDAOProtocolSettingsNetwork.getNodeConsensusThreshold()) {
+            _updateBalances(_block, _slotTimestamp, _totalEth, _stakingEth, _rethSupply);
+        }

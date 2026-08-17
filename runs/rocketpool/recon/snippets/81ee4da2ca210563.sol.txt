@@ -1,0 +1,1 @@
+_beforeTokenTransfer(account, address(0), amount)

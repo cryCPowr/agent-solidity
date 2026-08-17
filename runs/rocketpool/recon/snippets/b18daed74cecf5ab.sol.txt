@@ -1,0 +1,1 @@
+require(getLotExists(_lotIndex), "Lot does not exist")

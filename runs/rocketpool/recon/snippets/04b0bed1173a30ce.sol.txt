@@ -1,0 +1,15 @@
+contract RocketDAONodeTrustedActions is RocketBase, RocketDAONodeTrustedActionsInterface {
+
+    using SafeMath for uint;
+
+    // Events
+    event ActionJoined(address indexed nodeAddress, uint256 rplBondAmount, uint256 time);
+    event ActionLeave(address indexed nodeAddress, uint256 rplBondAmount, uint256 time);
+    event ActionKick(address indexed nodeAddress, uint256 rplBondAmount, uint256 time);
+    event ActionChallengeMade(address indexed nodeChallengedAddress, address indexed nodeChallengerAddress, uint256 time);
+    event ActionChallengeDecided(address indexed nodeChallengedAddress, address indexed nodeChallengeDeciderAddress, bool success, uint256 time);
+
+
+    // The namespace for any data stored in the trusted node DAO (do not change)
+    string constant private daoNameSpace = "d
+/* … truncated … */

@@ -1,0 +1,3 @@
+function recycleLiquidatedStake() override external payable onlyThisLatestContract onlyLatestContract("rocketAuctionManager", msg.sender) {
+        _recycleValue();
+    }

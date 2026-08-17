@@ -1,0 +1,3 @@
+function getNodeRPLWithdrawalAddressIsSet(address _nodeAddress) override external view returns (bool) {
+        return (getAddress(keccak256(abi.encodePacked("node.rpl.withdrawal.address", _nodeAddress))) != address(0));
+    }

@@ -1,0 +1,3 @@
+function _setSettingUint(string memory _settingPath, uint256 _value) internal {
+        setUint(keccak256(abi.encodePacked(settingNameSpace, _settingPath)), _value);
+    }

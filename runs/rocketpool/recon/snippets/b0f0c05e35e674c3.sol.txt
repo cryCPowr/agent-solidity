@@ -1,0 +1,1 @@
+function getSubmitRewardsEnabled() external view returns (bool);

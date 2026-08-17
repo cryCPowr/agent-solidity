@@ -1,0 +1,3 @@
+function getRegistrationEnabled() override external view returns (bool) {
+        return getSettingBool("node.registration.enabled");
+    }

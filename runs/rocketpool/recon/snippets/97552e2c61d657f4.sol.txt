@@ -1,0 +1,25 @@
+contract RocketMerkleDistributorMainnet is RocketBase, RocketMerkleDistributorMainnetInterface, RocketVaultWithdrawerInterface {
+    // Events
+    event RewardsClaimed(address indexed claimer, Claim[] claims);
+
+    // Constants
+    uint256 constant network = 0;
+
+    // Immutables
+    bytes32 immutable rocketVaultKey;
+    bytes32 immutable rocketTokenRPLKey;
+
+    // Allow receiving ETH
+    receive() payable external {}
+
+    // Construct
+    constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
+        // Version
+        version = 3;
+        // Precompute keys
+        rocketVaultKey = keccak256(abi.encodePacked("contract.address", "rocketVault"));
+        rocketTokenRPLKey = keccak256(abi.encodePacked("contract.address", "rocketTokenRPL"));
+    }
+
+    
+/* … truncated … */

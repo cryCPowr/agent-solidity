@@ -1,0 +1,18 @@
+contract RocketNetworkSnapshotsTime is RocketBase, RocketNetworkSnapshotsTimeInterface {
+    // Construct
+    constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
+        version = 1;
+    }
+
+    /// @notice Pushes a new value as at the current block timestamp
+    /// @param _key Key of the set to insert value into
+    /// @param _value New value to insert
+    function push(bytes32 _key, uint192 _value) onlyLatestContract("rocketNetworkSnapshotsTime", address(this)) onlyLatestNetworkContract external {
+        _insert(_key, _value);
+    }
+
+    /// @notice Returns the number of snapshots for a given key
+    /// @param _key Key to query
+    function length(bytes32 _key) public view returns (uint256) {
+        return rocketStorage.getUint(keccak256(abi.
+/* … truncated … */

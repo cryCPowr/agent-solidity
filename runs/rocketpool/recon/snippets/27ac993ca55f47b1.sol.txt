@@ -1,0 +1,3 @@
+if (storedValue != _value / shareScale)  {
+            _setShare(key, _value);
+        }

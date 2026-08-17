@@ -1,0 +1,1 @@
+function verifyWithdrawal(uint64 _slotTimestamp, uint64 _slot, WithdrawalProof calldata _proof) external view returns (bool);

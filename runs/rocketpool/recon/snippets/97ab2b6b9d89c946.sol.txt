@@ -1,0 +1,1 @@
+rocketNetworkVoting.getNodeCount(_blockNumber)

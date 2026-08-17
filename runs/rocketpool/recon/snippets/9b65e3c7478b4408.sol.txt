@@ -1,0 +1,1 @@
+require(validator.staked, "Validator not staked")

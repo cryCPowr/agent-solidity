@@ -1,0 +1,1 @@
+getUint(keccak256(abi.encodePacked(_namespace, ".index", _key.receiver, _key.validatorId)))

@@ -1,0 +1,3 @@
+for (uint256 i = 0; i < _intervalsSinceLastMint; i++) {
+                    newTotalSupply = newTotalSupply.mul(inflationRate).div(10**18);
+                }

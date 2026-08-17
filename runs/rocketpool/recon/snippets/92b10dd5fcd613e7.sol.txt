@@ -1,0 +1,1 @@
+rocketVaultAddress != address(0x0)

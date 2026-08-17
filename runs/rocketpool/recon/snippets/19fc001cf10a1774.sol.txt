@@ -1,0 +1,7 @@
+function executePenalty(address _megapool, uint256 _block, uint256 _amount) override external {
+        // Get submission count
+        bytes32 submissionCountKey = keccak256(abi.encodePacked("megapool.penalty.submission", _megapool, _block, _amount));
+        uint256 submissionCount = getUint(submissionCountKey);
+        // Apply penalty if relevant conditions are met
+        _maybeApplyPenalty(_megapool, _block, _amount, submissionCount);
+    }

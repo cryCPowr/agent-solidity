@@ -1,0 +1,1 @@
+function dissolveValidator(uint32 _validatorId) external;

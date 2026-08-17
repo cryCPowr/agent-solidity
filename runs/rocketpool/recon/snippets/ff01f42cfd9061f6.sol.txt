@@ -1,0 +1,12 @@
+function canPromote() override external view onlyInitialised returns (bool) {
+        // Check status
+        if (status != MinipoolStatus.Prelaunch) {
+            return false;
+        }
+        // Get contracts
+        RocketDAONodeTrustedSettingsMinipoolInterface rocketDAONodeTrustedSettingsMinipool = RocketDAONodeTrustedSettingsMinipoolInterface(getContractAddress("rocketDAONodeTrustedSettingsMinipool"));
+        // Get scrub period
+        uint256 scrubPeriod = rocketDAONodeTrustedSettingsMinipool.getPromotionScrubPeriod();
+        // Check if we have been in prelaunch status for long enough
+        return block.timestamp > statusTime + scrubPeriod;
+    }

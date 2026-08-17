@@ -1,0 +1,6 @@
+function getRPLBalance() override public view returns (uint256) {
+        // Get the vault contract instance
+        RocketVaultInterface rocketVault = RocketVaultInterface(getContractAddress("rocketVault"));
+        // Check contract RPL balance
+        return rocketVault.balanceOfToken("rocketRewardsPool", IERC20(getContractAddress("rocketTokenRPL")));
+    }

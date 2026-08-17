@@ -1,0 +1,8 @@
+function _getParentBlockRoot(uint64 _slotTimestamp) internal view returns (bytes32) {
+        (bool success, bytes memory result) = beaconRoots.staticcall(abi.encode(_slotTimestamp));
+        if (success && result.length > 0) {
+            return abi.decode(result, (bytes32));
+        }
+        // Fail
+        revert("Block root is not available");
+    }

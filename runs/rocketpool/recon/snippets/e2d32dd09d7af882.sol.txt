@@ -1,0 +1,8 @@
+if(!getBool(keccak256(abi.encodePacked(settingNameSpace, "deployed")))) {
+            // RPL Claims settings
+            setUint(keccak256(abi.encodePacked(settingNameSpace, "rewards.claims", "group.amount", "rocketClaimTrustedNode")), 0.2 ether);
+            setUint(keccak256(abi.encodePacked(settingNameSpace, "rewards.claims", "group.amount", "rocketClaimDAO")), 0.1 ether);
+            setUint(keccak256(abi.encodePacked(settingNameSpace, "rewards.claims", "group.amount", "rocketClaimNode")), 0.7 ether);
+            setUint(keccak256(abi.encodePacked(settingNameSpace, "rewards.claims", "group.amount.updated.time")), block.timestamp);
+            setUint(keccak256(abi.encodePacked(settingNameSpace, "rewards.claims", "periods")), 28);                  // The number of submission periods in 
+/* … truncated … */

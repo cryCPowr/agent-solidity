@@ -1,0 +1,10 @@
+function _memberJoin(address _nodeAddress) private {
+        AddressSetStorageInterface addressSetStorage = AddressSetStorageInterface(getContractAddress("addressSetStorage"));
+        // Load contracts
+        RocketDAOSecurityInterface rocketDAOSecurity = RocketDAOSecurityInterface(getContractAddress("rocketDAOSecurity"));
+        RocketDAOProtocolSettingsSecurityInterface rocketDAOProtocolSettingsSecurity = RocketDAOProtocolSettingsSecurityInterface(getContractAddress("rocketDAOProtocolSettingsSecurity"));
+        // The time that the member was successfully invited to join the DAO
+        uint256 memberInvitedTime = rocketDAOSecurity.getMemberProposalExecutedTime("invited", _nodeAddress);
+        // Have they been invited?
+        require(memberInvitedTime > 0, "This address has not be
+/* … truncated … */

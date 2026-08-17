@@ -1,0 +1,1 @@
+rocketVault.depositToken("rocketNodeStaking", rplToken, _amount)

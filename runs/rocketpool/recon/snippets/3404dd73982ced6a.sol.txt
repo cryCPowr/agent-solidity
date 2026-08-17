@@ -1,0 +1,8 @@
+function _slash() private {
+        // Get contracts
+        RocketNodeStakingInterface rocketNodeStaking = RocketNodeStakingInterface(getContractAddress("rocketNodeStaking"));
+        // Slash required amount and reset storage value
+        uint256 slashAmount = nodeSlashBalance;
+        nodeSlashBalance = 0;
+        rocketNodeStaking.slashRPL(nodeAddress, slashAmount);
+    }

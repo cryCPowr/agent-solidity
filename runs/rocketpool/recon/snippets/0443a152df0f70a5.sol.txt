@@ -1,0 +1,1 @@
+require(_index < 2 ** _log2Length, "Index exceeds length")

@@ -1,0 +1,1 @@
+minipools.length * variableDepositAmount

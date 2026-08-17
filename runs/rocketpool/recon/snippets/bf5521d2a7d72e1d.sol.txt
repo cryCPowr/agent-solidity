@@ -1,0 +1,1 @@
+_intervalsSinceLastMint > 0

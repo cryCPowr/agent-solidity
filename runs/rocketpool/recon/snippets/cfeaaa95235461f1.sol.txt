@@ -1,0 +1,12 @@
+function voteScrub() override external onlyInitialised {
+        // Check current status
+        require(status == MinipoolStatus.Prelaunch, "The minipool can only be scrubbed while in prelaunch");
+        // Get contracts
+        RocketDAONodeTrustedInterface rocketDAONode = RocketDAONodeTrustedInterface(getContractAddress("rocketDAONodeTrusted"));
+        RocketDAONodeTrustedSettingsMinipoolInterface rocketDAONodeTrustedSettingsMinipool = RocketDAONodeTrustedSettingsMinipoolInterface(getContractAddress("rocketDAONodeTrustedSettingsMinipool"));
+        // Must be a trusted member
+        require(rocketDAONode.getMemberIsValid(msg.sender), "Not a trusted member");
+        // Can only vote once
+        require(!memberScrubVotes[msg.sender], "Member has already voted to scrub");
+        memb
+/* … truncated … */

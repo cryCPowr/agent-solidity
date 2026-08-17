@@ -1,0 +1,1 @@
+require(totalActiveMinipoolCount + 1 <= rocketDAOProtocolSettingsMinipool.getMaximumCount(), "Global minipool limit reached")

@@ -1,0 +1,1 @@
+rocketNetworkVoting.getDelegate(msg.sender, blockNumber)

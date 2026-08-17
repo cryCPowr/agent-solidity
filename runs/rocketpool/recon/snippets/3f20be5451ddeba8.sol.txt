@@ -1,0 +1,5 @@
+if (tokens[j] != address(0x0)) {
+                    addrBalances[addrIdx] = tokenBalance(users[i], tokens[j]);
+                } else {
+                    addrBalances[addrIdx] = users[i].balance; // ETH balance
+                }

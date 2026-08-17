@@ -1,0 +1,1 @@
+require(averageCapitalRatio <= calcBase, "Invalid average capital ratio")

@@ -1,0 +1,12 @@
+function spend(string memory _invoiceID, address _recipientAddress, uint256 _amount) override external onlyLatestContract("rocketDAOProtocolProposals", msg.sender) onlyLatestContract("rocketClaimDAO", address(this)) {
+        // Load contracts
+        RocketVaultInterface rocketVault = RocketVaultInterface(getContractAddress("rocketVault"));
+        // Addresses
+        IERC20 rplToken = IERC20(getContractAddress("rocketTokenRPL"));
+        // Some initial checks
+        require(_amount > 0 && _amount <= rocketVault.balanceOfToken("rocketClaimDAO", rplToken), "You cannot send 0 RPL or more than the DAO has in its account");
+        // Send now
+        rocketVault.withdrawToken(_recipientAddress, rplToken, _amount);
+        // Log it
+        emit RPLTokensSentByDAOProtocol(_invoiceID, addre
+/* … truncated … */

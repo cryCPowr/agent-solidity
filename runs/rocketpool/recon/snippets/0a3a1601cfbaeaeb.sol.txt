@@ -1,0 +1,1 @@
+function setRewardNetwork(address _nodeAddress, uint256 network) external;

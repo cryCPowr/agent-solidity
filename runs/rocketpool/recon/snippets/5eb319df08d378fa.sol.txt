@@ -1,0 +1,4 @@
+function getNodeMegapoolETHBorrowed(address _nodeAddress) public view returns (uint256) {
+        bytes32 key = keccak256(abi.encodePacked("megapool.eth.matched.node.amount", _nodeAddress));
+        return getUint(key);
+    }

@@ -1,0 +1,17 @@
+function _incrementMinipoolPenaltyCount(address _minipool) internal {
+        // Get contracts
+        RocketDAOProtocolSettingsNetworkInterface rocketDAOProtocolSettingsNetwork = RocketDAOProtocolSettingsNetworkInterface(getContractAddress("rocketDAOProtocolSettingsNetwork"));
+        // Calculate penalty count key
+        bytes32 key = keccak256(abi.encodePacked("network.penalties.penalty", _minipool));
+        // Get the current penalty count
+        uint256 newPenaltyCount = getUint(key) + 1;
+        // Update the penalty count
+        setUint(key, newPenaltyCount);
+        // First two penalties do not increase penalty rate
+        if (newPenaltyCount < 3) {
+            return;
+        }
+        newPenaltyCount = newPenaltyCount - 2;
+        // Calculate the new penalty rate
+        u
+/* … truncated … */

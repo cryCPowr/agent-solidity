@@ -1,0 +1,1 @@
+setSettingUint("auction.price.start", 1 ether)

@@ -1,0 +1,15 @@
+function getNewValidatorBondRequirement() override public view returns (uint256) {
+        RocketNodeDepositInterface rocketNodeDeposit = _getRocketNodeDeposit();
+        uint256 newBondRequirement = rocketNodeDeposit.getBondRequirement(getActiveValidatorCount() + 1);
+        uint256 effectiveBond = nodeBond + nodeQueuedBond;
+        if (newBondRequirement > effectiveBond) {
+            // Clamp new bond requirement between 1 - 32 ETH
+            if (newBondRequirement - effectiveBond < prestakeValue) {
+                return prestakeValue;
+            } else {
+                uint256 bondRequirement = newBondRequirement - effectiveBond;
+                if (bondRequirement > fullDepositValue) {
+                    bondRequirement = fullDepositValue;
+                }
+                return
+/* … truncated … */

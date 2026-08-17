@@ -1,0 +1,1 @@
+(uint256(0x01) << 248) | uint256(uint160(address(this)))

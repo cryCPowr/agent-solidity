@@ -1,0 +1,3 @@
+constructor(RocketStorageInterface _rocketStorageAddress) LinkedListStorage(_rocketStorageAddress) {
+        version = 1;
+    }

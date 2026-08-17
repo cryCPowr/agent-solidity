@@ -1,0 +1,1 @@
+_binaryLookup(_key, _block, 0, len)

@@ -1,0 +1,1 @@
+function getRewardIndex() external view returns(uint256);

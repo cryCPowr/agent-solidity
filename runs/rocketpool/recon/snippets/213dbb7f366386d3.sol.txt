@@ -1,0 +1,3 @@
+function length(Path memory _path) internal pure returns (uint8) {
+        return uint8(_path._data);
+    }

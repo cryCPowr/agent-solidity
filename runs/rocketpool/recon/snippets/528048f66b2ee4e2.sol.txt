@@ -1,0 +1,3 @@
+function getNodeUsableCreditAndBalance(address _nodeAddress) override external view returns (uint256) {
+        return getNodeUsableCredit(_nodeAddress) + getNodeEthBalance(_nodeAddress);
+    }

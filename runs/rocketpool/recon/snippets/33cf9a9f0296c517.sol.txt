@@ -1,0 +1,1 @@
+require(_amount % milliToWei == 0, "Invalid requested amount")

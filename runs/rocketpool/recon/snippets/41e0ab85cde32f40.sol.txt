@@ -1,0 +1,3 @@
+function getPayload(uint256 _proposalID) override public view returns (bytes memory) {
+        return getBytes(keccak256(abi.encodePacked(daoProposalNameSpace, "payload", _proposalID))); 
+    }

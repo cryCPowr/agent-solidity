@@ -1,0 +1,3 @@
+if (_rplStake > maximumStake) {
+            _rplStake = maximumStake;
+        }

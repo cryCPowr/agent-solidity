@@ -1,0 +1,3 @@
+if (success && result.length > 0) {
+            return abi.decode(result, (bytes32));
+        }

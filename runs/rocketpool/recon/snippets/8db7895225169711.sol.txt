@@ -1,0 +1,1 @@
+totalSupply().add(_amount)

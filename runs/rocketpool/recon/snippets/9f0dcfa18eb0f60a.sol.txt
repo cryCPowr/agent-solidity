@@ -1,0 +1,3 @@
+function deployContract(address _nodeAddress) override public onlyLatestContract("rocketNodeManager", msg.sender) onlyLatestContract("rocketMegapoolFactory", address(this)) returns (address) {
+        return _deployContract(_nodeAddress);
+    }

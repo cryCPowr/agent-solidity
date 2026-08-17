@@ -1,0 +1,1 @@
+SSZ.toLittleEndian(_genesisTime)

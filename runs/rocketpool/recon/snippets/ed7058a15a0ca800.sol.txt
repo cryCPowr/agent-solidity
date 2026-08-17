@@ -1,0 +1,7 @@
+if (_balance > capital) {
+            // Total rewards to share
+            uint256 rewards = _balance.sub(capital);
+            nodeShare = nodeCapital.add(calculateNodeRewards(nodeCapital, userCapital, rewards));
+        } else if (_balance > userCapital) {
+            nodeShare = _balance.sub(userCapital);
+        }

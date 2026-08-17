@@ -1,0 +1,15 @@
+interface RocketNodeStakingInterface {
+    function getTotalStakedRPL() external view returns (uint256);
+    function getTotalMegapoolStakedRPL() external view returns (uint256);
+    function getTotalLegacyStakedRPL() external view returns (uint256);
+
+    function getNodeStakedRPL(address _nodeAddress) external view returns (uint256);
+    function getNodeMegapoolStakedRPL(address _nodeAddress) external view returns (uint256);
+    function getNodeLegacyStakedRPL(address _nodeAddress) external view returns (uint256);
+
+    function getNodeUnstakingRPL(address _nodeAddress) external view returns (uint256);
+    function getNodeLockedRPL(address _nodeAddress) external view returns (uint256);
+
+    function stakeRPLFor(address _nodeAddress, uint256 _amount) external;
+    function stakeRPL(uint256 
+/* … truncated … */

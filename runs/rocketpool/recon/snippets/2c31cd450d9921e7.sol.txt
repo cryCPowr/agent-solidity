@@ -1,0 +1,1 @@
+emit NodeRegistered(msg.sender, block.timestamp)

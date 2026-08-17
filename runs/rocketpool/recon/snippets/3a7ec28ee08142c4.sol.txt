@@ -1,0 +1,1 @@
+require(downcasted == value, "SafeCast: value doesn't fit in 192 bits")

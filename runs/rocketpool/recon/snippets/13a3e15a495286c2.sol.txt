@@ -1,0 +1,7 @@
+function addItem(bytes32 _key, address _value) override external onlyLatestContract("addressSetStorage", address(this)) onlyLatestNetworkContract {
+        require(getUint(keccak256(abi.encodePacked(_key, ".index", _value))) == 0, "Item already exists in set");
+        uint count = getUint(keccak256(abi.encodePacked(_key, ".count")));
+        setAddress(keccak256(abi.encodePacked(_key, ".item", count)), _value);
+        setUint(keccak256(abi.encodePacked(_key, ".index", _value)), count.add(1));
+        setUint(keccak256(abi.encodePacked(_key, ".count")), count.add(1));
+    }

@@ -1,0 +1,5 @@
+function _pathBeaconStateToValidator(uint40 _validatorIndex) internal view returns (SSZ.Path memory) {
+        SSZ.Path memory path = SSZ.from(11, 6); // 0b001011 (BeaconState -> validators)
+        path = SSZ.concat(path, SSZ.intoList(_validatorIndex, 40)); // validators -> validators[n]
+        return path;
+    }

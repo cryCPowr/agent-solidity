@@ -1,0 +1,1 @@
+daoSecurity.getMemberIsValid(_memberAddresses[i])

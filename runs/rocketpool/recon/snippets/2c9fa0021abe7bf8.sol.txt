@@ -1,0 +1,1 @@
+function swapTokens(uint256 _amount) external;

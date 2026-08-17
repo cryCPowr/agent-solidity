@@ -1,0 +1,1 @@
+abi.encodePacked("dao.security.allowed.setting", "network", "network.submit.balances.enabled")

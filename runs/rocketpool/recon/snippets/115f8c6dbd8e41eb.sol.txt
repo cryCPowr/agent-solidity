@@ -1,0 +1,1 @@
+require(!getReceiptHasVoted(_proposalID, _nodeOperator), "Node operator has already voted on proposal")

@@ -1,0 +1,1 @@
+function confirmWithdrawalAddress(address _nodeAddress) external;

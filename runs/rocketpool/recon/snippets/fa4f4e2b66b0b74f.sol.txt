@@ -1,0 +1,1 @@
+event NodeRewardNetworkChanged(address indexed node, uint256 network);

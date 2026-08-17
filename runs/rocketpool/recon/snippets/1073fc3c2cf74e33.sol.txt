@@ -1,0 +1,5 @@
+if (depositSizes[i] == 16 ether) {
+                    numeratorKey = keccak256(abi.encodePacked("node.average.fee.numerator", _nodeAddress));
+                } else {
+                    numeratorKey = keccak256(abi.encodePacked("node.average.fee.numerator", _nodeAddress, depositSizes[i]));
+                }

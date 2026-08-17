@@ -1,0 +1,1 @@
+_blockNumber + rocketDAOProtocolSettingsProposals.getProposalMaxBlockAge() > block.number

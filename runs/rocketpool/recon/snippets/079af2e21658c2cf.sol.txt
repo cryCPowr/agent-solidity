@@ -1,0 +1,13 @@
+function _applyPenalty(address _megapool, uint256 _amount) internal {
+        // Get contracts
+        RocketNetworkSnapshotsTimeInterface rocketNetworkSnapshotsTime = RocketNetworkSnapshotsTimeInterface(getContractAddress("rocketNetworkSnapshotsTime"));
+        RocketDAOProtocolSettingsMegapoolInterface rocketDAOProtocolSettingsMegapool = RocketDAOProtocolSettingsMegapoolInterface(getContractAddress("rocketDAOProtocolSettingsMegapool"));
+        // Grab max weekly penalty
+        uint256 maxPenalty = rocketDAOProtocolSettingsMegapool.getMaximumEthPenalty();
+        // Get running total from 7 days ago
+        uint256 earlierTime = 0;
+        if (block.timestamp > penaltyMaximumPeriod) {
+            earlierTime = block.timestamp - penaltyMaximumPeriod;
+        }
+        uint256 earlierRunn
+/* … truncated … */

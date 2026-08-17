@@ -1,0 +1,1 @@
+mapping(address => address) public signerToNode

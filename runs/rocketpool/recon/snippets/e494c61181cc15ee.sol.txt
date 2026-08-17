@@ -1,0 +1,1 @@
+uint256 constant public exponent = 10**uint256(decimalPlaces)

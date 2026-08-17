@@ -1,0 +1,1 @@
+getUint(keccak256(abi.encodePacked("rpl.locked.node.amount", _nodeAddress)))

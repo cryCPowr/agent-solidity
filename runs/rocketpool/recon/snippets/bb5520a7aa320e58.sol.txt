@@ -1,0 +1,1 @@
+setSettingUint("auction.lot.value.minimum", 1 ether)

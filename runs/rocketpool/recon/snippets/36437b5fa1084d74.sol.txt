@@ -1,0 +1,9 @@
+function submitRoot(uint256 _proposalID, uint256 _index, Types.Node[] calldata _nodes) external onlyLatestContract("rocketDAOProtocolVerifier", address(this)) onlyRegisteredNode(msg.sender) {
+        uint256 proposalKey = uint256(keccak256(abi.encodePacked("dao.protocol.proposal", _proposalID)));
+
+        {  // Scope to prevent stack too deep
+            // Check whether the proposal is in the Pending state
+            RocketDAOProtocolProposalInterface daoProposal = RocketDAOProtocolProposalInterface(getContractAddress("rocketDAOProtocolProposal"));
+            RocketDAOProtocolProposalInterface.ProposalState proposalState = daoProposal.getState(_proposalID);
+            require(proposalState == RocketDAOProtocolProposalInterface.ProposalState.Pending, "Can not submit root for a valid pro
+/* … truncated … */

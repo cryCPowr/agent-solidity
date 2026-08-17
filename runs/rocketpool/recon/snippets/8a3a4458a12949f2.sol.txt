@@ -1,0 +1,1 @@
+require(nodeQueuedBond == 0, "Cannot reduce bond with queued validators")

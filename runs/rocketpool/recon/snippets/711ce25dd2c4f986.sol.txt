@@ -1,0 +1,6 @@
+for (uint256 i = _offset; i < max; ++i) {
+            address nodeAddress = addressSetStorage.getItem(nodeKey, i);
+            if (getSmoothingPoolRegistrationState(nodeAddress)) {
+                count++;
+            }
+        }

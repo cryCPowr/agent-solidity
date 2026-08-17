@@ -1,0 +1,3 @@
+function setVoterShare(uint256 _newShare) external override onlyProtocolOrSecurityDAO {
+        _setShare(voterShareKey, _newShare);
+    }

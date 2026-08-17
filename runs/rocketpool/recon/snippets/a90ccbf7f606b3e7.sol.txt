@@ -1,0 +1,1 @@
+require(daoSettingsNode.getSmoothingPoolRegistrationEnabled(), "Smoothing pool registrations are not active")

@@ -1,0 +1,1 @@
+function submitPenalty(address _minipool, uint256 _block) external;

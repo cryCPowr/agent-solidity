@@ -1,0 +1,1 @@
+MegapoolDebtIncreased(_amount, block.timestamp)

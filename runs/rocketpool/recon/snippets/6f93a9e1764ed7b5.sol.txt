@@ -1,0 +1,3 @@
+function _setTotalETHBalance(uint256 _value) internal {
+        setUint(keccak256("network.balance.total"), _value);
+    }

@@ -1,0 +1,15 @@
+constructor(RocketStorageInterface _rocketStorageAddress, uint256 _slotsPerHistoricalRoot, uint64[5] memory _forkSlots, address _beaconRoots, uint256 _genesisTime, bytes32 _genesisValidatorRoot) RocketBase(_rocketStorageAddress) {
+        version = 1;
+        slotsPerHistoricalRoot = _slotsPerHistoricalRoot;
+        beaconRoots = _beaconRoots;
+        // Set fork slots
+        slotPhase0 = 0;
+        slotAltair = _forkSlots[0];
+        slotBellatrix = _forkSlots[1];
+        slotCapella = _forkSlots[2];
+        slotDeneb = _forkSlots[3];
+        slotElectra = _forkSlots[4];
+        // Historical summaries started being appended from Capella onwards, depending on the chain we might need an offset
+        historicalSummaryOffset = slotCapella / slotsPerHistoricalRoot;
+        // Compute the g
+/* … truncated … */

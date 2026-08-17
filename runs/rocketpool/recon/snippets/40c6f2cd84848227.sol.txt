@@ -1,0 +1,1 @@
+require(_slotTimestamp >= validator.lockedTime, "Proof is older than challenge")

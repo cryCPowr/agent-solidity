@@ -1,0 +1,1 @@
+periodsPaid + periodsToPay

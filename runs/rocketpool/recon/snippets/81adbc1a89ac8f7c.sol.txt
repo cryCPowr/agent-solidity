@@ -1,0 +1,1 @@
+require(_contractAddress != oldContractAddress, "The contract address cannot be set to its current address")

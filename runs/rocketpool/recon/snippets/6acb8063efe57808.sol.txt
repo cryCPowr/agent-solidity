@@ -1,0 +1,1 @@
+uint256(rocketNetworkSnapshotsTime.lookup(penaltyKey, SafeCast.toUint64(earlierTime)))

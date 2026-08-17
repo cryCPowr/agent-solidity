@@ -1,0 +1,12 @@
+if (keccak256(bytes(_settingPath)) == keccak256(bytes("network.node.commission.share.security.council.adder"))) {
+                RocketDAOProtocolSettingsNetworkInterface rocketDAOProtocolSettingsNetwork = RocketDAOProtocolSettingsNetworkInterface(getContractAddress("rocketDAOProtocolSettingsNetwork"));
+
+                // Check guardrails
+                uint256 maxAdderValue = rocketDAOProtocolSettingsNetwork.getMaxNodeShareSecurityCouncilAdder();
+                require(_value <= maxAdderValue, "Value must be <= max value");
+                uint256 maxVoterValue = rocketDAOProtocolSettingsNetwork.getVoterShare();
+                require(_value <= maxVoterValue, "Value must be <= voter share");
+
+                // Notify RocketNetworkRevenue of the changes to voter and node share
+      
+/* … truncated … */

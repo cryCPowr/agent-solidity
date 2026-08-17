@@ -1,0 +1,18 @@
+function restoreMerkleRoot(bytes32 _leaf, uint256 _gindex, bytes32[] memory _witnesses) internal view returns (bytes32) {
+        // Check for correct number of witnesses
+        require(2 ** (_witnesses.length + 1) > _gindex, "Invalid witness length");
+        bytes32 value = _leaf;
+        uint256 i = 0;
+        while (_gindex != 1) {
+            if (_gindex % 2 == 1) {
+                value = efficientSha256(_witnesses[i], value);
+            } else {
+                value = efficientSha256(value, _witnesses[i]);
+            }
+            _gindex /= 2;
+            unchecked {
+                i++;
+            }
+        }
+        return value;
+    }

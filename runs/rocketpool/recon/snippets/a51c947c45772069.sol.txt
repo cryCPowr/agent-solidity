@@ -1,0 +1,6 @@
+function payOutContracts(string[] calldata _contractNames) override external onlyLatestContract("rocketClaimDAO", address(this)) {
+        uint256 contractNamesLength = _contractNames.length;
+        for (uint256 i = 0; i < contractNamesLength; ++i) {
+            _payOutContract(_contractNames[i]);
+        }
+    }

@@ -1,0 +1,1 @@
+Math.average(_low, _high)

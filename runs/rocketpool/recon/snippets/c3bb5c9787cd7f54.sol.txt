@@ -1,0 +1,6 @@
+modifier nonReentrant() {
+        require(lock != ENTERED, "Reentrant call");
+        lock = ENTERED;
+        _;
+        lock = NOT_ENTERED;
+    }

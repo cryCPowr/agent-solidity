@@ -1,0 +1,1 @@
+beaconRoots[timestamp] != 0

@@ -1,0 +1,1 @@
+mulmod(x, y, denominator) > 0

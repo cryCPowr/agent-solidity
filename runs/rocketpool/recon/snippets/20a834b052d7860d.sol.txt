@@ -1,0 +1,16 @@
+function _upgradeDelegate(address _newDelegateAddress) internal {
+        /*
+            A set of all past delegates is stored in RocketStorage as a dequeue with the following layout:
+
+            Uint storage:
+                keccak("megapool.delegate.set")    : struct Metadata { uint128 tail, uint128 head }
+            Address storage:
+                keccak("megapool.delegate.set") + 0: delegate 0
+                             "                  + 1: delegate 1 <-- head (oldest unexpired delegate)
+                             "                  + 2: delegate 2
+                             "                  + 3: delegate 3 (latest delegate)
+                             "                  + 4: empty      <-- tail
+        */
+        // Compute storage keys
+        bytes32 metaKey = bytes32
+/* … truncated … */

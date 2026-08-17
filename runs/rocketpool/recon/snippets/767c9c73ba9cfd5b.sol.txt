@@ -1,0 +1,3 @@
+function getMaxNodeShareSecurityCouncilAdder() override public view returns (uint256) {
+        return getSettingUint("network.max.node.commission.share.council.adder");
+    }

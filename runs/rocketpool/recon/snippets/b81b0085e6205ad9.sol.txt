@@ -1,0 +1,1 @@
+function getExpectedAddress(address _nodeAddress, uint256 _salt) external view returns (address);

@@ -1,0 +1,1 @@
+event MegapoolPenaltyApplied(uint256 amount, uint256 time);

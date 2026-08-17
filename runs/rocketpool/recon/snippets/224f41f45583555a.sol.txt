@@ -1,0 +1,1 @@
+abi.encode("rewards.snapshot.submitted.count", _submission)

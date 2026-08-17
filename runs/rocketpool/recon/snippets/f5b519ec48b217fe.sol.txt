@@ -1,0 +1,1 @@
+function setNodeCapitalRatio(address _nodeAddress, uint256 _value) external;

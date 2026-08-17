@@ -1,0 +1,11 @@
+function actionLeave() override external onlyLatestContract("rocketDAOSecurityActions", address(this)) {
+        // Load contracts
+        RocketDAOSecurityInterface rocketDAOSecurity = RocketDAOSecurityInterface(getContractAddress("rocketDAOSecurity"));
+        RocketDAOProtocolSettingsSecurityInterface rocketDAOProtocolSettingsSecurity = RocketDAOProtocolSettingsSecurityInterface(getContractAddress("rocketDAOProtocolSettingsSecurity"));
+        // Check they are currently a member
+        require(rocketDAOSecurity.getMemberIsValid(msg.sender), "Not a current member");
+        // Get the time that they were approved to leave at
+        uint256 leaveAcceptedTime = rocketDAOSecurity.getMemberProposalExecutedTime("leave", msg.sender);
+        // Has the member waiting long enough?
+        re
+/* … truncated … */

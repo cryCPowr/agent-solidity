@@ -1,0 +1,1 @@
+getReceiptDirection(_proposalID, _nodeAddress) != VoteDirection.NoVote

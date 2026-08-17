@@ -1,0 +1,1 @@
+function getUpgradeABI(uint256 _upgradeProposalID) external view returns (string memory);

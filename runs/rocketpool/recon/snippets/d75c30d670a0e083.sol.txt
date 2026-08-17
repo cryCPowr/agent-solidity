@@ -1,0 +1,3 @@
+if (block.timestamp - getNodeRPLStakedTime(_nodeAddress) < rocketDAOProtocolSettingsNode.getWithdrawalCooldown()) {
+            return 0;
+        }

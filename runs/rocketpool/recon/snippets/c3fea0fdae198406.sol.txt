@@ -1,0 +1,1 @@
+require(_amount <= lockedRPL, "Not enough locked RPL")

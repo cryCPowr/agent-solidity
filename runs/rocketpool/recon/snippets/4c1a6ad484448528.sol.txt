@@ -1,0 +1,15 @@
+contract RocketMegapoolDelegate is RocketMegapoolDelegateBase, RocketMegapoolDelegateInterface {
+    // Constants
+    uint256 constant internal prestakeValue = 1 ether;
+    uint256 constant internal fullDepositValue = 32 ether;
+    uint256 constant internal milliToWei = 10 ** 15;
+    uint256 constant internal calcBase = 1 ether;
+
+    // Events
+    event MegapoolValidatorEnqueued(uint256 indexed validatorId, uint256 time);
+    event MegapoolValidatorDequeued(uint256 indexed validatorId, uint256 time);
+    event MegapoolValidatorAssigned(uint256 indexed validatorId, uint256 time);
+    event MegapoolValidatorExited(uint32 indexed validatorId, uint256 time);
+    event MegapoolValidatorExiting(uint256 indexed validatorId, uint256 time);
+    event MegapoolValidatorLocked(uint256 indexed validato
+/* … truncated … */

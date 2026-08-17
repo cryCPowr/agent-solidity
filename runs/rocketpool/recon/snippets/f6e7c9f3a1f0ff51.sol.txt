@@ -1,0 +1,19 @@
+contract RocketNetworkVoting is RocketBase, RocketNetworkVotingInterface {
+    // Constants
+    bytes32 immutable internal priceKey = keccak256("network.prices.rpl");
+
+    // Events
+    event DelegateSet(address nodeOperator, address delegate, uint256 time);
+
+    // Construct
+    constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
+        version = 3;
+    }
+
+    /// @notice Returns the number of registered nodes at a given block
+    /// @param _block Block number to query
+    function getNodeCount(uint32 _block) external override view returns (uint256) {
+        // Get contracts
+        RocketNetworkSnapshotsInterface rocketNetworkSnapshots = RocketNetworkSnapshotsInterface(getContractAddress("rocketNetworkSnapshots"));
+        bytes32 key = keccak
+/* … truncated … */

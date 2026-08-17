@@ -1,0 +1,1 @@
+uint256(ones64Bits) << endOffset

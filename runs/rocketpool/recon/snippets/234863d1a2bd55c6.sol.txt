@@ -1,0 +1,1 @@
+_migrateLegacy(_nodeAddress, uint256(value))

@@ -1,0 +1,10 @@
+function clearSigner() external {
+        // Clear existing reverse mapping
+        address previousSigner = nodeToSigner[msg.sender];
+        require (previousSigner != address(0), "No signer set");
+        // Clear mappings
+        delete signerToNode[previousSigner];
+        delete nodeToSigner[msg.sender];
+        // Emit event
+        emit SignerSet(msg.sender, address(0));
+    }

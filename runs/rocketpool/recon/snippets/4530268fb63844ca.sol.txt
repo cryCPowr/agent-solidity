@@ -1,0 +1,1 @@
+event TokenBurned(bytes32 indexed by, address indexed tokenAddress, uint256 amount, uint256 time);

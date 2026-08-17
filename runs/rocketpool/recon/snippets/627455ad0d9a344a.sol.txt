@@ -1,0 +1,3 @@
+function getSmoothingPoolRegistrationEnabled() override external view returns (bool) {
+        return getSettingBool("node.smoothing.pool.registration.enabled");
+    }

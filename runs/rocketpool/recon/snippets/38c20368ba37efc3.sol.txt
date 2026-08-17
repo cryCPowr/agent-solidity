@@ -1,0 +1,1 @@
+addressSetStorage.addItem(keccak256(abi.encodePacked("minipools.vacant.index")), address(minipool))

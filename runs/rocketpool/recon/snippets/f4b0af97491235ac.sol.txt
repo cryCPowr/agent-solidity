@@ -1,0 +1,1 @@
+function getMaximumDepositAssignments() external view returns (uint256);

@@ -1,0 +1,3 @@
+function getSubmitWithdrawableEnabled() override external view returns (bool) {
+        return getSettingBool("minipool.submit.withdrawable.enabled");
+    }

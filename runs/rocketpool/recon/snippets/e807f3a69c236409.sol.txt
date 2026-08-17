@@ -1,0 +1,1 @@
+require(result, "Failed to send pDAO rewards")

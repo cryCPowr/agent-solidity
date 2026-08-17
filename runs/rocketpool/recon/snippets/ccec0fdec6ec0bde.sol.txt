@@ -1,0 +1,1 @@
+getVotesRequired(_proposalID)

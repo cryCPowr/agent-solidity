@@ -1,0 +1,1 @@
+require(userDistributed, "Can only manually finalise after user distribution")

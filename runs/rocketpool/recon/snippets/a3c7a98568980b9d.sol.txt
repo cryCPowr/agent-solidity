@@ -1,0 +1,1 @@
+function receiveVaultWithdrawalETH() override external payable onlyLatestContract("rocketRewardsPool", address(this)) onlyLatestContract("rocketVault", msg.sender) {}

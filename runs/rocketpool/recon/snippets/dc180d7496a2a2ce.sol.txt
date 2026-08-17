@@ -1,0 +1,4 @@
+function getPenaltyRunningTotalAtTime(uint64 _time) override external view returns (uint256) {
+        RocketNetworkSnapshotsTimeInterface rocketNetworkSnapshotsTime = RocketNetworkSnapshotsTimeInterface(getContractAddress("rocketNetworkSnapshotsTime"));
+        return rocketNetworkSnapshotsTime.lookup(penaltyKey, _time);
+    }

@@ -1,0 +1,3 @@
+function setProtocolDAOShare(uint256 _newShare) external override onlyProtocolDAO {
+        _setShare(protocolDAOShareKey, _newShare);
+    }

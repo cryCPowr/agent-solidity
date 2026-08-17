@@ -1,0 +1,1 @@
+function getUserBalance() external view returns (int256);

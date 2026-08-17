@@ -1,0 +1,9 @@
+if (_indices[i] == 1) {
+                rocketNodeStaking.unlockRPL(proposer, proposalBond);
+            } else {
+                // Unlock the challenger bond and pay to proposer
+                address challenger = getChallengeAddress(state);
+                rocketNodeStaking.unlockRPL(challenger, challengeBond);
+                rocketNodeStaking.transferRPL(challenger, proposer, challengeBond - burnPerChallenge);
+                rocketNodeStaking.burnRPL(challenger, burnPerChallenge);
+            }

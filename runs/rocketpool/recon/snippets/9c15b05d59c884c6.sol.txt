@@ -1,0 +1,13 @@
+function setSettingUint(string memory _settingPath, uint256 _value) override public onlyDAOProtocolProposal {
+        // Some safety guards for certain settings
+        if(getBool(keccak256(abi.encodePacked(settingNameSpace, "deployed")))) {
+            bytes32 settingKey = keccak256(bytes(_settingPath));
+            if (settingKey == keccak256(bytes("deposit.fee"))) {
+                require(_value < 0.01 ether, "Fee must be less than 1%");
+            } else if (settingKey == keccak256(bytes("express.queue.rate"))) {
+                require(_value > 0, "Rate must be greater than 0");
+            }
+        }
+        // Update setting now
+        _setSettingUint(_settingPath, _value);
+    }

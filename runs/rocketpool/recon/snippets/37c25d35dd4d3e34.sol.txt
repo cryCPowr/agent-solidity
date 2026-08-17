@@ -1,0 +1,1 @@
+SSZ.efficientSha256(SSZ.toLittleEndian(_genesisTime), _genesisValidatorRoot)

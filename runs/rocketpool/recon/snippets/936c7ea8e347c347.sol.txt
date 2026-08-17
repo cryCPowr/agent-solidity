@@ -1,0 +1,1 @@
+totalStakedRPL - uint224(_amount)

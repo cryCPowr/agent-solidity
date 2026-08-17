@@ -1,0 +1,1 @@
+if (allowList[i] == _address) return true

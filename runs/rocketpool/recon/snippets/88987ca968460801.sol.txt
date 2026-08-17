@@ -1,0 +1,9 @@
+function getValidatorInfo(uint256 _index) override external view returns (bytes memory pubkey, RocketMegapoolStorageLayout.ValidatorInfo memory validatorInfo, address megapool, uint32 validatorId) {
+        // Retrieve and decode entry
+        uint256 encoded = getUint(keccak256(abi.encodePacked("megapool.validator.set", _index)));
+        megapool = address(uint160(encoded >> 96));
+        validatorId = uint32(encoded);
+        // Fetch and return info
+        RocketMegapoolInterface rocketMegapool = RocketMegapoolInterface(megapool);
+        (validatorInfo, pubkey) = rocketMegapool.getValidatorInfoAndPubkey(validatorId);
+    }

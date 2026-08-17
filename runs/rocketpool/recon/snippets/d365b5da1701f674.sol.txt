@@ -1,0 +1,1 @@
+_rethAmount > 0

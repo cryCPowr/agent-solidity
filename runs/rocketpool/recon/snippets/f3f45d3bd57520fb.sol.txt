@@ -1,0 +1,3 @@
+function getActiveValidatorCount() override public view returns (uint32) {
+        return numValidators - numInactiveValidators;
+    }

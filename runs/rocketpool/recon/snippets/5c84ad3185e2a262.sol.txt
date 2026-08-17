@@ -1,0 +1,3 @@
+if (_leaves[i].hash != keccak256(abi.encodePacked(actual))) {
+                return false;
+            }

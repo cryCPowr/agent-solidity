@@ -1,0 +1,1 @@
+require(nodeRefundBalance == 0, "Refund balance not zero")

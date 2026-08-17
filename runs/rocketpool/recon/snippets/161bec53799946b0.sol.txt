@@ -1,0 +1,1 @@
+_insert(keccak256("network.prices.rpl"), 0.01 ether)

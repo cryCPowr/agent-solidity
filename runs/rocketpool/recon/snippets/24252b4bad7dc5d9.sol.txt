@@ -1,0 +1,1 @@
+function getLotIsCleared(uint256 _index) external view returns (bool);

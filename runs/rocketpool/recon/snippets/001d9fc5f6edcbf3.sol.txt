@@ -1,0 +1,1 @@
+function getRewardsClaimersPerc() external view returns (uint256 _trustedNodePercent, uint256 _protocolPercent, uint256 _nodePercent);

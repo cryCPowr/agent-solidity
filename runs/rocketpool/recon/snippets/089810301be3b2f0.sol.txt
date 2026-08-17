@@ -1,0 +1,1 @@
+totalBalance >= 8 ether

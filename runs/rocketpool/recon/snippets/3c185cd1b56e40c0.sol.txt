@@ -1,0 +1,1 @@
+function deposit(uint256 _depositAmount, bool _useExpressTicket, bytes calldata _validatorPubkey, bytes calldata _validatorSignature, bytes32 _depositDataRoot) external payable;

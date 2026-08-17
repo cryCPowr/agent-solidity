@@ -1,0 +1,1 @@
+require(debt >= _amount, "Not enough debt")

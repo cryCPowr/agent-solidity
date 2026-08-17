@@ -1,0 +1,13 @@
+if(getBool(keccak256(abi.encodePacked(settingNameSpace, "deployed")))) {
+            bytes32 settingKey = keccak256(abi.encodePacked(_settingPath));
+            if(settingKey == keccak256(abi.encodePacked("auction.lot.value.minimum"))) {
+                // >= 1 RPL (RPIP-33)
+                require(_value >= 1 ether, "Value must be >= 1 RPL");
+            } else if(settingKey == keccak256(abi.encodePacked("auction.lot.value.maximum"))) {
+                // >= 1 RPL (RPIP-33)
+                require(_value >= 1 ether, "Value must be >= 1 RPL");
+            } else if(settingKey == keccak256(abi.encodePacked("auction.lot.duration"))) {
+                // >= 1 day (RPIP-33) (approximated by blocks)
+                require(_value >= 7200, "Value must be >= 7200");
+            } else if(settingK
+/* … truncated … */

@@ -1,0 +1,1 @@
+abi.encodePacked('rewards.merkle.root', _rewardIndex)

@@ -1,0 +1,1 @@
+_claim[i].amountRPL > 0 || _claim[i].amountSmoothingPoolETH > 0

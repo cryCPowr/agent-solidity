@@ -1,0 +1,1 @@
+function getClaimIntervalTime() external view returns(uint256);

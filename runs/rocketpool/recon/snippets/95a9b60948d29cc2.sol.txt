@@ -1,0 +1,1 @@
+_setSettingUint("network.submit.balances.frequency", 1 days)

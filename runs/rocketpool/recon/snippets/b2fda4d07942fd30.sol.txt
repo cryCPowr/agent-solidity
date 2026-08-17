@@ -1,0 +1,11 @@
+function verifyLeaves(uint256 _blockNumber, uint256 _nodeCount, uint256 _offset, Types.Node[] calldata _leaves) internal view returns (bool) {
+        // Get contracts
+        RocketNetworkVotingInterface rocketNetworkVoting = RocketNetworkVotingInterface(getContractAddress("rocketNetworkVoting"));
+        RocketNodeManagerInterface rocketNodeManager = RocketNodeManagerInterface(getContractAddress("rocketNodeManager"));
+        // Calculate the closest power of 2 of the node count
+        uint256 nodeCount = 2 ** Math.log2(_nodeCount, Math.Rounding.Up);
+        uint32 blockNumber32 = uint32(_blockNumber);
+        // Iterate over the leaves
+        for (uint256 i = 0; i < _leaves.length; ++i) {
+            // The leaf nodes are a 2d array of voting power in the form of [delegateIndex][nodeI
+/* … truncated … */

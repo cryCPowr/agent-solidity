@@ -1,0 +1,3 @@
+if (remaining > 0) {
+                    rocketVault.withdrawToken(rplWithdrawalAddress, IERC20(rocketTokenRPLAddress), remaining);
+                }

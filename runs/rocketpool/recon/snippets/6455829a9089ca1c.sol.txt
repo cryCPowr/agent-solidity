@@ -1,0 +1,15 @@
+function _distributeAmount(uint256 _rewards) internal {
+        // Cannot distribute a megapool with exiting or locked validators
+        require(numExitingValidators == 0, "Pending validator exit");
+        require(numLockedValidators == 0, "Megapool locked");
+        // Early out if there are no rewards to distribute
+        if (_rewards == 0) {
+            // Last distribution time still gets updated
+            lastDistributionTime = block.timestamp;
+            return;
+        }
+        (uint256 nodeAmount, uint256 voterAmount, uint256 protocolDAOAmount, uint256 rethAmount) = calculateRewards(_rewards);
+        // Update last distribution time for use in calculating time-weighted average commission
+        lastDistributionTime = block.timestamp;
+        // Maybe repay debt from node s
+/* … truncated … */

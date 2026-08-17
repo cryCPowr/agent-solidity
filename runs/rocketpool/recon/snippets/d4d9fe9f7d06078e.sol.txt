@@ -1,0 +1,3 @@
+if (getVetoed(_proposalID)) {
+                        return ProposalState.Vetoed;
+                    }

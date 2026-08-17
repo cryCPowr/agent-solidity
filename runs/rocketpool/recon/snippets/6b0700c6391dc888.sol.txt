@@ -1,0 +1,14 @@
+if(settingKey == keccak256(bytes("proposal.vote.phase1.time"))) {
+            // Must be at least 1 day (RPIP-33)
+            require(_value >= 1 days, "Value must be at least 1 day");
+        } else if(settingKey == keccak256(bytes("proposal.vote.phase2.time"))) {
+            // Must be at least 1 day (RPIP-33)
+            require(_value >= 1 days, "Value must be at least 1 day");
+        } else if(settingKey == keccak256(bytes("proposal.vote.delay.time"))) {
+            // Must be at least 1 week (RPIP-33)
+            require(_value >= 1 weeks, "Value must be at least 1 week");
+        } else if(settingKey == keccak256(bytes("proposal.execute.time"))) {
+            // Must be at least 1 week (RPIP-33)
+            require(_value >= 1 weeks, "Value must be at least 1 week");
+        } else
+/* … truncated … */

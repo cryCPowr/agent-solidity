@@ -1,0 +1,3 @@
+function getCurrentBlockCoinbase() public view returns (address coinbase) {
+        coinbase = block.coinbase;
+    }

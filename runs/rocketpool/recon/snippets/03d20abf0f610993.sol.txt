@@ -1,0 +1,1 @@
+require(_proof.withdrawalSlot >= slotElectra, "Invalid proof")

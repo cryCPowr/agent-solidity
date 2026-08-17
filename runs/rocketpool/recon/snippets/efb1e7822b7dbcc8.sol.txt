@@ -1,0 +1,6 @@
+if (indexDepth + depthPerRound >= treeDepth * 2) {
+                // Calculate the offset into the leaf nodes in the final tree that match the supplied nodes
+                uint256 offset = (_index * (2 ** (getNextDepth(_index, nodeCount) - indexDepth))) - (2 ** (treeDepth * 2));
+                // Verify the leaves match the values we know on chain
+                require(verifyLeaves(getUint(bytes32(proposalKey + blockNumberOffset)), nodeCount, offset, _nodes), "Invalid leaves");
+            }

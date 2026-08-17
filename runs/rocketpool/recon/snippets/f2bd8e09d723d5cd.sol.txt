@@ -1,0 +1,1 @@
+event TokensBurned(address indexed from, uint256 amount, uint256 ethAmount, uint256 time);

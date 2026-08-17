@@ -1,0 +1,1 @@
+setLotCount(lotIndex.add(1))

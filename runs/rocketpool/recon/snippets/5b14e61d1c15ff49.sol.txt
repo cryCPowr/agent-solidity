@@ -1,0 +1,14 @@
+if (vacant) {
+            // Vacant minipools waiting to be promoted need to be removed from the set maintained by the minipool manager
+            RocketMinipoolManagerInterface rocketMinipoolManager = RocketMinipoolManagerInterface(getContractAddress("rocketMinipoolManager"));
+            rocketMinipoolManager.removeVacantMinipool();
+        } else {
+            if (depositType == MinipoolDeposit.Full) {
+                // Handle legacy Full type minipool
+                rocketMinipoolQueue.removeMinipool(MinipoolDeposit.Full);
+            } else {
+                // Transfer user balance (and penalty) to deposit pool
+                uint256 userCapital = getUserDepositBalance();
+                rocketDepositPool.recycleDissolvedDeposit{value : userCapital + _penalty}();
+                
+/* … truncated … */

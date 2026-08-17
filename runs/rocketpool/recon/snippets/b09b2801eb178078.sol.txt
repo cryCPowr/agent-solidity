@@ -1,0 +1,4 @@
+function lookupRecent(string calldata _key, uint64 _time, uint256 _recency) external view returns (uint192) {
+        bytes32 key = keccak256(abi.encodePacked(_key));
+        return snapshots.lookupRecent(key, _time, _recency);
+    }

@@ -1,0 +1,16 @@
+if (pos > 0) {
+            Checkpoint224 memory last = _load(_key, pos - 1);
+
+            // Checkpoint keys must be non-decreasing.
+            require(last._block <= blockNumber, "Unordered snapshot insertion");
+
+            // Update or push new checkpoint
+            if (last._block == blockNumber) {
+                last._value = _value;
+                _set(_key, pos - 1, last);
+            } else {
+                _push(_key, Checkpoint224({_block: blockNumber, _value: _value}));
+            }
+        } else {
+            _push(_key, Checkpoint224({_block: blockNumber, _value: _value}));
+        }

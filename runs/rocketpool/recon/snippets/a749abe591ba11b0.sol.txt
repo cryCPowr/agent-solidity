@@ -1,0 +1,3 @@
+function setBytes32(bytes32 _key, bytes32 _value) onlyLatestRocketNetworkContract override external {
+        bytes32Storage[_key] = _value;
+    }

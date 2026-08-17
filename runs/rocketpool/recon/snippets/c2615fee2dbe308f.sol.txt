@@ -1,0 +1,15 @@
+function _payOutContract(string memory _contractName) internal {
+        // Load contracts
+        RocketVaultInterface rocketVault = RocketVaultInterface(getContractAddress("rocketVault"));
+        IERC20 rplToken = IERC20(getContractAddress("rocketTokenRPL"));
+        // Check contract exists
+        uint256 contractKey = uint256(keccak256(abi.encodePacked("dao.protocol.treasury.contract", _contractName)));
+        require(getBool(bytes32(contractKey + existsOffset)) == true, "Contract does not exist");
+        // Get time of last payout
+        uint256 lastPaymentTime = getUint(bytes32(contractKey + lastPaymentOffset));
+        // Payments haven't started yet (nothing to do)
+        if (block.timestamp < lastPaymentTime) {
+            return;
+        }
+        // Calculate how many peri
+/* … truncated … */

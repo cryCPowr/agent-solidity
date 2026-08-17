@@ -1,0 +1,7 @@
+function useExpressTicket(address _nodeAddress) external override onlyLatestContract("rocketNodeManager", address(this)) onlyLatestContract("rocketDepositPool", msg.sender) {
+        uint256 tickets = getExpressTicketCount(_nodeAddress);
+        require(tickets > 0, "No express tickets");
+        tickets -= 1;
+        setBool(keccak256(abi.encodePacked("node.express.provisioned", _nodeAddress)), true);
+        setUint(keccak256(abi.encodePacked("node.express.tickets", _nodeAddress)), tickets);
+    }

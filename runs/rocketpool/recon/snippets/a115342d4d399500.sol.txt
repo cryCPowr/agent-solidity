@@ -1,0 +1,1 @@
+rocketNetworkSnapshots.push(keccak256(abi.encodePacked("node.count")), uint224(addressSetStorage.getCount(nodeIndexKey)))

@@ -1,0 +1,1 @@
+setSettingUint("auction.lot.duration", 50400)

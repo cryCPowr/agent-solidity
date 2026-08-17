@@ -1,0 +1,1 @@
+keccak256(abi.encodePacked("node.reward.network", _nodeAddress))

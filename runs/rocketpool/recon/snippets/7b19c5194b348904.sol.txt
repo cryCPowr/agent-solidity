@@ -1,0 +1,1 @@
+function setSettingUint(string memory _settingPath, uint256 _value) external;

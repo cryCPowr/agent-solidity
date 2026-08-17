@@ -1,0 +1,1 @@
+function getRethDepositDelay() external view returns (uint256);

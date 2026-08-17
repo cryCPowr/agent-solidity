@@ -1,0 +1,1 @@
+getState(_proposalID) == ProposalState.Vetoed

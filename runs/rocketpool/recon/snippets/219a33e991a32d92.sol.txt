@@ -1,0 +1,3 @@
+function setUseLatestDelegate(bool _setting) external override onlyMinipoolOwner notSelf {
+        useLatestDelegate = _setting;
+    }

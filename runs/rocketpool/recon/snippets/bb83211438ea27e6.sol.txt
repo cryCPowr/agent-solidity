@@ -1,0 +1,3 @@
+assembly {
+            codeSize := extcodesize(_contractAddress)
+        }

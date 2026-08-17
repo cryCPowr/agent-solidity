@@ -1,0 +1,1 @@
+uint256(validator.lastRequestedValue) * milliToWei

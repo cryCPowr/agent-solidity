@@ -1,0 +1,14 @@
+function lockRPL(address _nodeAddress, uint256 _amount) override external onlyLatestNetworkContract() {
+        // Check status
+        require(getBool(keccak256(abi.encodePacked("rpl.locking.allowed", _nodeAddress))), "Node is not allowed to lock RPL");
+        // The node must have unlocked stake equaling or greater than the amount
+        uint256 rplStake = getNodeStakedRPL(_nodeAddress);
+        bytes32 lockedStakeKey = keccak256(abi.encodePacked("rpl.locked.node.amount", _nodeAddress));
+        uint256 lockedRPL = getUint(lockedStakeKey);
+        require(rplStake - lockedRPL >= _amount, "Not enough staked RPL");
+        // Increase locked RPL
+        setUint(lockedStakeKey, lockedRPL + _amount);
+        // Emit event
+        emit RPLLocked(_nodeAddress, _amount, block.timestamp);
+    
+/* … truncated … */

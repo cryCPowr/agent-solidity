@@ -1,0 +1,7 @@
+function getPreviousItem(bytes32 _namespace, DepositQueueValue memory _value) external view returns (DepositQueueValue memory previousItem) {
+        uint256 index = getUint(keccak256(abi.encodePacked(_namespace, ".index", _value.receiver, _value.validatorId)));
+        if (index > 0) {
+            uint256 previousIndex = getUint(keccak256(abi.encodePacked(_namespace, ".prev", index)));
+            previousItem = _unpackItem(getUint(keccak256(abi.encodePacked(_namespace, ".item", previousIndex))));
+        }
+    }

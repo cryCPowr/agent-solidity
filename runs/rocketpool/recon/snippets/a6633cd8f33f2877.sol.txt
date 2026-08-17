@@ -1,0 +1,1 @@
+function getChallengeCooldown() external view returns(uint256);

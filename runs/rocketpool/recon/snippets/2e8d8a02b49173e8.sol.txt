@@ -1,0 +1,1 @@
+msg.sender == _nodeAddress || msg.sender == withdrawalAddress

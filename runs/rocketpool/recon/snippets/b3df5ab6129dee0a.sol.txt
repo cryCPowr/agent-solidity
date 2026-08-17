@@ -1,0 +1,6 @@
+unchecked { // depositFee < msg.value
+            uint256 depositFee = _amount * rocketDAOProtocolSettingsDeposit.getDepositFee() / calcBase;
+            uint256 depositNet = _amount - depositFee;
+            // Mint rETH to recipient address
+            rocketTokenRETH.mint(depositNet, _recipient);
+        }

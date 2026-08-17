@@ -1,0 +1,14 @@
+function withdrawEther(uint256 _amount) override external onlyLatestNetworkContract {
+        // Valid amount?
+        require(_amount > 0, "No valid amount of ETH given to withdraw");
+        // Get contract key
+        string memory contractName = getContractName(msg.sender);
+        // Check and update contract balance
+        require(etherBalances[contractName] >= _amount, "Insufficient contract ETH balance");
+        etherBalances[contractName] = etherBalances[contractName].sub(_amount);
+        // Withdraw
+        RocketVaultWithdrawerInterface withdrawer = RocketVaultWithdrawerInterface(msg.sender);
+        withdrawer.receiveVaultWithdrawalETH{value: _amount}();
+        // Emit ether withdrawn event
+        emit EtherWithdrawn(contractName, _amount, block.timestamp);
+    }

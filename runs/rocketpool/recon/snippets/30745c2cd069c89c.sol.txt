@@ -1,0 +1,18 @@
+contract RocketMinipoolQueue is RocketBase, RocketMinipoolQueueInterface {
+
+    // Libs
+    using SafeMath for uint;
+    using SignedSafeMath for int;
+
+    // Constants
+    bytes32 private constant queueKeyFull = keccak256("minipools.available.full");
+    bytes32 private constant queueKeyHalf = keccak256("minipools.available.half");
+    bytes32 private constant queueKeyVariable = keccak256("minipools.available.variable");
+
+    // Events
+    event MinipoolEnqueued(address indexed minipool, bytes32 indexed queueId, uint256 time);
+    event MinipoolDequeued(address indexed minipool, bytes32 indexed queueId, uint256 time);
+    event MinipoolRemoved(address indexed minipool, bytes32 indexed queueId, uint256 time);
+
+    constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocket
+/* … truncated … */

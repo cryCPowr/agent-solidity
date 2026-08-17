@@ -1,0 +1,1 @@
+function getMinipoolPosition(address _minipool) external view returns (int256);

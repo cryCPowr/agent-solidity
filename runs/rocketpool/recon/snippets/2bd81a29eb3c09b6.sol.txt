@@ -1,0 +1,1 @@
+emit RPLSlashed(_nodeAddress, rplSlashAmount, _ethSlashAmount, block.timestamp)

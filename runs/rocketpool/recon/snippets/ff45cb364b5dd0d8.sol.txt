@@ -1,0 +1,16 @@
+function _binaryLookup(
+        bytes32 _key,
+        uint32 _block,
+        uint256 _low,
+        uint256 _high
+    ) internal view returns (uint256) {
+        while (_low < _high) {
+            uint256 mid = Math.average(_low, _high);
+            if (_blockAt(_key, mid) > _block) {
+                _high = mid;
+            } else {
+                _low = mid + 1;
+            }
+        }
+        return _high;
+    }

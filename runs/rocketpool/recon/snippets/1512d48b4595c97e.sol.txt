@@ -1,0 +1,1 @@
+function getInflationIntervalTime() external view returns(uint256);

@@ -1,0 +1,13 @@
+function updateNodeStakingMinipoolCount(uint256 _previousBond, uint256 _newBond, uint256 _previousFee, uint256 _newFee) override external onlyLatestContract("rocketMinipoolManager", address(this)) onlyRegisteredMinipool(msg.sender) {
+        bytes32 nodeKey;
+        bytes32 numeratorKey;
+        // Get contracts
+        RocketMinipoolInterface minipool = RocketMinipoolInterface(msg.sender);
+        address nodeAddress = minipool.getNodeAddress();
+        // Try to distribute current fees at previous average commission rate
+        _tryDistribute(nodeAddress);
+        // Decrement previous bond count
+        if (_previousBond == 16 ether){
+            nodeKey = keccak256(abi.encodePacked("node.minipools.staking.count", nodeAddress));
+            numeratorKey = keccak256(abi.encodePacked("no
+/* … truncated … */

@@ -1,0 +1,4 @@
+function lookup(string calldata _key, uint64 _time) external view returns (uint192){
+        bytes32 key = keccak256(abi.encodePacked(_key));
+        return snapshots.lookup(key, _time);
+    }

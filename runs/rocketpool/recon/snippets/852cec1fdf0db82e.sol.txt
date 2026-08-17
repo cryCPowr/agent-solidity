@@ -1,0 +1,3 @@
+function setPenaltyRate(address _minipoolAddress, uint256 _rate) external override onlyLatestNetworkContract {
+        setUint(keccak256(abi.encodePacked("minipool.penalty.rate", _minipoolAddress)), _rate);
+    }

@@ -1,0 +1,5 @@
+function reduceBond(address _nodeAddress, uint256 _amount) override external onlyRegisteredMegapool(msg.sender) onlyThisLatestContract {
+        // Update collateral balances
+        _increaseETHBorrowed(_nodeAddress, _amount);
+        _decreaseETHBonded(_nodeAddress, _amount);
+    }

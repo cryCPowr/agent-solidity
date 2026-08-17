@@ -1,0 +1,1 @@
+uint256 internal constant scrubPenalty = 2.4 ether

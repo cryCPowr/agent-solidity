@@ -1,0 +1,1 @@
+rocketMegapoolFactory.getMegapoolDeployed(_nodeAddress)

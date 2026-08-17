@@ -1,0 +1,15 @@
+function _removeItem(bytes32 _namespace, DepositQueueKey memory _key) internal {
+        uint256 index = getUint(keccak256(abi.encodePacked(_namespace, ".index", _key.receiver, _key.validatorId)));
+        uint256 data = getUint(keccak256(abi.encodePacked(_namespace, ".data")));
+        require(index > 0, "Item does not exist in queue");
+
+        uint256 prevIndex = getUint(keccak256(abi.encodePacked(_namespace, ".prev", index)));
+        uint256 nextIndex = getUint(keccak256(abi.encodePacked(_namespace, ".next", index)));
+        if (prevIndex > 0) {
+            // Not the first item
+            setUint(keccak256(abi.encodePacked(_namespace, ".next", prevIndex)), nextIndex);
+        } else {
+            // First item
+            // clear the 64 bits used to stored the 'start' pointer
+    
+/* … truncated … */

@@ -1,0 +1,1 @@
+rocketVault.withdrawEther(vaultBalance)

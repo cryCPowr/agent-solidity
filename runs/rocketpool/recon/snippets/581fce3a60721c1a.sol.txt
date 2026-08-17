@@ -1,0 +1,3 @@
+function getSubmitRewardsEnabled() override external view returns (bool) {
+        return getSettingBool("network.submit.rewards.enabled");
+    }

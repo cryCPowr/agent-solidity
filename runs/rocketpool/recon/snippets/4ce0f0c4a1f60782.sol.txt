@@ -1,0 +1,1 @@
+rocketStorage.deleteString(_key)

@@ -1,0 +1,1 @@
+event RootSubmitted(uint256 indexed proposalID, address indexed proposer, uint32 blockNumber, uint256 index, Types.Node root, Types.Node[] treeNodes, uint256 timestamp);

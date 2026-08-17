@@ -1,0 +1,1 @@
+function increaseDepositCreditBalance(address _nodeOperator, uint256 _amount) external;

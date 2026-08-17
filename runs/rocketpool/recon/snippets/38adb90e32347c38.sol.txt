@@ -1,0 +1,1 @@
+function setUint(bytes32 _key, uint _value) internal { rocketStorage.setUint(_key, _value); }

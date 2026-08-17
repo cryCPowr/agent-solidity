@@ -1,0 +1,1 @@
+getLength(_key) > 0

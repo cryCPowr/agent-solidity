@@ -1,0 +1,1 @@
+require(_newWithdrawalAddress != address(0x0), "Invalid withdrawal address")

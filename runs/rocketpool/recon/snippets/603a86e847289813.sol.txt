@@ -1,0 +1,3 @@
+function getFinalised(uint256 _proposalID) override external view returns (bool) {
+        return getBool(keccak256(abi.encodePacked(daoProposalNameSpace, "finalised", _proposalID)));
+    }

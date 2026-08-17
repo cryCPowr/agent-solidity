@@ -1,0 +1,1 @@
+_stakeRPLFor(msg.sender, _amount)

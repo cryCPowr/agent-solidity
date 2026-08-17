@@ -1,0 +1,1 @@
+intervalsSinceLastMint == 0

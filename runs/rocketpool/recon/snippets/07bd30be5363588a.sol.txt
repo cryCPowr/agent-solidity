@@ -1,0 +1,3 @@
+if (standardQueueLength == 1) {
+                _setQueueMoved(false, true);
+            }

@@ -1,0 +1,1 @@
+function actionKickMulti(address[] calldata _nodeAddresses) external;

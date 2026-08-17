@@ -1,0 +1,1 @@
+function getHeadIndex(bytes32 _namespace) external view returns (uint256);

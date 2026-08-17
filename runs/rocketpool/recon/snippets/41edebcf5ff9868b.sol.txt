@@ -1,0 +1,4 @@
+function bootstrapEnableGovernance() override external onlyGuardian onlyBootstrapMode onlyLatestContract("rocketDAOProtocol", address(this)) {
+        setUint(keccak256(abi.encodePacked("protocol.dao.enabled.block")), block.number);
+        emit BootstrapProtocolDAOEnabled(block.number, block.timestamp);
+    }

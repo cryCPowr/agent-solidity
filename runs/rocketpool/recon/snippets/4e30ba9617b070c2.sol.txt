@@ -1,0 +1,1 @@
+event PenaltyApplied(address indexed minipool, uint256 block, uint256 time);

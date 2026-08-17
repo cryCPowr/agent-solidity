@@ -1,0 +1,8 @@
+function _setQueueMoved(bool expressHeadMoved, bool standardHeadMoved) internal {
+        uint256 packed = getUint(queueMovedKey);
+        uint128 express = expressHeadMoved ? uint128(block.number) : uint128(packed >> 0);
+        uint128 standard = standardHeadMoved ? uint128(block.number) : uint128(packed >> 128);
+        packed = express << 0;
+        packed |= uint256(standard) << 128;
+        setUint(queueMovedKey, packed);
+    }

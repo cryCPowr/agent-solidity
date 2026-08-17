@@ -1,0 +1,1 @@
+require(!_rewardsOnly, "Balance exceeds 8 ether")

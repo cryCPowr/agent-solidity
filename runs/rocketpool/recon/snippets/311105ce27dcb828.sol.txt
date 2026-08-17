@@ -1,0 +1,1 @@
+(uint256(_gindex) << 8) | uint256(_length)

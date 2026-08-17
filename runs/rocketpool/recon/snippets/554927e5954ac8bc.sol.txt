@@ -1,0 +1,6 @@
+if(rplContractAddress != address(0x0)) {
+                    // Force inflation at old rate before updating inflation rate
+                    RocketTokenRPLInterface rplContract = RocketTokenRPLInterface(rplContractAddress);
+                    // Mint any new tokens from the RPL inflation
+                    rplContract.inflationMintTokens();
+                }

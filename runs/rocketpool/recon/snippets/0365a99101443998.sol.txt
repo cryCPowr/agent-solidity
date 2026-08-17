@@ -1,0 +1,6 @@
+function getLength(bytes32 _key) override public view returns (uint) {
+        uint start = getUint(keccak256(abi.encodePacked(_key, ".start")));
+        uint end = getUint(keccak256(abi.encodePacked(_key, ".end")));
+        if (end < start) { end = end.add(capacity); }
+        return end.sub(start);
+    }

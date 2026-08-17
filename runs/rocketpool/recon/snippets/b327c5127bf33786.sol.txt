@@ -1,0 +1,4 @@
+if(settingKey == keccak256(abi.encodePacked("auction.price.reserve"))) {
+                // >= 10% (RPIP-33)
+                require(_value >= 0.1 ether, "Value must be >= 10%");
+            }

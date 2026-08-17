@@ -1,0 +1,1 @@
+_setSettingUint("deposit.pool.maximum", 160 ether)

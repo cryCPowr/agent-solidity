@@ -1,0 +1,1 @@
+rocketStorage.setBool(_key, _value)

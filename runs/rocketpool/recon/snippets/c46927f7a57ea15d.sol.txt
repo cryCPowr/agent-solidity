@@ -1,0 +1,5 @@
+interface BeaconStateVerifierInterface {
+    function verifyValidator(uint64 _slotTimestamp, uint64 _slot, ValidatorProof calldata _proof) external view returns (bool);
+    function verifyWithdrawal(uint64 _slotTimestamp, uint64 _slot, WithdrawalProof calldata _proof) external view returns (bool);
+    function verifySlot(uint64 _slotTimestamp, SlotProof calldata _proof) external view returns (bool);
+}

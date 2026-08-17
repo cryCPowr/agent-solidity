@@ -1,0 +1,1 @@
+function burnProposalBond(uint256 _proposalID) external;

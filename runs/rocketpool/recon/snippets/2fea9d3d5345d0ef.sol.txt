@@ -1,0 +1,5 @@
+function setNode(uint256 _proposalID, uint256 _index, Types.Node memory _node) internal {
+        uint256 challengeKey = uint256(keccak256(abi.encodePacked("dao.protocol.proposal.challenge", _proposalID, _index)));
+        setUint(bytes32(challengeKey + sumOffset), _node.sum);
+        setBytes32(bytes32(challengeKey + hashOffset), _node.hash);
+    }

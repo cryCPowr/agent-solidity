@@ -1,0 +1,1 @@
+emit RPLBurned(_from, _amount, block.timestamp)

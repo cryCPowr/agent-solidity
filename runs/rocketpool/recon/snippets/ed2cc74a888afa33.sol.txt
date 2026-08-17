@@ -1,0 +1,4 @@
+function _increaseDebt(uint256 _amount) internal {
+        debt += _amount;
+        emit MegapoolDebtIncreased(_amount, block.timestamp);
+    }

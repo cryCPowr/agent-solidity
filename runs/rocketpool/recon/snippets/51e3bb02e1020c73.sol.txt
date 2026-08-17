@@ -1,0 +1,17 @@
+if (!validator.dissolved) {
+            // Calculate capital distribution amounts
+            uint256 depositBalance = uint256(validator.depositValue) * milliToWei;
+            (uint256 nodeShare, uint256 userShare) = _calculateCapitalDispersal(depositBalance, getActiveValidatorCount() - 1);
+            {
+                uint256 toNode = nodeShare;
+                if (withdrawalBalance < depositBalance) {
+                    uint256 shortfall = depositBalance - withdrawalBalance;
+                    if (shortfall > toNode) {
+                        toNode = 0;
+                    } else {
+                        toNode -= shortfall;
+                    }
+                }
+                uint256 toUser = withdrawalBalance - toNode;
+                // Pay off any existing debt and any new d
+/* … truncated … */

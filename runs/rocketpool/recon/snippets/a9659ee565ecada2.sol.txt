@@ -1,0 +1,1 @@
+require(msg.sender == nodeAddress || msg.sender == withdrawalAddress, "Only the node operator can access this method")

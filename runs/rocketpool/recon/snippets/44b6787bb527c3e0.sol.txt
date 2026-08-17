@@ -1,0 +1,1 @@
+function getPenaltyCount(address _minipoolAddress) external view returns (uint256);

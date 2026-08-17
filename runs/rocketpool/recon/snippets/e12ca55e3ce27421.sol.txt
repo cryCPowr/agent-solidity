@@ -1,0 +1,1 @@
+event ActionKick(address indexed nodeAddress, uint256 time);

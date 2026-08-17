@@ -1,0 +1,1 @@
+nodeIndex < _nodeCount && delegateIndex < _nodeCount

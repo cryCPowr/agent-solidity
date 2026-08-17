@@ -1,0 +1,1 @@
+getVetoed(_upgradeProposalID)

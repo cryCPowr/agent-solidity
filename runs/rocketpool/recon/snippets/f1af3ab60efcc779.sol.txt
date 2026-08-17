@@ -1,0 +1,1 @@
+block.timestamp - getNodeRPLStakedTime(_nodeAddress) < rocketDAOProtocolSettingsNode.getWithdrawalCooldown()

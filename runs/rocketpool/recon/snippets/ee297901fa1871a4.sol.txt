@@ -1,0 +1,1 @@
+_claimAndStake(_nodeAddress, _claims, _stakeAmount)

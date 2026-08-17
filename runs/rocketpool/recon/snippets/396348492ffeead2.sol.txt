@@ -1,0 +1,5 @@
+if (_submission.userETH > 0) {
+            address rocketTokenRETHAddress = getContractAddress("rocketTokenRETH");
+            (bool result,) = rocketTokenRETHAddress.call{value: _submission.userETH}("");
+            require(result, "Failed to send user rewards");
+        }

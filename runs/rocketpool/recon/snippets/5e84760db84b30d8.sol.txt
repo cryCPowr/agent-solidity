@@ -1,0 +1,11 @@
+function proposalSettingMulti(string[] memory _settingContractNames, string[] memory _settingPaths, SettingType[] memory _types, bytes[] memory _data) override external onlyExecutingContracts() {
+        // Check lengths of all arguments are the same
+        require(_settingContractNames.length == _settingPaths.length && _settingPaths.length == _types.length && _types.length == _data.length, "Invalid parameters supplied");
+        // Loop through settings
+        for (uint256 i = 0; i < _settingContractNames.length; ++i) {
+            if (_types[i] == SettingType.UINT256) {
+                uint256 value = abi.decode(_data[i], (uint256));
+                proposalSettingUint(_settingContractNames[i], _settingPaths[i], value);
+            } else if (_types[i] == SettingType.BOOL) {
+          
+/* … truncated … */

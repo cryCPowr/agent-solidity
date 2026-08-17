@@ -1,0 +1,3 @@
+function getValidatorCount() override external view returns (uint32) {
+        return numValidators;
+    }

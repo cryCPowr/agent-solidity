@@ -1,0 +1,3 @@
+if (nodeSlashBalance > 0) {
+            _slash();
+        }

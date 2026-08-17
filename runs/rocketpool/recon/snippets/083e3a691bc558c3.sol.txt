@@ -1,0 +1,1 @@
+event MaxPenaltyRateUpdated(uint256 rate, uint256 time);

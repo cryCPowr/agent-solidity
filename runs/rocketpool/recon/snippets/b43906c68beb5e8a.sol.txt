@@ -1,0 +1,4 @@
+if (userAmount > 0) {
+            // Send user amount to rETH contract
+            payable(rocketTokenRETH).transfer(userAmount);
+        }

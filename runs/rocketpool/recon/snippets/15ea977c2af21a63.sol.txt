@@ -1,0 +1,1 @@
+function setStakeRPLForAllowed(address _caller, bool _allowed) external;

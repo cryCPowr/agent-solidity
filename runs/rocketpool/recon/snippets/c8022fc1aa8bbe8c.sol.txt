@@ -1,0 +1,14 @@
+if (from != address(0)) {
+            // Check which block the user's last deposit was
+            bytes32 key = keccak256(abi.encodePacked("user.deposit.block", from));
+            uint256 lastDepositBlock = getUint(key);
+            if (lastDepositBlock > 0) {
+                // Ensure enough blocks have passed
+                uint256 depositDelay = getUint(keccak256(abi.encodePacked(keccak256("dao.protocol.setting.network"), "network.reth.deposit.delay")));
+                uint256 blocksPassed = block.number.sub(lastDepositBlock);
+                require(blocksPassed > depositDelay, "Not enough time has passed since deposit");
+                // Clear the state as it's no longer necessary to check this until another deposit is made
+                deleteUint(key);
+            }
+        
+/* … truncated … */

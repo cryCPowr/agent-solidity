@@ -1,0 +1,1 @@
+legacyStakedRPL >= _amount + minimumLegacyStakedRPL

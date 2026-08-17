@@ -1,0 +1,1 @@
+function proposalKick(address _memberAddress) external;

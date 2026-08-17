@@ -1,0 +1,1 @@
+string constant internal daoProposalNameSpace = "dao.protocol.proposal."

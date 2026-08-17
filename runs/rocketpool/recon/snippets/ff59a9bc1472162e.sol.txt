@@ -1,0 +1,3 @@
+function push(bytes32 _key, uint224 _value) onlyLatestContract("rocketNetworkSnapshots", address(this)) onlyLatestNetworkContract external {
+        _insert(_key, _value);
+    }

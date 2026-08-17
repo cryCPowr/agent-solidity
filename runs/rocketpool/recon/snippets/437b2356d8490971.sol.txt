@@ -1,0 +1,16 @@
+function setSigner(address _signer, uint8 _v, bytes32 _r, bytes32 _s) external {
+        require(msg.sender != _signer, "Cannot set to self");
+        require(signerToNode[_signer] == address(0), "Signer address already in use");
+        require(_signer != address(0), "Invalid signer");
+        require(recoverSigner(msg.sender, _v, _r, _s) == _signer, "Invalid signature");
+        // Clear existing reverse mapping
+        address previousSigner = nodeToSigner[msg.sender];
+        if (previousSigner != address(0)) {
+            delete signerToNode[previousSigner];
+        }
+        // Store new mapping
+        signerToNode[_signer] = msg.sender;
+        nodeToSigner[msg.sender] = _signer;
+        // Emit event
+        emit SignerSet(msg.sender, _signer);
+    }

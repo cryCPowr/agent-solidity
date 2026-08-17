@@ -1,0 +1,3 @@
+function getPenaltyCount(address _minipool) override external view returns (uint256) {
+        return getUint(keccak256(abi.encodePacked("network.penalties.penalty", _minipool)));
+    }

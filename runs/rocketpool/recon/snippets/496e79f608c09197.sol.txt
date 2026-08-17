@@ -1,0 +1,1 @@
+require(_currentBalance >= launchAmount, "Balance is too low")

@@ -1,0 +1,12 @@
+function submitPenalty(address _minipool, uint256 _block) override external onlyTrustedNode(msg.sender) onlyRegisteredMinipool(_minipool) {
+        require(_block < block.number, "Invalid block number");
+        // Get submission keys
+        bytes32 nodeSubmissionKey = keccak256(abi.encodePacked("minipool.penalty.submission", msg.sender, _minipool, _block));
+        bytes32 submissionCountKey = keccak256(abi.encodePacked("minipool.penalty.submission", _minipool, _block));
+        // Check & update node submission status
+        require(!getBool(nodeSubmissionKey), "Duplicate submission from node");
+        setBool(nodeSubmissionKey, true);
+        // Increment submission count
+        uint256 submissionCount = getUint(submissionCountKey) + 1;
+        setUint(submissionCountKey, submission
+/* … truncated … */

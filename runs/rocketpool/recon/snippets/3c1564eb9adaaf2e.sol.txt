@@ -1,0 +1,10 @@
+function getNodeMinipoolETHBonded(address _nodeAddress) public view returns (uint256) {
+        // Get contracts
+        RocketMinipoolManagerInterface rocketMinipoolManager = RocketMinipoolManagerInterface(getContractAddress("rocketMinipoolManager"));
+        uint256 activeMinipoolCount = rocketMinipoolManager.getNodeActiveMinipoolCount(_nodeAddress);
+        // Retrieve stored ETH borrowed value
+        uint256 ethBorrowed = getNodeMinipoolETHBorrowed(_nodeAddress);
+        // ETH bonded is number of staking minipools * 32 - eth borrowed
+        uint256 totalEthStaked = activeMinipoolCount * 32 ether;
+        return totalEthStaked - ethBorrowed;
+    }

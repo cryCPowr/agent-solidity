@@ -1,0 +1,1 @@
+daoNodeTrusted.getMemberRPLBondAmount(_nodeAddress)

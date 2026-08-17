@@ -1,0 +1,1 @@
+getPollardRootIndex(_index, nodeCount)

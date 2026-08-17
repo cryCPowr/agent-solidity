@@ -1,0 +1,1 @@
+getSettingUint("maximum.megapool.eth.penalty")

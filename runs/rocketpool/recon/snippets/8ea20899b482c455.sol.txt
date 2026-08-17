@@ -1,0 +1,11 @@
+function claimBondProposer(uint256 _proposalID, uint256[] calldata _indices) external onlyLatestContract("rocketDAOProtocolVerifier", address(this)) onlyRegisteredNode(msg.sender) {
+        uint256 defeatIndex = getUint(bytes32(uint256(keccak256(abi.encodePacked("dao.protocol.proposal", _proposalID)))+defeatIndexOffset));
+
+        // Proposer has nothing to claim if their proposal was defeated
+        require(defeatIndex == 0, "Proposal defeated");
+
+        // Check the proposal has passed the waiting period and the voting period and wasn't cancelled
+        {
+            RocketDAOProtocolProposalInterface daoProposal = RocketDAOProtocolProposalInterface(getContractAddress("rocketDAOProtocolProposal"));
+            RocketDAOProtocolProposalInterface.ProposalState proposalState = daoProposa
+/* … truncated … */

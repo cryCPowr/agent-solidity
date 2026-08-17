@@ -1,0 +1,3 @@
+function setBool(bytes32 _key, bool _value) external onlyGuardian {
+        rocketStorage.setBool(_key, _value);
+    }

@@ -1,0 +1,1 @@
+emit DepositAssigned(minipools[i], variableDepositAmount, block.timestamp)

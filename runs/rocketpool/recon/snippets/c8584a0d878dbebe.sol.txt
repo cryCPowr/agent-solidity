@@ -1,0 +1,9 @@
+if (newBondRequirement - effectiveBond < prestakeValue) {
+                return prestakeValue;
+            } else {
+                uint256 bondRequirement = newBondRequirement - effectiveBond;
+                if (bondRequirement > fullDepositValue) {
+                    bondRequirement = fullDepositValue;
+                }
+                return bondRequirement;
+            }

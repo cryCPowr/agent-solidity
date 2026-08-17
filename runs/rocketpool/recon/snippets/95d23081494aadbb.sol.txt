@@ -1,0 +1,1 @@
+tryAggregate(requireSuccess, calls)

@@ -1,0 +1,1 @@
+indexDepth + depthPerRound >= treeDepth * 2

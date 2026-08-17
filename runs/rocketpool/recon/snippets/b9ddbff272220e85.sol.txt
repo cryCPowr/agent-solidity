@@ -1,0 +1,1 @@
+addressQueueStorage.dequeueItem(_key)

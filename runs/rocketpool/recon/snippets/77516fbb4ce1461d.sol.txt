@@ -1,0 +1,4 @@
+receive() external payable notSelf {
+        // Emit ether received event
+        emit EtherReceived(msg.sender, msg.value, block.timestamp);
+    }

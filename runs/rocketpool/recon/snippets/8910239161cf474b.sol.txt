@@ -1,0 +1,4 @@
+if ((calcBase * submissionCount) / rocketDAONodeTrusted.getMemberCount() >= rocketDAOProtocolSettingsNetwork.getNodeConsensusThreshold()) {
+            // Update the price
+            updatePrices(_block, _slotTimestamp, _rplPrice);
+        }

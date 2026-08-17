@@ -1,0 +1,1 @@
+function memberJoinRequired(string memory _id, string memory _url) external;

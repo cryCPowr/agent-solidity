@@ -1,0 +1,19 @@
+contract RocketMegapoolFactory is RocketBase, RocketMegapoolFactoryInterface {
+    // Immutables
+    uint256 private immutable setKey;
+
+    // Libs
+    using Clones for address;
+
+    constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
+        version = 1;
+        // Initialise immutables
+        setKey = uint256(keccak256(abi.encodePacked("megapool.delegate.set")));
+    }
+
+    /// @notice Used following an upgrade or new deployment to initialise the delegate list
+    function initialise() override public {
+        // On new deploy, allow guardian to initialise, otherwise, only a network contract
+        if (rocketStorage.getDeployedStatus()) {
+            require(getBool(keccak256(abi.encodePacked("contract.exists", msg.sender))), "Invalid or outda
+/* … truncated … */

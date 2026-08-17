@@ -1,0 +1,14 @@
+if (minipools.length > 0) {
+            // Withdraw ETH from vault
+            uint256 totalEther = minipools.length * variableDepositAmount;
+            rocketVault.withdrawEther(totalEther);
+            uint256 nodeBalanceUsed = 0;
+            // Loop over minipools and deposit the amount required to reach launch balance
+            for (uint256 i = 0; i < minipools.length; ++i) {
+                RocketMinipoolInterface minipool = RocketMinipoolInterface(minipools[i]);
+                // Assign deposit to minipool
+                minipool.deposit{value: variableDepositAmount}();
+                nodeBalanceUsed = nodeBalanceUsed + minipool.getNodeTopUpValue();
+                // Emit deposit assigned event
+                emit DepositAssigned(minipools[i], variableDepositAmount, block.tim
+/* … truncated … */

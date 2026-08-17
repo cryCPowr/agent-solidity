@@ -1,0 +1,1 @@
+function getNodeTimezoneLocation(address _nodeAddress) external view returns (string memory);

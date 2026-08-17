@@ -1,0 +1,1 @@
+addressSetStorage.removeItem(keccak256(abi.encodePacked("minipools.vacant.index")), msg.sender)

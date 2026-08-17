@@ -1,0 +1,1 @@
+function bootstrapSettingAddressList(string memory _settingContractName, string memory _settingPath, address[] calldata _value) external;

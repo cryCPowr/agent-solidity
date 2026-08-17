@@ -1,0 +1,4 @@
+function depositExcess() override external payable onlyLatestContract("rocketDepositPool", msg.sender) {
+        // Emit ether deposited event
+        emit EtherDeposited(msg.sender, msg.value, block.timestamp);
+    }

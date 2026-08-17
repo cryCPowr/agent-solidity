@@ -1,0 +1,10 @@
+function upgrade(string memory _type, string memory _name, string memory _contractAbi, address _contractAddress) override external onlyLatestContract("rocketDAONodeTrustedProposals", msg.sender) {
+        uint256 upgradeProposalID = getTotal() + 1;
+        // Compute when the proposal can be executed if not vetoed by the security council
+        uint256 startTime = block.timestamp;
+        RocketDAOProtocolSettingsSecurityInterface rocketDAOProtocolSettingsSecurity = RocketDAOProtocolSettingsSecurityInterface(getContractAddress("rocketDAOProtocolSettingsSecurity"));
+        uint256 endTime = startTime + rocketDAOProtocolSettingsSecurity.getUpgradeDelay();
+        // Store data
+        bytes32 typeHash = keccak256(abi.encodePacked(_type));
+        setBytes32(keccak256(abi.encodePacked(daoUp
+/* … truncated … */

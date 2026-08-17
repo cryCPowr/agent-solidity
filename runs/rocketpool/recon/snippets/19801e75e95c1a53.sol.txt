@@ -1,0 +1,5 @@
+if (newRatio > currentRatio) {
+                require(newRatio - currentRatio <= maxChange, "Change exceeds maximum");
+            } else {
+                require(currentRatio - newRatio <= maxChange, "Change exceeds maximum");
+            }

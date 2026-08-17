@@ -1,0 +1,4 @@
+abi.encodePacked(
+                        _witness[i].hash, _witness[i].sum,
+                        root.hash, root.sum
+                    )

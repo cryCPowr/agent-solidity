@@ -1,0 +1,1 @@
+setSettingUint("proposal.max.block.age", 1024)

@@ -1,0 +1,1 @@
+abi.encodePacked("snapshot.length", _key)

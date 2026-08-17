@@ -1,0 +1,3 @@
+fallback() external payable {
+        revert("BalanceChecker does not accept payments");
+    }

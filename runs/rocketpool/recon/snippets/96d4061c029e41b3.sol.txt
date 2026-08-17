@@ -1,0 +1,1 @@
+emit RewardsClaimed(_nodeAddress, _claims)

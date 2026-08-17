@@ -1,0 +1,1 @@
+emit UseLatestUpdated(_state, block.timestamp)

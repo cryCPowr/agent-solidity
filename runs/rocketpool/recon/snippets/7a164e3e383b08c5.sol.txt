@@ -1,0 +1,1 @@
+_setSettingUint("reduced.bond", 4 ether)

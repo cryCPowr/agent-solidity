@@ -1,0 +1,3 @@
+if (claimed > total) {
+            return total;
+        }

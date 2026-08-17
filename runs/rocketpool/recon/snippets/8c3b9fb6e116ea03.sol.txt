@@ -1,0 +1,7 @@
+function _getCurrentShare(RocketNetworkSnapshotsTimeInterface _rocketNetworkSnapshotsTime, bytes32 _key, bool _mustExist) internal view returns (uint256) {
+        (bool exists, uint64 timestamp, ) = _rocketNetworkSnapshotsTime.latest(_key);
+        require(!_mustExist || exists, "Snapshot does not exist");
+        if (!exists) return 0;
+        bytes32 valueKey = bytes32(uint256(_key) + timestamp);
+        return getUint(valueKey) * shareScale;
+    }

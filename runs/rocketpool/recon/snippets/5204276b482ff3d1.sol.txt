@@ -1,0 +1,1 @@
+SSZ.efficientSha256(SSZ.toLittleEndian(_withdrawal.index), SSZ.toLittleEndian(_withdrawal.validatorIndex))

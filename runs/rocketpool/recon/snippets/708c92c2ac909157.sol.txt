@@ -1,0 +1,6 @@
+if (legacyAmount > legacyStakedRPL) {
+            uint256 megapoolAmount = legacyAmount - legacyStakedRPL;
+            legacyAmount -= megapoolAmount;
+            // Decrease megapool total
+            subUint(totalMegapoolKey, megapoolAmount);
+        }

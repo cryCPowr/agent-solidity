@@ -1,0 +1,3 @@
+function getBool(bytes32 _key) override external view returns (bool r) {
+        return booleanStorage[_key];
+    }

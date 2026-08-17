@@ -1,0 +1,1 @@
+SafeCast.toUint192(currentAccum)

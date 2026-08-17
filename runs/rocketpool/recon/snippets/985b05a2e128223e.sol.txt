@@ -1,0 +1,13 @@
+function relayRewards(uint256 _rewardIndex, uint256 _treeVersion, bytes32 _root, uint256 _rewardsRPL, uint256 _rewardsETH) external override onlyLatestContract("rocketMerkleDistributorMainnet", address(this)) onlyLatestContract("rocketRewardsPool", msg.sender) {
+        // Store root
+        bytes32 key = keccak256(abi.encodePacked('rewards.merkle.root', _rewardIndex));
+        require(getBytes32(key) == bytes32(0));
+        setBytes32(key, _root);
+        // Store tree version
+        bytes32 versionKey = keccak256(abi.encodePacked('rewards.interval.tree.version', _rewardIndex));
+        setUint(versionKey, _treeVersion);
+        // Send the ETH and RPL to the vault
+        RocketVaultInterface rocketVault = RocketVaultInterface(getAddress(rocketVaultKey));
+        if (_rewardsETH > 0) {
+
+/* … truncated … */

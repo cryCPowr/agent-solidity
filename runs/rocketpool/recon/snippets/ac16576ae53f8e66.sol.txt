@@ -1,0 +1,1 @@
+RocketClaimDAOInterface(getContractAddress("rocketClaimDAO"))

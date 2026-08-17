@@ -1,0 +1,17 @@
+interface RocketNodeDepositInterface {
+    struct NodeDeposit {
+        uint256 bondAmount;
+        bool useExpressTicket;
+        bytes validatorPubkey;
+        bytes validatorSignature;
+        bytes32 depositDataRoot;
+    }
+
+    function getBondRequirement(uint256 _numValidators) external view returns (uint256);
+    function getNodeDepositCredit(address _nodeAddress) external view returns (uint256);
+    function getNodeEthBalance(address _nodeAddress) external view returns (uint256);
+    function getNodeCreditAndBalance(address _nodeAddress) external view returns (uint256);
+    function getNodeUsableCreditAndBalance(address _nodeAddress) external view returns (uint256);
+    function getNodeUsableCredit(address _nodeAddress) external view returns (uint256);
+    function increaseDepositCr
+/* … truncated … */

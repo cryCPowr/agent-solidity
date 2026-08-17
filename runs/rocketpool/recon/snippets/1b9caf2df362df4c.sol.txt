@@ -1,0 +1,1 @@
+setSettingUint("auction.price.reserve", 0.5 ether)

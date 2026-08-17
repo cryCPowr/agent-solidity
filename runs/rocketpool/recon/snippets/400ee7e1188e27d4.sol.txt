@@ -1,0 +1,3 @@
+if (borrowedETH == 0 || bondedETH == 0) {
+            return calcBase * 2;
+        }

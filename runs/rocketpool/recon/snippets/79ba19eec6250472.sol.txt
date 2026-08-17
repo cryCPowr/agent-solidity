@@ -1,0 +1,3 @@
+for (uint256 i = 0; i < _value.length; ++i) {
+            setAddress(bytes32(key + i), _value[i]);
+        }

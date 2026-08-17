@@ -1,0 +1,1 @@
+amountToPay <= rocketVault.balanceOfToken("rocketClaimDAO", rplToken)

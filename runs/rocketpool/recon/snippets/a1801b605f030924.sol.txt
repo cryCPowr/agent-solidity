@@ -1,0 +1,1 @@
+function getWithdrawalCooldown() external view returns (uint256);

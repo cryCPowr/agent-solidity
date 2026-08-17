@@ -1,0 +1,1 @@
+ProposalDestroyed(_proposalID, block.timestamp)
