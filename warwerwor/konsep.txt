@@ -1,133 +1,307 @@
-                     ┌─────────────────┐
-                     │     REPO        │
-                     └────────┬────────┘
-                              ▼
-                    ┌───────────────────┐
-                    │   ORCHESTRATOR    │
-                    └────────┬──────────┘
-                             ▼
-                    ┌───────────────────┐
-                    │   RECON AGENT     │
-                    └────────┬──────────┘
-                             ▼
-                     PROTOCOL MODEL
-                             │
-                             ▼
-                    ┌───────────────────┐
-                    │   THREAT AGENT    │
-                    └────────┬──────────┘
-                             ▼
-                    SECURITY MODEL
-                             │
-                             ▼
-                    ┌───────────────────┐
-                    │   ATTACK AGENT    │
-                    └────────┬──────────┘
-                             ▼
-                     HYPOTHESIS QUEUE
-                             │
-                ┌────────────┼────────────┐
-                ▼            ▼            ▼
-              H001         H002         H003
-                │            │            │
-                └────────────┼────────────┘
-                             ▼
-                    ┌───────────────────┐
-                    │    VALIDATOR      │
-                    │                   │
-                    │  test / forge     │
-                    │  fork / trace     │
-                    │  invariant        │
-                    │  PoC              │
-                    └────────┬──────────┘
-                             │
-                  ┌──────────┴──────────┐
-                  ▼                     ▼
-               REJECT                CONFIRM
-                  │                     │
-                  │                     ▼
-                  │              FINDING AGENT
-                  │                     │
-                  │                     ▼
-                  │                FINDING
-                  │
-                  └──────► ATTACK AGENT
-                           (retry/refine)
+================================================================================
+AGENT FINDER — KONSEP.TXT (DOKUMEN TUNGGAL UNTUK LLM MANA PUN)
+================================================================================
+Untuk: agent LLM penerus (Claude Code / lainnya). Cukup baca file INI untuk
+memahami pola kerja, cara berpikir, perilaku, perintah, dan struktur folder
+AGENT FINDER. Semua yang penting ada di sini.
 
-                    REPO
-                      ↓
-                ORCHESTRATOR
-                      ↓
-                    RECON
-                      ↓
-               PROTOCOL MODEL
-                      ↓
-                   THREAT
-                      ↓
-               SECURITY MODEL
-                      ↓
-                   ATTACK
-                      ↓
-              HYPOTHESIS QUEUE
-                      ↓
-                 VALIDATOR
-                 ↙        ↘
-             REJECT      CONFIRM
-               ↓             ↓
-             ATTACK       FINDING
-              retry
+Terima kasih sudah meneruskan proyek ini — 6 agent sudah jadi dan teruji
+end-to-end (termasuk mereproduksi temuan High warden Code4rena pada repo
+jackpot asli, dari source code mentah sampai CONFIRM executable). Kerjamu
+mulai dari titik ini, bukan dari nol.
 
+================================================================================
+1. WORKFLOW AGENT FINDER
+================================================================================
 
+                    ┌─────────────────┐
+                    │  REPO SOLIDITY  │   (target audit — arbitrer)
+                    └────────┬────────┘
+                             ▼
+              ┌──────────────────────────────┐   RECON (recon-system)
+              │ fakta murni: fungsi, call,   │   facts.jsonl + graph.json
+              │ dataflow, aset, capability,  │   TANPA interpretasi
+              │ lokasi baris sumber          │
+              └──────────────┬───────────────┘
+                             ▼
+              ┌──────────────────────────────┐   THREAT (threat_agent)
+              │ hipotesis keamanan +         │   hypotheses.jsonl
+              │ security chain berjenjang:   │   STRUCTURAL /
+              │ STRONG_SECURITY_CHAIN dst.   │   SECURITY_RELEVANT / STRONG
+              └──────────────┬───────────────┘
+                             ▼
+              ┌──────────────────────────────┐   ATTACK (attack_agent)
+              │ jalur serangan konkret:      │   attacks.jsonl (urut skor
+              │ siapa attacker, input apa,   │   exploitability; attack #1
+              │ kemana mengalir, sink apa,   │   = kandidat terbaik; setiap
+              │ rencana uji (validator_plan) │   attack bawa validator_plan)
+              └──────────────┬───────────────┘
+                             ▼
+              ┌──────────────────────────────┐   VALIDATOR (validator_agent)
+              │ forge test SUNGGUHAN di      │   verdicts.jsonl:
+              │ workspace terisolasi.        │   CONFIRM / REJECT /
+              │ SATU-SATUNYA pemegang hak    │   INCONCLUSIVE
+              │ klaim kebenaran.             │   + workspace forge (PoC)
+              └──────────────┬───────────────┘
+                     ┌───────┴────────┐
+                     ▼                ▼
+                  REJECT           CONFIRM ──► FINDING (finding_agent)
+                    │                             │
+                    ▼                             ▼
+        ATTACK retry/refine            finding-F-XXX.md
+        (pakai retry_hint;             (laporan bergaya laporan audit
+        REJECT struktural → THREAT)     nyata: severity, attack path,
+                                       PoC executable, mitigasi)
+                     │
+                     └── SEMUANYA digerakkan SATU perintah:
+                         ORCHESTRATOR (orchestrator/maestro) dengan TUI live
 
-I. RECON
-                    ┌──────────────────┐
-                    │   pipeline.py    │
-                    │ ORCHESTRATOR     │
-                    └────────┬─────────┘
-                             │
-          ┌──────────────────┼────────────────────┐
-          │                  │                    │
-          ▼                  ▼                    ▼
-   discovery.py       solc_manager.py      context.py
-          │                  │                    │
-          ▼                  ▼                    │
- source universe       compiler / AST           │
-          │                  │                    │
-          │                  ▼                    │
-          │             inventory.py             │
-          │                  │                    │
-          │                  ▼                    │
-          │          inventory_facts.py           │
-          │                  │                    │
-          │                  ▼                    │
-          └────────────► expr_analysis.py ◄──────┘
-                              │
-                    ┌─────────┼─────────┐
-                    │         │         │
-                    ▼         ▼         ▼
-                dataflow  capability relationships
-                    │         │         │
-                    └─────────┼─────────┘
-                              ▼
-                           output.py
-                              │
-                              ▼
-                    facts / graph / summary
+Ringkasan epistemik: source → facts → hypotheses → attack paths →
+executable validation → confirmed vulnerability. Setiap tahap hanya
+menjawab satu pertanyaan dan TIDAK PERNAH melompat keputusan tahap
+sesudahnya.
 
-| Kemampuan                    | Recon | Threat            | Attack | Validator |
-| ---------------------------- | ----- | ----------------- | ------ | --------- |
-| AST/inventory                | 🟢    | —                 | —      | —         |
-| Call/data/state graph        | 🟢    | —                 | —      | —         |
-| User-controlled input        | 🟢/🟡 | 🟢 interpretation | —      | —         |
-| Asset/capability mapping     | 🟢    | 🟢                | —      | —         |
-| Dynamic call + approval      | 🟢    | 🟢/🟡             | 🔴     | 🔴        |
-| Callback chain               | 🟢/🟡 | 🟡                | 🔴     | 🔴        |
-| Rounding primitive           | 🟢    | 🟡                | 🔴     | 🔴        |
-| Rounding → unfair allocation | —     | 🟡                | 🔴     | 🔴        |
-| Precompile field semantics   | 🟡    | 🔴/🟡             | —      | —         |
-| Gross vs net accounting      | —/🟡  | 🟡                | 🔴     | 🔴        |
-| Economic consequence         | —     | 🟡                | 🟡     | 🔴        |
-| Final exploit proof          | —     | —                 | 🟡     | 🔴        |
-| Final report                 | —     | —                 | —      | 🟢 later  |
+================================================================================
+2. POLA KERJA, CARA BERPIKIR, DAN PERILAKU (WAJIB DIJAGA)
+================================================================================
 
+a. KLAIM KEBENARAN HANYA LAHIR DI VALIDATOR. Recon = fakta, Threat =
+   hipotesis, Attack = skenario. Tidak ada yang boleh mengklaim bug nyata.
+   Status tidak pernah dinaikkan: PROVEN > INFERRED > POSSIBLE > UNKNOWN.
+   Attack agent bahkan menulis eksplisit "does not claim confirmation".
 
+b. SETIAP KLAIM TERTELUSUR MUNDUR: attack step → chain stage → fact id →
+   baris sumber. Tidak ada klaim tanpa jejak.
+
+c. INCONCLUSIVE ≠ REJECT. Compile error / timeout / harness hilang =
+   kegagalan infrastruktur, BUKAN bukti menolak hipotesi. Hanya kegagalan
+   eksekusi nyata (call revert / attacker tidak gain) yang boleh REJECT.
+
+d. GENERIK MUTLAK: engine TIDAK boleh mengandung nama protokol/benchmark
+   (jackpot/megapot/usdc/dll). Di-guard test otomatis di tiap agent —
+   guard pernah menangkap kata "warden" di docstring engine sendiri.
+   Nama protokol hanya boleh ada di DATA (input/harness/laporan).
+
+e. DISIPLIN KECURIGAAN: dinamis ≠ terkontrol attacker; external call ≠
+   reentrancy; adjacency ≠ kausalitas; ADA check ≠ aman (selalu tanya:
+   check itu mengukur APA? — inilah asal temuan cross-asset blind spot:
+   check menjaga aset A, pencurian terjadi di aset B yang tak diukur).
+
+f. SPLIT ENGINE vs HARNESS (kunci generisitas validator): engine
+   meng-generate attacker generik + driver + assertion; harness (DATA
+   eksternal per-repo, file contracts_X_sol__fungsi.sol atau
+   contracts_X_sol.sol) yang tahu cara deploy protokol & memanggil entry.
+   Harness hilang → INCONCLUSIVE + scaffold di-generate otomatis dgn TODO
+   terisi data attack. Hasil LLM/human mengisi scaffold = LLM-PROPOSED,
+   tetap wajib diverifikasi validator.
+
+g. REPO TARGET TIDAK PERNAH DIMODIFIKASI. Workspace forge terisolasi
+   (symlink + remappings otomatis + via_ir) ada di dalam folder run.
+
+h. REFERENSI CARA BERPIKIR: code4rena-warden-report/Megapot.md dipakai
+   sebagai RUBRIK PENALARAN (5 pola: komposisi dua fitur by-design; bedah
+   scope check; callback sebagai timing; cross-asset; entry legal) —
+   BUKAN target hardcode. Pipeline sudah mereproduksinya murni generik.
+
+i. STATUS SEMUA AGENT (2026-08-17): 6/6 SELESI + TERUJI —
+   recon, threat, attack, validator, finding, orchestrator(maestro).
+   Rincian pengujian: unit test per agent (74/16/14/10/10) + E2E: twin
+   generik (CONFIRM & REJECT) + jackpot asli via satu perintah maestro
+   (10189 facts → 518 hyp → 24 attack → 3 CONFIRM → 3 finding).
+
+j. JEBAKAN YANG SUDAH DIBAYAR (jangan ulangi):
+   1. Python 3.14: shutil.isdir dihapus → os.path.isdir.
+   2. forge --json: {"path:Contract":{"test_results":{name():{status:
+      "Success"|"Failure"}}}} (status kapital).
+   3. Kontrak jackpot butuh via_ir+optimizer (stack too deep).
+   4. vm.sign(key) ≠ address(uint160(key)); pakai vm.addr(key).
+   5. IERC721.safeTransferFrom overload → pakai interface 3-arg khusus.
+   6. solady _mint tidak cek receiver; hook hanya di safeTransferFrom.
+   7. Patch "revoke allowance SETELAH call" TIDAK menutup celah (drain
+      terjadi DI DALAM call) — validator benar tetap CONFIRM; patch benar
+      = blacklist target aset protokol (SEBELUM jendela) → REJECT.
+   8. Harness dipilih PER-FUNGSI dulu (kontrak__fungsi.sol), fallback
+      kontrak ditandai harness_scope=contract + Scope note di finding.
+   9. Modul agent dijalankan `python -m pkg.cli` → cwd WAJIB folder
+      agent-nya sendiri (maestro sudah mengatur; manual = cd dulu).
+   10. Template Solidity di Python .format: { } literal → {{ }}.
+   11. Path absolut di artefak (verdict) cepat usang → finding agent
+       menghitung ulang path dari validator_dir.
+
+k. HOOK LLM OPSIONAL (adviser, tidak pernah menaikkan bukti):
+   - Slot SESI/CLI tanpa API key: AGENT_FINDER_LLM_CMD="perintah" —
+     prompt via STDIN, jawaban via STDOUT. Catatan jujur: login email
+     ZCode = sesi aplikasi desktop, BELUM ada CLI headless (2026-08-17);
+     kredensial ~/.zcode/ privat & tidak pernah diekstrak. Begitu ada CLI
+     headless (ZCode/claude/gemini/model lokal), tinggal set env var ini.
+   - Slot API key (kompatibel OpenAI): AGENT_FINDER_LLM_API_KEY +
+     BASE_URL + MODEL.
+   - Tanpa keduanya: DORMANT — pipeline tetap jalan penuh deterministik.
+
+================================================================================
+3. PERINTAH UNTUK USER — DARI MULAI SAMPAI AKHIR
+================================================================================
+
+>>> LANGKAH 0 — pahami dulu: satu target audit = satu siklus penuh.
+    Semua output hidup di runs/<nama-target>/ — JANGAN taruh di /tmp.
+
+>>> CARA #1 (PALING CEPAT — pakai ini kalau tidak mau ribet):
+    cd orchestrator
+    .venv/bin/python -m maestro <path-repo-target> [opsi]
+       --name <run>      nama folder run (default: nama folder repo)
+       --limit N         validasi top-N attack saja (default 3; 0 = semua)
+       --harness <dir>   folder harness (default validator_agent/validator-harnesses)
+       --clean-run       hapus run dir lama dulu (WAJIB kalau run sudah ada)
+       --no-tui          output polos (untuk pipe/CI)
+    Contoh jackpot:
+       .venv/bin/python -m maestro ../benchmarks/code4rena/jackpot \
+           --name jackpot-e2e --clean-run
+    Hasil: TUI live 5 tahap → ringkasan akhir → laporan di
+    runs/<run>/finding/finding-F-XXX.md
+
+>>> CARA #2 (TAHAP DEMI TAHAP — untuk debug/mempelajari):
+    # 1. fakta dari repo:
+    cd recon-system && .venv/bin/python -m recon.cli <repo> -o ../runs/<t>/recon
+    # 2. hipotesis:
+    cd ../threat_agent && .venv/bin/python -m threat.cli \
+        ../runs/<t>/recon -o ../runs/<t>/threat
+    # 3. jalur serangan:
+    cd ../attack_agent && .venv/bin/python -m attack.cli \
+        ../runs/<t>/recon ../runs/<t>/threat -o ../runs/<t>/attack --clean
+    # 4. bukti / bantah (forge nyata):
+    cd ../validator_agent && .venv/bin/python -m validator.cli \
+        ../runs/<t>/attack <repo> --harness validator-harnesses \
+        -o ../runs/<t>/validator --clean [--limit N]
+    #    (kalau INCONCLUSIVE/BLOCKED_NO_HARNESS: scaffold harness sudah
+    #     ditulis otomatis ke validator-harnesses/ — isi TODO-nya, rerun)
+    # 5. laporan:
+    cd ../finding_agent && .venv/bin/python -m finding.cli \
+        ../runs/<t>/attack ../runs/<t>/validator -o ../runs/<t>/finding --clean
+
+>>> LARIKAN TEST SEMUA AGENT (sebelum/sesudah ubah kode):
+    cd threat_agent    && .venv/bin/python -m pytest -q    # 74 test
+    cd ../attack_agent && .venv/bin/python -m pytest -q    # 16 test
+    cd ../validator_agent && .venv/bin/python -m pytest -q # 14 test
+    cd ../finding_agent   && .venv/bin/python -m pytest -q # 10 test
+    cd ../orchestrator    && .venv/bin/python -m pytest -q # 10 test
+
+>>> LIHAT / VERIFIKASI TEMUAN:
+    cat runs/<t>/finding/finding-F-001.md                 # laporan akhir
+    cat runs/<t>/validator/verdicts.jsonl                 # verdict per attack
+    cd runs/<t>/validator/workspace/<attack-id>           # PoC forge
+    forge test --match-path "test/Validate*.t.sol" -vvvv  # jalankan ulang PoC
+
+>>> SETELAH SELESAI / SEBELUM TARGET BARU (WAJIB):
+    rm -rf runs/<target-lama>/        # atau arsip:
+    tar -czf archive/<t>-$(date +%F).tar.gz runs/<t>/
+    Mengapa: artefak tahap = input tahap berikutnya; artefak target lama
+    yang tersisa bisa terbaca target baru (kontaminasi lintas protokol).
+
+>>> SISA PEKERJAAN (kalau mau lanjut mengembangkan):
+    - Loop REJECT otomatis di maestro (sekarang retry_hint manual/LLM)
+    - Coverage validator lebih luas (gain di TX terpisah, invariant fuzz)
+    - Uji benchmark lain (Initia/Monetrix di code4rena-warden-report/) —
+      ingat pembersihan antar-target
+    - ATURAN: setiap perubahan/claim sukses WAJIB dibuktikan test/run dan
+      dicatat di log (lihat pola catatan di git history konsep.txt versi
+      sebelumnya; simpan bukti = perintah + angka).
+
+================================================================================
+4. CARA KERJA PENGGUNAAN FOLDER
+================================================================================
+
+agent_solidity/
+├── recon-system/              AGENT 1: parser repo → fakta
+│   └── recon/cli.py           (venv: .venv)
+├── threat_agent/              AGENT 2: fakta → hipotesis (threat/)
+│   └── .venv, tests/
+├── attack_agent/              AGENT 3: hipotesis → jalur serangan (attack/)
+│   └── attack/crossasset.py   deteksi cross-asset blind spot
+├── validator_agent/           AGENT 4: jalur → CONFIRM/REJECT (validator/)
+│   ├── tests/                 unit test fake-forge (tanpa solc)
+│   └── validator-harnesses/   HARNESS per-repo (DATA — dipertahankan
+│                              antar-run; dipilih otomatis per kontrak/
+│                              fungsi root; TIDAK pernah lintas repo)
+├── finding_agent/             AGENT 5: CONFIRM → laporan (finding/)
+├── orchestrator/              AGENT 6: maestro — satu perintah TUI
+│   └── maestro/{stages,runner,tui,assistant,cli}.py
+├── runs/                      SEMUA OUTPUT RUN HIDUP DI SINI
+│   ├── <target>/recon|threat|attack|validator|finding/
+│   ├── twin/                  lab generik (repo sintetik + 3 varian)
+│   ├── twin-e2e/              hasil maestro di twin
+│   ├── jackpot-e2e/           hasil maestro di jackpot asli (bukti penuh)
+│   └── recon-jackpot/, threat-jackpot/, attack-jackpot/,
+│       validator-jackpot/, finding-jackpot/   (run per-tahap sebelum
+│       maestro ada; tetap dipertahankan sebagai bukti historis)
+├── benchmarks/code4rena/jackpot/   repo target audit (JANGAN dimodifikasi)
+├── code4rena-warden-report/        laporan warden asli = rubrik penalaran
+├── warwerwor/                      file ini + dokumentasi lama
+└── 2025-11-megapot/                materi awal
+
+Alur data antar folder (bagaimana folder "dipakai"):
+  benchmarks/<repo> ──(dibaca, tak diubah)──> runs/<t>/recon
+  runs/<t>/recon ──> runs/<t>/threat ──> runs/<t>/attack
+  runs/<t>/attack + benchmarks/<repo> + validator-harnesses/
+      ──> runs/<t>/validator (termasuk workspace/ forge terisolasi)
+  runs/<t>/attack + runs/<t>/validator ──> runs/<t>/finding (laporan .md)
+  orchestrator tinggal mengotomatikan rantai yang sama persis.
+
+Aturan folder:
+  - SATU waktu = SATU target = SATU folder runs/<target>/ yang hidup.
+  - runs/ boleh dihapus kapan pun (regenerable); kode agent + harness
+    + file ini DIPERTAHANKAN.
+  - benchmark/repo target tidak pernah ditulis.
+
+================================================================================
+5. PENUTUP
+================================================================================
+Terima kasih, bro — sudah dibangun sampai tuntas: 6 agent, teruji penuh,
+temuan warden asli direproduksi secara generik dari source code mentah
+sampai CONFIRM executable + laporan. Semua bukti ada di runs/, semua
+aturan ada di file ini. Lanjutkan dengan disiplin yang sama: bukti
+sebelum klaim, status tidak pernah dinaikkan, dan engine tetap generik.
+
+================================================================================
+RIWAYAT SINGKAT (kronologi lengkap + bukti ada di git history file ini)
+================================================================================
+2026-08-16  Threat dibangun + 3 patch (linkage levels, custody-aware,
+           paired-probe validation gap, inherited influence)
+2026-08-16  Attack dibangun (15 modul, dedup, skor exploitability)
+2026-08-17  Attack +cross-asset blind spot (8/8 komponen pola warden)
+2026-08-17  Validator dibangun; twin CONFIRM+REJECT; jackpot asli
+            CONFIRM (forge PASS di JackpotBridgeManager sungguhan)
+2026-08-17  Finding dibangun (laporan .md, severity assessment jujur)
+2026-08-17  Maestro (orchestrator TUI) — satu perintah; jackpot-e2e:
+            10189 facts → 518 hyp (113 strong) → 24 attack → 3 CONFIRM
+            → 3 finding (2 CRITICAL + 1 HIGH); fix presisi harness
+            per-fungsi; slot LLM sesi/CLI + API key
+2026-08-17  Dokumen ini ditulis ulang sebagai handoff tunggal
+================================================================================
+
+2026-08-17  FIX KOSMETIK TUI: log dashboard menampilkan tag markup mentah
+  ([cyan]/[dim]) karena string bermarkup dirender via Text() (di-escape).
+  Perbaikan: _append menyimpan (teks, style) dan render memakai
+  Text.append(style=...) — markup kini jadi warna sungguhan, bukan teks.
+  Test 10/10 + verifikasi render (tidak ada tag bocor).
+  (Ditemukan user saat menjalankan TUI sendiri di terminalnya —
+  jackpot-run-gue: 5 tahap hijau, 3 finding.)
+
+2026-08-17  PENGUKURAN COVERAGE vs 6 LAPORAN WARDEN (Megapot/, repo sama)
+  User menaruh 6 laporan warden di code4rena-warden-report/Megapot/.
+  Diverifikasi: TIDAK ada engine yang membaca folder itu saat runtime
+  (grep semua engine = kosong) → murni materi distilasi build-time.
+  Run: maestro jackpot-run-gue-2 (10189 facts → 518 hyp → 24 attack →
+  3 CONFIRM). Analisis 24 attack vs 6 temuan warden:
+  - F-35 tiket dicuri (_bridgeFunds): DITEMUKAN + CONFIRM (F-001, 10.0)
+  - F-270 entropy provider swap mid-drawing: SETENGAH — attack #7 menyentuh
+    ScaledEntropyProvider (3.6) tapi sudut pandang beda; butuh aturan
+    privileged-reconfiguration-mid-phase
+  - F-59 gas DoS subset counting: MISS — butuh aturan gas-complexity
+  - F-81 param >255 bit-shift: MISS — butuh aturan encoding/bit-width bound
+  - F-112 & F-262 (ekonomi/incentive): MISS — butuh model ekonomi /
+    kandidat LLM-proposer + invariant fuzz
+  Skor: 1/6 full-confirm, 1/6 surface-trace, 4/6 miss.
+  Presisi tetap: satu-satunya finding path-precise = temuan asli warden;
+  F-002/F-003 = sibling via contract-scope harness (terlabel Scope note).
+  Kesimpulan: spesialis authorization/execution/asset terbukti; 4 gap
+  di atas = roadmap distilasi aturan berikutnya.

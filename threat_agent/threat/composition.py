@@ -67,6 +67,14 @@ FACT_TYPE_BUCKETS: dict[str, str] = {
     # interaction whose target/calldata traces back to caller-controlled
     # input -- bucket it accordingly.
     "security_relationship_chain": "external_interaction",
+    # New fact types for expanded coverage (gas DoS, arithmetic overflow, frontrun, randomness)
+    "loop_nesting_depth": "control_flow_complexity",
+    "computational_complexity_indicator": "resource_consumption",
+    "bitshift_operation": "arithmetic_boundary",
+    "randomness_source_usage": "entropy_source",
+    "repeated_randomness_consumer": "entropy_reuse",
+    "state_dependent_constraint": "temporal_constraint",
+    "mev_exposure_indicator": "temporal_vulnerability",
 }
 
 # capability facts carry their bucket in the capability name rather than the
@@ -94,6 +102,8 @@ CONSEQUENTIAL_BUCKETS = {
     "authorization",
     "lifecycle",
     "external_interaction",
+    "resource_consumption",  # Gas DoS consequence
+    "temporal_vulnerability",  # Frontrun/MEV consequence
 }
 
 # Best-effort labels for recognizable bucket pairs, purely for readability.
@@ -109,6 +119,13 @@ NAMED_COMBINATIONS: dict[frozenset, str] = {
     frozenset({"lifecycle", "asset_movement"}): "initialization_vulnerability",
     frozenset({"control_flow", "external_interaction"}): "DoS_griefing",
     frozenset({"control_flow", "asset_movement"}): "DoS_griefing",
+    # New patterns for expanded coverage
+    frozenset({"control_flow_complexity", "resource_consumption"}): "gas_complexity_dos",
+    frozenset({"arithmetic_boundary", "data_ingestion"}): "arithmetic_bound_violation",
+    frozenset({"temporal_constraint", "authorization"}): "frontrun_vulnerability",
+    frozenset({"temporal_constraint", "external_interaction"}): "frontrun_vulnerability",
+    frozenset({"entropy_reuse", "control_flow"}): "randomness_manipulation",
+    frozenset({"entropy_source", "control_flow"}): "randomness_manipulation",
 }
 
 

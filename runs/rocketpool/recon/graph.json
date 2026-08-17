@@ -1,0 +1,136 @@
+{
+  "edges": [
+    {
+      "fact_ids": [],
+      "id": "edge:1214059c0511ff3a",
+      "properties": {},
+      "source": "node:26b9beafaf1ff71a",
+      "status": "observed",
+      "target": "node:62792f16acbbc9e1",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:3b61b71376de9fb0",
+      "properties": {},
+      "source": "node:26b9beafaf1ff71a",
+      "status": "observed",
+      "target": "node:2f86be1234f719e2",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:49e997f104265279",
+      "properties": {},
+      "source": "node:26b9beafaf1ff71a",
+      "status": "observed",
+      "target": "node:054972d093cb7d3e",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:7187a5cc5eb98bfd",
+      "properties": {},
+      "source": "node:26b9beafaf1ff71a",
+      "status": "observed",
+      "target": "node:0de40fe1148075ce",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:7ecbf994cf43e8db",
+      "properties": {},
+      "source": "node:26b9beafaf1ff71a",
+      "status": "observed",
+      "target": "node:2455014f064dd95c",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:ef4e9b2962e09f94",
+      "properties": {},
+      "source": "node:26b9beafaf1ff71a",
+      "status": "observed",
+      "target": "node:6b7075c150c19815",
+      "type": "DECLARES"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "node:054972d093cb7d3e",
+      "kind": "function",
+      "label": "getEnabled",
+      "properties": {
+        "kind": "function",
+        "signature": "getEnabled()",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:0de40fe1148075ce",
+      "kind": "function",
+      "label": "register",
+      "properties": {
+        "kind": "function",
+        "signature": "register(address,bool)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:2455014f064dd95c",
+      "kind": "function",
+      "label": "getClaimRewardsPerc",
+      "properties": {
+        "kind": "function",
+        "signature": "getClaimRewardsPerc(address)",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:26b9beafaf1ff71a",
+      "kind": "contract",
+      "label": "RocketClaimNodeInterface",
+      "properties": {
+        "contract_kind": "interface",
+        "file": "contracts/interface/rewards/claims/RocketClaimNodeInterface.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:2f86be1234f719e2",
+      "kind": "function",
+      "label": "getClaimRewardsAmount",
+      "properties": {
+        "kind": "function",
+        "signature": "getClaimRewardsAmount(address)",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:62792f16acbbc9e1",
+      "kind": "function",
+      "label": "getClaimPossible",
+      "properties": {
+        "kind": "function",
+        "signature": "getClaimPossible(address)",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:6b7075c150c19815",
+      "kind": "function",
+      "label": "claim",
+      "properties": {
+        "kind": "function",
+        "signature": "claim()",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    }
+  ]
+}

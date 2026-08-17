@@ -364,6 +364,7 @@ def run(
         capability.derive_capabilities(ctx)
         relationships.derive_role_privilege_facts(ctx)
         relationships.derive_relationship_chains(ctx)
+        relationships.derive_frontrun_vulnerability_facts(ctx)
         _record_phase("capability_and_relationship_derivation", t_phase)
 
     except _PipelineTimeout:

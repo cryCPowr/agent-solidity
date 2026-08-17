@@ -32,6 +32,16 @@ from .hypothesis import generate_hypotheses
 from .prioritization import prioritize_all
 from .evidence import EvidenceTier
 
+# Investigation queue order: strongest priority band first, then
+# deterministic by hypothesis id. The queue ranks security-relevant
+# reasoning (multi-stage compositions) above the volume of weak signals.
+_PRIORITY_BAND_ORDER = {
+    "very_high_interest": 0,
+    "high_interest": 1,
+    "medium_interest": 2,
+    "low_interest": 3,
+}
+
 
 def write_threat_output(
     recon: loader.ReconArtifact,
@@ -46,6 +56,9 @@ def write_threat_output(
     surfaces = build_surfaces(recon)
     invariants = generate_invariants(recon)
     hypotheses = prioritize_all(generate_hypotheses(recon, invariants), recon)
+    hypotheses.sort(key=lambda h: (
+        _PRIORITY_BAND_ORDER.get(h.priority, 99), h.hypothesis_id,
+    ))
 
     # Map invariants for reference
     inv_map = {inv.id: inv for inv in invariants}
@@ -108,6 +121,13 @@ def write_threat_output(
         "hypotheses_by_evidence_tier": {
             t: sum(1 for h in hypotheses if h.evidence_tier == t)
             for t in EvidenceTier.all()
+        },
+        "security_chains_by_composition_strength": {
+            s: sum(
+                1 for h in hypotheses
+                if h.category == "security_chain" and h.composition_strength == s
+            )
+            for s in ("STRUCTURAL", "SECURITY_RELEVANT", "STRONG_SECURITY_CHAIN")
         },
         "hypotheses_by_category": {
             c: sum(1 for h in hypotheses if h.category == c)

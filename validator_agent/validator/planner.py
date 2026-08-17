@@ -1,0 +1,123 @@
+"""Pre-flight planning: can this validator_plan be executed at all?
+
+Static checks against the attack record itself (no code execution):
+  - the plan is structurally complete (entry, setup, confirm/reject)
+  - an executable backend is available (forge on PATH when needed)
+  - a repo-specific setup harness exists (supplied as DATA; the engine
+    never generates protocol deployments itself)
+
+Result: READY or BLOCKED_NO_HARNESS with the exact reason. BLOCKED runs
+produce INCONCLUSIVE verdicts -- never REJECT (a missing harness is not
+evidence against the hypothesis).
+"""
+
+from __future__ import annotations
+
+import os
+import re
+import shutil
+from typing import Any
+
+from .model import BLOCKED_NO_HARNESS, READY
+
+
+def preflight(attack: dict[str, Any], repo_dir: str, harness_dir: str) -> dict[str, Any]:
+    checks: dict[str, Any] = {"status": READY, "reasons": []}
+
+    plan = attack.get("validator_plan") or {}
+    for field in ("functions_to_test", "attacker_setup", "confirm_if", "reject_if"):
+        if not plan.get(field):
+            checks["status"] = BLOCKED_NO_HARNESS
+            checks["reasons"].append(f"plan field missing/empty: {field}")
+
+    if not repo_dir or not os.path.isdir(repo_dir):
+        checks["status"] = BLOCKED_NO_HARNESS
+        checks["reasons"].append(f"repository directory not found: {repo_dir!r}")
+        return checks
+
+    if not shutil.which("forge"):
+        checks["status"] = BLOCKED_NO_HARNESS
+        checks["reasons"].append("forge not on PATH (foundry required for execution)")
+
+    # the setup harness is repo-specific data: a Solidity file implementing
+    # IProtocolHarness, selected by the root contract's file key so the
+    # engine stays name-agnostic
+    harness = find_harness(attack, harness_dir)
+    if harness is None:
+        checks["status"] = BLOCKED_NO_HARNESS
+        checks["reasons"].append(
+            "no setup harness found for this protocol: supply a Solidity "
+            "contract implementing IProtocolHarness under the harness "
+            "directory (see generated scaffold)"
+        )
+    checks["harness"] = harness
+    return checks
+
+
+def find_harness(attack: dict[str, Any], harness_dir: str | None):
+    """Select the setup harness for an attack.
+
+    Precision rule: harness selection is FUNCTION-scoped first. A
+    contract-level harness's performAttack implements ONE specific attack
+    path; validating a different root function through it would answer
+    the harness's path, not the attack's. Lookup order:
+
+      1. <contract>__<function>.sol   (function-scoped harness)
+      2. <contract>.sol               (contract-scoped fallback -- the
+                                       attack agent's dedup keeps one root
+                                       exploit per contract in the top of
+                                       the queue, so this stays defensible
+                                       for the FIRST attack of a contract)
+    """
+    if not harness_dir or not os.path.isdir(harness_dir):
+        return None
+    key = root_contract_key(attack)
+    if not key:
+        return None
+    fn_name = root_function_name(attack)
+    candidates = []
+    if fn_name:
+        candidates.append(f"{key}__{fn_name}.sol")
+    candidates.append(f"{key}.sol")
+    scopes = (["function", "contract"] if len(candidates) == 2
+              else ["contract"])
+    for name, scope in zip(candidates, scopes):
+        candidate = os.path.join(harness_dir, name)
+        if os.path.exists(candidate):
+            with open(candidate, encoding="utf-8") as f:
+                source = f.read()
+            return {"path": candidate,
+                    "contract": _main_contract(source, key),
+                    "scope": scope,
+                    "source": source}
+    return None
+
+
+def root_function_name(attack: dict[str, Any]) -> str:
+    """Function segment of the root fn-key ('...::claimWinnings#12' ->
+    'claimWinnings')."""
+    root = attack.get("root_function", "")
+    if "::" not in root:
+        return ""
+    tail = root.split("::", 1)[1]
+    return tail.split("#")[0].strip()
+
+
+def root_contract_key(attack: dict[str, Any]) -> str:
+    """Deterministic, name-derived key for the root function's contract.
+
+    Uses the fn-key path (e.g. 'contracts/X.sol#12') purely to SELECT the
+    supplied harness file -- never inside engine logic.
+    """
+    root = attack.get("root_function", "")
+    return root.split("::")[0].split("#")[0].replace("/", "_").replace(".", "_") if root else ""
+
+
+def _main_contract(source: str, key: str) -> str:
+    """Main harness contract name (first real declaration: `contract X {`
+    or `contract X is ...`; ignores mentions inside comments/strings)."""
+    match = re.search(
+        r"contract\s+([A-Za-z_][A-Za-z0-9_]*)\s*(?:is\b|\{)",
+        source,
+    )
+    return match.group(1) if match else key

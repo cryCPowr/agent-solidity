@@ -151,6 +151,8 @@ def analyze_function(ctx: ProjectContext, cu: ContractUnit, fu: FunctionUnit) ->
     _emit_events_errors_usage(ctx, cu, fu, fnode_id)
     _emit_special_features(ctx, cu, fu, fnode_id)
     _emit_arithmetic_operations(ctx, cu, fu, fnode_id)
+    _emit_loop_complexity(ctx, cu, fu, fnode_id)
+    _emit_randomness_patterns(ctx, cu, fu, fnode_id)
     _emit_expression_origin_chains(ctx, cu, fu, fnode_id, local_scope, visible_state_vars)
 
 
@@ -1124,6 +1126,201 @@ def _emit_arithmetic_operations(ctx, cu, fu, fnode_id) -> None:
                 },
                 "observed", confidence="high",
             )
+        
+        # Bit-shift operation fact (for arithmetic bound violation detection)
+        if operator in ("<<", ">>", ">>>"):
+            right_expr = node.get("rightExpression") or {}
+            shift_source = _classify_operand_source(right_expr)
+            _emit_fact(
+                ctx, fu, "bitshift_operation", src_ref, evid,
+                {"function": fu.key},
+                {
+                    "operator": operator,
+                    "operand": left_text,
+                    "shift_amount": right_text,
+                    "shift_amount_source": shift_source,
+                    "result_type": result_type,
+                    "immediate_consumer": consumer,
+                    "note": (
+                        "Bit-shift operations can cause panic if shift amount exceeds type bounds (255 for uint256)"
+                    ),
+                },
+                "observed", confidence="high",
+            )
+
+
+def _classify_operand_source(node: dict) -> str:
+    """Classify the source of an operand (constant, parameter, state_var, computed)."""
+    if node.get("nodeType") == "Literal":
+        return "constant"
+    if node.get("nodeType") == "Identifier":
+        # Could be parameter, local var, or state var - we mark as parameter-like
+        return "parameter"
+    if node.get("nodeType") == "BinaryOperation":
+        return "computed"
+    # Default for complex expressions
+    return "expression"
+
+
+def _emit_loop_complexity(ctx, cu, fu, fnode_id) -> None:
+    """Extract loop nesting depth and iteration bound dependencies for gas DoS detection.
+    
+    Records structural loop patterns that could lead to excessive gas consumption:
+    - Nested loops (quadratic or worse complexity)
+    - Loops with parameter-dependent bounds (unbounded iteration)
+    
+    This is purely structural observation; no gas consumption claims are made.
+    """
+    # First pass: collect all loops with their AST nodes
+    loops = []
+    for node, parent in ast_utils.walk(fu.body_node):
+        if node.get("nodeType") in ("ForStatement", "WhileStatement", "DoWhileStatement"):
+            loops.append((node, parent))
+    
+    if not loops:
+        return
+    
+    # Build parent map for nesting calculation
+    parent_map = {}
+    for node, parent in ast_utils.walk(fu.body_node):
+        if parent is not None and "id" in node and "id" in parent:
+            parent_map[node["id"]] = parent
+    
+    # Second pass: analyze each loop
+    for loop_node, parent in loops:
+        # Calculate nesting depth
+        depth = 1
+        current = parent_map.get(loop_node.get("id"))
+        while current:
+            if current.get("nodeType") in ("ForStatement", "WhileStatement", "DoWhileStatement"):
+                depth += 1
+            current = parent_map.get(current.get("id"))
+        
+        # Extract iteration bound information
+        bound_type = "unbounded"
+        bound_expr = ""
+        
+        if loop_node.get("nodeType") == "ForStatement":
+            condition = loop_node.get("condition")
+            if condition:
+                bound_expr = _src_text(ctx, fu.file, condition)
+                # Check if condition references parameters or state
+                if condition.get("nodeType") == "BinaryOperation":
+                    right = condition.get("rightExpression") or {}
+                    if right.get("nodeType") == "Identifier":
+                        bound_type = "parameter"  # Could be parameter or state var
+                    elif right.get("nodeType") == "Literal":
+                        bound_type = "constant"
+                    else:
+                        bound_type = "expression"
+        
+        src_ref = ctx.source_ref(fu.file, loop_node)
+        evid = ctx.make_evidence(fu.file, loop_node)
+        
+        _emit_fact(
+            ctx, fu, "loop_nesting_depth", src_ref, evid,
+            {"function": fu.key},
+            {
+                "nesting_level": depth,
+                "loop_type": loop_node.get("nodeType"),
+                "bound_dependency": bound_type,
+                "bound_expression": bound_expr,
+            },
+            "observed", confidence="high",
+        )
+        
+        # Emit derived complexity indicator for high-risk patterns
+        if depth >= 2 or bound_type in ("parameter", "expression"):
+            _emit_fact(
+                ctx, fu, "computational_complexity_indicator", src_ref, evid,
+                {"function": fu.key},
+                {
+                    "pattern": "nested_loop" if depth >= 2 else "parameter_dependent_iteration",
+                    "nesting_level": depth,
+                    "bound_type": bound_type,
+                    "risk_category": "gas_dos_potential",
+                },
+                "derived", confidence="medium",
+            )
+
+
+def _emit_randomness_patterns(ctx, cu, fu, fnode_id) -> None:
+    """Extract randomness source usage patterns for statistical exploit detection.
+    
+    Records usage of predictable on-chain randomness sources:
+    - block.timestamp, block.number, block.difficulty, block.prevrandao
+    - blockhash()
+    
+    Multiple uses in same function may indicate seed reuse vulnerability.
+    This is structural observation; no randomness quality claims are made.
+    """
+    randomness_uses = []
+    
+    for node, parent in ast_utils.walk(fu.body_node):
+        # Check for block.* randomness sources
+        if node.get("nodeType") == "MemberAccess":
+            base = node.get("expression") or {}
+            if base.get("nodeType") == "Identifier" and base.get("name") == "block":
+                member = node.get("memberName")
+                if member in ("timestamp", "number", "difficulty", "prevrandao"):
+                    src_ref = ctx.source_ref(fu.file, node)
+                    evid = ctx.make_evidence(fu.file, node)
+                    source_expr = f"block.{member}"
+                    consumer = _enclosing_use(node, parent)
+                    
+                    _emit_fact(
+                        ctx, fu, "randomness_source_usage", src_ref, evid,
+                        {"function": fu.key},
+                        {
+                            "source": source_expr,
+                            "source_type": "block_environment",
+                            "immediate_consumer": consumer,
+                            "predictability": "high",
+                            "note": "On-chain randomness sources are manipulable by miners/validators",
+                        },
+                        "observed", confidence="high",
+                    )
+                    randomness_uses.append(node)
+        
+        # Check for blockhash() calls
+        if node.get("nodeType") == "FunctionCall":
+            expr = node.get("expression") or {}
+            if expr.get("nodeType") == "Identifier" and expr.get("name") == "blockhash":
+                src_ref = ctx.source_ref(fu.file, node)
+                evid = ctx.make_evidence(fu.file, node)
+                consumer = _enclosing_use(node, parent)
+                
+                _emit_fact(
+                    ctx, fu, "randomness_source_usage", src_ref, evid,
+                    {"function": fu.key},
+                    {
+                        "source": "blockhash",
+                        "source_type": "blockhash_function",
+                        "immediate_consumer": consumer,
+                        "predictability": "high",
+                        "note": "blockhash is predictable and has limited availability (last 256 blocks)",
+                    },
+                    "observed", confidence="high",
+                )
+                randomness_uses.append(node)
+    
+    # If multiple randomness uses detected, emit reuse indicator
+    if len(randomness_uses) > 1:
+        # Use first occurrence for provenance
+        first_node = randomness_uses[0]
+        src_ref = ctx.source_ref(fu.file, first_node)
+        evid = ctx.make_evidence(fu.file, first_node)
+        
+        _emit_fact(
+            ctx, fu, "repeated_randomness_consumer", src_ref, evid,
+            {"function": fu.key},
+            {
+                "usage_count": len(randomness_uses),
+                "pattern": "multiple_draws_same_function",
+                "risk_category": "seed_reuse_potential",
+            },
+            "derived", confidence="medium",
+        )
 
 
 def _emit_decode_encode(

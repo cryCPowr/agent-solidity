@@ -78,7 +78,18 @@
         "priority": {"type": "string", "enum": ["very_high_interest", "high_interest", "medium_interest", "low_interest"]},
         "priority_rationale": {"type": "string"},
         "suggested_next_investigation": {"type": "string"},
-        "evidence_tier": {"type": "string", "enum": ["CO_OCCURRENCE", "RELATIONSHIP_GROUNDED", "ARGUMENT_DEPENDENCY", "GRAPH_REACHABILITY"]}
+        "evidence_tier": {"type": "string", "enum": ["CO_OCCURRENCE", "RELATIONSHIP_GROUNDED", "ARGUMENT_DEPENDENCY", "GRAPH_REACHABILITY"]},
+        "control_provenance": {"type": "string", "enum": ["", "PROVEN", "INFERRED", "UNKNOWN"]},
+        "composition_strength": {"type": "string", "enum": ["", "STRUCTURAL", "SECURITY_RELEVANT", "STRONG_SECURITY_CHAIN"]},
+        "chain": {"type": "array", "items": {"type": "object", "properties": {
+            "stage": {"type": "string"},
+            "description": {"type": "string"},
+            "fact_ids": {"type": "array", "items": {"type": "string"}},
+            "status": {"type": "string", "enum": ["proven", "inferred", "observed", "uncertain"]},
+            "linkage": {"type": "string", "enum": ["asset_flow_linked", "dataflow_linked", "post_call_derived", "adjacent_only", "flow_linked", "authorization_grant", "validation_gap"]},
+            "grade": {"type": "string", "enum": ["PROVEN", "STRUCTURALLY_INDICATED", "POSSIBLE"]},
+            "weak_signal": {"type": "boolean"}
+        }}}
       },
       "required": ["hypothesis_id", "category", "statement", "actor", "observed_facts", "priority", "priority_rationale", "suggested_next_investigation"]
     }

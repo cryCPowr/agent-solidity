@@ -1,0 +1,25 @@
+{
+  "actor_count": 2,
+  "trust_boundary_count": 1,
+  "surface_count": 0,
+  "invariant_count": 0,
+  "hypothesis_count": 0,
+  "hypotheses_by_priority": {
+    "very_high_interest": 0,
+    "high_interest": 0,
+    "medium_interest": 0,
+    "low_interest": 0
+  },
+  "hypotheses_by_evidence_tier": {
+    "CO_OCCURRENCE": 0,
+    "RELATIONSHIP_GROUNDED": 0,
+    "ARGUMENT_DEPENDENCY": 0,
+    "GRAPH_REACHABILITY": 0
+  },
+  "security_chains_by_composition_strength": {
+    "STRUCTURAL": 0,
+    "SECURITY_RELEVANT": 0,
+    "STRONG_SECURITY_CHAIN": 0
+  },
+  "hypotheses_by_category": {}
+}

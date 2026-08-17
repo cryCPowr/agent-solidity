@@ -124,6 +124,7 @@ def test_non_privileged_function_does_not_create_excessive_hypotheses(artifacts)
             "DoS_griefing", "upgrade_risk", "economic_manipulation",
             "initialization_vulnerability", "flash_loan_sensitivity",
             "novel_composition",
+            "security_chain",  # generic multi-stage composition (security_chains.py)
         )
 
 

@@ -487,3 +487,92 @@ def derive_relationship_chains(ctx: ProjectContext) -> None:
                     extraction_method="ast+heuristic",
                 )
             )
+
+
+def derive_frontrun_vulnerability_facts(ctx: ProjectContext) -> None:
+    """Detect state-dependent constraints vulnerable to frontrunning (F-112 pattern).
+    
+    Identifies functions with require/revert conditions that depend on mutable state,
+    combined with external visibility - a pattern vulnerable to MEV/frontrunning attacks.
+    
+    This is purely structural observation; no exploit scenario is claimed.
+    """
+    for fu in ctx.function_by_key.values():
+        # Only analyze external/public functions (frontrun surface)
+        if fu.visibility not in ("external", "public"):
+            continue
+        
+        # Find require statements in this function
+        require_facts = [
+            f for f in ctx.facts
+            if f.type == "require_statement" and f.subject.get("function") == fu.key
+        ]
+        
+        # Find state reads in this function
+        state_read_facts = [
+            f for f in ctx.facts
+            if f.type == "state_read" and f.subject.get("function") == fu.key
+        ]
+        
+        # Find state writes in this function (to identify functions that manipulate state)
+        state_write_facts = [
+            f for f in ctx.facts
+            if f.type == "state_write" and f.subject.get("function") == fu.key
+        ]
+        
+        if not require_facts or not state_read_facts:
+            continue
+        
+        # For each require, check if it references mutable state
+        for req_fact in require_facts:
+            condition = req_fact.properties.get("condition", "")
+            
+            # Check if any state variable appears in condition
+            # (simple heuristic: if function reads state and has requires, they likely interact)
+            if state_read_facts:
+                ctx.add_fact(
+                    Fact(
+                        id=ids.fact_id("state_dependent_constraint", fu.file, req_fact.id),
+                        type="state_dependent_constraint",
+                        status="derived",
+                        subject={"function": fu.key},
+                        properties={
+                            "constraint_expression": condition,
+                            "visibility": fu.visibility,
+                            "state_dependencies": len(state_read_facts),
+                            "mutable_state_dependency": True,
+                            "certainty": "INFERENCE",
+                        },
+                        source=req_fact.source,
+                        evidence=req_fact.evidence,
+                        confidence="medium",
+                        extraction_method="ast+heuristic",
+                    )
+                )
+        
+        # If function has both state reads in requires AND state writes available elsewhere,
+        # emit MEV exposure indicator
+        if require_facts and state_read_facts and len(state_write_facts) > 0:
+            # Use first require for provenance
+            first_req = require_facts[0]
+            ctx.add_fact(
+                Fact(
+                    id=ids.fact_id("mev_exposure_indicator", fu.file, fu.ast_id),
+                    type="mev_exposure_indicator",
+                    status="derived",
+                    subject={"function": fu.key},
+                    properties={
+                        "visibility": fu.visibility,
+                        "constraint_count": len(require_facts),
+                        "state_read_count": len(state_read_facts),
+                        "state_write_count": len(state_write_facts),
+                        "frontrun_risk": "high" if fu.visibility == "external" else "medium",
+                        "pattern": "state_dependent_external_function",
+                        "certainty": "HYPOTHESIS",
+                    },
+                    source=first_req.source,
+                    evidence=first_req.evidence,
+                    confidence="medium",
+                    extraction_method="ast+heuristic",
+                )
+            )

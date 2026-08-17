@@ -1,51 +1,78 @@
-# Minus — Recon
+RECON
 
-## Recon Gate: Code4rena Jackpot
+Gate status
 
-Status gate: **PASS**
+Recon sudah menghasilkan protocol model / security-relevant artifacts yang cukup untuk diteruskan ke Threat.
 
-Recon berhasil menganalisis repo Jackpot secara penuh:
-- 61 files analyzed
-- 0 files failed
-- 10,189 facts
-- 1,214 graph nodes
-- 2,079 graph edges
-- compiler resolved/invoked: 0.8.28
-- `JackpotBridgeManager`, `Jackpot`, dan `JackpotTicketNFT` terdeteksi
-- `_bridgeFunds` berhasil diekstrak beserta dynamic low-level call, approval, dataflow, dan post-call balance check
+Kekurangan Recon yang perlu dicatat
 
-## Kekurangan yang masih terlihat
+Coverage belum identik dengan semantic completeness. Recon kuat di AST, inventory, call graph, state read/write, external interaction, dataflow, capability, dan provenance, tetapi hasil statis belum otomatis memahami apakah sebuah hubungan benar-benar security-relevant pada runtime.
 
-### 1. Callback capability belum terdeteksi pada benchmark Jackpot
+Dynamic behavior masih punya batas static analysis. Callback, hook, runtime dispatch, delegatecall/call target resolution, dan perilaku kontrak eksternal belum selalu bisa dipastikan hanya dari fakta statis.
 
-**Evidence:** `summary.json` menghasilkan `callback_capable_call_count: 0`, walaupun target finding warden bergantung pada jalur `safeTransferFrom -> IERC721Receiver.onERC721Received`.
+Authorization semantics belum sepenuhnya diputuskan oleh Recon. Recon dapat menunjukkan caller/input provenance, tetapi siapa yang secara semantik berhak melakukan aksi tertentu tetap perlu interpretasi Threat/Attack/Validator.
 
-**Dampak:** Recon sudah menyediakan primitive yang diperlukan Threat (dynamic call, approval, asset operation, graph, dan post-call balance check), tetapi belum memberikan primitive callback yang eksplisit untuk jalur exploit tersebut.
+Business/economic meaning belum lengkap. Asset movement dan state mutation bisa ditemukan, tetapi hubungan akhirnya dengan economic loss, unfair allocation, insolvency, griefing, atau broken protocol invariant membutuhkan reasoning lanjutan.
 
-**Kepemilikan perbaikan:** Belum tentu bug Recon. Ini harus diuji di Threat terlebih dahulu. Bila Threat gagal hanya karena callback primitive tidak tersedia, baru evaluasi apakah Recon perlu memperkaya callback analysis.
+Invariant masih berupa kandidat bila tidak benar-benar diturunkan dari protocol semantics. Jangan menganggap invariant candidate sebagai invariant yang sudah terbukti.
 
-### 2. Banyak call-argument dataflow masih unresolved
+Tidak semua target yang tampak dinamis adalah attacker-controlled. Provenance terhadap parameter/argument perlu dibedakan dari sekadar adanya external call atau dynamic-looking expression.
 
-**Evidence:** `summary.json` menunjukkan `analysis_coverage.unresolved.call_argument_dataflows: 237` dan terdapat `call_unresolved: 73`.
+Dependencies eksternal / library / mocks dapat memperbesar noise. Model perlu membedakan production code, test/mock code, dependency/library code, dan helper code agar Threat tidak menganggap semuanya sebagai attack surface yang setara.
 
-**Dampak:** Sebagian hubungan parameter -> argument -> sink belum dapat dibuktikan secara penuh. Ini dapat membatasi reasoning Threat/Attack pada kontrak yang memiliki ekspresi argument kompleks.
+Recon bukan attack proof. Output Recon adalah evidence/model untuk agent berikutnya, bukan konfirmasi vulnerability.
 
-**Kepemilikan perbaikan:** Rekan ini tetap menjadi limitation Recon dan dapat diprioritaskan setelah benchmark Threat/Attack menunjukkan bahwa unresolved dataflow tersebut benar-benar memblokir finding.
+THREAT
 
-### 3. Beberapa origin/dataflow pada `_bridgeFunds` masih berstatus unknown/heuristic
+Gate status
 
-**Evidence:** untuk `_bridgeFunds`, beberapa fact seperti origin `_bridgeDetails.to`, `_bridgeDetails.data`, dan `balanceOf(address(this))` masih memiliki `root_kind: unresolved` atau catatan `unsupported_expression_shape`.
+Threat sekarang mampu menyusun hypothesis dari kombinasi:
+untrusted influence -> argument propagation -> external execution -> downstream opportunity -> asset/state effect -> invariant concern
 
-**Dampak:** Recon dapat mengetahui bahwa field tersebut dipakai, tetapi belum selalu dapat membuktikan asal nilai secara granular sampai root caller/field source.
+Threat juga sudah memiliki grading seperti:
 
-**Kepemilikan perbaikan:** Jangan patch sekarang. Catat sebagai limitation yang akan dipakai untuk menentukan apakah Threat membutuhkan dataflow yang lebih dalam.
+STRUCTURAL
 
-## Gate decision
+SECURITY_RELEVANT
 
-Recon **cukup kuat untuk diteruskan ke Threat**. Kekurangan di atas dicatat sebagai backlog dan **tidak menjadi alasan untuk memblokir Threat**, kecuali benchmark Threat membuktikan bahwa salah satu limitation tersebut mencegah rekonstruksi root cause.
+STRONG_SECURITY_CHAIN
 
-## Next gate
+Kekurangan Threat yang masih perlu dibawa ke gate berikutnya
 
-Lanjutkan ke **Threat Agent** menggunakan artifact:
+Threat masih menghasilkan hypothesis, bukan confirmed finding.
 
-`/tmp/recon-jackpot-v1a`
+Banyak hypothesis masih berhenti pada POSSIBLE / STRUCTURALLY_INDICATED karena runtime callback/target behavior belum bisa dibuktikan static.
+
+Dynamic target tidak selalu terbukti benar-benar attacker-controlled.
+
+Adjacency atau post-call-derived effect tidak boleh dianggap sebagai causal exploit proof.
+
+INV-* masih candidate invariant, bukan invariant yang confirmed.
+
+Banyak duplicate / overlapping hypotheses dapat menunjuk ke akar masalah yang sama.
+
+Mock, tester, helper, dan dependency code masih dapat menghasilkan noise; production relevance harus diverifikasi.
+
+Threat belum membuktikan exploitability, exact loss, privilege boundary bypass, griefing feasibility, atau economic consequence.
+
+Threat belum menghasilkan PoC, trace runtime, fork reproduction, atau test result.
+
+Threat belum melakukan final deduplication berdasarkan root cause / exploit path.
+
+Output Threat harus diperlakukan sebagai input Attack Agent, bukan langsung sebagai finding.
+
+Rule gate
+
+Threat lolos untuk diteruskan ketika:
+
+provenance cukup jelas untuk dianalisis,
+
+security chain dapat dibentuk,
+
+asset/state/invariant relationship dapat ditunjukkan,
+
+uncertainty diberi label eksplisit,
+
+dan hypothesis memiliki evidence/fact IDs yang dapat ditelusuri.
+
+Threat belum dianggap confirmed vulnerability sampai Attack + Validator membuktikannya.

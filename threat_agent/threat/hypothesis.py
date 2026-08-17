@@ -23,9 +23,14 @@ functions below):
 - initialization_vulnerability
 - flash_loan_sensitivity
 
-Plus one open-set category produced by the generic composition layer
-(composition.py) for signal combinations that don't match any named lens:
-- novel_composition
+Plus two open-set layers:
+- the generic composition layer (composition.py) for signal combinations
+  that don't match any named lens:
+    - novel_composition (bucket co-occurrence observations)
+- the generic security-chain layer (security_chains.py) for multi-stage
+  influence -> propagation -> external execution -> effect -> invariant
+  compositions backed by relation evidence:
+    - security_chain
 
 Architecture
 ------------
@@ -66,7 +71,12 @@ HYPOTHESIS_CATEGORIES = [
     "economic_manipulation",
     "initialization_vulnerability",
     "flash_loan_sensitivity",
+    "gas_dos",
+    "arithmetic_bound_violation",
+    "frontrun_vulnerability",
+    "randomness_manipulation",
     "novel_composition",
+    "security_chain",
 ]
 
 
@@ -89,6 +99,15 @@ class ThreatHypothesis:
     suggested_next_investigation: str = ""
     evidence_tier: str = ""  # canonical tier from threat/evidence.py:
     # "CO_OCCURRENCE" | "RELATIONSHIP_GROUNDED" | "ARGUMENT_DEPENDENCY" | "GRAPH_REACHABILITY"
+    # Generic security-chain provenance (see provenance.py); empty for
+    # non-chain hypotheses.
+    control_provenance: str = ""  # "PROVEN" | "INFERRED" | "UNKNOWN" | ""
+    # Generic security-chain composition strength (security_chains.py):
+    # "STRUCTURAL" | "SECURITY_RELEVANT" | "STRONG_SECURITY_CHAIN" | ""
+    composition_strength: str = ""
+    # Ordered chain stages (security_chains.py): dicts with stage /
+    # description / fact_ids / status. Empty for non-chain hypotheses.
+    chain: list[dict[str, Any]] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -108,6 +127,9 @@ class ThreatHypothesis:
             "priority_rationale": self.priority_rationale,
             "suggested_next_investigation": self.suggested_next_investigation,
             "evidence_tier": self.evidence_tier,
+            "control_provenance": self.control_provenance,
+            "composition_strength": self.composition_strength,
+            "chain": self.chain,
         }
 
 
@@ -175,12 +197,31 @@ def generate_hypotheses(
     # --- Category 8: Economic Manipulation ---
     _generate_economic_hypotheses(recon, hypotheses, _next_id, invariants)
 
+    # --- Category 9: Gas DoS ---
+    _generate_gas_dos_hypotheses(recon, hypotheses, _next_id, invariants)
+
+    # --- Category 10: Arithmetic Bound Violation ---
+    _generate_arithmetic_overflow_hypotheses(recon, hypotheses, _next_id, invariants)
+
+    # --- Category 11: Frontrun Vulnerability ---
+    _generate_frontrun_hypotheses(recon, hypotheses, _next_id, invariants)
+
+    # --- Category 12: Randomness Manipulation ---
+    _generate_randomness_bias_hypotheses(recon, hypotheses, _next_id, invariants)
+
     # --- Generic composition layer: catches signal combinations that don't
     # match any named lens above (see composition.py). Runs after the
     # lenses so lens statements win ties during dedup below. ---
     from .composition import generate_composed_hypotheses  # deferred import
 
     hypotheses.extend(generate_composed_hypotheses(recon, invariants, _next_id))
+
+    # --- Generic security-chain layer (security_chains.py): multi-stage
+    # influence -> propagation -> external execution -> effect -> invariant
+    # compositions, only where relation evidence links the stages. ---
+    from .security_chains import compose_security_chains  # deferred import
+
+    hypotheses.extend(compose_security_chains(recon, invariants, _next_id))
 
     # --- Assign deterministic content-derived IDs (Problem 4) ---
     for h in hypotheses:
@@ -555,11 +596,43 @@ def _generate_cross_contract_hypotheses(
     """H-00X: Cross-contract trust chains.
 
     Focus: CALLS edges between contracts that form chains.
+
+    Selectivity (threat-perbaikan.md): graph adjacency alone is not
+    semantic dependency. A dynamic cross-contract call only stays a
+    security-relevant trust hypothesis when fact-level influence evidence
+    (parameter-rooted flows, relationship chains, or caller-controlled
+    input origins) links the calling function to the interaction;
+    otherwise the hypothesis is emitted as a structural observation with
+    UNKNOWN control provenance, which the prioritizer keeps out of the
+    high-interest bands.
     """
-    # Find CALLS edges between contracts
+    from .provenance import build_control_profiles, ControlProvenance  # deferred: avoid import cycle
+    from .security_chains import (  # deferred: avoid import cycle
+        LINKAGE_ASSET_FLOW, LINKAGE_DATAFLOW, linked_downstream_facts,
+        grade_composition,
+    )
+
     calls = [e for e in recon.graph.edges if e.get("type") == "CALLS"]
     if not calls:
         return
+
+    control_profiles = build_control_profiles(recon)
+    # Recon's composed caller-influence proofs are per interaction fact
+    # (a step's basis_facts point at the exact dynamic call), so map each
+    # interaction fact to the strongest certainty a relationship chain
+    # asserts over it. This is call-specific linkage, not function-level
+    # co-occurrence.
+    basis_certainty: dict[str, str] = {}
+    _cert_rank = {"FACT": 2, "INFERENCE": 1, "HYPOTHESIS": 0}
+    for rel in recon.facts_obj.by_type.get("security_relationship_chain", []):
+        cert = (rel.get("properties") or {}).get("overall_certainty", "")
+        for step in (rel.get("properties") or {}).get("steps", []):
+            if not isinstance(step, dict):
+                continue
+            for fid in step.get("basis_facts") or []:
+                prev = basis_certainty.get(fid, "")
+                if _cert_rank.get(cert, -1) > _cert_rank.get(prev, -1):
+                    basis_certainty[fid] = cert
 
     for edge in calls:
         src_id = edge.get("source", "")
@@ -576,31 +649,114 @@ def _generate_cross_contract_hypotheses(
         props = edge.get("properties") or {}
         if props.get("target_status") == "dynamic":
             observed = edge.get("fact_ids") or []
+            # Resolve the calling function from the edge's own facts.
+            src_fn = next(
+                (
+                    (recon.facts_obj.by_id.get(fid) or {}).get("subject", {}).get(
+                        "function"
+                    ) or (recon.facts_obj.by_id.get(fid) or {}).get("subject", {}).get("caller")
+                    for fid in observed
+                ),
+                "",
+            )
+            profile = control_profiles.get(src_fn)
+            # Call-specific influence evidence: a relationship chain whose
+            # basis facts cover THIS interaction.
+            edge_cert = max(
+                (_cert_rank.get(basis_certainty.get(fid, ""), -1) for fid in observed),
+                default=-1,
+            )
+            if edge_cert >= _cert_rank["FACT"]:
+                provenance = ControlProvenance.PROVEN
+            elif edge_cert >= _cert_rank["INFERENCE"]:
+                provenance = ControlProvenance.INFERRED
+            else:
+                provenance = (
+                    profile.provenance if profile is not None else ControlProvenance.UNKNOWN
+                )
+            propagation = provenance is ControlProvenance.PROVEN
+            linked_fx = (
+                linked_downstream_facts(profile)[0] if profile is not None else []
+            )
+            linked_linkage = None
+            if linked_fx:
+                from .security_chains import classify_downstream_fact, _chain_identity
+                levels = {
+                    classify_downstream_fact(f, _chain_identity(profile))
+                    for f in linked_fx
+                }
+                linked_linkage = (
+                    LINKAGE_ASSET_FLOW if LINKAGE_ASSET_FLOW in levels
+                    else LINKAGE_DATAFLOW
+                )
+            strength = grade_composition(
+                provenance,
+                propagation=propagation,
+                sensitive_execution=True,  # the edge IS a dynamic execution path
+                authority=bool(profile is not None and profile.has_sensitive_capability),
+                effect_linkage=linked_linkage,
+                # no callback model at edge level: the lens can grade at
+                # most SECURITY_RELEVANT; STRONG chains are owned by the
+                # chain layer.
+                downstream_grade=None,
+            )
+            if strength != "STRUCTURAL":
+                statement = (
+                    f"Contract {src_contract} calls dynamic target in {tgt_contract}. "
+                    f"Trust chain: {src_contract} -> dynamic -> {tgt_contract}. "
+                    f"Recon's relationship evidence over this specific call "
+                    f"asserts caller influence at {provenance.value} certainty, "
+                    f"so the dynamic target is an unverified execution path "
+                    f"(composition strength {strength})."
+                )
+                uncertainty = (
+                    "Whether the target is actually user-controlled depends "
+                    "on the dataflow from the function's inputs to the call "
+                    "target expression."
+                )
+                priority = "medium_interest"
+                rationale = (
+                    f"Dynamic cross-contract call with call-specific "
+                    f"influence evidence (composition strength {strength})"
+                )
+            else:
+                statement = (
+                    f"Contract {src_contract} calls dynamic target in {tgt_contract}. "
+                    f"Trust chain: {src_contract} -> dynamic -> {tgt_contract}. "
+                    f"This is structural graph adjacency: no fact-level "
+                    f"influence evidence ties any caller to this specific "
+                    f"dynamic call, so it is recorded as a structural "
+                    f"observation, not a security-relevant composition."
+                )
+                uncertainty = (
+                    "Whether the target is user-controlled is unknown; no "
+                    "dataflow or relationship evidence connects caller "
+                    "influence to this call."
+                )
+                priority = "low_interest"
+                rationale = "Structural graph adjacency without semantic dependency"
             h = ThreatHypothesis(
                 hypothesis_id=next_id(),
                 category="cross_contract_trust",
-                statement=(
-                    f"Contract {src_contract} calls dynamic target in {tgt_contract}. "
-                    f"Trust chain: {src_contract} -> dynamic -> {tgt_contract}. "
-                    f"If the target is user-controlled, this may create an "
-                    f"unverified execution path."
-                ),
+                statement=statement,
                 actor="external_user",
                 observed_facts=observed,
                 graph_nodes=[src_id, tgt_id],
                 graph_edges=[edge.get("id", "")],
-                affected_functions=[],
+                affected_functions=[src_fn] if src_fn else [],
                 affected_assets=["cross-contract assets"],
                 preconditions=[
                     "Target is controlled by untrusted party",
                     "Target has code that can interact with protocol",
                 ],
-                uncertainty="Whether the target is actually user-controlled is unknown.",
+                uncertainty=uncertainty,
                 suggested_next_investigation=(
                     "Trace the dataflow to determine who controls the call target."
                 ),
-                priority="medium_interest",
-                priority_rationale="Dynamic cross-contract call is a trust boundary",
+                priority=priority,
+                priority_rationale=rationale,
+                control_provenance=provenance.value,
+                composition_strength=strength,
             )
             h.evidence_tier = classify_evidence(h.observed_facts, h.graph_nodes, h.graph_edges, recon)
             out.append(h)
@@ -785,3 +941,289 @@ def _contract_for_node(node_id: str, recon: loader.ReconArtifact) -> str:
 
     # Last resort: return opaque id (nothing to parse from hashes)
     return node_id
+
+
+def _generate_gas_dos_hypotheses(
+    recon: loader.ReconArtifact,
+    out: list[ThreatHypothesis],
+    next_id,
+    invariants: list[InvariantCandidate],
+) -> None:
+    """Detect unbounded gas consumption patterns (F-59 pattern).
+    
+    Looks for nested loops with parameter-dependent bounds.
+    Unlike other categories, this does NOT filter by visibility because:
+    - Private functions with expensive computation can cause DoS via public callers
+    - Gas complexity is transitive through call chain
+    """
+    # Find computational complexity indicators
+    complexity_facts = recon.facts_obj.by_type.get("computational_complexity_indicator", [])
+    
+    for comp_fact in complexity_facts:
+        fn_key = comp_fact["subject"].get("function", "")
+        if not fn_key:
+            continue
+        
+        # Find related loop facts
+        fn_facts = _find_function_facts(recon, fn_key)
+        loop_facts = [
+            f for f in fn_facts
+            if f["type"] == "loop_nesting_depth"
+        ]
+        
+        nesting_level = comp_fact["properties"].get("nesting_level", 1)
+        pattern = comp_fact["properties"].get("pattern", "unknown")
+        
+        # Prioritize based on nesting level
+        # Level 3+: very high (matches F-59 _countSubsetMatches)
+        # Level 2: high
+        # Level 1: medium
+        if nesting_level >= 3:
+            priority = "very_high_interest"
+        elif nesting_level >= 2:
+            priority = "high_interest"
+        else:
+            priority = "medium_interest"
+        
+        out.append(
+            ThreatHypothesis(
+                hypothesis_id=next_id(),
+                category="gas_dos",
+                statement=(
+                    f"Function contains {pattern} with nesting level {nesting_level}. "
+                    f"Expensive computation could cause gas exhaustion, potentially exceeding "
+                    f"block gas limit and causing denial of service. "
+                    f"Even private functions are relevant if called by public entry points."
+                ),
+                actor="external_caller",
+                preconditions=[
+                    "Function is reachable (directly or via call chain from external entry)",
+                    "Loop bounds depend on caller-supplied parameters or unbounded state",
+                ],
+                observed_facts=[comp_fact["id"]] + [lf["id"] for lf in loop_facts],
+                graph_nodes=[],
+                graph_edges=[],
+                affected_functions=[fn_key],
+                affected_assets=[],
+                priority=priority,
+                priority_rationale=f"Gas DoS through resource exhaustion (nesting level {nesting_level}, pattern: {pattern})",
+                evidence_tier=classify_evidence(
+                    [comp_fact["id"]] + [lf["id"] for lf in loop_facts],
+                    [],
+                    [],
+                    recon
+                ).name,
+            )
+        )
+
+
+def _generate_arithmetic_overflow_hypotheses(
+    recon: loader.ReconArtifact,
+    out: list[ThreatHypothesis],
+    next_id,
+    invariants: list[InvariantCandidate],
+) -> None:
+    """Detect bit-shift overflow patterns (F-81 pattern).
+    
+    Looks for bit-shift operations with non-constant shift amounts.
+    """
+    # Find bitshift operations
+    bitshift_facts = recon.facts_obj.by_type.get("bitshift_operation", [])
+    
+    for shift_fact in bitshift_facts:
+        shift_source = shift_fact["properties"].get("shift_amount_source", "constant")
+        if shift_source == "constant":
+            continue  # Constants are safe
+        
+        fn_key = shift_fact["subject"].get("function", "")
+        if not fn_key:
+            continue
+        
+        # Check if function is externally callable
+        fn_facts = _find_function_facts(recon, fn_key)
+        vis_fact = next((f for f in fn_facts if f["type"] == "function_visibility"), None)
+        if not vis_fact or vis_fact["properties"].get("visibility") not in ("external", "public"):
+            continue
+        
+        out.append(
+            ThreatHypothesis(
+                hypothesis_id=next_id(),
+                category="arithmetic_bound_violation",
+                statement=(
+                    f"Function performs bit-shift operation with {shift_source} shift amount. "
+                    f"If shift amount exceeds type bounds (255 for uint256), operation will panic. "
+                    f"Attacker could trigger overflow causing protocol lock or undefined behavior."
+                ),
+                actor="external_caller",
+                preconditions=[
+                    "Function is externally callable",
+                    "Shift amount not validated against type bounds",
+                ],
+                observed_facts=[shift_fact["id"]],
+                graph_nodes=[],
+                graph_edges=[],
+                affected_functions=[fn_key],
+                affected_assets=[],
+                priority="high_interest",
+                priority_rationale="Arithmetic panic can lock protocol state",
+                evidence_tier=classify_evidence([shift_fact["id"]], [], [], recon).name,
+            )
+        )
+
+
+def _generate_frontrun_hypotheses(
+    recon: loader.ReconArtifact,
+    out: list[ThreatHypothesis],
+    next_id,
+    invariants: list[InvariantCandidate],
+) -> None:
+    """Detect frontrunnable governance patterns (F-112 pattern).
+    
+    Looks for state-dependent constraints in external functions.
+    """
+    # Find MEV exposure indicators
+    mev_facts = recon.facts_obj.by_type.get("mev_exposure_indicator", [])
+    
+    for mev_fact in mev_facts:
+        fn_key = mev_fact["subject"].get("function", "")
+        if not fn_key:
+            continue
+        
+        # Find related state_dependent_constraint facts
+        fn_facts = _find_function_facts(recon, fn_key)
+        constraint_facts = [
+            f for f in fn_facts
+            if f["type"] == "state_dependent_constraint"
+        ]
+        
+        constraint_count = mev_fact["properties"].get("constraint_count", 0)
+        frontrun_risk = mev_fact["properties"].get("frontrun_risk", "medium")
+        
+        out.append(
+            ThreatHypothesis(
+                hypothesis_id=next_id(),
+                category="frontrun_vulnerability",
+                statement=(
+                    f"Function has {constraint_count} state-dependent constraint(s) vulnerable to frontrunning. "
+                    f"Attacker can observe pending transaction and frontrun with state manipulation, "
+                    f"causing victim transaction to revert or behave unexpectedly (MEV exploitation)."
+                ),
+                actor="mev_searcher",
+                preconditions=[
+                    "Function has require/revert conditions that depend on mutable state",
+                    "State can be manipulated by other external functions",
+                    "Transaction observable in mempool",
+                ],
+                observed_facts=[mev_fact["id"]] + [cf["id"] for cf in constraint_facts],
+                graph_nodes=[],
+                graph_edges=[],
+                affected_functions=[fn_key],
+                affected_assets=[],
+                priority="high_interest" if frontrun_risk == "high" else "medium_interest",
+                priority_rationale="MEV/frontrunning can DoS governance or manipulate outcomes",
+                evidence_tier=classify_evidence(
+                    [mev_fact["id"]] + [cf["id"] for cf in constraint_facts],
+                    [],
+                    [],
+                    recon
+                ).name,
+            )
+        )
+
+
+def _generate_randomness_bias_hypotheses(
+    recon: loader.ReconArtifact,
+    out: list[ThreatHypothesis],
+    next_id,
+    invariants: list[InvariantCandidate],
+) -> None:
+    """Detect randomness reuse patterns (F-262 pattern).
+    
+    Looks for multiple randomness draws from same source in same function.
+    """
+    # Find repeated randomness consumers
+    reuse_facts = recon.facts_obj.by_type.get("repeated_randomness_consumer", [])
+    
+    for reuse_fact in reuse_facts:
+        fn_key = reuse_fact["subject"].get("function", "")
+        if not fn_key:
+            continue
+        
+        # Find related randomness source facts
+        fn_facts = _find_function_facts(recon, fn_key)
+        source_facts = [
+            f for f in fn_facts
+            if f["type"] == "randomness_source_usage"
+        ]
+        
+        usage_count = reuse_fact["properties"].get("usage_count", 0)
+        
+        out.append(
+            ThreatHypothesis(
+                hypothesis_id=next_id(),
+                category="randomness_manipulation",
+                statement=(
+                    f"Function uses randomness source {usage_count} times. "
+                    f"If same seed is reused for multiple independent draws, "
+                    f"attacker can exploit correlation to gain statistical advantage."
+                ),
+                actor="strategic_player",
+                preconditions=[
+                    "Same randomness seed used for multiple draws",
+                    "Draws should be independent but share correlation",
+                    "Attacker can choose inputs that exploit correlation",
+                ],
+                observed_facts=[reuse_fact["id"]] + [sf["id"] for sf in source_facts],
+                graph_nodes=[],
+                graph_edges=[],
+                affected_functions=[fn_key],
+                affected_assets=[],
+                priority="medium_interest",
+                priority_rationale="Statistical bias can provide unfair advantage",
+                evidence_tier=classify_evidence(
+                    [reuse_fact["id"]] + [sf["id"] for sf in source_facts],
+                    [],
+                    [],
+                    recon
+                ).name,
+            )
+        )
+    
+    # Also check for single randomness usage (still noteworthy)
+    single_rand_facts = recon.facts_obj.by_type.get("randomness_source_usage", [])
+    for rand_fact in single_rand_facts:
+        fn_key = rand_fact["subject"].get("function", "")
+        if not fn_key:
+            continue
+        
+        # Skip if already covered by reuse_facts
+        if any(rf["subject"].get("function") == fn_key for rf in reuse_facts):
+            continue
+        
+        source = rand_fact["properties"].get("source", "unknown")
+        predictability = rand_fact["properties"].get("predictability", "medium")
+        
+        if predictability == "high":
+            out.append(
+                ThreatHypothesis(
+                    hypothesis_id=next_id(),
+                    category="randomness_manipulation",
+                    statement=(
+                        f"Function uses predictable randomness source ({source}). "
+                        f"On-chain randomness is manipulable by miners/validators."
+                    ),
+                    actor="miner_validator",
+                    preconditions=[
+                        "Function relies on on-chain randomness for security-critical decision",
+                        "Randomness source is predictable or manipulable",
+                    ],
+                    observed_facts=[rand_fact["id"]],
+                    graph_nodes=[],
+                    graph_edges=[],
+                    affected_functions=[fn_key],
+                    affected_assets=[],
+                    priority="low_interest",
+                    priority_rationale="Predictable randomness - common knowledge issue",
+                    evidence_tier=classify_evidence([rand_fact["id"]], [], [], recon).name,
+                )
+            )

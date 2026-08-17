@@ -1,0 +1,1009 @@
+{
+  "analysis_coverage": {
+    "files_analyzed": 2,
+    "files_failed": 179,
+    "files_partially_analyzed": 0,
+    "unresolved": {
+      "call_argument_dataflows": 0,
+      "event_emissions": 0,
+      "inheritance_bases": 0,
+      "internal_calls": 0
+    }
+  },
+  "asset_operation_count": 0,
+  "authorization_check_count": 0,
+  "callback_capable_call_count": 0,
+  "capabilities": {},
+  "contracts": [
+    {
+      "file": "contracts/interface/rewards/claims/RocketClaimNodeInterface.sol",
+      "is_abstract": false,
+      "key": "contracts/interface/rewards/claims/RocketClaimNodeInterface.sol#38",
+      "kind": "interface",
+      "name": "RocketClaimNodeInterface"
+    }
+  ],
+  "error_count": 0,
+  "eth_transfer_count": 0,
+  "event_count": 0,
+  "external_call_count": 0,
+  "fact_status_counts": {
+    "observed": 34
+  },
+  "fact_type_counts": {
+    "contract_exists": 1,
+    "function_body": 6,
+    "function_exists": 6,
+    "function_mutability": 6,
+    "function_parameter": 5,
+    "function_return": 4,
+    "function_visibility": 6
+  },
+  "function_count": 6,
+  "graph_statistics": {
+    "edge_count": 6,
+    "edges_by_type": {
+      "DECLARES": 6
+    },
+    "node_count": 7,
+    "nodes_by_kind": {
+      "contract": 1,
+      "function": 6
+    }
+  },
+  "interfaces": [
+    {
+      "file": "contracts/interface/rewards/claims/RocketClaimNodeInterface.sol",
+      "key": "contracts/interface/rewards/claims/RocketClaimNodeInterface.sol#38",
+      "name": "RocketClaimNodeInterface"
+    }
+  ],
+  "libraries": [],
+  "state_variable_count": 0,
+  "warnings": [
+    {
+      "duration_seconds": 0.069,
+      "message": "phase duration",
+      "phase": "file_discovery_and_reading"
+    },
+    {
+      "duration_seconds": 0.691,
+      "message": "phase duration",
+      "phase": "dependency_expansion"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/RocketBase.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/RocketStorage.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/RocketVault.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/auction/RocketAuctionManager.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/RocketDAOProposal.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/node/RocketDAONodeTrusted.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/node/RocketDAONodeTrustedActions.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/node/RocketDAONodeTrustedProposals.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/node/RocketDAONodeTrustedUpgrade.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettings.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsMembers.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsMinipool.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsProposals.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/node/settings/RocketDAONodeTrustedSettingsRewards.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/protocol/RocketDAOProtocol.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/protocol/RocketDAOProtocolActions.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/protocol/RocketDAOProtocolProposal.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/protocol/RocketDAOProtocolProposals.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/protocol/RocketDAOProtocolVerifier.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettings.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsAuction.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsDeposit.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsInflation.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsMegapool.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsMinipool.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsNetwork.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsNode.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsProposals.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsRewards.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/protocol/settings/RocketDAOProtocolSettingsSecurity.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/security/RocketDAOSecurity.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/security/RocketDAOSecurityActions.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/security/RocketDAOSecurityProposals.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/dao/security/RocketDAOSecurityUpgrade.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/deposit/RocketDepositPool.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/helper/BeaconStateVerifierMock.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/helper/MegapoolUpgradeHelper.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/helper/PenaltyTest.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/helper/SnapshotTest.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/helper/SnapshotTimeTest.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/helper/StakeHelper.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/helper/StorageHelper.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/megapool/RocketMegapoolDelegate.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/megapool/RocketMegapoolDelegateBase.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/megapool/RocketMegapoolFactory.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/megapool/RocketMegapoolManager.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/megapool/RocketMegapoolPenalties.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/megapool/RocketMegapoolProxy.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/megapool/RocketMegapoolStorageLayout.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/minipool/RocketMinipoolBase.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/minipool/RocketMinipoolBondReducer.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/minipool/RocketMinipoolDelegate.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/minipool/RocketMinipoolFactory.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/minipool/RocketMinipoolManager.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/minipool/RocketMinipoolPenalty.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/minipool/RocketMinipoolQueue.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/minipool/RocketMinipoolStorageLayout.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/network/RocketNetworkBalances.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/network/RocketNetworkFees.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/network/RocketNetworkPenalties.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/network/RocketNetworkPrices.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/network/RocketNetworkRevenues.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/network/RocketNetworkSnapshots.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/network/RocketNetworkSnapshotsTime.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/network/RocketNetworkVoting.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/node/RocketNodeDeposit.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/node/RocketNodeDistributor.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/node/RocketNodeDistributorDelegate.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/node/RocketNodeDistributorFactory.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/node/RocketNodeDistributorStorageLayout.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/node/RocketNodeManager.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/node/RocketNodeStaking.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/rewards/RocketClaimDAO.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/rewards/RocketMerkleDistributorMainnet.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/rewards/RocketRewardsPool.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/rewards/RocketSmoothingPool.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/token/RocketTokenRETH.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/token/RocketTokenRPL.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/util/AddressQueueStorage.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/util/AddressSetStorage.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/util/BeaconStateVerifier.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/util/Context.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/util/ERC20.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/util/ERC20Burnable.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/util/LinkedListStorage.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/util/LinkedListStorageHelper.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/util/SSZ.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/util/SafeERC20.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/util/SafeMath.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/RocketStorageInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/RocketVaultInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/RocketVaultWithdrawerInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/auction/RocketAuctionManagerInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/casper/DepositInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/RocketDAOProposalInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/node/RocketDAONodeTrustedActionsInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/node/RocketDAONodeTrustedInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/node/RocketDAONodeTrustedProposalsInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/node/RocketDAONodeTrustedUpgradeInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsMembersInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsMinipoolInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsProposalsInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/node/settings/RocketDAONodeTrustedSettingsRewardsInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/protocol/RocketDAOProtocolActionsInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/protocol/RocketDAOProtocolInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/protocol/RocketDAOProtocolProposalInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/protocol/RocketDAOProtocolProposalsInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/protocol/RocketDAOProtocolVerifierInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsAuctionInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsDepositInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsInflationInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsMegapoolInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsMinipoolInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsNetworkInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsNodeInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsProposalsInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsRewardsInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/protocol/settings/RocketDAOProtocolSettingsSecurityInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/security/RocketDAOSecurityActionsInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/security/RocketDAOSecurityInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/security/RocketDAOSecurityProposalsInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/dao/security/RocketDAOSecurityUpgradeInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/deposit/RocketDepositPoolInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/megapool/RocketMegapoolDelegateBaseInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/megapool/RocketMegapoolDelegateInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/megapool/RocketMegapoolFactoryInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/megapool/RocketMegapoolInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/megapool/RocketMegapoolManagerInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/megapool/RocketMegapoolPenaltiesInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/megapool/RocketMegapoolProxyInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/minipool/RocketMinipoolBaseInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/minipool/RocketMinipoolBondReducerInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/minipool/RocketMinipoolFactoryInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/minipool/RocketMinipoolInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/minipool/RocketMinipoolManagerInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/minipool/RocketMinipoolPenaltyInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/minipool/RocketMinipoolQueueInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/network/RocketNetworkBalancesInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/network/RocketNetworkFeesInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/network/RocketNetworkPenaltiesInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/network/RocketNetworkPricesInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/network/RocketNetworkRevenuesInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/network/RocketNetworkSnapshotsInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/network/RocketNetworkSnapshotsTimeInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/network/RocketNetworkVotingInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/node/RocketNodeDepositInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/node/RocketNodeDistributorFactoryInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/node/RocketNodeDistributorInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/node/RocketNodeManagerInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/node/RocketNodeStakingInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/rewards/RocketMerkleDistributorMainnetInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/rewards/RocketRewardsPoolInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/rewards/RocketRewardsRelayInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/rewards/RocketSmoothingPoolInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/rewards/claims/RocketClaimDAOInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/rewards/claims/RocketClaimTrustedNodeInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/token/RocketTokenRETHInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/token/RocketTokenRPLInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/util/AddressQueueStorageInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/util/AddressSetStorageInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/util/BeaconStateVerifierInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/util/IERC20.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/util/IERC20Burnable.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interface/util/LinkedListStorageInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/types/MinipoolDeposit.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/types/MinipoolDetails.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/types/MinipoolStatus.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/types/NodeDetails.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/types/RewardSubmission.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/types/SettingType.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "files": [
+        "contracts/contract/helper/RevertOnTransfer.sol",
+        "contracts/thirdparty/EthBalanceChecker/EthBalanceChecker.sol",
+        "contracts/thirdparty/Multicall2/Multicall2.sol",
+        "contracts/thirdparty/UniswapOracleMock/UniswapOracleMock.sol"
+      ],
+      "message": "constraint 0.8.30 not satisfied by the bundled compiler; resolved compatible solc 0.8.36 via cache_compatible"
+    },
+    {
+      "compiler_version": "0.8.36",
+      "file": "contracts/contract/helper/RevertOnTransfer.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": "0.8.36",
+      "file": "contracts/thirdparty/EthBalanceChecker/EthBalanceChecker.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": "0.8.36",
+      "file": "contracts/thirdparty/Multicall2/Multicall2.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": "0.8.36",
+      "file": "contracts/thirdparty/UniswapOracleMock/UniswapOracleMock.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/contract/token/temp/RocketTokenDummyRPL.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/thirdparty/RocketSignerRegistry/RocketSignerRegistry.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/thirdparty/RocketSignerRegistry/interface/RocketSignerRegistryInterface.sol",
+      "message": "file failed to produce AST"
+    },
+    {
+      "duration_seconds": 2.131,
+      "message": "phase duration",
+      "phase": "compilation"
+    },
+    {
+      "duration_seconds": 0.002,
+      "message": "phase duration",
+      "phase": "inventory"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "modifier_analysis"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "function_analysis"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "capability_and_relationship_derivation"
+    },
+    {
+      "duration_seconds": 2.908,
+      "message": "phase duration",
+      "phase": "total"
+    }
+  ]
+}
