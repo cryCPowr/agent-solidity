@@ -1,1 +1,0 @@
-UseLatestUpdated(_state, block.timestamp)

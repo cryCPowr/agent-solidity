@@ -1,1 +1,0 @@
-require(_confirmDisableBootstrapMode == true, "You must confirm disabling bootstrap mode, it can only be done once!")

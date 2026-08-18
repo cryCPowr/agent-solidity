@@ -1,5 +1,0 @@
-function _valueAt(bytes32 _key, uint256 _pos) internal view returns (uint224) {
-        bytes32 key = bytes32(uint256(_key) + _pos);
-        bytes32 raw = rocketStorage.getBytes32(key);
-        return uint224(uint256(raw));
-    }

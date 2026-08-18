@@ -1,1 +1,0 @@
-getReceiptDirection(_proposalID, delegate)

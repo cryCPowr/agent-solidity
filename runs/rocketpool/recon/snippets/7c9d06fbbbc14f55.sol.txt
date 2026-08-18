@@ -1,3 +1,0 @@
-for (uint256 i = 0; i < _memberAddresses.length; ++i) {
-            actionKick(_memberAddresses[i]);
-        }

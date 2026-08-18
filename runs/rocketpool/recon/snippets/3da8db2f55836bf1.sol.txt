@@ -1,1 +1,0 @@
-require(_treeNodes.length == 2 ** depthPerRound, "Invalid node count")

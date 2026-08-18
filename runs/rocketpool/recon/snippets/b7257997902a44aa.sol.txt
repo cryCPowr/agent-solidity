@@ -1,1 +1,0 @@
-getSettingUint("network.submit.prices.frequency")

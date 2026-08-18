@@ -1,1 +1,0 @@
-TokensMinted(_to, rethAmount, _ethAmount, block.timestamp)

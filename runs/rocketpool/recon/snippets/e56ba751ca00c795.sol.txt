@@ -1,1 +1,0 @@
-keccak256(abi.encodePacked("node.minipools.staking.count", _nodeAddress, depositSize))

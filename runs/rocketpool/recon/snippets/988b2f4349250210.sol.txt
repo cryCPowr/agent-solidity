@@ -1,4 +1,0 @@
-abi.encodePacked(
-                        root.hash, root.sum,
-                        _witness[i].hash, _witness[i].sum
-                    )

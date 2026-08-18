@@ -1,1 +1,0 @@
-setSettingUint("members.minipool.unbonded.max", 30)

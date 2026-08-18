@@ -1,1 +1,0 @@
-function getSettingAddressList(string memory _settingPath) external view returns (address[] memory);

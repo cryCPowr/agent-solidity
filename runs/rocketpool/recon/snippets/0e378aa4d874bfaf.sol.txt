@@ -1,1 +1,0 @@
-getActiveValidatorCount() + 1

@@ -1,9 +1,0 @@
-function getSettingAddressList(string memory _settingPath) public view override returns (address[] memory) {
-        uint256 key = uint256(keccak256(abi.encodePacked(settingNameSpace, _settingPath)));
-        uint256 count = getUint(bytes32(key));
-        address[] memory addressList = new address[](count);
-        for (uint256 i = 0; i < count; ++i) {
-            addressList[i] = getAddress(bytes32(key + i));
-        }
-        return addressList;
-    }

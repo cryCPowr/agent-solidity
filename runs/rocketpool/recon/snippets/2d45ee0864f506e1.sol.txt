@@ -1,1 +1,0 @@
-require(getUint(bytes32(proposalKey + defeatIndexOffset)) == 0, "Proposal already defeated")

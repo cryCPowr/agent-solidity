@@ -1,3 +1,0 @@
-function voteCancelReduction(address _minipoolAddress) override external onlyTrustedNode(msg.sender) onlyLatestContract("rocketMinipoolBondReducer", address(this)) {
-        revert("Minipool bond reductions are no longer available");
-    }

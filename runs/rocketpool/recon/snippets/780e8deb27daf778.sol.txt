@@ -1,3 +1,0 @@
-function getNodeExists(address _nodeAddress) override public view returns (bool) {
-        return getBool(keccak256(abi.encodePacked("node.exists", _nodeAddress)));
-    }

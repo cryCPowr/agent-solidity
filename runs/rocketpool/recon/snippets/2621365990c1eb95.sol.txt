@@ -1,3 +1,0 @@
-assembly {
-                ptr := add(buffer, add(32, length))
-            }

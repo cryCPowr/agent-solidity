@@ -1,1 +1,0 @@
-RPLTreasuryContractClaimed(_recipientAddress, amount, block.timestamp)

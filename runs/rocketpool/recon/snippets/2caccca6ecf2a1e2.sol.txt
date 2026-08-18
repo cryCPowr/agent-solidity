@@ -1,4 +1,0 @@
-if (value >= 10 ** 8) {
-                value /= 10 ** 8;
-                result += 8;
-            }

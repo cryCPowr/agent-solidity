@@ -1,4 +1,0 @@
-if (!deprecatedOne) {
-                // This delegate has already expired so no longer considered "in-use", advance the head
-                head += 1;
-            }

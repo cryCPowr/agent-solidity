@@ -1,1 +1,0 @@
-function getStakingETHBalance() external view returns (uint256);

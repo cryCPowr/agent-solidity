@@ -34,6 +34,7 @@ from __future__ import annotations
 
 import logging
 import os
+import re
 import time
 
 from . import (
@@ -66,6 +67,7 @@ _MAX_TOTAL_SOURCE_BYTES = 200 * 1024 * 1024   # 200 MB across the whole repo
 # timeout in solc_manager) still has to return before the check can fire.
 _DEFAULT_TIMEOUT_SECONDS = 30 * 60          # overall wall-clock budget for run()
 _MAX_CONSECUTIVE_ANALYSIS_FAILURES = 50     # circuit breaker on repeated exceptions
+_INJECTION_RE = re.compile(r"ignore\s+previous\s+instructions|^\s*system\s*:|^\s*assistant\s*:", re.IGNORECASE | re.MULTILINE)
 
 logger = logging.getLogger("recon.pipeline")
 
@@ -166,6 +168,14 @@ def run(
                 files_failed.append(d.relative_path)
                 ctx.warn(f"could not read file: {exc}", file=d.relative_path)
                 continue
+            if _INJECTION_RE.search(content):
+                files_failed.append(d.relative_path)
+                file_diagnostics[d.relative_path] = {
+                    "failure_reason": "INJECTION_DETECTED",
+                    "has_ast": False,
+                }
+                ctx.warn("prompt-injection-like source text detected; file skipped", file=d.relative_path)
+                continue
             total_bytes_read += file_size
             sources[d.relative_path] = content
             ctx.files[d.relative_path] = content
@@ -206,6 +216,13 @@ def run(
                 files=expansion.added,
             )
         _record_phase("dependency_expansion", t_phase)
+
+        ctx.dependency_graph = {
+            "sources_total": sorted(sources.keys()),
+            "dependency_files_added": list(expansion.added),
+            "import_prefix_aliases": dict(sorted(expansion.prefix_aliases.items())),
+            "unresolved_imports": list(expansion.unresolved_remaining),
+        }
 
         # ---- Build metadata compiler hints (diagnostics, never override) ----
         compiler_hints = solc_manager.extract_compiler_hints(repo_root)
@@ -418,6 +435,9 @@ def run(
         capability.derive_capabilities(ctx)
         relationships.derive_role_privilege_facts(ctx)
         relationships.derive_relationship_chains(ctx)
+        relationships.derive_initializer_lifecycle_facts(ctx)
+        relationships.derive_proxy_upgradeability_facts(ctx)
+        relationships.derive_capability_authority_facts(ctx)
         relationships.derive_frontrun_vulnerability_facts(ctx)
         _record_phase("capability_and_relationship_derivation", t_phase)
 
@@ -465,6 +485,23 @@ def run(
     files_discovered_count = len(discovered)
     files_with_ast = len(files_analyzed)
     coverage_percent = round(100.0 * files_with_ast / files_discovered_count, 1) if files_discovered_count > 0 else 0.0
+    dependency_total = len(expansion.added) + len(expansion.unresolved_remaining)
+    dependency_resolved = len(expansion.added)
+    low_level_calls = [f for f in ctx.facts if f.type == "low_level_call"]
+    delegatecall_count = sum(1 for f in low_level_calls if f.properties.get("call_subtype") == "delegatecall")
+    resolved_delegate_edges = sum(1 for e in ctx.graph_edges.values() if e.type == "DELEGATES_TO")
+    contract_count = len(ctx.contracts)
+    function_count = sum(len(c.functions) for c in ctx.contracts.values())
+    state_var_count = sum(len(c.state_vars) for c in ctx.contracts.values())
+    source_coverage = round(files_with_ast / files_discovered_count, 4) if files_discovered_count else 0.0
+    dependency_coverage_ratio = round(dependency_resolved / dependency_total, 4) if dependency_total else 1.0
+    call_graph_edge_total = sum(1 for e in ctx.graph_edges.values() if e.type in ("CALLS", "DELEGATES_TO", "CREATES"))
+    call_graph_known_total = call_graph_edge_total + sum(1 for f in ctx.facts if f.type == "internal_call" and f.status != "observed")
+    call_graph_coverage_ratio = round(call_graph_edge_total / call_graph_known_total, 4) if call_graph_known_total else 1.0
+    dataflow_known = sum(1 for f in ctx.facts if f.type in ("call_argument_dataflow", "call_argument_origin_chain"))
+    dataflow_observed = sum(1 for f in ctx.facts if f.type in ("call_argument_dataflow", "call_argument_origin_chain") and f.status == "observed")
+    dataflow_coverage_ratio = round(dataflow_observed / dataflow_known, 4) if dataflow_known else 1.0
+    partial_source_coverage = analysis_status != "complete" or bool(files_failed) or bool(files_partial)
 
     run_meta = {
         "source_root": repo_root,
@@ -478,9 +515,52 @@ def run(
             "files_failed": len(files_failed),
             "files_partial": len(files_partial),
             "coverage_percent": coverage_percent,
+            "partial_source_coverage": partial_source_coverage,
+            "source_coverage": source_coverage,
+            "compile_coverage": {
+                "contracts_modeled": contract_count,
+                "coverage_ratio": source_coverage,
+            },
+            "ast_coverage": {
+                "files_with_ast": files_with_ast,
+                "coverage_ratio": source_coverage,
+            },
+            "contract_coverage": {
+                "contracts_modeled": contract_count,
+                "coverage_ratio": source_coverage,
+            },
+            "function_coverage": {
+                "functions_modeled": function_count,
+                "coverage_ratio": round((function_count / max(1, function_count + len(files_partial))), 4),
+            },
+            "dependency_coverage": {
+                "resolved": dependency_resolved,
+                "total": dependency_total,
+                "coverage_ratio": dependency_coverage_ratio,
+            },
+            "call_graph_coverage": {
+                "resolved_edges": call_graph_edge_total,
+                "total_candidates": call_graph_known_total,
+                "coverage_ratio": call_graph_coverage_ratio,
+            },
+            "dataflow_coverage": {
+                "resolved_paths": dataflow_observed,
+                "total_candidates": dataflow_known,
+                "coverage_ratio": dataflow_coverage_ratio,
+            },
+            "storage_coverage": {
+                "state_variables_modeled": state_var_count,
+                "coverage_ratio": source_coverage,
+            },
+            "proxy_coverage": {
+                "delegatecall_facts": delegatecall_count,
+                "delegate_edges": resolved_delegate_edges,
+                "coverage_ratio": round(resolved_delegate_edges / delegatecall_count, 4) if delegatecall_count else 1.0,
+            },
         },
         "dependency_files_added": expansion.added,
         "import_prefix_aliases": expansion.prefix_aliases,
+        "build_dependency_graph": ctx.dependency_graph,
         "build_metadata_hints": compiler_hints,
         "compiler": {
             "engine": "solc-js (npm)",

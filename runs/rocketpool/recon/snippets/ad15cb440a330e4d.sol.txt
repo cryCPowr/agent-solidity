@@ -1,1 +1,0 @@
-MinipoolDestroyed(msg.sender, nodeAddress, block.timestamp)

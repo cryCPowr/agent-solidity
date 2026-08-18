@@ -1,1 +1,0 @@
-setBool(finalisedKey, true)

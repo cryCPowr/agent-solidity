@@ -1,1 +1,0 @@
-require(memberInvitedTime + rocketDAOProtocolSettingsSecurity.getActionTime() > block.timestamp, "This node's invitation to join has expired, please apply again")

@@ -1,3 +1,0 @@
-function getNodeFee() override external view returns (uint256) {
-        return getNodeFeeByDemand(getNodeDemand());
-    }

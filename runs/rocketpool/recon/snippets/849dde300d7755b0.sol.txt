@@ -1,3 +1,0 @@
-function setInt(bytes32 _key, int _value) onlyLatestRocketNetworkContract override external {
-        intStorage[_key] = _value;
-    }

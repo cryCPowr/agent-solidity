@@ -1,6 +1,0 @@
-if (balanceToUse > 0) {
-            subUint(keccak256(abi.encodePacked("node.eth.balance", msg.sender)), balanceToUse);
-            // Withdraw the funds
-            RocketVaultInterface rocketVault = RocketVaultInterface(getContractAddress("rocketVault"));
-            rocketVault.withdrawEther(balanceToUse);
-        }

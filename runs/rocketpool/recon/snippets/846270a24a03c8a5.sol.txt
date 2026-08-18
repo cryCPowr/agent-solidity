@@ -1,1 +1,0 @@
-toHexString(value, Math.log256(value) + 1)

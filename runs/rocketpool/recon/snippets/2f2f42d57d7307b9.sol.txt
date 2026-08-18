@@ -1,1 +1,0 @@
-require(getBool(stateKey) != _state, "Invalid state change")

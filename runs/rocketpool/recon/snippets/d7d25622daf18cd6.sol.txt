@@ -1,1 +1,0 @@
-event EtherDeposited(string indexed by, uint256 amount, uint256 time);

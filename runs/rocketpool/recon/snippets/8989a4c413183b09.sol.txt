@@ -1,4 +1,0 @@
-for (uint256 i = 0; i < depositSizes.length; ++i) {
-            depositCounts[i] = rocketMinipoolManager.getNodeStakingMinipoolCountBySize(_nodeAddress, depositSizes[i]);
-            totalCount = totalCount + depositCounts[i];
-        }

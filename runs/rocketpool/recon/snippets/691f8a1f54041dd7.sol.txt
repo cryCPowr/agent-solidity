@@ -1,1 +1,0 @@
-require(oldContractAddress != address(0x0), "Contract does not exist")

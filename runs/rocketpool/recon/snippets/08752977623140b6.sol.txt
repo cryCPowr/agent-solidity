@@ -1,1 +1,0 @@
-function getIndexOf(bytes32 _key, address _value) external view returns (int);

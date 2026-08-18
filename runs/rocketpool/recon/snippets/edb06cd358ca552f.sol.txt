@@ -1,1 +1,0 @@
-getMemberCount().mul(rocketDAONodeTrustedSettingsMembers.getQuorum())

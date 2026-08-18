@@ -1,1 +1,0 @@
-deleteAddress(keccak256(abi.encodePacked("validator.minipool", pubkey)))

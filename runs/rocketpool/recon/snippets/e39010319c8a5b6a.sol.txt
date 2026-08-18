@@ -1,5 +1,0 @@
-if (express) {
-            headMovedBlock = uint128(packed);
-        } else {
-            headMovedBlock = uint128(packed >> 128);
-        }

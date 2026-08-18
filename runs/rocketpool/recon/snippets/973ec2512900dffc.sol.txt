@@ -1,1 +1,0 @@
-function isWithinUserDistributeWindow(uint256 _time) external view returns (bool);

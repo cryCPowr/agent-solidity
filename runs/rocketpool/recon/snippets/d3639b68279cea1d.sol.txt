@@ -1,1 +1,0 @@
-getNodeMegapoolETHBorrowed(_nodeAddress) + getNodeMinipoolETHBorrowed(_nodeAddress)

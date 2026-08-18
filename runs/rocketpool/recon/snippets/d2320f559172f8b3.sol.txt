@@ -1,6 +1,0 @@
-function verifySlot(uint64 _slotTimestamp, SlotProof calldata _proof) override external view returns(bool) {
-        if (disabled) {
-            return true;
-        }
-        return verifier.verifySlot(_slotTimestamp, _proof);
-    }

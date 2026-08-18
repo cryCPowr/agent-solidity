@@ -1,1 +1,0 @@
-require(rocketDAONode.getMemberIsValid(_nodeAddress) != true, "This node is already part of the trusted node DAO")

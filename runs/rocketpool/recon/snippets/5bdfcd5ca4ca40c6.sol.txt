@@ -1,3 +1,0 @@
-for (uint256 i = 0; i < _claimingContracts.length; ++i) {
-            percentages[i] = daoSettingsRewards.getRewardsClaimerPerc(_claimingContracts[i]);
-        }

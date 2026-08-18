@@ -1,1 +1,0 @@
-function beginReduceBondAmount(address _minipoolAddress, uint256 _newBondAmount) external;

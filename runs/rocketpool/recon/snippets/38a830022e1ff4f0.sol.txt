@@ -1,1 +1,0 @@
-require(getBytes32(key) == bytes32(0))

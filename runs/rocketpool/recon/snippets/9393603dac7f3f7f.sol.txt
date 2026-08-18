@@ -1,1 +1,0 @@
-require(rocketDAOSecurity.getMemberIsValid(msg.sender), "Not a current member")

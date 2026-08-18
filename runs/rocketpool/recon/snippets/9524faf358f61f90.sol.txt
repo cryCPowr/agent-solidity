@@ -1,1 +1,0 @@
-_value <= (rocketDAOProtocolSettingsMinipool.getLaunchTimeout().sub(1 hours))

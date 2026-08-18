@@ -1,1 +1,0 @@
-require(getBool(keccak256(abi.encodePacked("contract.exists", msg.sender))), "Invalid or outdated network contract")

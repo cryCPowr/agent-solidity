@@ -1,4 +1,0 @@
-if (address(this).balance > 0) {
-            // Send user amount to rETH contract
-            payable(rocketTokenRETH).transfer(address(this).balance);
-        }

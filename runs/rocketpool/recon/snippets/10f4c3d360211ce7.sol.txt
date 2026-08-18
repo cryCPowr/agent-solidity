@@ -1,1 +1,0 @@
-setNode(_proposalID, _index, actual)

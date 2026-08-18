@@ -1,1 +1,0 @@
-function getUserCapital() external view returns (uint256);

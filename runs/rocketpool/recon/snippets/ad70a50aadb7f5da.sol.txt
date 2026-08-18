@@ -1,4 +1,0 @@
-modifier onlyLatestContract(string memory _contractName, address _contractAddress) {
-        require(_contractAddress == getContractAddress(_contractName), "Invalid or outdated contract");
-        _;
-    }

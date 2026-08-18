@@ -1,7 +1,0 @@
-if (incursShortfall) {
-                uint256 userDistributeDelay = rocketDAOProtocolSettingsMegapool.getUserDistributeDelayWithShortfall();
-                require(uint256(_recentEpoch) >= _withdrawalEpoch + userDistributeDelay, "Not enough time has passed");
-            } else {
-                uint256 userDistributeDelay = rocketDAOProtocolSettingsMegapool.getUserDistributeDelay();
-                require(uint256(_recentEpoch) >= _withdrawalEpoch + userDistributeDelay, "Not enough time has passed");
-            }

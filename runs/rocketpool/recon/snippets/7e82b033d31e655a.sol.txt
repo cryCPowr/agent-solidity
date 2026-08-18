@@ -1,3 +1,0 @@
-function setStakeRPLForAllowed(address _caller, bool _allowed) override external {
-        setStakeRPLForAllowed(msg.sender, _caller, _allowed);
-    }

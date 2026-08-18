@@ -1,1 +1,0 @@
-uint256 constant internal prestakeValue = 1 ether

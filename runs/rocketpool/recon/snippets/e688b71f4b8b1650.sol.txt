@@ -1,1 +1,0 @@
-getLotPriceByTotalBids(_index) >= getLotPriceAtCurrentBlock(_index)

@@ -1,1 +1,0 @@
-event ProposalSettingAddress(string settingContractName, string settingPath, address value, uint256 time);

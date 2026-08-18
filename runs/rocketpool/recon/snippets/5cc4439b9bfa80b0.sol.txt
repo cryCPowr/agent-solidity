@@ -1,1 +1,0 @@
-rocketNodeStaking.slashRPL(nodeAddress, slashAmount)

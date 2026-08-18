@@ -1,1 +1,0 @@
-require(getLength(_key) < capacity.sub(1), "Queue is at capacity")

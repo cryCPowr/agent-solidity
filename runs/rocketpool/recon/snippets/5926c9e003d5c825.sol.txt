@@ -1,3 +1,0 @@
-if (_caller == withdrawalAddress) {
-                return true;
-            }

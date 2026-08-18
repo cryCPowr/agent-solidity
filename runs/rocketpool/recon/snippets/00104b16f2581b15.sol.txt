@@ -1,3 +1,0 @@
-if (_index < variableLength) {
-            return addressQueueStorage.getItem(queueKeyVariable, _index);
-        }

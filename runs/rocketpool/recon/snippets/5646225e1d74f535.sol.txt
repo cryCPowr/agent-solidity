@@ -1,3 +1,0 @@
-function deleteBool(bytes32 _key) external onlyGuardian {
-        rocketStorage.deleteBool(_key);
-    }

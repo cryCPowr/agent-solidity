@@ -1,1 +1,0 @@
-function getUpgradeDelay() external view returns (uint256);

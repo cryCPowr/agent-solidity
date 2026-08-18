@@ -1,1 +1,0 @@
-require(_tokenContract.transferFrom(msg.sender, address(this), _amount), "Token transfer was not successful")

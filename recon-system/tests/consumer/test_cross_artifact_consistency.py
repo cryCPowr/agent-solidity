@@ -1,8 +1,8 @@
 """Cross-Artifact Consistency Checks.
 
-Recon produces FIVE artifacts that a downstream consumer may read
+Recon produces multiple artifacts that a downstream consumer may read
 independently (facts.jsonl, graph.json, summary.json, metadata.json,
-snippets/). This file checks that they actually agree with each other and
+coverage.json, protocol.json, dependencies.json, snippets/). This file checks that they actually agree with each other and
 contain no dangling references — i.e. that treating any one of them as a
 "partial view" and cross-referencing another is safe.
 
@@ -142,3 +142,4 @@ def test_every_fact_source_file_was_reported_analyzed(recon: ReconOutput):
 def test_metadata_and_summary_agree_on_files_analyzed_count(recon: ReconOutput):
     assert recon.summary["analysis_coverage"]["files_analyzed"] == len(recon.metadata["files_analyzed"])
     assert recon.summary["analysis_coverage"]["files_failed"] == len(recon.metadata["files_failed"])
+    assert recon.summary["analysis_coverage"]["partial_source_coverage"] == recon.metadata["partial_source_coverage"]

@@ -1,1 +1,0 @@
-setSettingUint("minipool.launch.timeout", 72 hours)

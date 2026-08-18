@@ -1,1 +1,0 @@
-increaseLotTotalBidAmount(_lotIndex, bidAmount)

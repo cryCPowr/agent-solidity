@@ -1,1 +1,0 @@
-require(rocketDAONodeTrustedUpgrade.getState(_upgradeProposalID) == RocketDAONodeTrustedUpgradeInterface.UpgradeProposalState.Pending)

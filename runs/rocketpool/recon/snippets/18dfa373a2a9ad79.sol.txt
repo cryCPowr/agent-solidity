@@ -1,1 +1,0 @@
-MinipoolStatus internal status

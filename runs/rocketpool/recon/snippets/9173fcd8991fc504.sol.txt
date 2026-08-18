@@ -1,1 +1,0 @@
-emit RewardSnapshotSubmitted(msg.sender, _submission.rewardIndex, _submission, block.timestamp)

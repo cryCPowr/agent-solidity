@@ -1,1 +1,0 @@
-setAddress(keccak256(abi.encodePacked("validator.minipool", _pubkey)), _minipool)

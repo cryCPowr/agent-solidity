@@ -1,3 +1,0 @@
-function enqueueItem(bytes32 _namespace, DepositQueueValue memory _item) virtual override external onlyLatestContract("linkedListStorage", address(this)) onlyLatestNetworkContract {
-        _enqueueItem(_namespace, _item);
-    }

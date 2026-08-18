@@ -1,3 +1,0 @@
-function getLastDistributionTime() override external view returns (uint256) {
-        return lastDistributionTime;
-    }

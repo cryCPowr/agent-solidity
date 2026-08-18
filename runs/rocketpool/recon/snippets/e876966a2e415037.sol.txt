@@ -1,5 +1,0 @@
-modifier onlyExecutingContracts() {
-        // Methods are executed by people executing passed proposals in rocketDAOProposal
-        require(msg.sender == getContractAddress("rocketDAOProposal"), "Sender is not permitted to access executing methods");
-        _;
-    }

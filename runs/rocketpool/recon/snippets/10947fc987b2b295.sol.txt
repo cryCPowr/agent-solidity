@@ -1,1 +1,0 @@
-require(daoSecurity.getMemberIsValid(_memberAddress), "This node is not part of the security council")

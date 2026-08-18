@@ -1,3 +1,0 @@
-function getMemberID(address _memberAddress) override external view returns (string memory) {
-        return getString(keccak256(abi.encodePacked(daoNameSpace, "member.id", _memberAddress)));
-    }

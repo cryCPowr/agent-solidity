@@ -1,1 +1,0 @@
-event UpgradeVetoed(uint256 upgradeProposalID, uint256 time);

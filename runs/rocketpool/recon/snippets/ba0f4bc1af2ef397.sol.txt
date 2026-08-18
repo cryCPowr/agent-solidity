@@ -1,1 +1,0 @@
-require(status == MinipoolStatus.Prelaunch, "The minipool can only begin staking while in prelaunch")

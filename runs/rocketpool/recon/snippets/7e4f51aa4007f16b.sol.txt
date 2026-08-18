@@ -1,3 +1,0 @@
-function getUpgradeVetoQuorum() override external view returns (uint256) {
-        return getSettingUint("upgradeveto.quorum");
-    }

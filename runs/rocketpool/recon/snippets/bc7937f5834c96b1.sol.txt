@@ -1,6 +1,0 @@
-function getMemberQuorumVotesRequired() override external view returns (uint256) {
-        // Load contracts
-        RocketDAONodeTrustedSettingsMembersInterface rocketDAONodeTrustedSettingsMembers = RocketDAONodeTrustedSettingsMembersInterface(getContractAddress("rocketDAONodeTrustedSettingsMembers"));
-        // Calculate and return votes required
-        return getMemberCount().mul(rocketDAONodeTrustedSettingsMembers.getQuorum());
-    }

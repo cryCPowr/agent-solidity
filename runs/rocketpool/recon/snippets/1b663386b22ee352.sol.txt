@@ -1,3 +1,0 @@
-function getTimeBeforeDissolve() override external view returns (uint256) {
-        return getSettingUint("megapool.time.before.dissolve");
-    }

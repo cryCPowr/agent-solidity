@@ -1,3 +1,0 @@
-function getScrubPeriod() override external view returns (uint256) {
-        return getSettingUint("minipool.scrub.period");
-    }

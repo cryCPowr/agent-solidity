@@ -1,1 +1,0 @@
-keccak256(abi.encodePacked("node.delegate", msg.sender))

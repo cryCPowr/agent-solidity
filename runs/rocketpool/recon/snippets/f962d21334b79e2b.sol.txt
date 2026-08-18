@@ -1,3 +1,0 @@
-interface RocketDAONodeTrustedSettingsRewardsInterface {
-    function getNetworkEnabled(uint256 _network) external view returns (bool);
-}

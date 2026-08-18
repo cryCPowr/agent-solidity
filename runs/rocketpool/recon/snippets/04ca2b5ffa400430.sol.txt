@@ -1,1 +1,0 @@
-_approve(_msgSender(), spender, amount)

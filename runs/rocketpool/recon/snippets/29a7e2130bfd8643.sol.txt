@@ -1,9 +1,0 @@
-if (votesFor > votesAgainst) {
-                            if (block.timestamp < getExpires(_proposalID)) {
-                                // Vote was successful, is now awaiting execution
-                                return ProposalState.Succeeded;
-                            }
-                        } else {
-                            // Vote was defeated
-                            return ProposalState.Defeated;
-                        }

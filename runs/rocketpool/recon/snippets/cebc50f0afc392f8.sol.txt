@@ -1,1 +1,0 @@
-function bootstrapDisable(bool _confirmDisableBootstrapMode) external;

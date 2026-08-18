@@ -1,1 +1,0 @@
-withdrawalEpoch >= _validatorProof.validator.withdrawableEpoch

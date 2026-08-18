@@ -1,5 +1,0 @@
-function proposalSecurityInvite(string calldata _id, address _memberAddress) override external onlyExecutingContracts() {
-        RocketDAOSecurityProposalsInterface rocketDAOSecurityProposals = RocketDAOSecurityProposalsInterface(getContractAddress("rocketDAOSecurityProposals"));
-        rocketDAOSecurityProposals.proposalInvite(_id, _memberAddress);
-        emit ProposalSecurityInvite(_id, _memberAddress, block.timestamp);
-    }

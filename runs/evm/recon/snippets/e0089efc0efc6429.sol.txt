@@ -1,0 +1,8 @@
+function scheduleBatch(
+        address[] calldata targets,
+        uint256[] calldata values,
+        bytes[] calldata payloads,
+        bytes32 predecessor,
+        bytes32 salt,
+        uint256 delay
+    ) external;

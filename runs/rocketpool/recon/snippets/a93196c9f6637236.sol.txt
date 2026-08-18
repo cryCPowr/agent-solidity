@@ -1,1 +1,0 @@
-require(msg.sender == proposer, "Not proposer")

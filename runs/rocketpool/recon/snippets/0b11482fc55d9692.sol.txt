@@ -1,1 +1,0 @@
-function getAllowListedControllers() external view returns (address[] memory);

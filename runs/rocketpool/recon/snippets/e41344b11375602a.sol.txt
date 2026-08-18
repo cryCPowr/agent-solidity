@@ -1,3 +1,0 @@
-if (expressQueueLength == 0 && standardQueueLength == 0) {
-            return (address(0x0), false, 0);
-        }

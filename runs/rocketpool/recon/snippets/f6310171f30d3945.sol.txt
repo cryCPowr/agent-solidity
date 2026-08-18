@@ -1,6 +1,0 @@
-function actionJoin() override external onlyLatestContract("rocketDAOSecurityActions", address(this)) {
-        // Add the member
-        _memberJoin(msg.sender);
-        // Log it
-        emit ActionJoined(msg.sender, block.timestamp);
-    }

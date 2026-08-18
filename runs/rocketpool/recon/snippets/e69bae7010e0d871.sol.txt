@@ -1,1 +1,0 @@
-function balanceOfToken(string memory _networkContractName, IERC20 _tokenAddress) external view returns (uint256);

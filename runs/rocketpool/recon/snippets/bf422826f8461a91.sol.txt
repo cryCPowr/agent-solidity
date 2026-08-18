@@ -1,1 +1,0 @@
-keccak256(abi.encodePacked(daoNameSpace, "member.challenged.time", _nodeAddress))

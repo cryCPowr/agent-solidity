@@ -1,1 +1,0 @@
-RPLWithdrawn(nodeAddress, amount, block.timestamp)

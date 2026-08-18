@@ -1,4 +1,0 @@
-function _reduceDebt(uint256 _amount) internal {
-        debt -= _amount;
-        emit MegapoolDebtReduced(_amount, block.timestamp);
-    }

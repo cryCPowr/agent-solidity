@@ -1,1 +1,0 @@
-function decrementNodeStakingMinipoolCount(address _nodeAddress) external;

@@ -1,5 +1,0 @@
-if (amountToSend > 0) {
-            address nodeWithdrawalAddress = rocketStorage.getNodeWithdrawalAddress(nodeAddress);
-            (bool success,) = nodeWithdrawalAddress.call{value: amountToSend}("");
-            require(success, "Failed to send ETH");
-        }

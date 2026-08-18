@@ -1,1 +1,0 @@
-EtherWithdrawn(nodeWithdrawalAddress, refundAmount, block.timestamp)

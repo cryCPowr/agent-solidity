@@ -46,15 +46,97 @@ def write_metadata_json(ctx: ProjectContext, path: str, run_meta: dict) -> None:
         "files_failed": run_meta.get("files_failed", []),
         "file_diagnostics": run_meta.get("file_diagnostics", {}),
         "coverage": run_meta.get("coverage", {}),
+        "partial_source_coverage": bool(run_meta.get("coverage", {}).get("partial_source_coverage", False)),
         "dependency_files_added": run_meta.get("dependency_files_added", []),
         "import_prefix_aliases": run_meta.get("import_prefix_aliases", {}),
         "build_metadata_hints": run_meta.get("build_metadata_hints", {}),
+        "build_dependency_graph": run_meta.get("build_dependency_graph", {}),
         "compiler": run_meta.get("compiler", {}),
         "analysis_status": run_meta.get("analysis_status", "unknown"),
         "warnings": ctx.warnings,
         "errors": run_meta.get("errors", []),
     }
     _write_json(path, metadata)
+
+
+def write_protocol_json(ctx: ProjectContext, path: str) -> None:
+    contracts = sorted(ctx.contracts.values(), key=lambda c: c.key)
+    proxy_like_by_contract = {}
+    implementation_slots = {}
+    upgrade_functions = {}
+    initializer_functions = {}
+    initializer_lifecycles = {}
+    initializer_surfaces = {}
+    capability_authority_surfaces = {}
+    upgrade_authorities = {}
+    delegatecall_paths = {}
+    for f in ctx.facts:
+        subj = f.subject or {}
+        if f.type == "proxy_like_contract":
+            proxy_like_by_contract[subj.get("contract")] = f.properties
+        elif f.type == "implementation_slot":
+            implementation_slots.setdefault(subj.get("contract"), []).append(subj.get("state_variable"))
+        elif f.type == "upgrade_function":
+            upgrade_functions.setdefault(subj.get("contract"), []).append(subj.get("function"))
+        elif f.type == "initializer_function":
+            initializer_functions.setdefault(subj.get("contract"), []).append(subj.get("function"))
+        elif f.type == "initializer_lifecycle":
+            initializer_lifecycles[subj.get("contract")] = f.properties
+        elif f.type == "initializer_surface":
+            initializer_surfaces.setdefault(subj.get("contract"), []).append(f.properties)
+        elif f.type == "capability_authority_surface":
+            fn = subj.get("function")
+            capability_authority_surfaces.setdefault(fn, []).append(f.properties)
+        elif f.type == "upgrade_authority":
+            upgrade_authorities.setdefault(subj.get("contract"), []).append(f.properties)
+        elif f.type == "proxy_delegatecall_path":
+            delegatecall_paths.setdefault(subj.get("contract"), []).append(f.properties)
+
+    data = {
+        "contracts": [
+            {
+                "key": c.key,
+                "name": c.name,
+                "kind": c.kind,
+                "file": c.file,
+                "is_abstract": c.is_abstract,
+                "bases": list(c.base_names),
+                "functions": [f.key for f in c.functions],
+                "state_variables": [sv.key for sv in c.state_vars],
+                "events": [e.key for e in c.events],
+                "errors": [e.key for e in c.errors],
+                "modifiers": [m.key for m in c.modifiers],
+                "proxy_upgradeability": {
+                    "proxy_like": c.key in proxy_like_by_contract,
+                    "implementation_slots": implementation_slots.get(c.key, []),
+                    "upgrade_functions": upgrade_functions.get(c.key, []),
+                    "initializer_functions": initializer_functions.get(c.key, []),
+                    "initializer_lifecycle": initializer_lifecycles.get(c.key, {}),
+                    "initializer_surfaces": initializer_surfaces.get(c.key, []),
+                    "upgrade_authorities": upgrade_authorities.get(c.key, []),
+                    "delegatecall_paths": delegatecall_paths.get(c.key, []),
+                },
+            }
+            for c in contracts
+        ]
+    }
+    _write_json(path, data)
+
+
+
+def write_dependencies_json(ctx: ProjectContext, path: str, run_meta: dict) -> None:
+    _write_json(path, {
+        "dependency_files_added": run_meta.get("dependency_files_added", []),
+        "import_prefix_aliases": run_meta.get("import_prefix_aliases", {}),
+        "build_dependency_graph": run_meta.get("build_dependency_graph", {}),
+        "dependency_coverage": run_meta.get("coverage", {}).get("dependency_coverage", {}),
+    })
+
+
+
+def write_coverage_json(ctx: ProjectContext, path: str, run_meta: dict) -> None:
+    _write_json(path, run_meta.get("coverage", {}))
+
 
 
 def write_summary_json(ctx: ProjectContext, path: str, run_meta: dict) -> None:
@@ -117,6 +199,7 @@ def write_summary_json(ctx: ProjectContext, path: str, run_meta: dict) -> None:
             "files_analyzed": len(run_meta.get("files_analyzed", [])),
             "files_partially_analyzed": len(run_meta.get("files_partially_analyzed", [])),
             "files_failed": len(run_meta.get("files_failed", [])),
+            "partial_source_coverage": bool(run_meta.get("coverage", {}).get("partial_source_coverage", False)),
             "unresolved": unresolved,
         },
         "warnings": ctx.warnings,
@@ -130,5 +213,8 @@ def write_all(ctx: ProjectContext, output_dir: str, run_meta: dict) -> None:
     write_schema_json(os.path.join(output_dir, "schema.json"))
     write_metadata_json(ctx, os.path.join(output_dir, "metadata.json"), run_meta)
     write_summary_json(ctx, os.path.join(output_dir, "summary.json"), run_meta)
+    write_coverage_json(ctx, os.path.join(output_dir, "coverage.json"), run_meta)
+    write_protocol_json(ctx, os.path.join(output_dir, "protocol.json"))
+    write_dependencies_json(ctx, os.path.join(output_dir, "dependencies.json"), run_meta)
     write_facts_jsonl(ctx, os.path.join(output_dir, "facts.jsonl"))
     write_graph_json(ctx, os.path.join(output_dir, "graph.json"))

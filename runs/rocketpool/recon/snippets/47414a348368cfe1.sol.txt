@@ -1,1 +1,0 @@
-function calculatePendingRewards() external view returns (uint256 nodeRewards, uint256 voterRewards, uint256 protocolDAORewards, uint256 rethRewards);

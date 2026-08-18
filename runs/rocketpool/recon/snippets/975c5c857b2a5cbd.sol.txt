@@ -1,4 +1,0 @@
-require(
-                uint256(totalStakedRPL) >= _amount + lockedRPL,
-                "Insufficient RPL stake to reduce"
-            )

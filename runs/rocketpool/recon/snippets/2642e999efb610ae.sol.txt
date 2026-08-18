@@ -1,1 +1,0 @@
-rocketDAONode.getMemberCount() > rocketDAONode.getMemberMinRequired()

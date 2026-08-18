@@ -1,1 +1,0 @@
-require(bytes(_contractAbi).length > 0, "Empty ABI is invalid")

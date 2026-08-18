@@ -1,1 +1,0 @@
-emit TokenBurned(contractKey, address(_tokenAddress), _amount, block.timestamp)

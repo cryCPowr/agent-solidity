@@ -1,1 +1,0 @@
-emit FundsAssigned(head.receiver, ethRequired, block.timestamp)

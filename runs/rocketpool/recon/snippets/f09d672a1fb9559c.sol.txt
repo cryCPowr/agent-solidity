@@ -1,1 +1,0 @@
-Math.log2(_index, Math.Rounding.Down)

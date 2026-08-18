@@ -1,3 +1,0 @@
-function verifyCalldata(bytes32[] calldata proof, bytes32 root, bytes32 leaf) internal pure returns (bool) {
-        return processProofCalldata(proof, leaf) == root;
-    }

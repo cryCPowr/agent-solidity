@@ -1,1 +1,0 @@
-function getRewardsClaimersProtocolPerc() external view returns (uint256);

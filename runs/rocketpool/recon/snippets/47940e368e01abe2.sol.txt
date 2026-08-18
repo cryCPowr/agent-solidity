@@ -1,1 +1,0 @@
-function withdrawBalance(address _recipientAddress) external;

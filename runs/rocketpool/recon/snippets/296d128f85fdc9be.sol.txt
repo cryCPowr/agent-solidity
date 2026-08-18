@@ -1,1 +1,0 @@
-minipool.getNodeFee()

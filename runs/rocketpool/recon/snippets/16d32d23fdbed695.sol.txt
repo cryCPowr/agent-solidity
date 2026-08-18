@@ -1,5 +1,0 @@
-function proposalSettingUint(string memory _settingContractName, string memory _settingPath, uint256 _value) override public onlyExecutingContracts() {
-        RocketDAOProtocolSettingsInterface rocketDAOProtocolSettings = RocketDAOProtocolSettingsInterface(getContractAddress(_settingContractName));
-        rocketDAOProtocolSettings.setSettingUint(_settingPath, _value);
-        emit ProposalSettingUint(_settingContractName, _settingPath, _value, block.timestamp);
-    }

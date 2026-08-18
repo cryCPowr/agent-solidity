@@ -1,1 +1,0 @@
-function getSmoothingPoolRegistrationChanged(address _nodeAddress) external returns (uint256);

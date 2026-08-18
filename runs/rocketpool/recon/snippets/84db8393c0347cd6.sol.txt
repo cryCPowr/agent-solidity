@@ -1,1 +1,0 @@
-getReceiptHasVotedPhase1(_proposalID, delegate)

@@ -1,1 +1,0 @@
-BootstrapSettingAddressList(_settingContractName, _settingPath, _value, block.timestamp)

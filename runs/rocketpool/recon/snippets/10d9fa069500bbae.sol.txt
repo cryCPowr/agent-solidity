@@ -1,1 +1,0 @@
-rocketDAOProtocolSettings.setSettingUint(_settingPath, _value)

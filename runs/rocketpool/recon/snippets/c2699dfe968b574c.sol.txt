@@ -1,4 +1,0 @@
-if (value >> 64 > 0) {
-                value >>= 64;
-                result += 64;
-            }

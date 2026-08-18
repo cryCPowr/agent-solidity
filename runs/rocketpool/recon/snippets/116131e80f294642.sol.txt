@@ -1,1 +1,0 @@
-rplToken.transferFrom(_nodeAddress, address(this), _amount)

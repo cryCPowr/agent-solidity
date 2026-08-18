@@ -1,1 +1,0 @@
-function stake(bytes calldata _validatorSignature, bytes32 _depositDataRoot) external;

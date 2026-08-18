@@ -1,1 +1,0 @@
-getBool(keccak256(abi.encodePacked("auction.lot.rpl.recovered", _index)))

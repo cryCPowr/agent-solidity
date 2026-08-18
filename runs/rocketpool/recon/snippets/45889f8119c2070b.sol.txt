@@ -1,1 +1,0 @@
-rocketRewardsPool.depositVoterShare{value: voterAmount}()

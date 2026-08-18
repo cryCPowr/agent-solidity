@@ -1,1 +1,0 @@
-bytes32 private constant queueKeyHalf = keccak256("minipools.available.half")

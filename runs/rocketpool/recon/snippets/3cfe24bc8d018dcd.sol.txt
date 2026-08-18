@@ -1,3 +1,0 @@
-function getDepthFromIndex(uint256 _index) internal pure returns (uint256) {
-        return Math.log2(_index, Math.Rounding.Down);
-    }

@@ -1,1 +1,0 @@
-rocketStorage.getNodePendingWithdrawalAddress(_nodeAddress)

@@ -1,1 +1,0 @@
-RocketDAONodeTrustedInterface(getContractAddress("rocketDAONodeTrusted"))

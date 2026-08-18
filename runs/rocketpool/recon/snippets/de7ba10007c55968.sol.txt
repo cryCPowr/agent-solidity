@@ -1,1 +1,0 @@
-getUserDepositBalance().add(previousBond.sub(newBond))

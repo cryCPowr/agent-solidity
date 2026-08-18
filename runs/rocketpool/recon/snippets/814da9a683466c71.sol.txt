@@ -1,4 +1,0 @@
-modifier onlyTrustedNode(address _nodeAddress) {
-        require(getBool(keccak256(abi.encodePacked("dao.trustednodes.", "member", _nodeAddress))), "Invalid trusted node");
-        _;
-    }

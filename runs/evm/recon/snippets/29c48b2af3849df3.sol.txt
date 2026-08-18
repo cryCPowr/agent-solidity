@@ -1,0 +1,4 @@
+constructor(address _mailbox) {
+        mailbox = _mailbox;
+        canReceive = true;
+    }

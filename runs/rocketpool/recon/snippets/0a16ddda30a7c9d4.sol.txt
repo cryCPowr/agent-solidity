@@ -1,1 +1,0 @@
-setBool(keccak256(abi.encodePacked("rpl.locking.allowed", _nodeAddress)), _allowed)

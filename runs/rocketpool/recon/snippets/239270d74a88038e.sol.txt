@@ -1,3 +1,0 @@
-if (rplAmount > allottedAmount) {
-            rplAmount = allottedAmount;
-        }

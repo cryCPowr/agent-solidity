@@ -1,1 +1,0 @@
-require(spender != address(0), "ERC20: approve to the zero address")

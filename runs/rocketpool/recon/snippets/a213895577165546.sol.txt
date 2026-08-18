@@ -1,1 +1,0 @@
-require(block.timestamp > validator.lastAssignmentTime + timeBeforeDissolve, "Not enough time has passed")

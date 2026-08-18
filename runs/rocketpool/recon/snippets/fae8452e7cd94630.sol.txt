@@ -1,1 +1,0 @@
-ProposalFinalised(_proposalID, tx.origin, block.timestamp)

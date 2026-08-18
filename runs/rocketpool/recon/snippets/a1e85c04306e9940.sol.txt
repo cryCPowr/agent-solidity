@@ -1,1 +1,0 @@
-if (index < 0) { index += int(capacity); }

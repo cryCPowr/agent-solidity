@@ -1,1 +1,0 @@
-setSettingUint("proposal.veto.quorum", 0.20 ether)

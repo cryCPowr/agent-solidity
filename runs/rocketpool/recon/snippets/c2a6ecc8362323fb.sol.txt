@@ -1,1 +1,0 @@
-event ProposalDestroyed(uint256 indexed proposalID, uint256 time);

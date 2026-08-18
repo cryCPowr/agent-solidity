@@ -1,3 +1,0 @@
-if (getBool(keccak256(abi.encodePacked("megapool.exists", contractAddress)))) {
-            return contractAddress;
-        }

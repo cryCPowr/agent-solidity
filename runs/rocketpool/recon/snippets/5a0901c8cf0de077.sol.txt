@@ -1,8 +1,0 @@
-function veto(uint256 _upgradeProposalID) override external onlyLatestContract("rocketDAOSecurityUpgrade", msg.sender) {
-        // Validate proposal state
-        require(getState(_upgradeProposalID) == UpgradeProposalState.Pending, "Proposal has already succeeded, expired, or executed");
-        // Mark the upgrade as vetoed
-        setBool(keccak256(abi.encodePacked(daoUpgradeNameSpace, "vetoed", _upgradeProposalID)), true);
-        // Emit event
-        emit UpgradeVetoed(_upgradeProposalID, block.timestamp);
-    }

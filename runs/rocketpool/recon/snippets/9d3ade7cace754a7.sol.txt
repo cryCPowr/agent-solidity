@@ -1,9 +1,0 @@
-constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
-        version = 2;
-        // Precompute keys
-        typeUpgradeContract = keccak256(abi.encodePacked("upgradeContract"));
-        typeAddContract = keccak256(abi.encodePacked("addContract"));
-        typeUpgradeABI = keccak256(abi.encodePacked("upgradeABI"));
-        typeAddABI = keccak256(abi.encodePacked("addABI"));
-        daoTrustedBootstrapKey = keccak256(abi.encodePacked("dao.trustednodes.", "bootstrapmode.disabled"));
-    }

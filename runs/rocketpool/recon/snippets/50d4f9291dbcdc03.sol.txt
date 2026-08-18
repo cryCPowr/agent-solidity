@@ -1,4 +1,0 @@
-function withdrawCredit(uint256 _amount) override external onlyRegisteredNode(msg.sender) onlyThisLatestContract {
-        address withdrawalAddress = rocketStorage.getNodeWithdrawalAddress(msg.sender);
-        _withdrawCreditFor(msg.sender, withdrawalAddress, _amount);
-    }

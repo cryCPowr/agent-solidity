@@ -1,3 +1,0 @@
-if (periodsToPay + periodsPaid > numPeriods) {
-            periodsToPay = numPeriods - periodsPaid;
-        }

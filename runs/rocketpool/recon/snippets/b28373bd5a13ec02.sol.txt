@@ -1,1 +1,0 @@
-_setSettingUint("megapool.dissolve.penalty", 0.05 ether)

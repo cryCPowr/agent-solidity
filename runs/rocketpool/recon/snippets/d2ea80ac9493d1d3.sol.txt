@@ -1,4 +1,0 @@
-function setSettingAddress(string memory _settingPath, address _value) virtual external override onlyDAOProtocolProposal {
-        // Update setting now
-        setAddress(keccak256(abi.encodePacked(settingNameSpace, _settingPath)), _value);
-    }

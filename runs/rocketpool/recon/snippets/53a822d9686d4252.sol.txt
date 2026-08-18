@@ -1,1 +1,0 @@
-require(result, "Failed to withdraw ETH")

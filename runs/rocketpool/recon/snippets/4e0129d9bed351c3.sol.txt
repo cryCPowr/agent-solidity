@@ -1,1 +1,0 @@
-function getExecuted(uint256 _upgradeProposalID) external view returns (bool);

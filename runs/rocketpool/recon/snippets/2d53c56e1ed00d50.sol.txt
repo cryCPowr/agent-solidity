@@ -1,1 +1,0 @@
-function removeItem(bytes32 _namespace, DepositQueueKey memory _key) external;

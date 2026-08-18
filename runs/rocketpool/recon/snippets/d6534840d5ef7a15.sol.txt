@@ -1,1 +1,0 @@
-require(validator.staked || validator.dissolved, "Not staking or dissolved")

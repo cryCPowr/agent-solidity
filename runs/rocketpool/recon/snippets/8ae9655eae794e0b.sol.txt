@@ -1,1 +1,0 @@
-require(_callerAllowedFor(msg.sender), "Not allowed to stake for")

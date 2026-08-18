@@ -87,10 +87,22 @@ def write_output(results: list[Verdict], attacks: list[dict[str, Any]],
             f.write(json.dumps(record) + "\n")
 
     counts = {CONFIRM: 0, REJECT: 0, INCONCLUSIVE: 0}
+    readiness_counts: dict[str, int] = {}
+    executed = 0
+    blocked = 0
     for verdict in results:
         counts[verdict.verdict] = counts.get(verdict.verdict, 0) + 1
+        readiness = verdict.readiness or "READY"
+        readiness_counts[readiness] = readiness_counts.get(readiness, 0) + 1
+        if readiness == "READY":
+            executed += 1
+        else:
+            blocked += 1
     summary = {
         "validated_attacks": len(results),
+        "executed_attacks": executed,
+        "blocked_attacks": blocked,
+        "readiness_counts": readiness_counts,
         "verdict_counts": counts,
         "attack_summary_source": attack_dir,
         "confirmed": [

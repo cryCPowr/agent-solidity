@@ -1,3 +1,0 @@
-function getValidatorCount() override external view returns (uint256) {
-        return getUint(setCountKey);
-    }

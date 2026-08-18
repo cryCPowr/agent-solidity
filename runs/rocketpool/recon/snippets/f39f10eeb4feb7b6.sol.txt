@@ -1,1 +1,0 @@
-require(rethAmount > 0, "Invalid token mint amount")

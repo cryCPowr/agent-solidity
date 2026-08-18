@@ -1,3 +1,0 @@
-function getMemberMinRequired() override external pure returns (uint256) {
-        return daoMemberMinCount;
-    }

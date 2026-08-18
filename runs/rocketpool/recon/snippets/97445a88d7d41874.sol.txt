@@ -1,1 +1,0 @@
-int256(getBalance()) - int256(getNodeBalance())

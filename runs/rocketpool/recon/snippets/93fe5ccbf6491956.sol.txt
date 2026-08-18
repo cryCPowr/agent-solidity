@@ -1,1 +1,0 @@
-lastDistributionTime != 0

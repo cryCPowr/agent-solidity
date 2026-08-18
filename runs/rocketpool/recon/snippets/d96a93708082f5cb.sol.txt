@@ -1,1 +1,0 @@
-event BootstrapSpendTreasury(string invoiceID, address recipientAddress, uint256 amount, uint256 time);

@@ -1,1 +1,0 @@
-event PenaltyApplied(address indexed megapool, uint256 block, uint256 amount, uint256 time);

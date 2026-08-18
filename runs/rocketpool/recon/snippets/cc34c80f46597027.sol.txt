@@ -1,1 +1,0 @@
-function getEthValue(uint256 _rethAmount) external view returns (uint256);

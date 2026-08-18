@@ -1,1 +1,0 @@
-require(nodeRefundBalance > 0, "No amount of the node deposit is available for refund")

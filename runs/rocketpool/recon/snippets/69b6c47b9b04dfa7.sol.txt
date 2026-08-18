@@ -1,1 +1,0 @@
-require(value >= 0, "SafeCast: value must be positive")

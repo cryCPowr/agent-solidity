@@ -1,5 +1,0 @@
-if (shortfall > toNode) {
-                        toNode = 0;
-                    } else {
-                        toNode -= shortfall;
-                    }

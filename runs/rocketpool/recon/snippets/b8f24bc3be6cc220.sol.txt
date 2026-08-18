@@ -1,1 +1,0 @@
-_verifyClaim(_nodeAddress, _claims)

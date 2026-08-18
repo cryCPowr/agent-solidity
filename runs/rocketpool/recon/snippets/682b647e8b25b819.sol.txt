@@ -1,3 +1,0 @@
-function getSettingUint(string memory _settingPath) public view override returns (uint256) {
-        return getUint(keccak256(abi.encodePacked(settingNameSpace, _settingPath)));
-    }

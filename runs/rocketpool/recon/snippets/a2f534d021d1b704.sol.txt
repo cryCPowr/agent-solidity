@@ -1,1 +1,0 @@
-event MegapoolDebtReduced(uint256 amount, uint256 time);

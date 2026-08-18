@@ -12,6 +12,11 @@ from .context import ProjectContext
 from .inventory import ContractUnit, canonical_signature
 from .models import Fact, GraphEdge, GraphNode
 
+_PROXY_STATE_NAMES = {"implementation", "_implementation", "impl"}
+_UPGRADE_NAMES = {"upgradeto", "upgradeandcall", "setimplementation"}
+_INITIALIZER_NAMES = {"initialize", "initializer"}
+_INITIALIZED_STATE_NAMES = {"initialized", "_initialized", "isInitialized"}
+
 
 def contract_node_id(cu: ContractUnit) -> str:
     return ids.node_id("contract", cu.key)
@@ -155,6 +160,7 @@ def _emit_contract(ctx: ProjectContext, cu: ContractUnit) -> None:
         _emit_modifier(ctx, cu, mu, cnode_id)
     for fu in cu.functions:
         _emit_function(ctx, cu, fu, cnode_id)
+    _emit_proxy_upgradeability_facts(ctx, cu, cnode_id, src_ref, ev)
 
 
 def _emit_state_var(ctx, cu, sv, cnode_id) -> None:
@@ -306,6 +312,116 @@ def _emit_modifier(ctx, cu, mu, cnode_id) -> None:
             extraction_method="ast",
         )
     )
+
+
+def _emit_proxy_upgradeability_facts(ctx, cu, cnode_id, src_ref, ev) -> None:
+    impl_vars = [
+        sv for sv in cu.state_vars
+        if (sv.name or "").lower() in _PROXY_STATE_NAMES and "address" in (sv.type_string or "").lower()
+    ]
+    upgrade_functions = [
+        fu for fu in cu.functions
+        if (fu.name or "").lower() in _UPGRADE_NAMES
+    ]
+    initializer_functions = [
+        fu for fu in cu.functions
+        if (fu.name or "").lower() in _INITIALIZER_NAMES
+    ]
+    initialized_state_vars = [
+        sv for sv in cu.state_vars
+        if (sv.name or "") in _INITIALIZED_STATE_NAMES
+    ]
+    fallback_functions = [
+        fu for fu in cu.functions
+        if fu.kind in ("fallback", "receive") or (fu.name or "").lower() in ("fallback", "receive")
+    ]
+    delegatecall_functions = []
+
+    proxy_like = bool(impl_vars and (upgrade_functions or fallback_functions))
+    if proxy_like:
+        ctx.add_fact(
+            Fact(
+                id=ids.fact_id("proxy_like_contract", cu.file, f"{cu.ast_id}:proxy_like"),
+                type="proxy_like_contract",
+                status="observed",
+                subject={"contract": cu.key, "name": cu.name},
+                properties={
+                    "implementation_slots": [sv.key for sv in impl_vars],
+                    "upgrade_functions": [fu.key for fu in upgrade_functions],
+                    "fallback_functions": [fu.key for fu in fallback_functions],
+                    "delegatecall_functions": [fu.key for fu in delegatecall_functions],
+                    "initializer_functions": [fu.key for fu in initializer_functions],
+                    "initialized_state_variables": [sv.key for sv in initialized_state_vars],
+                },
+                source=src_ref,
+                evidence=[ev] if ev else [],
+                confidence="medium",
+                extraction_method="ast+heuristic",
+            )
+        )
+
+    for sv in impl_vars:
+        ctx.add_fact(
+            Fact(
+                id=ids.fact_id("implementation_slot", sv.file, sv.ast_id),
+                type="implementation_slot",
+                status="observed",
+                subject={"contract": cu.key, "state_variable": sv.key, "name": sv.name},
+                properties={"type": sv.type_string},
+                source=ctx.source_ref(sv.file, sv.node),
+                evidence=[ctx.make_evidence(sv.file, sv.node)] if ctx.make_evidence(sv.file, sv.node) else [],
+                confidence="high",
+                extraction_method="ast",
+            )
+        )
+
+    for fu in upgrade_functions:
+        ctx.add_fact(
+            Fact(
+                id=ids.fact_id("upgrade_function", fu.file, fu.ast_id),
+                type="upgrade_function",
+                status="observed",
+                subject={"contract": cu.key, "function": fu.key, "name": fu.name},
+                properties={"signature": canonical_signature(fu)},
+                source=ctx.source_ref(fu.file, fu.node),
+                evidence=[ctx.make_evidence(fu.file, fu.node)] if ctx.make_evidence(fu.file, fu.node) else [],
+                confidence="high",
+                extraction_method="ast",
+            )
+        )
+
+    for fu in initializer_functions:
+        ctx.add_fact(
+            Fact(
+                id=ids.fact_id("initializer_function", fu.file, fu.ast_id),
+                type="initializer_function",
+                status="observed",
+                subject={"contract": cu.key, "function": fu.key, "name": fu.name},
+                properties={"signature": canonical_signature(fu)},
+                source=ctx.source_ref(fu.file, fu.node),
+                evidence=[ctx.make_evidence(fu.file, fu.node)] if ctx.make_evidence(fu.file, fu.node) else [],
+                confidence="high",
+                extraction_method="ast",
+            )
+        )
+
+    for fu in [f for f in cu.functions if f.kind == "constructor"]:
+        ctx.add_fact(
+            Fact(
+                id=ids.fact_id("constructor_function", fu.file, fu.ast_id),
+                type="constructor_function",
+                status="observed",
+                subject={"contract": cu.key, "function": fu.key, "name": fu.name},
+                properties={"signature": canonical_signature(fu)},
+                source=ctx.source_ref(fu.file, fu.node),
+                evidence=[ctx.make_evidence(fu.file, fu.node)] if ctx.make_evidence(fu.file, fu.node) else [],
+                confidence="high",
+                extraction_method="ast",
+            )
+        )
+
+
+
 
 
 def _emit_function(ctx, cu, fu, cnode_id) -> None:

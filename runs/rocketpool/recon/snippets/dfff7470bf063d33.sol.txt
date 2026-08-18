@@ -1,7 +1,0 @@
-if (_nodeDemand < 0) {
-            nNodeDemand = uint256(-_nodeDemand);
-            nNodeDemandSign = false;
-        } else {
-            nNodeDemand = uint256(_nodeDemand);
-            nNodeDemandSign = true;
-        }

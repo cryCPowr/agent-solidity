@@ -1,3 +1,0 @@
-function _getChallengeState(uint256 _data) internal pure returns (Types.ChallengeState) {
-        return Types.ChallengeState(uint8(_data >> stateOffset));
-    }

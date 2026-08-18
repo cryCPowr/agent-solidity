@@ -1,4 +1,0 @@
-function proposalVeto(uint256 _upgradeProposalID) override public onlyExecutingContracts {
-        RocketDAONodeTrustedUpgradeInterface rocketDAONodeTrustedUpgrade = RocketDAONodeTrustedUpgradeInterface(getContractAddress("rocketDAONodeTrustedUpgrade"));
-        rocketDAONodeTrustedUpgrade.veto(_upgradeProposalID);
-    }

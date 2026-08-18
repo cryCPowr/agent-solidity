@@ -1,1 +1,0 @@
-require(_verifyProof(_nodeAddress, _claim[i]), "Invalid proof")

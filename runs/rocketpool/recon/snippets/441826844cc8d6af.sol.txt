@@ -1,5 +1,0 @@
-function getClaimIntervalTime() override public view returns (uint256) {
-        // Get from the DAO settings
-        RocketDAOProtocolSettingsRewardsInterface daoSettingsRewards = RocketDAOProtocolSettingsRewardsInterface(getContractAddress("rocketDAOProtocolSettingsRewards"));
-        return daoSettingsRewards.getRewardsClaimIntervalTime();
-    }

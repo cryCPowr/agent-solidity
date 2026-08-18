@@ -1,8 +1,0 @@
-function getProxyAddress(address _nodeAddress) override external view returns(address) {
-        bytes memory contractCode = getProxyBytecode();
-        bytes memory initCode = abi.encodePacked(contractCode, abi.encode(_nodeAddress, rocketStorage));
-
-        bytes32 hash = keccak256(abi.encodePacked(bytes1(0xff), address(this), uint256(0), keccak256(initCode)));
-
-        return address(uint160(uint(hash)));
-    }

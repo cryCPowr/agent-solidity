@@ -1,6 +1,0 @@
-function getQueueNamespace(bool _expressQueue) internal pure returns (bytes32) {
-        if (_expressQueue) {
-            return expressQueueNamespace;
-        }
-        return standardQueueNamespace;
-    }

@@ -1,5 +1,0 @@
-function isWithinBondReductionWindow(uint256 _time) override external view returns (bool) {
-        uint256 start = getBondReductionWindowStart();
-        uint256 length = getBondReductionWindowLength();
-        return (_time >= start && _time < (start.add(length)));
-    }

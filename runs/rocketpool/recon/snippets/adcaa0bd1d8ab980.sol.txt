@@ -1,3 +1,0 @@
-function setDisabled(bool _disabled) external {
-        disabled = _disabled;
-    }

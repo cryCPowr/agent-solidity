@@ -1,1 +1,0 @@
-require(rocketMinipoolDelegatePrev != address(0x0), "Previous delegate contract is not set")

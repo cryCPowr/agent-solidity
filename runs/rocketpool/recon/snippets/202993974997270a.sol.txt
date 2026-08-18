@@ -1,4 +1,0 @@
-modifier onlyRegisteredNode(address _nodeAddress) {
-        require(getBool(keccak256(abi.encodePacked("node.exists", _nodeAddress))), "Invalid node");
-        _;
-    }

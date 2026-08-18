@@ -1,1 +1,0 @@
-setAddress(bytes32(proposalKey + proposerOffset), _proposer)

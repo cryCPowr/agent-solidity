@@ -1,1 +1,0 @@
-rocketStorage.deleteBytes(_key)

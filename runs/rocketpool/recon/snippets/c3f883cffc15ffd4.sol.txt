@@ -1,1 +1,0 @@
-setUint(keccak256(abi.encodePacked("node.eth.balance", _nodeAddress)), balance - _amount)

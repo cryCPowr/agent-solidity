@@ -35,7 +35,11 @@ class AttackSurface:
 
 
 def build_surfaces(recon: loader.ReconArtifact) -> list[AttackSurface]:
-    """Cluster Recon facts into Attack Surfaces."""
+    """Cluster Recon facts into Attack Surfaces.
+
+    Surfaces remain structural: they describe reachable security-relevant
+    protocol areas and observed authority boundaries, not exploitability.
+    """
     surfaces: dict[str, AttackSurface] = {}
 
     def _ensure(category: str, desc: str) -> AttackSurface:
@@ -46,6 +50,10 @@ def build_surfaces(recon: loader.ReconArtifact) -> list[AttackSurface]:
                 description=desc,
             )
         return surfaces[category]
+
+    def _protocol_contracts() -> list[dict[str, Any]]:
+        contracts = recon.protocol.raw.get("contracts")
+        return contracts if isinstance(contracts, list) else []
 
     # --- 1. Asset Movement Surface ---
     asset_ops = recon.facts_obj.by_type.get("asset_operation", [])
@@ -104,8 +112,14 @@ def build_surfaces(recon: loader.ReconArtifact) -> list[AttackSurface]:
     # --- 5. Lifecycle / Initialization Surface ---
     creations = recon.facts_obj.by_type.get("contract_creation", [])
     selfdestructs = recon.facts_obj.by_type.get("selfdestruct_call", [])
-    if creations or selfdestructs:
-        s = _ensure("Lifecycle", "Contract creation or destruction events")
+    initializer_functions = recon.facts_obj.by_type.get("initializer_function", [])
+    initializer_surfaces = recon.facts_obj.by_type.get("initializer_surface", [])
+    initializer_lifecycles = recon.facts_obj.by_type.get("initializer_lifecycle", [])
+    if creations or selfdestructs or initializer_functions or initializer_surfaces or initializer_lifecycles:
+        s = _ensure(
+            "Lifecycle",
+            "Contract creation, initialization, or destruction surfaces that affect deployment-time state",
+        )
         for f in creations:
             s.functions.append(f["subject"]["function"])
             s.evidence_fact_ids.append(f["id"])
@@ -113,25 +127,91 @@ def build_surfaces(recon: loader.ReconArtifact) -> list[AttackSurface]:
             s.functions.append(f["subject"]["function"])
             s.evidence_fact_ids.append(f["id"])
             s.capabilities.append("can_selfdestruct")
+        for f in initializer_functions:
+            s.functions.append(f["subject"].get("function", ""))
+            s.evidence_fact_ids.append(f["id"])
+            s.capabilities.append("has_initializer")
+        for f in initializer_surfaces:
+            s.functions.append(f["subject"].get("function", ""))
+            s.evidence_fact_ids.append(f["id"])
+            props = f.get("properties", {})
+            if props.get("authorization_status") == "none_observed":
+                s.capabilities.append("initializer_without_observed_authorization")
+            if props.get("writes_initialized_flag"):
+                s.capabilities.append("initializer_writes_initialized_flag")
+        for f in initializer_lifecycles:
+            s.evidence_fact_ids.append(f["id"])
+            s.capabilities.append("has_initializer_lifecycle_model")
 
     # --- 6. Upgradeability Surface ---
-    # Heuristic: functions named upgradeTo, setImplementation, etc.
-    # or using proxy delegatecall patterns.
-    for fact in recon.facts_obj.facts:
-        if fact["type"] == "function_exists":
-            name = fact["properties"].get("name", "").lower()
-            if any(x in name for x in ("upgrade", "implementation", "proxy")):
-                s = _ensure("Upgradeability", "Components related to contract logic upgrades or proxies")
-                s.functions.append(fact["subject"]["function"])
-                s.evidence_fact_ids.append(fact["id"])
+    proxy_like = recon.facts_obj.by_type.get("proxy_like_contract", [])
+    upgrade_functions = recon.facts_obj.by_type.get("upgrade_function", [])
+    upgrade_authorities = recon.facts_obj.by_type.get("upgrade_authority", [])
+    delegatecall_paths = recon.facts_obj.by_type.get("proxy_delegatecall_path", [])
+    if proxy_like or upgrade_functions or upgrade_authorities or delegatecall_paths:
+        s = _ensure(
+            "Upgradeability",
+            "Components related to proxy patterns, delegatecall-based execution, and logic upgrades",
+        )
+        for f in proxy_like:
+            s.evidence_fact_ids.append(f["id"])
+            s.capabilities.append("proxy_like_contract")
+        for f in upgrade_functions:
+            s.functions.append(f["subject"].get("function", ""))
+            s.evidence_fact_ids.append(f["id"])
+            s.capabilities.append("has_upgrade_function")
+        for f in upgrade_authorities:
+            s.functions.append(f["subject"].get("function", ""))
+            s.evidence_fact_ids.append(f["id"])
+            s.capabilities.append("has_observed_upgrade_authority")
+        for f in delegatecall_paths:
+            s.functions.append(f["subject"].get("function", ""))
+            s.evidence_fact_ids.append(f["id"])
+            s.capabilities.append("proxy_delegatecall_path")
+            s.cross_contract_reach = True
+
+        # Supplement function inventory from protocol.json when available.
+        for contract in _protocol_contracts():
+            proxy = (contract.get("proxy_upgradeability") or {})
+            if proxy.get("proxy_like"):
+                s.capabilities.append("proxy_like_contract")
+            for fn in proxy.get("upgrade_functions") or []:
+                s.functions.append(fn)
+            for fn in proxy.get("initializer_functions") or []:
+                s.functions.append(fn)
+            if proxy.get("delegatecall_paths"):
+                s.cross_contract_reach = True
+
+    # --- 7. Authority / Capability Surface ---
+    authority_surfaces = recon.facts_obj.by_type.get("capability_authority_surface", [])
+    if authority_surfaces:
+        s = _ensure(
+            "Authority and Capability",
+            "Observed capabilities together with their current authorization surfaces",
+        )
+        for f in authority_surfaces:
+            fn = f["subject"].get("function", "")
+            cap = f["subject"].get("capability", "")
+            props = f.get("properties", {})
+            if fn:
+                s.functions.append(fn)
+            s.evidence_fact_ids.append(f["id"])
+            if cap:
+                s.capabilities.append(cap)
+            if props.get("authority_status") == "guarded":
+                s.capabilities.append("capability_with_observed_authorization")
+            else:
+                s.capabilities.append("capability_without_observed_authorization")
+            if props.get("writes_authorization_state"):
+                s.capabilities.append("writes_authorization_state")
 
     # Clean up and dedupe
     result = list(surfaces.values())
     for s in result:
-        s.functions = sorted(set(s.functions))
-        s.assets = sorted(set(s.assets))
-        s.capabilities = sorted(set(s.capabilities))
-        s.evidence_fact_ids = sorted(set(s.evidence_fact_ids))
+        s.functions = sorted({fn for fn in s.functions if fn})
+        s.assets = sorted({asset for asset in s.assets if asset})
+        s.capabilities = sorted({cap for cap in s.capabilities if cap})
+        s.evidence_fact_ids = sorted({fid for fid in s.evidence_fact_ids if fid})
         # Entrypoints are just the functions that are also entrypoints in actor model
         # but for simplicity we list all associated functions here.
         s.entrypoints = s.functions

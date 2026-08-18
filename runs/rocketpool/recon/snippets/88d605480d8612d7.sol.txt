@@ -1,1 +1,0 @@
-function getMinipoolPubkey(address _minipoolAddress) external view returns (bytes memory);

@@ -1,1 +1,0 @@
-require(assignedValue == 0, "Cannot reduce bond with prestaked validators")

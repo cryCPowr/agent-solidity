@@ -1,1 +1,0 @@
-_value >= (rocketDAONodeTrustedSettingsMinipool.getScrubPeriod() + 1 hours)

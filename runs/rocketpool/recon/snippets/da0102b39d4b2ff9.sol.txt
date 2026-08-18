@@ -1,6 +1,0 @@
-function getBaseBondArray() override public pure returns (uint256[] memory) {
-        uint256[] memory amounts = new uint256[](2);
-        amounts[0] = 4 ether;
-        amounts[1] = 8 ether;
-        return amounts;
-    }

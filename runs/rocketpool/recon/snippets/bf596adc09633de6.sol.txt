@@ -1,1 +1,0 @@
-getLotAddressBidAmount(_lotIndex, msg.sender)

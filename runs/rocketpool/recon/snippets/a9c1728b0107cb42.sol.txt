@@ -1,1 +1,0 @@
-function getRefundValue() external view returns (uint256);

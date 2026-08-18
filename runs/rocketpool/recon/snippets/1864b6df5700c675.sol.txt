@@ -1,1 +1,0 @@
-SSZ.restoreMerkleRoot(leaf, SSZ.toIndex(path), _proof.witnesses)

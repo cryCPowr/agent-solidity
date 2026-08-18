@@ -1,1 +1,0 @@
-function getAddress(bytes32 _key) internal view returns (address) { return rocketStorage.getAddress(_key); }

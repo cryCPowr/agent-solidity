@@ -1,1 +1,0 @@
-function signerToNode(address) external view returns (address);

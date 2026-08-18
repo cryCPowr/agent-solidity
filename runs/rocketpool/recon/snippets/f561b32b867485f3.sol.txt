@@ -1,3 +1,0 @@
-function getCount(bytes32 _key) override external view returns (uint) {
-        return getUint(keccak256(abi.encodePacked(_key, ".count")));
-    }

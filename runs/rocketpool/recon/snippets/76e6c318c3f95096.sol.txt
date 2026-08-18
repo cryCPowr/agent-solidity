@@ -1,6 +1,0 @@
-function actionKickMulti(address[] calldata _memberAddresses) override external onlyLatestContract("rocketDAOSecurityProposals", msg.sender) {
-        // Remove the members
-        for (uint256 i = 0; i < _memberAddresses.length; ++i) {
-            actionKick(_memberAddresses[i]);
-        }
-    }

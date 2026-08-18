@@ -1,1 +1,0 @@
-abi.encodePacked("rpl.locked.node.amount", _nodeAddress)

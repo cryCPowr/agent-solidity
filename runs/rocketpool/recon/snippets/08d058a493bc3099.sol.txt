@@ -1,1 +1,0 @@
-require(_value > 0, "Rate must be greater than 0")

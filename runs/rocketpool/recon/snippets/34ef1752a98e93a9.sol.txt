@@ -1,1 +1,0 @@
-effectiveBond > newBondRequirement

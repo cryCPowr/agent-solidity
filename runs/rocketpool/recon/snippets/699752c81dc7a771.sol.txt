@@ -1,1 +1,0 @@
-if (_depositType == MinipoolDeposit.Full) { return dequeueMinipool(queueKeyFull); }

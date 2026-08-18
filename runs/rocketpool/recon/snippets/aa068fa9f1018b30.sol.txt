@@ -1,1 +1,0 @@
-mapping(uint256 => bytes32) internal beaconRoots

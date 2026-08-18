@@ -1,7 +1,0 @@
-function getNode(uint256 _proposalID, uint256 _index) public view returns (Types.Node memory) {
-        uint256 challengeKey = uint256(keccak256(abi.encodePacked("dao.protocol.proposal.challenge", _proposalID, _index)));
-        Types.Node memory node;
-        node.sum = getUint(bytes32(challengeKey + sumOffset));
-        node.hash = getBytes32(bytes32(challengeKey + hashOffset));
-        return node;
-    }

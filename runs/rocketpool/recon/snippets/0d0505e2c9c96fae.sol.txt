@@ -1,3 +1,0 @@
-function getMaximumDepositAssignments() override external view returns (uint256) {
-        return getSettingUint("deposit.assign.maximum");
-    }

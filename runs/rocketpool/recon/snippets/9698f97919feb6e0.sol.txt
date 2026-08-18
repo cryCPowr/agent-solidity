@@ -1,1 +1,0 @@
-_megapool.stake(_validatorId)

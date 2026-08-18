@@ -1,0 +1,3 @@
+function withdrawFee() external {
+        IMailboxWithdrawFee(mailbox).withdrawFee();
+    }

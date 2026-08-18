@@ -1,3 +1,0 @@
-for (uint256 i = 0; i < _memberAddresses.length; ++i) {
-            require(daoSecurity.getMemberIsValid(_memberAddresses[i]), "This node is not part of the security council");
-        }

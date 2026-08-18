@@ -1,1 +1,0 @@
-setPricesBlock(_block)

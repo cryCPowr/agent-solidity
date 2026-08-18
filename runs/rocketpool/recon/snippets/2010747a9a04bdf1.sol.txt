@@ -1,3 +1,0 @@
-function getDeployedStatus() external override view returns (bool) {
-        return storageInit;
-    }

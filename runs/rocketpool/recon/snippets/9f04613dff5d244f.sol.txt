@@ -1,1 +1,0 @@
-ChallengeSubmitted(_proposalID, msg.sender, _index, block.timestamp)

@@ -1,3 +1,0 @@
-function removeItem(bytes32 _namespace,  DepositQueueKey memory _key) public virtual override {
-        return _removeItem(_namespace, _key);
-    }

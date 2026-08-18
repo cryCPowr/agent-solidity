@@ -1,1 +1,0 @@
-require(bidAmount > 0, "Address has no RPL to claim")

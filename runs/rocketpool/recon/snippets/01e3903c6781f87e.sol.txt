@@ -1,4 +1,0 @@
-function proposalSettingBool(string memory _settingNameSpace, string memory _settingPath, bool _value) override public onlyExecutingContracts() onlyValidSetting(_settingNameSpace, _settingPath) {
-        bytes32 namespace = keccak256(abi.encodePacked(protocolDaoSettingNamespace, _settingNameSpace));
-        setBool(keccak256(abi.encodePacked(namespace, _settingPath)), _value);
-    }

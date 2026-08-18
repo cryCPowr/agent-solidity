@@ -1,1 +1,0 @@
-function getOutstandingEth(address _address) external view returns (uint256);

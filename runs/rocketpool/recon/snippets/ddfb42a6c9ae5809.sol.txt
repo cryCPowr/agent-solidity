@@ -1,8 +1,0 @@
-function div(int256 a, int256 b) internal pure returns (int256) {
-        require(b != 0, "SignedSafeMath: division by zero");
-        require(!(b == -1 && a == _INT256_MIN), "SignedSafeMath: division overflow");
-
-        int256 c = a / b;
-
-        return c;
-    }

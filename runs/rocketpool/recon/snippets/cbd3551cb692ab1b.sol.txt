@@ -1,1 +1,0 @@
-function getExitingValidatorCount() external view returns (uint32);

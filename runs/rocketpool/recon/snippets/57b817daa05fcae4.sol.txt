@@ -1,3 +1,0 @@
-assembly {
-            _returnData := add(_returnData, 0x04)
-        }

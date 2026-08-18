@@ -1,5 +1,0 @@
-function _merkleiseWithdrawal(Withdrawal calldata _withdrawal) internal view returns (bytes32) {
-        bytes32 left = SSZ.efficientSha256(SSZ.toLittleEndian(_withdrawal.index), SSZ.toLittleEndian(_withdrawal.validatorIndex));
-        bytes32 right = SSZ.efficientSha256(_withdrawal.withdrawalCredentials, SSZ.toLittleEndian(_withdrawal.amountInGwei));
-        return SSZ.efficientSha256(left, right);
-    }

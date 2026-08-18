@@ -1,1 +1,0 @@
-require(_from != _to, "Cannot transfer to same address")

@@ -1,1 +1,0 @@
-_verifyCallResult(success, returndata, errorMessage)

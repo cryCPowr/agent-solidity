@@ -1,1 +1,0 @@
-_previousBond == 16 ether

@@ -1,8 +1,0 @@
-function destroy(uint256 _proposalID) override external onlyLatestContract("rocketDAOProtocolProposal", address(this)) onlyLatestContract("rocketDAOProtocolVerifier", msg.sender) {
-        // Cancel the proposal
-        bytes32 destroyedKey = keccak256(abi.encodePacked(daoProposalNameSpace, "destroyed", _proposalID));
-        require(getBool(destroyedKey) == false, "Proposal already destroyed");
-        setBool(destroyedKey, true);
-        // Log it
-        emit ProposalDestroyed(_proposalID, block.timestamp);
-    }

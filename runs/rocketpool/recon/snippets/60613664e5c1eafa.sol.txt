@@ -1,7 +1,0 @@
-fallback(bytes calldata _input) external returns (bytes memory) {
-        uint256 timestamp = abi.decode(_input, (uint256));
-        if (beaconRoots[timestamp] != 0) {
-            return abi.encode(beaconRoots[timestamp]);
-        }
-        revert();
-    }

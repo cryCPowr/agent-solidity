@@ -1,1 +1,0 @@
-require(vacant, "Cannot promote a non-vacant minipool")

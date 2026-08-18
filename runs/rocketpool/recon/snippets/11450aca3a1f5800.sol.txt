@@ -1,1 +1,0 @@
-require(bytes(existingAbi).length == 0, "Contract name is already in use")

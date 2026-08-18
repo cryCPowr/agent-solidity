@@ -1,4 +1,0 @@
-function bootstrapSecurityKick(address _memberAddress) override external onlyGuardian onlyBootstrapMode onlyLatestContract("rocketDAOProtocol", address(this)) {
-        RocketDAOProtocolProposalsInterface(getContractAddress("rocketDAOProtocolProposals")).proposalSecurityKick(_memberAddress);
-        emit BootstrapSecurityKick(_memberAddress, block.timestamp);
-    }

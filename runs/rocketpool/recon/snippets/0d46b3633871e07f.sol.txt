@@ -1,4 +1,0 @@
-modifier onlyAllowListedController() {
-        require(isAllowListedController(msg.sender), "Not on allow list");
-        _;
-    }

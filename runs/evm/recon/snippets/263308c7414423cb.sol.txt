@@ -1,0 +1,1 @@
+function isOperationPending(bytes32 id) external view returns (bool);

@@ -1,1 +1,0 @@
-function getState(uint256 _proposalID) external view returns (ProposalState);

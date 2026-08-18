@@ -1,3 +1,0 @@
-if (!success) {
-            revert(getRevertMessage(data));
-        }

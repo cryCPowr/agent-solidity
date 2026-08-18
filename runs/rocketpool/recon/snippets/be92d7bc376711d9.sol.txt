@@ -1,1 +1,0 @@
-emit NodeSmoothingPoolStateChanged(msg.sender, _state)

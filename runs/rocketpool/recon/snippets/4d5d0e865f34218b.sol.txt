@@ -1,1 +1,0 @@
-setSettingBool("auction.lot.create.enabled", true)

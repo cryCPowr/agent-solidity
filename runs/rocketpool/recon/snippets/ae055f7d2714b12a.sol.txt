@@ -1,1 +1,0 @@
-_setSettingUint("network.node.fee.target", 0.15 ether)

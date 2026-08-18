@@ -1,1 +1,0 @@
-rounding == Rounding.Up && 10 ** result < value ? 1 : 0

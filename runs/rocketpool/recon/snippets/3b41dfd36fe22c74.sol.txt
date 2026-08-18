@@ -1,4 +1,0 @@
-if (rewardsRPL > 0) {
-                // RPL rewards are withdrawn from the vault directly to the relay
-                rocketVault.withdrawToken(address(relay), rplContract, rewardsRPL);
-            }

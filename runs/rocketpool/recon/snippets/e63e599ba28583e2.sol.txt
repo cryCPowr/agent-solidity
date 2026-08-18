@@ -1,1 +1,0 @@
-require(numExitingValidators == 0, "Pending validator exit")

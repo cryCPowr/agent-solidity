@@ -1,1 +1,0 @@
-emit DelegateRolledBack(originalDelegate, rocketMinipoolDelegate, block.timestamp)

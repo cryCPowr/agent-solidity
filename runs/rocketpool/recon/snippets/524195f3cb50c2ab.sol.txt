@@ -1,4 +1,0 @@
-if (withdrawalBlock == 0) {
-                // Record shortfall for slashing
-                nodeSlashBalance = userCapital.sub(_balance);
-            }

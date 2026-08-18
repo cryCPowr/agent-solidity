@@ -1,1 +1,0 @@
-keccak256(abi.encodePacked("rewards.pool.interval.execution.block", _interval))

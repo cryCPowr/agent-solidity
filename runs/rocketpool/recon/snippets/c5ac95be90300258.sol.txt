@@ -1,1 +1,0 @@
-require(_slot >= slotElectra, "Invalid proof")

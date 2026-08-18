@@ -1,8 +1,0 @@
-function getExpectedAddress(address _nodeAddress) override public view returns (address) {
-        // Ensure rocketMegapoolBase is setAddress
-        address rocketMegapoolProxy = getContractAddress("rocketMegapoolProxy");
-        // Calculate node specific salt value
-        bytes32 salt = keccak256(abi.encodePacked(_nodeAddress));
-        // Return expected address
-        return rocketMegapoolProxy.predictDeterministicAddress(salt, address(this));
-    }

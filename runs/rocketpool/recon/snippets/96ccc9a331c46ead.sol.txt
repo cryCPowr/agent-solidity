@@ -1,1 +1,0 @@
-event PricesUpdated(uint256 indexed block, uint256 slotTimestamp, uint256 rplPrice, uint256 time);

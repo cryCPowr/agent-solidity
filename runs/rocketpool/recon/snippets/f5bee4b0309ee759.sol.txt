@@ -1,1 +1,0 @@
-function getUserDistributeWindowLength() external view returns (uint256);

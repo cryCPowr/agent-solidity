@@ -1,1 +1,0 @@
-remainingRplAmount > 0

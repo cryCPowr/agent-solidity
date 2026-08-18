@@ -1,1 +1,0 @@
-function distributeBalance(bool _rewardsOnly) external;

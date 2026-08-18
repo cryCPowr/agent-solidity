@@ -1,1 +1,0 @@
-setUint(bytes32(contractKey + numPeriodsOffset), _numPeriods)

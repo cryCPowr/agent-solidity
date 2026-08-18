@@ -1,9 +1,0 @@
-function stake(RocketMegapoolInterface _megapool, uint32 _validatorId, uint64 _slotTimestamp, ValidatorProof calldata _validatorProof, SlotProof calldata _slotProof) override external onlyRegisteredMegapool(address(_megapool)) {
-        // Require a recent proof
-        require(_slotTimestamp + slotRecencyThreshold >= block.timestamp, "Slot proof too old");
-        // Verify state proofs
-        BeaconStateVerifierInterface beaconStateVerifier = BeaconStateVerifierInterface(getContractAddress("beaconStateVerifier"));
-        require(beaconStateVerifier.verifyValidator(_slotTimestamp, _slotProof.slot, _validatorProof), "Invalid validator proof");
-        require(beaconStateVerifier.verifySlot(_slotTimestamp, _slotProof), "Invalid slot proof");
-        bytes32 withdrawalCredentials = _megapo
-/* … truncated … */

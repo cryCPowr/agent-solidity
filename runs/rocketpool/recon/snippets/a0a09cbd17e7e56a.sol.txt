@@ -1,1 +1,0 @@
-function actionChallengeDecide(address _nodeAddress) external;

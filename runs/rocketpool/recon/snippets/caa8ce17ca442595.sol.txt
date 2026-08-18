@@ -1,1 +1,0 @@
-PricesUpdated(_block, _slotTimestamp, _rplPrice, block.timestamp)

@@ -1,1 +1,0 @@
-require(getState(_proposalID) == ProposalState.Pending || getState(_proposalID) == ProposalState.Active, "Proposal can only be cancelled if pending or active")

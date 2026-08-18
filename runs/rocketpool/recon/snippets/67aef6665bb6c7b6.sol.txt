@@ -1,5 +1,0 @@
-if (address(this).balance > targetCollateral) {
-                // Send that excess to deposit pool
-                uint256 excessCollateral = address(this).balance.sub(targetCollateral);
-                rocketDepositPool.recycleExcessCollateral{value: excessCollateral}();
-            }

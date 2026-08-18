@@ -1,1 +1,0 @@
-rethSupply == 0

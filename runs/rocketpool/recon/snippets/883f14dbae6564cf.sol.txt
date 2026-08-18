@@ -1,8 +1,0 @@
-function maybeAssignDeposits(uint256 _max) override external onlyThisLatestContract {
-        require(_max > 0, "Must assign at least 1");
-        RocketDAOProtocolSettingsDepositInterface rocketDAOProtocolSettingsDeposit = RocketDAOProtocolSettingsDepositInterface(getContractAddress("rocketDAOProtocolSettingsDeposit"));
-        if (!rocketDAOProtocolSettingsDeposit.getAssignDepositsEnabled()) {
-            return;
-        }
-        _assignDeposits(_max, rocketDAOProtocolSettingsDeposit);
-    }

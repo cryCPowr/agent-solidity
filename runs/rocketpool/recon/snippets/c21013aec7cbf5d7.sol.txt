@@ -1,4 +1,0 @@
-if (value >> 32 > 0) {
-                value >>= 32;
-                result += 4;
-            }

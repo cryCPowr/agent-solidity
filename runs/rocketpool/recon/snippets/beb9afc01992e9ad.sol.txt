@@ -1,5 +1,0 @@
-modifier onlyThisLatestContract() {
-        // Compiler can optimise out this keccak at compile time
-        require(address(this) == getAddress(keccak256("contract.addressrocketDepositPool")), "Invalid or outdated contract");
-        _;
-    }

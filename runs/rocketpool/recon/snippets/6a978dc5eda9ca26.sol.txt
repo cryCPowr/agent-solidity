@@ -1,1 +1,0 @@
-SSZ.toLittleEndian(_validator.effectiveBalance)

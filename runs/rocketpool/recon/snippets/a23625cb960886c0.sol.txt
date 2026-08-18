@@ -1,3 +1,0 @@
-function getRethCommission() override public view returns (uint256) {
-        return getNodeShare() + getVoterShare() + getProtocolDAOShare();
-    }

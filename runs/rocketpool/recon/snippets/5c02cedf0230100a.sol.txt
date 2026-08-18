@@ -1,1 +1,0 @@
-rocketDAONodeTrustedUpgrade.getState(_upgradeProposalID)

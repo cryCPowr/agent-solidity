@@ -1,1 +1,0 @@
-require(bytes(contractName).length > 0, "Contract not found")

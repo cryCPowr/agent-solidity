@@ -1,3 +1,0 @@
-function removeItem(bytes32 _namespace, DepositQueueKey memory _key) public virtual override onlyLatestContract("linkedListStorage", address(this)) onlyLatestNetworkContract {
-        _removeItem(_namespace, _key);
-    }

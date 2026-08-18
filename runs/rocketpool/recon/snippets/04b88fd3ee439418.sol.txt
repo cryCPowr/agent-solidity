@@ -1,1 +1,0 @@
-require(totalBalance < 8 ether, "Cannot reduce bond with balance of 8 ether or more")

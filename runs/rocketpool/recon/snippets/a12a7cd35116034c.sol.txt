@@ -1,4 +1,0 @@
-constructor (RocketStorageInterface _rocketStorage) {
-        self = address(this);
-        rocketStorage = _rocketStorage;
-    }

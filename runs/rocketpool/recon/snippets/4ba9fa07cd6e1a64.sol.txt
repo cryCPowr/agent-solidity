@@ -1,1 +1,0 @@
-lastDepositBlock > 0

@@ -1,1 +1,0 @@
-require(leaveAcceptedTime + rocketDAOProtocolSettingsSecurity.getActionTime() > block.timestamp, "This member has not been approved to leave or request has expired, please apply to leave again")

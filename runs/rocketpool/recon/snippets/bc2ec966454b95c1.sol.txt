@@ -1,6 +1,0 @@
-if(rplBondRefundAmount > 0) {
-            // Valid withdrawal address
-            require(_rplBondRefundAddress != address(0x0), "Member has not supplied a valid address for their RPL bond refund");
-            // Send tokens now
-            rocketVault.withdrawToken(_rplBondRefundAddress, IERC20(getContractAddress("rocketTokenRPL")), rplBondRefundAmount);
-        }

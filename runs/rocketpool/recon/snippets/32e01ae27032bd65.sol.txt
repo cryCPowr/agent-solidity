@@ -1,1 +1,0 @@
-require(getState(_proposalID) == ProposalState.Vetoed, "Proposal has not been vetoed")

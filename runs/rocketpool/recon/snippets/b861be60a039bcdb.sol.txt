@@ -1,3 +1,0 @@
-if (msg.value < totalBond) {
-            balanceToUse = _useCreditOrBalanceIfRequired(totalBond);
-        }

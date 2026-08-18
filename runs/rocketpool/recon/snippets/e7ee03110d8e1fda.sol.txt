@@ -1,6 +1,0 @@
-function increaseDepositCreditBalance(address _nodeAddress, uint256 _amount) override external onlyLatestContract("rocketNodeDeposit", address(this)) {
-        // Accept calls from registered minipools
-        require(getBool(keccak256(abi.encodePacked("minipool.exists", msg.sender))), "Invalid or outdated network contract");
-        // Increase credit balance
-        addUint(keccak256(abi.encodePacked("node.deposit.credit.balance", _nodeAddress)), _amount);
-    }

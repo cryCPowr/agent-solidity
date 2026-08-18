@@ -1,4 +1,0 @@
-constructor(RocketStorageInterface _rocketStorageAddress, uint256 _version) {
-        version = _version;
-        rocketStorage = _rocketStorageAddress;
-    }

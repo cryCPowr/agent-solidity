@@ -1,1 +1,0 @@
-setUint(keccak256(abi.encodePacked(daoProposalNameSpace, "votes.for", proposalID)), 0)

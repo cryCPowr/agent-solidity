@@ -126,4 +126,73 @@ def generate_invariants(recon: loader.ReconArtifact) -> list[InvariantCandidate]
             )
         )
 
+    # --- 5. Initialization Coherence Invariant ---
+    initializer_surfaces = recon.facts_obj.by_type.get("initializer_surface", [])
+    initializer_lifecycles = recon.facts_obj.by_type.get("initializer_lifecycle", [])
+    if initializer_surfaces or initializer_lifecycles:
+        funcs = sorted({
+            f["subject"].get("function", "")
+            for f in initializer_surfaces
+            if f["subject"].get("function")
+        })
+        facts = [f["id"] for f in initializer_surfaces + initializer_lifecycles]
+        candidates.append(
+            InvariantCandidate(
+                id=_next_id(),
+                category="initialization_coherence",
+                statement="Initialization routines must execute in the intended lifecycle order and must not remain unexpectedly callable after deployment.",
+                rationale="Recon observed initializer declarations and/or lifecycle modeling for the contract.",
+                involved_facts=facts,
+                involved_functions=funcs,
+                involved_assets=["deployment_state", "configuration_state"],
+                uncertainty="Recon models initializer structure and observed authorization surfaces, but not deployment sequencing or post-deploy reachability.",
+            )
+        )
+
+    # --- 6. Upgrade Authority Coherence Invariant ---
+    upgrade_functions = recon.facts_obj.by_type.get("upgrade_function", [])
+    upgrade_authorities = recon.facts_obj.by_type.get("upgrade_authority", [])
+    proxy_paths = recon.facts_obj.by_type.get("proxy_delegatecall_path", [])
+    if upgrade_functions or upgrade_authorities or proxy_paths:
+        funcs = sorted({
+            f["subject"].get("function", "")
+            for f in upgrade_functions + upgrade_authorities + proxy_paths
+            if f["subject"].get("function")
+        })
+        facts = [f["id"] for f in upgrade_functions + upgrade_authorities + proxy_paths]
+        candidates.append(
+            InvariantCandidate(
+                id=_next_id(),
+                category="upgrade_authority_coherence",
+                statement="Upgrade and delegatecall-controlled execution paths must remain constrained to the intended authority boundary and implementation source.",
+                rationale="Recon observed upgrade-related functions, authorities, or proxy delegatecall paths.",
+                involved_facts=facts,
+                involved_functions=funcs,
+                involved_assets=["implementation_address", "proxy_storage"],
+                uncertainty="Observed authorization on an upgrade path does not by itself prove the authority is immutable, reachable, or semantically correct.",
+            )
+        )
+
+    # --- 7. Capability / Authority Consistency Invariant ---
+    authority_surfaces = recon.facts_obj.by_type.get("capability_authority_surface", [])
+    if authority_surfaces:
+        funcs = sorted({
+            f["subject"].get("function", "")
+            for f in authority_surfaces
+            if f["subject"].get("function")
+        })
+        facts = [f["id"] for f in authority_surfaces]
+        candidates.append(
+            InvariantCandidate(
+                id=_next_id(),
+                category="capability_authority_consistency",
+                statement="Security-sensitive capabilities should remain consistent with their observed authorization boundary and should not unexpectedly rewrite authority state.",
+                rationale="Recon linked capability facts to observed authorization surfaces and authorization-state writes.",
+                involved_facts=facts,
+                involved_functions=funcs,
+                involved_assets=["authorization_state", "sensitive_capabilities"],
+                uncertainty="Threat significance depends on whether the capability is externally reachable and whether authority state transitions are intended.",
+            )
+        )
+
     return candidates

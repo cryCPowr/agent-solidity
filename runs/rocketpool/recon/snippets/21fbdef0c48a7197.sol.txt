@@ -1,1 +1,0 @@
-function getFinalised(uint256 _proposalID) external view returns (bool);

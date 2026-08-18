@@ -1,1 +1,0 @@
-_memberAdd(_nodeAddress, rplBondAmount)

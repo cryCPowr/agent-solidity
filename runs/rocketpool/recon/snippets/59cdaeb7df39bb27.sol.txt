@@ -1,4 +1,0 @@
-function getTotalCollateral() override public view returns (uint256) {
-        RocketDepositPoolInterface rocketDepositPool = RocketDepositPoolInterface(getContractAddress("rocketDepositPool"));
-        return rocketDepositPool.getExcessBalance().add(address(this).balance);
-    }

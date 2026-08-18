@@ -1,1 +1,0 @@
-require(_claim[i].amountRPL > 0 || _claim[i].amountSmoothingPoolETH > 0 || _claim[i].amountVoterETH > 0, "Invalid amount")

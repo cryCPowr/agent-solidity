@@ -1,1 +1,0 @@
-require(_contractAddress == getContractAddress(_contractName), "Invalid or outdated contract")

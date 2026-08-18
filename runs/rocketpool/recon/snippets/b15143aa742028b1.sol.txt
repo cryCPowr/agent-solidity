@@ -1,1 +1,0 @@
-newPenaltyCount * rocketDAOProtocolSettingsNetwork.getPerPenaltyRate()

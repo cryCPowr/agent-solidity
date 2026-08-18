@@ -1,3 +1,0 @@
-function getMemberIsValid(address _memberAddress) override external view returns (bool) {
-        return getBool(keccak256(abi.encodePacked(daoNameSpace, "member", _memberAddress)));
-    }

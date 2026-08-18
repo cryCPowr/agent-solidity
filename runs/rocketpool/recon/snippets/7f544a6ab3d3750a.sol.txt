@@ -1,3 +1,0 @@
-function getUnstakingPeriod() override external view returns (uint256) {
-        return getSettingUint("node.unstaking.period");
-    }

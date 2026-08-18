@@ -1,1 +1,0 @@
-megapool.newValidator(deposit.bondAmount, deposit.useExpressTicket, deposit.validatorPubkey, deposit.validatorSignature, deposit.depositDataRoot)

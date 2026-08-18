@@ -1,1 +1,0 @@
-require(rocketMinipoolDelegate != rocketMinipoolDelegatePrev, "New delegate is the same as the existing one")

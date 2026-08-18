@@ -1,1 +1,0 @@
-require(expected.hash == actualHash, "Invalid hash")

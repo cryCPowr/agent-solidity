@@ -1,1 +1,0 @@
-SSZ.toLittleEndian(uint256(_proof.slot))

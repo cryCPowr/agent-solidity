@@ -1,1 +1,0 @@
-event BootstrapSecurityInvite(string id, address memberAddress, uint256 time);

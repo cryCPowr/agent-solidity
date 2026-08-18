@@ -1,1 +1,0 @@
-bytes(existingAbi).length > 0

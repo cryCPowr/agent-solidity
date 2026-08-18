@@ -1,1 +1,0 @@
-uint64 constant internal ones64Bits = 0xFFFFFFFFFFFFFFFF

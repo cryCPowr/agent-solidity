@@ -1,1 +1,0 @@
-deleteAddress(keccak256(abi.encodePacked(daoNameSpace, "member.address", _nodeAddress)))

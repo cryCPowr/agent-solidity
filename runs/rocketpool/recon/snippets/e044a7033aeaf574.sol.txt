@@ -1,9 +1,0 @@
-function _migrateLegacy(address _nodeAddress, uint256 _amount) internal {
-        bytes32 migratedKey = keccak256(abi.encodePacked("rpl.legacy.staked.node.migrated", _nodeAddress));
-        if (getBool(migratedKey)) {
-            return;
-        }
-        bytes32 legacyKey = keccak256(abi.encodePacked("rpl.legacy.staked.node.amount", _nodeAddress));
-        setUint(legacyKey, _amount);
-        setBool(migratedKey, true);
-    }

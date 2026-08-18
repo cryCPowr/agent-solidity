@@ -1,1 +1,0 @@
-require(proofPos == proofLen, "MerkleProof: invalid multiproof")

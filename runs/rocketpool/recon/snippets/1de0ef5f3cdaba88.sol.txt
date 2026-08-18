@@ -1,1 +1,0 @@
-function getDeployedStatus() external view returns (bool);

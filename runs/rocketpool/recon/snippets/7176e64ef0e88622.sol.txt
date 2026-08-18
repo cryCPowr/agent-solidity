@@ -1,1 +1,0 @@
-require(msg.sender == newGuardian, "Confirmation must come from new guardian address")

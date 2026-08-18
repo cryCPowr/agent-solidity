@@ -1,2 +1,0 @@
-interface RocketMegapoolInterface is RocketMegapoolDelegateInterface, RocketMegapoolProxyInterface {
-}

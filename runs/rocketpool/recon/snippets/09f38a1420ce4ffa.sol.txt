@@ -1,1 +1,0 @@
-_setSettingBool("network.submit.rewards.enabled", true)

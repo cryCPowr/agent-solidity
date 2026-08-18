@@ -1,1 +1,0 @@
-require(_submission.nodeRPL.length == _submission.trustedNodeRPL.length && _submission.trustedNodeRPL.length == _submission.nodeETH.length, "Invalid array length")

@@ -1,1 +1,0 @@
-function getProposalQuorum() external view returns (uint256);

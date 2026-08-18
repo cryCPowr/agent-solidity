@@ -1,1 +1,0 @@
-function deleteUint(bytes32 _key) external;

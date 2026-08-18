@@ -1,6 +1,0 @@
-function getPendingRPLRewards() override public view returns (uint256) {
-        RocketTokenRPLInterface rplContract = RocketTokenRPLInterface(getContractAddress("rocketTokenRPL"));
-        uint256 pendingInflation = rplContract.inflationCalculate();
-        // Any inflation that has accrued so far plus any amount that would be minted if we called it now
-        return getRPLBalance() + pendingInflation;
-    }

@@ -1,3 +1,0 @@
-function getQuorum() override external view returns (uint256) {
-        return getSettingUint("members.quorum");
-    }

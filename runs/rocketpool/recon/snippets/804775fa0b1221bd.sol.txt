@@ -1,3 +1,0 @@
-function setBytes(bytes32 _key, bytes memory _value) external onlyGuardian {
-        rocketStorage.setBytes(_key, _value);
-    }

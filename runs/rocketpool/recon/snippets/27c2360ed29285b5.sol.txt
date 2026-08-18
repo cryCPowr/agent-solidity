@@ -1,6 +1,0 @@
-function proposalSettingUint(string memory _settingContractName, string memory _settingPath, uint256 _value) override external onlyExecutingContracts() {
-        // Load contracts
-        RocketDAONodeTrustedSettingsInterface rocketDAONodeTrustedSettings = RocketDAONodeTrustedSettingsInterface(getContractAddress(_settingContractName));
-        // Lets update
-        rocketDAONodeTrustedSettings.setSettingUint(_settingPath, _value);
-    }

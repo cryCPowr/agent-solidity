@@ -1,1 +1,0 @@
-toNode > 0 && debt > 0

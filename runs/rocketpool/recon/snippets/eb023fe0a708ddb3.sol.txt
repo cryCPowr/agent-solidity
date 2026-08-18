@@ -1,3 +1,0 @@
-for (uint256 i = 0; i < _submission.nodeRPL.length; ++i) {
-                totalRewardsRPL = totalRewardsRPL + _submission.nodeRPL[i];
-            }

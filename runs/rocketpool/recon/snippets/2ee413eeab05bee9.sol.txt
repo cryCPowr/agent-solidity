@@ -1,7 +1,0 @@
-function setSettingAddressList(string memory _settingPath, address[] calldata _value) virtual public override onlyDAOProtocolProposal {
-        uint256 key = uint256(keccak256(abi.encodePacked(settingNameSpace, _settingPath)));
-        setUint(bytes32(key), _value.length);
-        for (uint256 i = 0; i < _value.length; ++i) {
-            setAddress(bytes32(key + i), _value[i]);
-        }
-    }

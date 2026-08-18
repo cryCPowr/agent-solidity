@@ -1,1 +1,0 @@
-new RocketNodeDistributor{salt: ''}(_nodeAddress, address(rocketStorage))

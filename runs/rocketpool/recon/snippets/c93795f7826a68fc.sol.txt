@@ -1,6 +1,0 @@
-if(!getBool(keccak256(abi.encodePacked(settingNameSpace, "deployed")))) {
-            // Init settings
-            setSettingBool("rewards.network.enabled", true);
-            // Settings initialised
-            setBool(keccak256(abi.encodePacked(settingNameSpace, "deployed")), true);
-        }

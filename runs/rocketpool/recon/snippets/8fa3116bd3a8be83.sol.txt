@@ -1,8 +1,0 @@
-function getRPLPrice() override public view returns (uint256) {
-        RocketNetworkSnapshotsInterface rocketNetworkSnapshots = RocketNetworkSnapshotsInterface(getContractAddress("rocketNetworkSnapshots"));
-        uint256 price = uint256(rocketNetworkSnapshots.latestValue(priceKey));
-        if (price == 0) {
-            price = getUint(priceKey);
-        }
-        return price;
-    }

@@ -1,4 +1,0 @@
-function getLength() override public view returns (uint256) {
-        AddressQueueStorageInterface addressQueueStorage = AddressQueueStorageInterface(getContractAddress("addressQueueStorage"));
-        return addressQueueStorage.getLength(queueKeyVariable);
-    }

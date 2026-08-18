@@ -1,3 +1,0 @@
-if (ownerCalling && nodeRefundBalance > 0) {
-                _refund();
-            }

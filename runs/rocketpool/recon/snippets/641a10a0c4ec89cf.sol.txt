@@ -1,4 +1,0 @@
-receive() external payable {
-        // Emit ether deposited event
-        emit EtherDeposited(msg.sender, msg.value, block.timestamp);
-    }

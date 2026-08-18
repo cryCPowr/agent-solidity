@@ -1,3 +1,0 @@
-if (_index < halfLength) {
-            return addressQueueStorage.getItem(queueKeyHalf, _index);
-        }

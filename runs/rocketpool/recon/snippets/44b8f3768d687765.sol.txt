@@ -1,1 +1,0 @@
-function getSubmitBalancesFrequency() external view returns (uint256);

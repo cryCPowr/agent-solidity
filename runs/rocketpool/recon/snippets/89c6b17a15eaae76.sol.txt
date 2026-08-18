@@ -1,1 +1,0 @@
-actionKick(_memberAddresses[i])

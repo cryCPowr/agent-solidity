@@ -1,1 +1,0 @@
-require(getState(_proposalID) == ProposalState.ActivePhase2, "Phase 2 voting is not active")

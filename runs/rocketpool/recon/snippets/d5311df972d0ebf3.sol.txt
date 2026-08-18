@@ -1,1 +1,0 @@
-uint256 constant totalInitialSupply = 18000000000000000000000000

@@ -1,9 +1,0 @@
-if (minipoolQueueLength >= _max) {
-                _assignMinipools(_max, _rocketDAOProtocolSettingsDeposit);
-                return;
-            } else {
-                unchecked { // _max > minipoolQueueLength
-                    _max -= minipoolQueueLength;
-                }
-                _assignMinipools(minipoolQueueLength, _rocketDAOProtocolSettingsDeposit);
-            }

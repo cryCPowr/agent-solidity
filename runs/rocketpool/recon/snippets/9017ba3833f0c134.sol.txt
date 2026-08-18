@@ -1,1 +1,0 @@
-function getLengthLegacy(MinipoolDeposit _depositType) external view returns (uint256);

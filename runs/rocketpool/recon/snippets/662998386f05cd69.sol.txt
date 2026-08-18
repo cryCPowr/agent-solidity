@@ -1,1 +1,0 @@
-rocketNodeStakingInterface.transferRPL(_from, _to, _amount)

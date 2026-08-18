@@ -1,1 +1,0 @@
-EtherDeposited(msg.sender, msg.value, block.timestamp)

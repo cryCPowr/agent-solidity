@@ -1,3 +1,0 @@
-function getMaxPenaltyRate() external override view returns (uint256) {
-        return maxPenaltyRate;
-    }

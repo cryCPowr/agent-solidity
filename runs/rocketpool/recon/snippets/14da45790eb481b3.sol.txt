@@ -1,3 +1,0 @@
-function setBytes(bytes32 _key, bytes calldata _value) onlyLatestRocketNetworkContract override external {
-        bytesStorage[_key] = _value;
-    }

@@ -1,1 +1,0 @@
-_amount % milliToWei == 0

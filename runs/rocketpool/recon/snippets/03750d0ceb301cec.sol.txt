@@ -1,3 +1,0 @@
-if (assignments > 0) {
-            _assignMegapools(assignments, _rocketDAOProtocolSettingsDeposit);
-        }

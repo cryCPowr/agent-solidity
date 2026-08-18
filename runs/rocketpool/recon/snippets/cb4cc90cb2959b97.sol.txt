@@ -1,1 +1,0 @@
-require(lenA + lenB <= 248, "Path too long")

@@ -1,1 +1,0 @@
-function getUserDistributeDelay() external view returns (uint256);

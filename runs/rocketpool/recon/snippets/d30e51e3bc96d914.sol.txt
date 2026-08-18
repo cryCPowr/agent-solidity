@@ -1,3 +1,0 @@
-if (nodeRefundBalance > 0) {
-            _refund();
-        }

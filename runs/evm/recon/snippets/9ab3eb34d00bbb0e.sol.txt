@@ -1,0 +1,1 @@
+IMailboxWithdrawFee(mailbox).withdrawFee()

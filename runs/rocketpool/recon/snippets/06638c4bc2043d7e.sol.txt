@@ -1,1 +1,0 @@
-subUint(keccak256(abi.encodePacked("auction.rpl.allotted")), _amount)

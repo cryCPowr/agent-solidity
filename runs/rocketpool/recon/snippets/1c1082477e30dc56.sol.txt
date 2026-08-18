@@ -1,1 +1,0 @@
-expected.hash == actual.hash

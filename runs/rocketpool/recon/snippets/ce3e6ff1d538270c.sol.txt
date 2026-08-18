@@ -1,1 +1,0 @@
-keccak256(abi.encodePacked("dao.security.allowed.setting", "auction", "auction.lot.bidding.enabled"))

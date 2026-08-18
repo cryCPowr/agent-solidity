@@ -1,1 +1,0 @@
-function recoverUnclaimedRPL(uint256 _lotIndex) external;

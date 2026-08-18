@@ -1,4 +1,0 @@
-function getVacantMinipoolCount() override external view returns (uint256) {
-        AddressSetStorageInterface addressSetStorage = AddressSetStorageInterface(getContractAddress("addressSetStorage"));
-        return addressSetStorage.getCount(keccak256(abi.encodePacked("minipools.vacant.index")));
-    }

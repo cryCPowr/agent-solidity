@@ -1,1 +1,0 @@
-function vote(address _member, uint256 _votes, uint256 _proposalID, bool _support) external;

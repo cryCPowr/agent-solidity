@@ -1,5 +1,0 @@
-if (_timeAt(_key, mid) > _time) {
-                _high = mid;
-            } else {
-                _low = mid + 1;
-            }

@@ -1,1 +1,0 @@
-BootstrapSpendTreasury(_invoiceID, _recipientAddress, _amount, block.timestamp)

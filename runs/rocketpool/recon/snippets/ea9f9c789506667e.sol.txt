@@ -1,1 +1,0 @@
-function getNodeRPLWithdrawalAddress(address _nodeAddress) external view returns (address);

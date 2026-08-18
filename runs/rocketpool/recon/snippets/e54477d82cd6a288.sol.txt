@@ -1,4 +1,0 @@
-function proposalSettingAddress(string memory _settingNameSpace, string memory _settingPath, address _value) override public onlyExecutingContracts() onlyValidSetting(_settingNameSpace, _settingPath) {
-        bytes32 namespace = keccak256(abi.encodePacked(protocolDaoSettingNamespace, _settingNameSpace));
-        setAddress(keccak256(abi.encodePacked(namespace, _settingPath)), _value);
-    }

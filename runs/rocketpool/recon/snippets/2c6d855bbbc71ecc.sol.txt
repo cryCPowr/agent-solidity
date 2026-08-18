@@ -1,1 +1,0 @@
-function getFinalised() external view returns (bool);

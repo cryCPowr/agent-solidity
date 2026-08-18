@@ -1,3 +1,0 @@
-function getNodeShareSecurityCouncilAdder() override public view returns (uint256) {
-        return getSettingUint("network.node.commission.share.security.council.adder");
-    }

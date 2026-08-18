@@ -1,3 +1,0 @@
-if (expressQueueLength == 1) {
-                _setQueueMoved(true, false);
-            }

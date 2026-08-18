@@ -38,12 +38,19 @@ def build_summary(attacks) -> dict[str, Any]:
             buckets[key_fn(attack)] = buckets.get(key_fn(attack), 0) + 1
         return dict(sorted(buckets.items()))
 
+    gate_status_counts: dict[str, int] = {}
+    for attack in attacks:
+        for gate in (attack.attack_gates or {}).values():
+            status = (gate or {}).get("status", "UNKNOWN")
+            gate_status_counts[status] = gate_status_counts.get(status, 0) + 1
+
     return {
         "attack_count": len(attacks),
         "attacks_by_band": count(lambda a: a.exploitability_band),
         "attacks_by_strategy": count(lambda a: a.attack_strategy),
         "attacks_by_production_relevance": count(lambda a: a.production_relevance),
         "attacks_by_consequence": count(lambda a: a.expected_consequence.get("class", "?")),
+        "attack_gates_by_status": dict(sorted(gate_status_counts.items())),
         "merged_duplicate_hypotheses": sum(len(a.linked_hypothesis_ids) for a in attacks),
         "top_attacks": [
             {

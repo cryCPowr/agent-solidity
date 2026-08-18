@@ -1,1 +1,0 @@
-rocketNodeStaking.transferRPL(challenger, proposer, challengeBond - burnPerChallenge)

@@ -1,1 +1,0 @@
-_verifyProof(_nodeAddress, _claim[i])

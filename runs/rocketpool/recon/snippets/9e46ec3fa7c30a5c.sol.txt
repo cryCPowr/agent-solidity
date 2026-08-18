@@ -1,8 +1,0 @@
-if (indexWordIndex != _claim[i].rewardIndex / 256) {
-                // Store the previous word
-                setUint(claimedWordKey, claimedWord);
-                // Load the word for this entry
-                indexWordIndex = _claim[i].rewardIndex / 256;
-                claimedWordKey = keccak256(abi.encodePacked('rewards.interval.claimed', _nodeAddress, indexWordIndex));
-                claimedWord = getUint(claimedWordKey);
-            }

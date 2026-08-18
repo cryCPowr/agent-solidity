@@ -1,1 +1,0 @@
-require(getTotal() >= _proposalID && _proposalID > 0, "Invalid proposal ID")

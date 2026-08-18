@@ -1,0 +1,49 @@
+{
+  "ast_coverage": {
+    "coverage_ratio": 0.0469,
+    "files_with_ast": 6
+  },
+  "call_graph_coverage": {
+    "coverage_ratio": 1.0,
+    "resolved_edges": 1,
+    "total_candidates": 1
+  },
+  "compile_coverage": {
+    "contracts_modeled": 7,
+    "coverage_ratio": 0.0469
+  },
+  "contract_coverage": {
+    "contracts_modeled": 7,
+    "coverage_ratio": 0.0469
+  },
+  "coverage_percent": 4.7,
+  "dataflow_coverage": {
+    "coverage_ratio": 0.7857,
+    "resolved_paths": 11,
+    "total_candidates": 14
+  },
+  "dependency_coverage": {
+    "coverage_ratio": 0.0,
+    "resolved": 0,
+    "total": 229
+  },
+  "files_discovered": 128,
+  "files_failed": 122,
+  "files_partial": 0,
+  "files_with_ast": 6,
+  "function_coverage": {
+    "coverage_ratio": 1.0,
+    "functions_modeled": 26
+  },
+  "partial_source_coverage": true,
+  "proxy_coverage": {
+    "coverage_ratio": 1.0,
+    "delegate_edges": 0,
+    "delegatecall_facts": 0
+  },
+  "source_coverage": 0.0469,
+  "storage_coverage": {
+    "coverage_ratio": 0.0469,
+    "state_variables_modeled": 3
+  }
+}

@@ -16,11 +16,17 @@ recipient traces to attacker-controlled data).
 
 from __future__ import annotations
 
+import re
 from typing import Any
 
-from .model import INFERRED, PROVEN, UNKNOWN, POSSIBLE
+from .model import INFERRED, PROVEN, UNKNOWN, POSSIBLE, STATUS_ORDER
 
-_TOKEN_RE = None  # imported lazily to keep this module import-light
+_TOKEN_RE = re.compile(r"[A-Za-z_][A-Za-z0-9_]*")
+_STOPWORDS = frozenset({
+    "address", "this", "msg", "sender", "call", "data", "abi",
+    "true", "false", "uint", "uint256", "int", "int256", "bytes",
+    "string", "memory", "calldata", "storage",
+})
 
 # --- sink classification (generic token-standard vocabulary) --------------
 
@@ -84,17 +90,72 @@ def choose_sink(recon, hypothesis: dict[str, Any], root_fn: str) -> dict[str, An
     """Choose the most security-sensitive sink among the hypothesis's
     observed facts for the root function.
 
-    Priority: asset sinks with protocol custody at risk (grant/outbound)
-    > arbitrary/dynamic execution > other asset sinks > state mutation.
+    Priority is family-aware. Example: for approval-abuse chains, approval
+    sinks stay highest priority; for accounting/front-run/rounding families,
+    prefer the sink shape that best matches the bug class instead of always
+    grabbing the globally most dangerous primitive.
     """
+    category = str(hypothesis.get("category") or "")
     sink_priority = {
         "token_approval": 0, "transfer_from": 1, "native_value_transfer": 1,
         "withdraw": 2, "burn": 2, "token_transfer": 3, "mint": 4,
         "asset_operation": 5,
         "arbitrary_external_call": 1, "contract_creation": 2,
         "dynamic_external_call": 3, "static_external_call": 6,
+        "arith_bitshift": 4,
+        "arith_division": 5,
+        "randomness_source": 5,
+        "state_constraint": 5,
+        "iteration": 5,
         "state_mutation": 7,
     }
+    if category == "accounting_mismatch":
+        sink_priority.update({
+            "state_mutation": 0,
+            "native_value_transfer": 1,
+            "withdraw": 1,
+            "token_transfer": 1,
+            "transfer_from": 2,
+            "asset_operation": 3,
+            "token_approval": 6,
+            "dynamic_external_call": 6,
+            "arbitrary_external_call": 6,
+        })
+    elif category == "rounding_allocation":
+        sink_priority.update({
+            "arith_division": 0,
+            "state_mutation": 1,
+            "native_value_transfer": 2,
+            "withdraw": 2,
+            "token_transfer": 2,
+            "token_approval": 7,
+        })
+    elif category == "frontrun_vulnerability":
+        sink_priority.update({
+            "state_constraint": 0,
+            "state_mutation": 1,
+            "dynamic_external_call": 4,
+            "arbitrary_external_call": 4,
+        })
+    elif category == "randomness_manipulation":
+        sink_priority.update({
+            "randomness_source": 0,
+            "state_mutation": 1,
+            "native_value_transfer": 2,
+            "token_transfer": 2,
+        })
+    elif category in ("gas_dos", "gas_complexity_dos"):
+        sink_priority.update({
+            "iteration": 0,
+            "state_mutation": 1,
+        })
+    elif category == "arithmetic_bound_violation":
+        sink_priority.update({
+            "arith_bitshift": 0,
+            "state_mutation": 1,
+            "native_value_transfer": 2,
+            "token_transfer": 2,
+        })
     best: dict[str, Any] | None = None
     best_rank: tuple[int, int] | None = None
     for fid in hypothesis.get("observed_facts") or []:
@@ -113,6 +174,18 @@ def choose_sink(recon, hypothesis: dict[str, Any], root_fn: str) -> dict[str, An
             candidates.append((exec_sink, "n/a", fid))
         if fact.get("type") == "state_write":
             candidates.append(("state_mutation", "n/a", fid))
+        if fact.get("type") == "bitshift_operation":
+            candidates.append(("arith_bitshift", "n/a", fid))
+        if fact.get("type") == "division_operation":
+            candidates.append(("arith_division", "n/a", fid))
+        if fact.get("type") == "randomness_source_usage":
+            candidates.append(("randomness_source", "n/a", fid))
+        if fact.get("type") == "state_dependent_constraint":
+            candidates.append(("state_constraint", "n/a", fid))
+        if fact.get("type") == "control_flow_structure":
+            construct = str((fact.get("properties") or {}).get("construct") or "").lower()
+            if construct in {"for_loop", "while_loop", "do_while", "for_statement", "while_statement"}:
+                candidates.append(("iteration", "n/a", fid))
         for cls, custody, cand_id in candidates:
             rank = (sink_priority.get(cls, 9), 0 if custody in ("grant", "outbound") else 1)
             if best_rank is None or rank < best_rank:
@@ -139,12 +212,16 @@ def choose_sink(recon, hypothesis: dict[str, Any], root_fn: str) -> dict[str, An
 def controlled_inputs(recon, hypothesis: dict[str, Any], root_fn: str) -> list[dict[str, Any]]:
     """B. CONTROL -- what the attacker chooses at the entry.
 
-    Derived from the hypothesis's parameter-rooted argument-flow facts on
-    the root function (PROVEN), plus caller-controlled input origins.
-    Never includes inferred-only shapes without a status downgrade.
+    Only caller-controlled roots count here. Parameter-rooted values are
+    PROVEN-controlled. A small allowlist of environment values that the
+    caller directly chooses at invocation time (for example `msg.sender`
+    and `msg.value`) also count. Literals, state variables, local
+    variables, registry names, and unresolved expressions are *not*
+    attacker-controlled merely because they appear in an argument-flow fact.
     """
     inputs: list[dict[str, Any]] = []
     seen: set[str] = set()
+    caller_controlled_env = {"msg.sender", "msg.value", "tx.origin"}
     for fid in hypothesis.get("observed_facts") or []:
         fact = recon.fact(fid)
         if fact is None or fact.get("type") not in (
@@ -155,19 +232,34 @@ def controlled_inputs(recon, hypothesis: dict[str, Any], root_fn: str) -> list[d
         if (subj.get("function") or subj.get("caller")) != root_fn:
             continue
         props = fact.get("properties") or {}
-        root_kind = str(
-            props.get("root_kind") or props.get("origin_kind") or ""
-        ).lower()
-        expr = str(props.get("argument_expression") or props.get("root_name")
-                   or subj.get("origin") or "")
+        root_kind = str(props.get("root_kind") or props.get("origin_kind") or "").lower()
+        expr = str(props.get("argument_expression") or props.get("root_name") or subj.get("origin") or "")
         if not expr or expr in seen:
             continue
+
+        status = None
+        kind = ""
+        if root_kind == "parameter":
+            status = PROVEN
+            kind = "parameter"
+        elif fact.get("type") == "input_origin":
+            origin = str((subj.get("origin") or props.get("origin") or expr)).strip()
+            if origin in caller_controlled_env:
+                status = PROVEN
+                kind = "environment"
+            else:
+                continue
+        elif expr in caller_controlled_env:
+            status = PROVEN
+            kind = "environment"
+        else:
+            continue
+
         seen.add(expr)
-        is_parameter = root_kind == "parameter" or fact.get("type") == "input_origin"
         inputs.append({
             "expression": expr,
-            "kind": "parameter" if is_parameter else (root_kind or UNKNOWN),
-            "status": PROVEN if is_parameter else INFERRED,
+            "kind": kind,
+            "status": status,
             "fact_id": fid,
             "location": recon.source_location(fid),
         })
@@ -227,6 +319,165 @@ def propagation_path(recon, hypothesis: dict[str, Any], root_fn: str,
     return steps
 
 
+def _tokens(value: Any) -> set[str]:
+    if isinstance(value, str):
+        values = [value]
+    elif isinstance(value, list):
+        values = [v for v in value if isinstance(v, str)]
+    else:
+        values = []
+    out: set[str] = set()
+    for item in values:
+        out |= {
+            tok.lower() for tok in _TOKEN_RE.findall(item)
+            if tok.lower() not in _STOPWORDS
+        }
+    return out
+
+
+
+def target_control(recon, hypothesis: dict[str, Any], root_fn: str,
+                   controlled: list[dict[str, Any]], sink: dict[str, Any]) -> dict[str, Any]:
+    """Whether attacker-controlled input reaches the execution TARGET/recipient.
+
+    For executable attack candidates, POSSIBLE is not enough: STRUCTURALLY_
+    INDICATED or stronger is required for attacker-controlled-target claims.
+    """
+    stages = {s.get("stage"): s for s in (hypothesis.get("chain") or [])}
+    downstream = stages.get("downstream_execution_opportunity") or {}
+    grade = str(downstream.get("grade") or "")
+    if grade == "PROVEN":
+        return {
+            "status": PROVEN,
+            "basis": "downstream_execution_opportunity grade PROVEN",
+            "fact_ids": list(downstream.get("fact_ids") or []),
+        }
+    if grade == "STRUCTURALLY_INDICATED":
+        return {
+            "status": INFERRED,
+            "basis": "downstream_execution_opportunity grade STRUCTURALLY_INDICATED",
+            "fact_ids": list(downstream.get("fact_ids") or []),
+        }
+
+    target_expr = sink.get("target_expression", "")
+    target_tokens = _tokens(target_expr)
+    matched = [c for c in controlled if _tokens(c.get("expression", "")) & target_tokens]
+    if matched and sink.get("class") in ("dynamic_external_call", "arbitrary_external_call"):
+        fact_ids = [c.get("fact_id", "") for c in matched if c.get("fact_id")]
+        return {
+            "status": INFERRED,
+            "basis": "controlled input overlaps the dynamic target expression",
+            "fact_ids": fact_ids,
+        }
+    return {
+        "status": POSSIBLE if grade == "POSSIBLE" else UNKNOWN,
+        "basis": "no recipient-side control provenance stronger than POSSIBLE was observed",
+        "fact_ids": list(downstream.get("fact_ids") or []),
+    }
+
+
+
+# Sentinel used only inside beneficiary_control's returned dict, never as
+# an AttackStep/strategy status value: it means "checked, and the
+# beneficiary is PROVABLY NOT attacker-influenced" -- a stronger, more
+# specific signal than UNKNOWN ("not checked / cannot determine").
+BENEFICIARY_FIXED = "FIXED"
+
+# Sink classes whose argument shape encodes an unambiguous beneficiary/
+# spender -- the account that RECEIVES custody or spending authority.
+# Generic token-standard vocabulary, never benchmark-specific names.
+_BENEFICIARY_ARG_INDEX = {
+    "token_approval": 0,   # approve(spender, amount) -> spender
+    "transfer_from": 1,    # transferFrom(from, to, amount) -> to
+}
+
+
+def beneficiary_expression(sink: dict[str, Any]) -> str:
+    """The argument expression that receives custody/authority for this
+    sink, when the sink's own argument shape encodes it unambiguously.
+    Returns '' when the sink class has no well-defined beneficiary slot.
+    """
+    idx = _BENEFICIARY_ARG_INDEX.get(sink.get("class", ""))
+    if idx is None:
+        return ""
+    args = sink.get("arguments") or []
+    if not isinstance(args, list) or len(args) <= idx:
+        return ""
+    val = args[idx]
+    return val if isinstance(val, str) else ""
+
+
+def beneficiary_control(recon, hypothesis: dict[str, Any], root_fn: str,
+                        controlled: list[dict[str, Any]], sink: dict[str, Any]) -> dict[str, Any]:
+    """Whether the account that RECEIVES spending authority/custody (the
+    beneficiary/spender) -- not merely the amount -- is attacker-influenced.
+
+    Evidence discipline: a caller-controlled AMOUNT never proves a
+    caller-chosen BENEFICIARY. Approval/transferFrom-abuse claims require
+    this specifically: a spender resolved from a fixed/registry expression
+    (e.g. a protocol contract resolved via getContractAddress/getAddress)
+    must never be described as an attacker-chosen recipient just because
+    some OTHER argument on the same call (the amount) is caller-controlled.
+    """
+    beneficiary = beneficiary_expression(sink)
+    if not beneficiary:
+        return {
+            "status": UNKNOWN,
+            "basis": "sink shape does not expose an unambiguous beneficiary argument",
+            "beneficiary_expression": "",
+            "fact_ids": [],
+        }
+    beneficiary_tokens = _tokens(beneficiary)
+    if not beneficiary_tokens:
+        return {
+            "status": UNKNOWN,
+            "basis": "beneficiary expression carries no resolvable identifier",
+            "beneficiary_expression": beneficiary,
+            "fact_ids": [],
+        }
+    matched = [c for c in controlled if _tokens(c.get("expression", "")) & beneficiary_tokens]
+    if matched:
+        status = PROVEN if any(c.get("status") == PROVEN for c in matched) else INFERRED
+        return {
+            "status": status,
+            "basis": "beneficiary/spender expression overlaps a caller-controlled input",
+            "beneficiary_expression": beneficiary,
+            "fact_ids": [c.get("fact_id", "") for c in matched if c.get("fact_id")],
+        }
+    return {
+        "status": BENEFICIARY_FIXED,
+        "basis": (
+            "beneficiary/spender expression does not overlap any "
+            "caller-controlled input -- likely fixed or protocol-registry-resolved"
+        ),
+        "beneficiary_expression": beneficiary,
+        "fact_ids": [],
+    }
+
+
+
+def sink_argument_control(recon, hypothesis: dict[str, Any], root_fn: str,
+                          controlled: list[dict[str, Any]], sink: dict[str, Any]) -> dict[str, Any]:
+    """Whether controlled inputs overlap the sink's arguments/target expression."""
+    sink_tokens = _tokens(sink.get("target_expression", "")) | _tokens(sink.get("arguments", []))
+    matched = [c for c in controlled if _tokens(c.get("expression", "")) & sink_tokens]
+    if matched:
+        status = PROVEN if any(c.get("status") == PROVEN for c in matched) else INFERRED
+        return {
+            "status": status,
+            "basis": "controlled input overlaps sink arguments/target expression",
+            "fact_ids": [c.get("fact_id", "") for c in matched if c.get("fact_id")],
+            "matched_expressions": [c.get("expression", "") for c in matched],
+        }
+    return {
+        "status": UNKNOWN,
+        "basis": "no controlled input was linked to the sink arguments/target expression",
+        "fact_ids": [],
+        "matched_expressions": [],
+    }
+
+
+
 def _stage_status(stage: dict[str, Any]) -> str:
     status = str(stage.get("status", "")).upper()
     if "GRADE" in stage and status == "INFERRED":
@@ -237,16 +488,40 @@ def _stage_status(stage: dict[str, Any]) -> str:
     return mapping.get(status, UNKNOWN)
 
 
-def capability_obtained(hypothesis: dict[str, Any], recon, root_fn: str) -> tuple[str, str]:
+def capability_obtained(hypothesis: dict[str, Any], recon, root_fn: str,
+                        beneficiary: dict[str, Any] | None = None) -> tuple[str, str]:
     """What the attacker obtains, with status. Derived from the sink +
-    chain stages, never upgraded."""
+    chain stages, never upgraded.
+
+    `beneficiary` (see beneficiary_control()) disambiguates "attacker
+    controls the amount" from "attacker controls who receives the granted
+    authority": only the latter may be described as a caller-chosen
+    beneficiary, and only when proven/inferred by beneficiary_control.
+    """
     stages = {s.get("stage"): s for s in (hypothesis.get("chain") or [])}
     parts: list[str] = []
     status = UNKNOWN
     if "asset_authorization" in stages:
-        parts.append("spender authority over the contract's asset account "
-                     "(caller-chosen beneficiary)")
-        status = PROVEN
+        ben_status = (beneficiary or {}).get("status", UNKNOWN)
+        if ben_status in (PROVEN, INFERRED):
+            parts.append("spender authority over the contract's asset account "
+                         "(caller-chosen beneficiary)")
+            status = PROVEN if ben_status == PROVEN else INFERRED
+        elif ben_status == BENEFICIARY_FIXED:
+            parts.append(
+                "spending authority is granted, but the beneficiary/spender "
+                f"('{(beneficiary or {}).get('beneficiary_expression', '')}') "
+                "does not overlap any caller-controlled input -- likely fixed "
+                "or protocol-registry-resolved, so no attacker-chosen-beneficiary "
+                "capability is established by this grant alone"
+            )
+            status = max(status, POSSIBLE, key=lambda s: STATUS_ORDER.get(s, 0))
+        else:
+            parts.append(
+                "spender authority over the contract's asset account "
+                "(beneficiary control not established by Recon; requires verification)"
+            )
+            status = max(status, INFERRED, key=lambda s: STATUS_ORDER.get(s, 0))
     downstream = stages.get("downstream_execution_opportunity") or {}
     grade = downstream.get("grade", "")
     if grade == "STRUCTURALLY_INDICATED":

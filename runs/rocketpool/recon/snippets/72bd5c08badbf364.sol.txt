@@ -1,1 +1,0 @@
-require(c / a == b, "SafeMath: multiplication overflow")

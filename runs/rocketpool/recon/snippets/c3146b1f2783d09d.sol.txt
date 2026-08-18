@@ -1,3 +1,0 @@
-function getLotCount() override public view returns (uint256) {
-        return getUint(keccak256("auction.lots.count"));
-    }

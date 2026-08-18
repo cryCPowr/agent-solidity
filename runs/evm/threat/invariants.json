@@ -1,0 +1,61 @@
+{
+  "count": 3,
+  "invariants": [
+    {
+      "id": "INV-001",
+      "category": "initialization_coherence",
+      "statement": "Initialization routines must execute in the intended lifecycle order and must not remain unexpectedly callable after deployment.",
+      "rationale": "Recon observed initializer declarations and/or lifecycle modeling for the contract.",
+      "involved_facts": [
+        "fact:d48f0de1f20364bd"
+      ],
+      "involved_functions": [],
+      "involved_assets": [
+        "deployment_state",
+        "configuration_state"
+      ],
+      "uncertainty": "Recon models initializer structure and observed authorization surfaces, but not deployment sequencing or post-deploy reachability.",
+      "confidence": "medium"
+    },
+    {
+      "id": "INV-002",
+      "category": "upgrade_authority_coherence",
+      "statement": "Upgrade and delegatecall-controlled execution paths must remain constrained to the intended authority boundary and implementation source.",
+      "rationale": "Recon observed upgrade-related functions, authorities, or proxy delegatecall paths.",
+      "involved_facts": [
+        "fact:430e184c2a5d1d30"
+      ],
+      "involved_functions": [
+        "contracts/interfaces/IProxyAdmin.sol#237::upgradeAndCall#236"
+      ],
+      "involved_assets": [
+        "implementation_address",
+        "proxy_storage"
+      ],
+      "uncertainty": "Observed authorization on an upgrade path does not by itself prove the authority is immutable, reachable, or semantically correct.",
+      "confidence": "medium"
+    },
+    {
+      "id": "INV-003",
+      "category": "capability_authority_consistency",
+      "statement": "Security-sensitive capabilities should remain consistent with their observed authorization boundary and should not unexpectedly rewrite authority state.",
+      "rationale": "Recon linked capability facts to observed authorization surfaces and authorization-state writes.",
+      "involved_facts": [
+        "fact:7c7de749636a6800",
+        "fact:8988f7a5e318cf09",
+        "fact:a89608458a67fcf8"
+      ],
+      "involved_functions": [
+        "contracts/consortium/ILombardTimelockController.sol#194::executeBatch#187",
+        "contracts/interfaces/IProxyAdmin.sol#237::upgradeAndCall#236",
+        "contracts/mock/MailboxTreasuryMock.sol#299::<receive>#298"
+      ],
+      "involved_assets": [
+        "authorization_state",
+        "sensitive_capabilities"
+      ],
+      "uncertainty": "Threat significance depends on whether the capability is externally reachable and whether authority state transitions are intended.",
+      "confidence": "medium"
+    }
+  ]
+}

@@ -1,8 +1,0 @@
-function multiProofVerifyCalldata(
-        bytes32[] calldata proof,
-        bool[] calldata proofFlags,
-        bytes32 root,
-        bytes32[] memory leaves
-    ) internal pure returns (bool) {
-        return processMultiProofCalldata(proof, proofFlags, leaves) == root;
-    }

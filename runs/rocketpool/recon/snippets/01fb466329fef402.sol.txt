@@ -1,1 +1,0 @@
-require(_getChallengeState(state) == Types.ChallengeState.Responded, "Invalid challenge state")

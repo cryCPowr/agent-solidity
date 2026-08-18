@@ -1,0 +1,1 @@
+function updateDelay(uint256 newDelay) external;

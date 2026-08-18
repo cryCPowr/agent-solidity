@@ -1,1 +1,0 @@
-require(value <= type(uint40).max, "SafeCast: value doesn't fit in 40 bits")

@@ -1,1 +1,0 @@
-calculateNodeRewards(nodeDepositBalance, getUserDepositBalance(), rewards)

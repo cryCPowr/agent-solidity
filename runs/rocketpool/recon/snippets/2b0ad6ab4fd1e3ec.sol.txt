@@ -1,3 +1,0 @@
-function getLength(bytes32 _namespace) override public view returns (uint256) {
-        return uint64(getUint(keccak256(abi.encodePacked(_namespace, ".data"))) >> lengthOffset);
-    }

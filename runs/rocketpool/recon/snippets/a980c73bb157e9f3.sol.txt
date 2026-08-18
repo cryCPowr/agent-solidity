@@ -1,1 +1,0 @@
-event RewardsClaimed(address indexed claimer, Claim[] claims);

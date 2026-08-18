@@ -1,3 +1,0 @@
-function getNodePendingWithdrawalAddress(address _nodeAddress) override public view returns (address) {
-        return rocketStorage.getNodePendingWithdrawalAddress(_nodeAddress);
-    }

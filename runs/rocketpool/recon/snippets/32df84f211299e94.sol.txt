@@ -1,5 +1,0 @@
-constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) {
-        version = 1;
-        // Initialise immutables
-        setKey = uint256(keccak256(abi.encodePacked("megapool.delegate.set")));
-    }

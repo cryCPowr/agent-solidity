@@ -1,1 +1,0 @@
-getBool(keccak256(abi.encode("rewards.snapshot.submitted.node", _trustedNodeAddress, _rewardIndex)))

@@ -1,9 +1,0 @@
-function unsetRPLWithdrawalAddress(address _nodeAddress) external override onlyRegisteredNode(_nodeAddress) {
-        bytes32 addressKey = keccak256(abi.encodePacked("node.rpl.withdrawal.address", _nodeAddress));
-        // Confirm the transaction is from the node's current RPL withdrawal address
-        require(getAddress(addressKey) == msg.sender, "Only a tx from a node's RPL withdrawal address can unset it");
-        // Unset the address
-        deleteAddress(addressKey);
-        // Emit withdrawal address unset event
-        emit NodeRPLWithdrawalAddressUnset(_nodeAddress, block.timestamp);
-    }

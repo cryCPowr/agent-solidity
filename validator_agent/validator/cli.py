@@ -50,7 +50,11 @@ def main() -> None:
     with open(os.path.join(args.output, "summary.json"), encoding="utf-8") as f:
         summary = json.load(f)
     print("\nValidator Summary:", file=sys.stderr)
-    print(f"  Validated: {summary['validated_attacks']}", file=sys.stderr)
+    print(f"  Queued: {summary['validated_attacks']}", file=sys.stderr)
+    print(f"  Executed: {summary.get('executed_attacks', summary['validated_attacks'])}", file=sys.stderr)
+    print(f"  Blocked: {summary.get('blocked_attacks', 0)}", file=sys.stderr)
+    for readiness, count in summary.get("readiness_counts", {}).items():
+        print(f"    readiness[{readiness}]: {count}", file=sys.stderr)
     for verdict, count in summary["verdict_counts"].items():
         print(f"    {verdict}: {count}", file=sys.stderr)
     for confirmed in summary["confirmed"]:

@@ -1,1 +1,0 @@
-megapool.getDebt() == 0

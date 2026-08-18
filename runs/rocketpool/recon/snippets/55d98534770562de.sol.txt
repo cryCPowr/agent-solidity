@@ -1,1 +1,0 @@
-function getVotingPowerAbstained(uint256 _proposalID) external view returns (uint256);

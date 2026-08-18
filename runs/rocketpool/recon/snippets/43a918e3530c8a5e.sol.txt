@@ -1,3 +1,0 @@
-assembly {
-                    mstore8(ptr, byte(mod(value, 10), _SYMBOLS))
-                }

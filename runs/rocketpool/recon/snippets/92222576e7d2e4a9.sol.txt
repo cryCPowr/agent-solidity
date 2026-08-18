@@ -1,1 +1,0 @@
-emit RPLStaked(_nodeAddress, msg.sender, _amount, block.timestamp)

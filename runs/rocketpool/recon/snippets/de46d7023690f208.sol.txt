@@ -1,1 +1,0 @@
-setUint(keccak256(abi.encodePacked(settingNameSpace, "rewards.claims", "periods")), 28)

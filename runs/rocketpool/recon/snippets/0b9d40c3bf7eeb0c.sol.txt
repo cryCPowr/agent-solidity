@@ -1,1 +1,0 @@
-function getCreateLotEnabled() external view returns (bool);

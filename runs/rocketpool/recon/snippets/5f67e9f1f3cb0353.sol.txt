@@ -1,1 +1,0 @@
-function lookupCheckpoint(bytes32 _key, uint32 _block) external view returns (bool exists, uint32 block, uint224 value);

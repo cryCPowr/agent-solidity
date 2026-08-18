@@ -1,1 +1,0 @@
-require(_validatorProof.validator.activationEpoch == farFutureEpoch, "Validator is activated")

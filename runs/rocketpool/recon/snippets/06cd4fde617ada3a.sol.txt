@@ -1,1 +1,0 @@
-addressSetStorage.getCount(keccak256(abi.encodePacked("node.minipools.validating.index", _nodeAddress)))

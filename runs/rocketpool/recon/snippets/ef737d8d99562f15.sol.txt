@@ -1,1 +1,0 @@
-rocketDAONode.getMemberIsValid(_nodeAddress) != true

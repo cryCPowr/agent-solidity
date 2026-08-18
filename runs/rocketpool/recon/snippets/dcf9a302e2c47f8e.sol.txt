@@ -1,3 +1,0 @@
-function setVoterShare(uint256 _value) override external onlyAllowListedController {
-        _setVoterShare(_value);
-    }

@@ -1,1 +1,0 @@
-getChallengeAddress(state)

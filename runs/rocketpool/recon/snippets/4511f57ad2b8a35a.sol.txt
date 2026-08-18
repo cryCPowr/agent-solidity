@@ -1,1 +1,0 @@
-getState(_proposalID) == ProposalState.Pending

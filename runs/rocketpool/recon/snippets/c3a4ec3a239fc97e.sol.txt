@@ -1,2 +1,0 @@
-if (bidPrice > blockPrice) { currentPrice = bidPrice; }
-        else { currentPrice = blockPrice; }

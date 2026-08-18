@@ -1,1 +1,0 @@
-setSettingUint("minipool.scrub.period", 12 hours)

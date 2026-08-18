@@ -1,3 +1,0 @@
-if (numExitingValidators == 0 && numLockedValidators == 0) {
-            _distributeAmount(getPendingRewards());
-        }

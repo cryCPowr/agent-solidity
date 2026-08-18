@@ -1,1 +1,0 @@
-require(challengeData == 0, "Index already challenged")

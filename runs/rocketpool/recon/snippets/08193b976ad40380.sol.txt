@@ -1,6 +1,0 @@
-function setStakeRPLForAllowed(address _nodeAddress, address _caller, bool _allowed) override public onlyRPLWithdrawalAddressOrNode(_nodeAddress) onlyRegisteredNode(_nodeAddress) {
-        // Set the value
-        setBool(keccak256(abi.encodePacked("node.stake.for.allowed", _nodeAddress, _caller)), _allowed);
-        // Log it
-        emit StakeRPLForAllowed(_nodeAddress, _caller, _allowed, block.timestamp);
-    }

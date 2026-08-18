@@ -1,1 +1,0 @@
-rocketDAOProtocolVerifier.burnProposalBond(_proposalID)

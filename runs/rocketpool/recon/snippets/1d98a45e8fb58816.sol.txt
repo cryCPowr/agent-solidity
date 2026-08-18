@@ -1,4 +1,0 @@
-interface RocketMegapoolDelegateBaseInterface {
-    function deprecate() external;
-    function getExpirationTime() external view returns (uint256);
-}

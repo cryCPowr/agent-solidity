@@ -1,1 +1,0 @@
-_assignMegapools(assignments, _rocketDAOProtocolSettingsDeposit)

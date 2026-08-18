@@ -1,3 +1,0 @@
-function getUserDistributeDelay() override external view returns (uint256) {
-        return getSettingUint("user.distribute.delay");
-    }

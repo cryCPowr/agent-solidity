@@ -1,3 +1,0 @@
-function getBondReductionWindowLength() override public view returns (uint256) {
-        return getSettingUint("minipool.bond.reduction.window.length");
-    }

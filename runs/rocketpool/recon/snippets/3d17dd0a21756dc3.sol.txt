@@ -1,1 +1,0 @@
-emit EtherDeposited(msg.sender, preLaunchValue, block.timestamp)

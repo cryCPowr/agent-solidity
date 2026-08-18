@@ -1,1 +1,0 @@
-require(keccak256(bytes(existingAbi)) != keccak256(bytes(_contractAbi)), "ABIs are identical")

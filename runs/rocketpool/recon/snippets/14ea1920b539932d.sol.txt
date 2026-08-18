@@ -1,1 +1,0 @@
-event BootstrapProtocolDAOEnabled(uint256 block, uint256 time);

@@ -1,1 +1,0 @@
-function proposalUpgrade(string memory _type, string memory _name, string memory _contractAbi, address _contractAddress) external;

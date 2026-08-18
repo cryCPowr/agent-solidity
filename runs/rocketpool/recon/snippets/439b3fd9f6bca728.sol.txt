@@ -1,1 +1,0 @@
-require(!getBool(migratedKey), "Cannot set once migrated")

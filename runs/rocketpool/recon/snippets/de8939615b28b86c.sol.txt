@@ -1,1 +1,0 @@
-require (previousSigner != address(0), "No signer set")

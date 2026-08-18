@@ -1,4 +1,0 @@
-function getLengthLegacy(bytes32 _key) private view returns (uint256) {
-        AddressQueueStorageInterface addressQueueStorage = AddressQueueStorageInterface(getContractAddress("addressQueueStorage"));
-        return addressQueueStorage.getLength(_key);
-    }

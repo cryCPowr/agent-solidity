@@ -1,1 +1,0 @@
-if (msg.value > bidAmount) { msg.sender.transfer(msg.value.sub(bidAmount)); }

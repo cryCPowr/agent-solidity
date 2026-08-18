@@ -1,1 +1,0 @@
-abi.encodePacked("validator.megapool", _megapoolAddress, _pubkey)

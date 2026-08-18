@@ -1,5 +1,0 @@
-function getContractAddress(string memory _contractName) private view returns (address) {
-        address contractAddress = rocketStorage.getAddress(keccak256(abi.encodePacked("contract.address", _contractName)));
-        require(contractAddress != address(0x0), "Contract not found");
-        return contractAddress;
-    }

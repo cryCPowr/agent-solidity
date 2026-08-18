@@ -1,1 +1,0 @@
-getSettingBool("auction.lot.bidding.enabled")

@@ -1,1 +1,0 @@
-emit ContractAdded(nameHash, _contractAddress, block.timestamp)

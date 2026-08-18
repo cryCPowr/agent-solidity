@@ -1,1 +1,0 @@
-_setSettingUint("network.node.fee.demand.range", 160 ether)

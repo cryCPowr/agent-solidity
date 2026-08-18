@@ -1,3 +1,0 @@
-if (_recentEpoch > _withdrawableEpoch - notifyThreshold) {
-            _increaseDebt(rocketDAOProtocolSettingsMegapool.getLateNotifyFine());
-        }

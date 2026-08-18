@@ -1,1 +1,0 @@
-function getPenaltyThreshold() external view returns (uint256);

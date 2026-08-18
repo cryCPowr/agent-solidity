@@ -1,7 +1,0 @@
-if (calcBase * _submissionCount / rocketDAONodeTrusted.getMemberCount() >= rocketDAOProtocolSettingsNetwork.getNodePenaltyThreshold()) {
-            // Apply penalty and mark as applied
-            setBool(penaltyAppliedKey, true);
-            _applyPenalty(_minipool);
-            // Emit event
-            emit PenaltyApplied(_minipool, _block, block.timestamp);
-        }

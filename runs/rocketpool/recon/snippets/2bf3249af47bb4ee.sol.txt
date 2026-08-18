@@ -1,1 +1,0 @@
-getUint(bytes32(proposalKey + challengePeriodOffset))

@@ -1,7 +1,0 @@
-modifier onlyRegisteredMinipoolOrMegapool(address _caller) {
-        require(
-            getBool(keccak256(abi.encodePacked("megapool.exists", _caller))) ||
-            getBool(keccak256(abi.encodePacked("minipool.exists", _caller)))
-        , "Invalid caller");
-        _;
-    }

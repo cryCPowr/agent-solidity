@@ -1,3 +1,0 @@
-function getWithdrawalCooldown() override external view returns (uint256) {
-        return getSettingUint("node.withdrawal.cooldown");
-    }

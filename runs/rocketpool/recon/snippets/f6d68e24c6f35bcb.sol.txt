@@ -1,1 +1,0 @@
-NodeWithdrawalAddressSet(_nodeAddress, _newWithdrawalAddress, block.timestamp)

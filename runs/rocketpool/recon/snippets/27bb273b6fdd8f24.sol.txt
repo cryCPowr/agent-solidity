@@ -1,1 +1,0 @@
-event BootstrapSettingBool(string settingContractName, string settingPath, bool value, uint256 time);

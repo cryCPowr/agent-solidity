@@ -1,1 +1,0 @@
-settingKey == keccak256(abi.encodePacked("auction.lot.value.minimum"))

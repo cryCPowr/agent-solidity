@@ -1,7 +1,0 @@
-function getNextItem(bytes32 _namespace, DepositQueueValue memory _value) external view returns (DepositQueueValue memory nextItem) {
-        uint256 index = getUint(keccak256(abi.encodePacked(_namespace, ".index", _value.receiver, _value.validatorId)));
-        if (index > 0) {
-            uint256 nextIndex = getUint(keccak256(abi.encodePacked(_namespace, ".next", index)));
-            nextItem = _unpackItem(getUint(keccak256(abi.encodePacked(_namespace, ".item", nextIndex))));
-        }
-    }

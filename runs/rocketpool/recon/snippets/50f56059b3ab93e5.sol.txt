@@ -1,3 +1,0 @@
-function getScrubQuorum() override external view returns (uint256) {
-        return getSettingUint("minipool.scrub.quorum");
-    }

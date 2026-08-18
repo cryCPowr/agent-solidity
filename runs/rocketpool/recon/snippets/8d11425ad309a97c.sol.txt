@@ -1,3 +1,0 @@
-function getUpgradeAddress(uint256 _upgradeProposalID) override public view returns (address) {
-        return getAddress(keccak256(abi.encodePacked(daoUpgradeNameSpace, "address", _upgradeProposalID)));
-    }

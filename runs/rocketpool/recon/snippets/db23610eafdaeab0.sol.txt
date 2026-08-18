@@ -1,1 +1,0 @@
-_types[i] == SettingType.UINT256

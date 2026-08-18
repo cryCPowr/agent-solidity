@@ -1,3 +1,0 @@
-if (toVault > 0) {
-            rocketVault.depositEther{value: toVault}();
-        }

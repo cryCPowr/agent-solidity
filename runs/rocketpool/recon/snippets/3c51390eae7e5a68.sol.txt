@@ -1,1 +1,0 @@
-require(ownerCalling, "Only owner can distribute dissolved minipool")

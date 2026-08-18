@@ -1,9 +1,0 @@
-function vote(uint256 _proposalID, VoteDirection _voteDirection, uint256 _votingPower, uint256 _nodeIndex, Types.Node[] calldata _witness) external onlyRegisteredNode(msg.sender) onlyLatestContract("rocketDAOProtocolProposal", address(this)) {
-        // Check valid vote
-        require(_voteDirection != VoteDirection.NoVote, "Invalid vote");
-        // Check the proposal is in a state that can be voted on
-        require(getState(_proposalID) == ProposalState.ActivePhase1, "Phase 1 voting is not active");
-        // Verify the voting power is correct
-        RocketDAOProtocolVerifierInterface rocketDAOProtocolVerifier = RocketDAOProtocolVerifierInterface(getContractAddress("rocketDAOProtocolVerifier"));
-        require(rocketDAOProtocolVerifier.verifyVote(msg.sender, _nodeIndex, _proposal
-/* … truncated … */

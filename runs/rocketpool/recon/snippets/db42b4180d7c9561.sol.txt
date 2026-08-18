@@ -1,3 +1,0 @@
-if (toNode > 0) {
-                    refundValue += toNode;
-                }

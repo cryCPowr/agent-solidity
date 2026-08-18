@@ -1,1 +1,0 @@
-rocketMinipoolManager.getMinipoolWithdrawalCredentials(address(this))

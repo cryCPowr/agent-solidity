@@ -1,3 +1,0 @@
-for (uint256 i = 0; i < _submission.nodeETH.length; ++i) {
-                totalRewardsETH = totalRewardsETH + _submission.nodeETH[i];
-            }

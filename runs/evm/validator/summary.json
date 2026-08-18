@@ -1,0 +1,14 @@
+{
+  "validated_attacks": 0,
+  "executed_attacks": 0,
+  "blocked_attacks": 0,
+  "readiness_counts": {},
+  "verdict_counts": {
+    "CONFIRM": 0,
+    "REJECT": 0,
+    "INCONCLUSIVE": 0
+  },
+  "attack_summary_source": "/home/farhanagil/Dokumen/Workshop/agent/agent_solidity/runs/evm/attack",
+  "confirmed": [],
+  "rejected": []
+}

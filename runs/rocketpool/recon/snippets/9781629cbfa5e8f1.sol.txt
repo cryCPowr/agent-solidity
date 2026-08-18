@@ -1,1 +1,0 @@
-event RPLLocked(address indexed from, uint256 amount, uint256 time);

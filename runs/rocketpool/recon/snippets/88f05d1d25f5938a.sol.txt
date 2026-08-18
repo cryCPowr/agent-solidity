@@ -1,1 +1,0 @@
-abi.encode("rewards.snapshot.submitted.node.key", _trustedNodeAddress, _submission)

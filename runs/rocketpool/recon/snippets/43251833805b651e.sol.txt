@@ -1,1 +1,0 @@
-function getVoteCount(address _megapool, uint256 _block, uint256 _amount) external view returns (uint256);

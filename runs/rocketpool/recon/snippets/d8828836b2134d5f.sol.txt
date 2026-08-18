@@ -1,1 +1,0 @@
-RocketDAOProtocolVerifierInterface(getContractAddress("rocketDAOProtocolVerifier"))

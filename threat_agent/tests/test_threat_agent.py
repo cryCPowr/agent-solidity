@@ -24,6 +24,33 @@ from threat.prioritization import prioritize_all
 from threat.output import write_threat_output
 
 
+def _synthetic_recon(facts, protocol=None, coverage=None, dependencies=None):
+    facts_obj = loader._index_facts(list(facts))
+    return loader.ReconArtifact(
+        facts_obj=facts_obj,
+        graph=loader.ReconGraph(),
+        summary=loader.ReconSummary(),
+        metadata=loader.ReconMetadata(),
+        coverage=loader.ReconCoverage(raw=coverage or {}),
+        protocol=loader.ReconProtocol(raw=protocol or {}),
+        dependencies=loader.ReconDependencies(raw=dependencies or {}),
+        output_dir="synthetic",
+    )
+
+
+def _fact(fid, ftype, fn="synthetic/Proxy.sol#1::fn#2", props=None, subject=None, status="observed"):
+    subj = {"function": fn}
+    if subject:
+        subj.update(subject)
+    return {
+        "id": fid,
+        "type": ftype,
+        "subject": subj,
+        "properties": props or {},
+        "status": status,
+    }
+
+
 @pytest.fixture(scope="session")
 def recon(recon_output_dir):
     """Use real Recon artifact resolved by conftest."""
@@ -123,7 +150,8 @@ def test_non_privileged_function_does_not_create_excessive_hypotheses(artifacts)
             "rounding_allocation", "signature_replay", "cross_contract_trust",
             "DoS_griefing", "upgrade_risk", "economic_manipulation",
             "initialization_vulnerability", "flash_loan_sensitivity",
-            "novel_composition",
+            "gas_dos", "arithmetic_bound_violation", "frontrun_vulnerability",
+            "randomness_manipulation", "novel_composition",
             "security_chain",  # generic multi-stage composition (security_chains.py)
         )
 
@@ -239,3 +267,247 @@ def test_threat_agent_does_not_claim_vulnerabilities(artifacts):
         # "attacker" (hypothetical) is OK; "attack" as a claim is not
         assert "vulnerability" not in h.statement.lower()
         assert "bug" not in h.statement.lower()
+
+
+# ===========================================================================
+# Recon integration regressions for new artifacts/facts
+# ===========================================================================
+def test_loader_reads_optional_recon_artifacts(staging_dir):
+    recon_dir = os.path.join(staging_dir, "recon-opt")
+    os.makedirs(recon_dir, exist_ok=True)
+
+    with open(os.path.join(recon_dir, "facts.jsonl"), "w", encoding="utf-8") as f:
+        f.write(json.dumps(_fact("fact:001", "function_exists", props={"name": "upgradeTo"}, subject={"function": "synthetic/Proxy.sol#1::upgradeTo#2"})) + "\n")
+    for name, payload in {
+        "graph.json": {"nodes": [], "edges": []},
+        "summary.json": {"schema_version": "1.0"},
+        "metadata.json": {"schema_version": "1.0"},
+        "coverage.json": {"source_coverage": {"analyzed_ratio": 0.42}},
+        "protocol.json": {
+            "contracts": [
+                {
+                    "key": "synthetic/Proxy.sol#1",
+                    "proxy_upgradeability": {
+                        "proxy_like": True,
+                        "upgrade_functions": ["synthetic/Proxy.sol#1::upgradeTo#2"],
+                        "initializer_functions": [],
+                        "delegatecall_paths": [],
+                    },
+                }
+            ]
+        },
+        "dependencies.json": {"dependency_files_added": ["lib/SomeDep.sol"]},
+    }.items():
+        with open(os.path.join(recon_dir, name), "w", encoding="utf-8") as f:
+            json.dump(payload, f)
+
+    recon = loader.load_recon(recon_dir)
+    assert recon.coverage.raw["source_coverage"]["analyzed_ratio"] == 0.42
+    assert recon.protocol.raw["contracts"][0]["proxy_upgradeability"]["proxy_like"] is True
+    assert recon.dependencies.raw["dependency_files_added"] == ["lib/SomeDep.sol"]
+
+
+
+def test_single_predictable_randomness_source_does_not_emit_family_hypothesis():
+    fn = "synthetic/Game.sol#1::play#2"
+    recon = _synthetic_recon([
+        _fact("fact:rand", "randomness_source_usage", fn=fn, props={"source": "block.timestamp", "predictability": "high"}),
+        _fact("fact:mut", "function_mutability", fn=fn, props={"state_mutability": "nonpayable"}),
+        _fact("fact:vis", "function_visibility", fn=fn, props={"visibility": "external"}),
+    ])
+    hyps = generate_hypotheses(recon, generate_invariants(recon))
+    assert not [h for h in hyps if h.category == "randomness_manipulation"]
+
+
+
+def test_reused_randomness_with_input_and_effect_emits_family_hypothesis():
+    fn = "synthetic/Game.sol#1::play#2"
+    recon = _synthetic_recon([
+        _fact("fact:reuse", "repeated_randomness_consumer", fn=fn, props={"usage_count": 2}),
+        _fact("fact:rand1", "randomness_source_usage", fn=fn, props={"source": "block.timestamp", "predictability": "high", "immediate_consumer": "variable_initializer"}),
+        _fact("fact:rand2", "randomness_source_usage", fn=fn, props={"source": "block.timestamp", "predictability": "high", "immediate_consumer": "assignment"}),
+        _fact("fact:input", "input_origin", fn=fn, props={"origin_kind": "parameter", "root_name": "choice"}),
+        _fact("fact:write", "state_write", fn=fn, subject={"name": "score", "state_variable": "score"}),
+        _fact("fact:mut", "function_mutability", fn=fn, props={"state_mutability": "nonpayable"}),
+        _fact("fact:vis", "function_visibility", fn=fn, props={"visibility": "external"}),
+    ])
+    hyps = generate_hypotheses(recon, generate_invariants(recon))
+    targets = [h for h in hyps if h.category == "randomness_manipulation"]
+    assert targets
+    assert "same randomness source" in targets[0].statement.lower() or "consumes the same randomness source" in targets[0].statement.lower()
+
+
+
+def test_reused_timestamp_for_guard_and_event_does_not_emit_randomness_family():
+    fn = "synthetic/Megapool.sol#1::dissolve#2"
+    recon = _synthetic_recon([
+        _fact("fact:reuse", "repeated_randomness_consumer", fn=fn, props={"usage_count": 2}),
+        _fact("fact:rand1", "randomness_source_usage", fn=fn, props={"source": "block.timestamp", "predictability": "high", "immediate_consumer": "binary_op:>"}),
+        _fact("fact:rand2", "randomness_source_usage", fn=fn, props={"source": "block.timestamp", "predictability": "high", "immediate_consumer": "call_argument"}),
+        _fact("fact:input", "input_origin", fn=fn, props={"origin_kind": "parameter", "root_name": "validatorId"}),
+        _fact("fact:write", "state_write", fn=fn, subject={"name": "validator", "state_variable": "validator"}),
+        _fact("fact:mut", "function_mutability", fn=fn, props={"state_mutability": "nonpayable"}),
+        _fact("fact:vis", "function_visibility", fn=fn, props={"visibility": "external"}),
+    ])
+    hyps = generate_hypotheses(recon, generate_invariants(recon))
+    assert not [h for h in hyps if h.category == "randomness_manipulation"]
+
+
+
+def test_accounting_digest_plus_transfers_without_state_write_does_not_emit_family():
+    fn = "synthetic/Distributor.sol#1::claimAndStake#2"
+    recon = _synthetic_recon([
+        _fact("fact:digest", "digest_construction_operation", fn=fn, props={"arguments": ["abi.encodePacked('rewards.eth.balance', withdrawalAddress)"], "builtin": "keccak256"}),
+        _fact("fact:input", "call_argument_origin_chain", fn=fn, props={"root_kind": "parameter", "argument_expression": "amount"}),
+        _fact("fact:arith", "arithmetic_operation", fn=fn, props={"left_operand": "total", "operator": "-", "right_operand": "stake"}),
+        _fact("fact:eth", "eth_transfer", fn=fn, props={"amount_expression": ["amount"]}),
+        _fact("fact:mut", "function_mutability", fn=fn, props={"state_mutability": "nonpayable"}),
+        _fact("fact:vis", "function_visibility", fn=fn, props={"visibility": "external"}),
+    ])
+    hyps = generate_hypotheses(recon, generate_invariants(recon))
+    assert not [h for h in hyps if h.category == "accounting_mismatch"]
+
+
+
+def test_division_without_effectful_anchor_does_not_emit_rounding_family():
+    fn = "synthetic/Vault.sol#1::preview#2"
+    recon = _synthetic_recon([
+        _fact("fact:div", "division_operation", fn=fn, props={"left_operand": "assets", "right_operand": "supply", "immediate_consumer": "return_value"}),
+        _fact("fact:mut", "function_mutability", fn=fn, props={"state_mutability": "view"}),
+        _fact("fact:vis", "function_visibility", fn=fn, props={"visibility": "external"}),
+    ])
+    hyps = generate_hypotheses(recon, generate_invariants(recon))
+    assert not [h for h in hyps if h.category == "rounding_allocation"]
+
+
+
+def test_helper_division_is_lifted_to_effectful_caller():
+    helper = "synthetic/Rewards.sol#1::_computeShare#2"
+    caller = "synthetic/Rewards.sol#1::distribute#3"
+    recon = _synthetic_recon([
+        _fact("fact:div", "division_operation", fn=helper, props={"left_operand": "rewards", "right_operand": "supply", "immediate_consumer": "return_value"}),
+        _fact("fact:helper-mut", "function_mutability", fn=helper, props={"state_mutability": "view"}),
+        _fact("fact:helper-input", "input_origin", fn=helper, props={"origin_kind": "parameter", "root_name": "rewards"}),
+        _fact("fact:call", "internal_call", fn=caller, props={"callee_function": helper, "static_target": True}, subject={"callee_name": "_computeShare"}),
+        _fact("fact:caller-vis", "function_visibility", fn=caller, props={"visibility": "external"}),
+        _fact("fact:caller-mut", "function_mutability", fn=caller, props={"state_mutability": "nonpayable"}),
+        _fact("fact:caller-input", "input_origin", fn=caller, props={"origin_kind": "parameter", "root_name": "beneficiary"}),
+        _fact("fact:caller-asset", "asset_operation", fn=caller, props={"operation": "transfer", "target_expression": "rewardToken", "arguments": ["beneficiary", "share"]}),
+        _fact("fact:caller-write", "state_write", fn=caller, subject={"name": "distributed", "state_variable": "distributed"}),
+    ])
+    hyps = generate_hypotheses(recon, generate_invariants(recon))
+    targets = [h for h in hyps if h.category == "rounding_allocation"]
+    assert targets
+    lifted = next(h for h in targets if caller in h.affected_functions)
+    assert lifted.affected_functions[0] == caller
+    assert helper in lifted.affected_functions
+    assert "feeds effectful caller" in lifted.statement
+    assert "fact:call" in lifted.observed_facts
+    assert "fact:caller-asset" in lifted.observed_facts
+    assert "fact:caller-write" in lifted.observed_facts
+
+
+
+def test_helper_division_is_lifted_when_internal_call_uses_subject_caller():
+    helper = "synthetic/Rewards.sol#1::_computeShare#2"
+    caller = "synthetic/Rewards.sol#1::distribute#3"
+    recon = _synthetic_recon([
+        _fact("fact:div", "division_operation", fn=helper, props={"left_operand": "rewards", "right_operand": "supply", "immediate_consumer": "return_value"}),
+        _fact("fact:helper-mut", "function_mutability", fn=helper, props={"state_mutability": "view"}),
+        {
+            "id": "fact:call2",
+            "type": "internal_call",
+            "subject": {"caller": caller, "callee_name": "_computeShare"},
+            "properties": {"callee_function": helper, "static_target": True},
+            "status": "observed",
+        },
+        _fact("fact:caller-vis", "function_visibility", fn=caller, props={"visibility": "external"}),
+        _fact("fact:caller-mut", "function_mutability", fn=caller, props={"state_mutability": "nonpayable"}),
+        _fact("fact:caller-asset", "asset_operation", fn=caller, props={"operation": "transfer", "target_expression": "rewardToken", "arguments": ["beneficiary", "share"]}),
+        _fact("fact:caller-write", "state_write", fn=caller, subject={"name": "distributed", "state_variable": "distributed"}),
+    ])
+    hyps = generate_hypotheses(recon, generate_invariants(recon))
+    targets = [h for h in hyps if h.category == "rounding_allocation"]
+    assert targets
+    lifted = next(h for h in targets if caller in h.affected_functions)
+    assert helper in lifted.affected_functions
+    assert "fact:call2" in lifted.observed_facts
+
+
+
+def test_frontrun_requires_auth_and_effect_anchor():
+    fn = "synthetic/Governance.sol#1::setCap#2"
+    recon = _synthetic_recon([
+        _fact("fact:mev", "mev_exposure_indicator", fn=fn, props={"constraint_count": 1, "frontrun_risk": "high"}, status="derived"),
+        _fact("fact:constraint", "state_dependent_constraint", fn=fn, props={"constraint_expression": "newCap >= liveUsage", "mutable_state_dependency": True, "visibility": "public"}, status="derived"),
+        _fact("fact:auth", "modifier_usage", fn=fn, subject={"modifier_name": "onlyOwner"}),
+        _fact("fact:write", "state_write", fn=fn, subject={"name": "cap", "state_variable": "cap"}),
+        _fact("fact:mut", "function_mutability", fn=fn, props={"state_mutability": "nonpayable"}),
+        _fact("fact:vis", "function_visibility", fn=fn, props={"visibility": "external"}),
+    ])
+    hyps = generate_hypotheses(recon, generate_invariants(recon))
+    assert [h for h in hyps if h.category == "frontrun_vulnerability"]
+
+
+
+def test_upgrade_and_initializer_signals_flow_into_threat_models():
+    contract_key = "synthetic/Proxy.sol#1"
+    upgrade_fn = f"{contract_key}::upgradeTo#10"
+    init_fn = f"{contract_key}::initialize#11"
+    delegate_fn = f"{contract_key}::fallback#12"
+    facts = [
+        _fact("fact:proxy", "proxy_like_contract", subject={"contract": contract_key, "name": "Proxy"}, props={"implementation_slots": [f"{contract_key}::implementation"], "upgrade_functions": [upgrade_fn], "initializer_functions": [init_fn]}),
+        _fact("fact:upgrade", "upgrade_function", fn=upgrade_fn, subject={"contract": contract_key, "function": upgrade_fn, "name": "upgradeTo"}),
+        _fact("fact:upgrade-auth", "upgrade_authority", fn=upgrade_fn, subject={"contract": contract_key, "function": upgrade_fn}, props={"mechanisms": [{"kind": "modifier"}], "basis_facts": ["fact:acf"]}, status="derived"),
+        _fact("fact:path", "proxy_delegatecall_path", fn=delegate_fn, subject={"contract": contract_key, "function": delegate_fn}, props={"implementation_slots": [f"{contract_key}::implementation"], "fallback_like": True}, status="derived"),
+        _fact("fact:init-fn", "initializer_function", fn=init_fn, subject={"contract": contract_key, "function": init_fn, "name": "initialize"}),
+        _fact("fact:init-surface", "initializer_surface", fn=init_fn, subject={"contract": contract_key, "function": init_fn}, props={"authorization_status": "none_observed", "writes_initialized_flag": True}, status="derived"),
+        _fact("fact:init-life", "initializer_lifecycle", fn=init_fn, subject={"contract": contract_key}, props={"initializer_functions": [init_fn], "initialized_state_variables": [f"{contract_key}::initialized"]}, status="derived"),
+        _fact("fact:cap-auth", "capability_authority_surface", fn=upgrade_fn, subject={"function": upgrade_fn, "capability": "can_delegatecall"}, props={"authority_status": "guarded", "writes_authorization_state": True, "capability_fact_id": "fact:cap"}, status="derived"),
+    ]
+    protocol = {
+        "contracts": [
+            {
+                "key": contract_key,
+                "proxy_upgradeability": {
+                    "proxy_like": True,
+                    "upgrade_functions": [upgrade_fn],
+                    "initializer_functions": [init_fn],
+                    "delegatecall_paths": [{"delegatecall_function": delegate_fn}],
+                },
+            }
+        ]
+    }
+    recon = _synthetic_recon(
+        facts,
+        protocol=protocol,
+        coverage={"source_coverage": {"analyzed_ratio": 0.4}},
+    )
+
+    surfaces = build_surfaces(recon)
+    invariants = generate_invariants(recon)
+    hypotheses = generate_hypotheses(recon, invariants)
+
+    surface_by_category = {s.category: s for s in surfaces}
+    assert "Upgradeability" in surface_by_category
+    assert "Lifecycle" in surface_by_category
+    assert "Authority and Capability" in surface_by_category
+    assert "proxy_delegatecall_path" in surface_by_category["Upgradeability"].capabilities
+    assert "initializer_without_observed_authorization" in surface_by_category["Lifecycle"].capabilities
+    assert "writes_authorization_state" in surface_by_category["Authority and Capability"].capabilities
+
+    inv_categories = {inv.category for inv in invariants}
+    assert "upgrade_authority_coherence" in inv_categories
+    assert "initialization_coherence" in inv_categories
+    assert "capability_authority_consistency" in inv_categories
+
+    hyp_categories = {h.category for h in hypotheses}
+    assert "upgrade_risk" in hyp_categories
+    assert "initialization_vulnerability" in hyp_categories
+
+    upgrade_h = next(h for h in hypotheses if h.category == "upgrade_risk")
+    init_h = next(h for h in hypotheses if h.category == "initialization_vulnerability")
+    assert "low analysis coverage" in upgrade_h.uncertainty.lower()
+    assert "low analysis coverage" in init_h.uncertainty.lower()
+    assert upgrade_h.observed_facts
+    assert init_h.observed_facts

@@ -1,1 +1,0 @@
-require(!getReceiptHasVoted(_proposalID, _member), "Member has already voted on proposal")

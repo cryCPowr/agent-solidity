@@ -1,1 +1,0 @@
-require(voterShare + protocolDAOShare + rethShare <= calcBase, "Invalid shares")

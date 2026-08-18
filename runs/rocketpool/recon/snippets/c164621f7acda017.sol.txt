@@ -1,4 +1,0 @@
-function setRPLPrice(uint256 _value) private {
-        RocketNetworkSnapshotsInterface rocketNetworkSnapshots = RocketNetworkSnapshotsInterface(getContractAddress("rocketNetworkSnapshots"));
-        rocketNetworkSnapshots.push(priceKey, uint224(_value));
-    }

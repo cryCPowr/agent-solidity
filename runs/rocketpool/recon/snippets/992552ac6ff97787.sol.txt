@@ -1,1 +1,0 @@
-function deleteInt(bytes32 _key) internal { rocketStorage.deleteInt(_key); }

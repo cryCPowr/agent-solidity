@@ -1,1 +1,0 @@
-event MinipoolDequeued(address indexed minipool, bytes32 indexed queueId, uint256 time);

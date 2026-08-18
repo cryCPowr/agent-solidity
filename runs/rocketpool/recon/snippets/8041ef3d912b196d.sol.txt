@@ -1,1 +1,0 @@
-require(msg.sender == proxyAddress, "Only distributor can add unclaimed rewards")

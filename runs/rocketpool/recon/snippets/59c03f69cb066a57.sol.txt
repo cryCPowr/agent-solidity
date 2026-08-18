@@ -1,1 +1,0 @@
-setString(keccak256(abi.encodePacked(daoProposalNameSpace, "message", proposalID)), _message)

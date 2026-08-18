@@ -1,1 +1,0 @@
-uint256(protocolDAOShareKey) + block.timestamp

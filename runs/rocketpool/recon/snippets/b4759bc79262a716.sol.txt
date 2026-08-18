@@ -1,1 +1,0 @@
-linkedListStorage.getLength(standardQueueNamespace)

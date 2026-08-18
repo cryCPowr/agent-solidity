@@ -1,6 +1,0 @@
-function setGuardian(address _newAddress) external override {
-        // Check tx comes from current guardian
-        require(msg.sender == guardian, "Is not guardian account");
-        // Store new address awaiting confirmation
-        newGuardian = _newAddress;
-    }

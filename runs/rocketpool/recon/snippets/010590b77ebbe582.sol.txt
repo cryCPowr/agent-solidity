@@ -1,6 +1,0 @@
-function getNodeMinipoolETHBorrowed(address _nodeAddress) public view returns (uint256) {
-        RocketNetworkSnapshotsInterface rocketNetworkSnapshots = RocketNetworkSnapshotsInterface(getContractAddress("rocketNetworkSnapshots"));
-        bytes32 key = keccak256(abi.encodePacked("eth.matched.node.amount", _nodeAddress));
-        (,,uint224 value) = rocketNetworkSnapshots.latest(key);
-        return value;
-    }

@@ -1,5 +1,0 @@
-function deployMegapool() override external onlyLatestContract("rocketNodeManager", address(this)) onlyRegisteredNode(msg.sender) returns (address) {
-        RocketMegapoolFactoryInterface rocketMegapool = RocketMegapoolFactoryInterface(getContractAddress("rocketMegapoolFactory"));
-        require(!rocketMegapool.getMegapoolDeployed(msg.sender), "Megapool already deployed for this node");
-        return rocketMegapool.deployContract(msg.sender);
-    }

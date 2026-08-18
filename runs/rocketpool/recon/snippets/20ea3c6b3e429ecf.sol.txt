@@ -1,4 +1,0 @@
-function _increaseETHBorrowed(address _nodeAddress, uint256 _amount) internal {
-        bytes32 key = keccak256(abi.encodePacked("megapool.eth.matched.node.amount", _nodeAddress));
-        addUint(key, _amount);
-    }

@@ -1,6 +1,0 @@
-constructor() {
-        // These values must be set by proxy contract as this contract should only be delegatecalled
-        rocketStorage = RocketStorageInterface(address(0));
-        nodeAddress = address(0);
-        lock = NOT_ENTERED;
-    }

@@ -1,1 +1,0 @@
-function getTotalStakedRPL() external view returns (uint256);

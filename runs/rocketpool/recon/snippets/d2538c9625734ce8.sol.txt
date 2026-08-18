@@ -1,3 +1,0 @@
-function getUserDistributeWindowStart() override public pure returns (uint256) {
-        return minipoolUserDistributeWindowStart;
-    }

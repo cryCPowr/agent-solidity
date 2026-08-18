@@ -1,1 +1,0 @@
-StatusUpdated(uint8(_status), block.timestamp)

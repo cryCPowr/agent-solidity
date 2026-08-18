@@ -1,5 +1,0 @@
-for (uint256 i = _defeatIndex; i > 1; i /= 2) {
-            if (_index == i) {
-                return true;
-            }
-        }

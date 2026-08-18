@@ -1,1 +1,0 @@
-function getScrubVoted(address _member) external view returns (bool);

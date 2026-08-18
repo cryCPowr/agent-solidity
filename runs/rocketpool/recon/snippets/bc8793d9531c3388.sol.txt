@@ -1,1 +1,0 @@
-function assignFunds(uint32 _validatorId) external payable;

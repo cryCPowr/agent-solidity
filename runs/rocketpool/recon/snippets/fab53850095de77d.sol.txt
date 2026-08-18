@@ -1,1 +1,0 @@
-require(msg.sender == rplWithdrawalAddress, "Can only claim and stake from RPL withdrawal address")

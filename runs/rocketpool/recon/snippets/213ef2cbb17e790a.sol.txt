@@ -1,1 +1,0 @@
-function withdrawEther(uint256 _amount) external;

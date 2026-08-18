@@ -1,1 +1,0 @@
-function getProposer(uint256 _proposalID) external view returns (address);

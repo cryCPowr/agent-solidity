@@ -1,1 +1,0 @@
-function getDepositFee() external view returns (uint256);

@@ -1,6 +1,0 @@
-if (votesFor <= votesAgainst || votesFor < getVotesRequired(_proposalID)) {
-            return ProposalState.Defeated;
-        } else {
-            // Was it successful, but has now expired? and cannot be executed anymore?
-            return ProposalState.Expired;
-        }

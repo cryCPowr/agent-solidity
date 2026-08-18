@@ -1,1 +1,0 @@
-addUint(keccak256(bytes("minipools.finalised.count")), 1)

@@ -1,1 +1,0 @@
-bidAmount > 0

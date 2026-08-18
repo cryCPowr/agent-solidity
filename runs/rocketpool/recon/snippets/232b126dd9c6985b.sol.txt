@@ -1,1 +1,0 @@
-_increaseETHBonded(nodeAddress, _bondAmount)

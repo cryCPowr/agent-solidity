@@ -1,1 +1,0 @@
-function cancel(uint256 _proposalID) external;

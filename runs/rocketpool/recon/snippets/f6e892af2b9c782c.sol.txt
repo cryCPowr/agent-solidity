@@ -1,6 +1,0 @@
-function cancel(uint256 _proposalID) override external onlyTrustedNode(msg.sender) onlyLatestContract("rocketDAONodeTrustedProposals", address(this)) {
-        // Load contracts
-        RocketDAOProposalInterface daoProposal = RocketDAOProposalInterface(getContractAddress("rocketDAOProposal"));
-        // Cancel now, will succeed if it is the original proposer
-        daoProposal.cancel(msg.sender, _proposalID);
-    }

@@ -1,1 +1,0 @@
-require(leavesLen + proofLen - 1 == totalHashes, "MerkleProof: invalid multiproof")

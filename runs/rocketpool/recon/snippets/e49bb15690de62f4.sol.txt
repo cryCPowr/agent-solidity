@@ -1,1 +1,0 @@
-mapping(string => uint256) etherBalances

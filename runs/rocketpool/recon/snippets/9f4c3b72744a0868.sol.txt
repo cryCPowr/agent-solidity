@@ -1,4 +1,0 @@
-function transferRPL(address _from, address _to, uint256 _amount) external {
-        RocketNodeStakingInterface rocketNodeStakingInterface = RocketNodeStakingInterface(getContractAddress("rocketNodeStaking"));
-        rocketNodeStakingInterface.transferRPL(_from, _to, _amount);
-    }

@@ -1,1 +1,0 @@
-totalAmountVoterETH + _claims[i].amountVoterETH

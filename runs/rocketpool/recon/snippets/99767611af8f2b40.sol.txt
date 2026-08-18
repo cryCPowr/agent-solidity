@@ -1,1 +1,0 @@
-function getLeaveTime() external view returns (uint256);

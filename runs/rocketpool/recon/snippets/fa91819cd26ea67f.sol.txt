@@ -1,3 +1,0 @@
-function getLotMinimumEthValue() override external view returns (uint256) {
-        return getSettingUint("auction.lot.value.minimum");
-    }

@@ -1,3 +1,0 @@
-function getNodePenaltyThreshold() override external view returns (uint256) {
-        return getSettingUint("network.penalty.threshold");
-    }

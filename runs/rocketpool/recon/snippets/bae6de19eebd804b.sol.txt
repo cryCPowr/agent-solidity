@@ -1,3 +1,0 @@
-function getPreviousDelegate() external override view returns (address) {
-        return rocketMinipoolDelegatePrev;
-    }

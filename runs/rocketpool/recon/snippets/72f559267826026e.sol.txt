@@ -1,1 +1,0 @@
-getBool(keccak256(abi.encodePacked(settingNameSpace, "rewards.network.enabled", _network)))

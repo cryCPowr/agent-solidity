@@ -1,1 +1,0 @@
-function scan(bytes32 _namespace, uint256 _startIndex, uint256 _count) external view returns (DepositQueueValue[] memory entries, uint256 nextIndex);

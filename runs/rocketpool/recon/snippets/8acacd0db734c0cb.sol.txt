@@ -1,1 +1,0 @@
-rocketMinipoolPenalty.setPenaltyRate(_minipoolAddress, _rate)

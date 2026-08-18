@@ -1,3 +1,0 @@
-if (_submission.rewardIndex != rewardIndex) {
-            return;
-        }

@@ -1,1 +1,0 @@
-_value >= 0.33 ether && _value <= 1 ether

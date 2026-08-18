@@ -1,4 +1,0 @@
-function toInt16(int256 value) internal pure returns (int16) {
-        require(value >= -2**15 && value < 2**15, "SafeCast: value doesn\'t fit in 16 bits");
-        return int16(value);
-    }

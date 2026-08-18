@@ -1,1 +1,0 @@
-function incrementMemberUnbondedValidatorCount(address _nodeAddress) external;

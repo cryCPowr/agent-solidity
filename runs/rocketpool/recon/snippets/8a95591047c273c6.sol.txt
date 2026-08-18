@@ -1,1 +1,0 @@
-function getVacant() override external view returns (bool) { return vacant; }

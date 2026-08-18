@@ -1,1 +1,0 @@
-rocketMegapoolManager.addValidator(address(megapool), megapool.getValidatorCount(), _validatorPubkey)

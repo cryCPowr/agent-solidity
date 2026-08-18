@@ -1,1 +1,0 @@
-function setBytes(bytes32 _key, bytes calldata _value) external;

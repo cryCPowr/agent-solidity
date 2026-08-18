@@ -1,1 +1,0 @@
-function getEthBalance() external view returns (uint256);

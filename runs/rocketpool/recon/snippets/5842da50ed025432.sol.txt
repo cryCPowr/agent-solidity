@@ -1,1 +1,0 @@
-function getMinipoolByPubkey(bytes calldata _pubkey) external view returns (address);

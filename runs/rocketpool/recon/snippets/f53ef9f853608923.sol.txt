@@ -1,1 +1,0 @@
-function getTotalScrubVotes() external view returns (uint256);

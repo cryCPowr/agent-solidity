@@ -1,1 +1,0 @@
-SSZ.efficientSha256(SSZ.toLittleEndian(uint256(_validator.activationEligibilityEpoch)), SSZ.toLittleEndian(uint256(_validator.activationEpoch)))

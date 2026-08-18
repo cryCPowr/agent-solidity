@@ -1,3 +1,0 @@
-if (_leaves[i].sum != actual) {
-                return false;
-            }

@@ -1,1 +1,0 @@
-RocketMegapoolDelegateInterface(_megapool).applyPenalty(_amount)

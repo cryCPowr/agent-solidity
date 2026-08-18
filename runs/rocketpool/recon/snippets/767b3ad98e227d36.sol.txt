@@ -1,1 +1,0 @@
-require(_value >= 12 hours, "Launch timeout must be greater than 12 hours")

@@ -1,1 +1,0 @@
-_setSettingUint("megapool.penalty.threshold", 0.51 ether)

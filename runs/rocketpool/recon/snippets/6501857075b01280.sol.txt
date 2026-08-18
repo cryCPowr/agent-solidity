@@ -1,5 +1,0 @@
-if (index != lastIndex) {
-            address lastItem = getAddress(keccak256(abi.encodePacked(_key, ".item", lastIndex)));
-            setAddress(keccak256(abi.encodePacked(_key, ".item", index)), lastItem);
-            setUint(keccak256(abi.encodePacked(_key, ".index", lastItem)), index.add(1));
-        }

@@ -1,1 +1,0 @@
-setSettingUint("proposal.vote.phase2.time", 1 weeks)

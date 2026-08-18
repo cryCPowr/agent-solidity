@@ -1,1 +1,0 @@
-getLotRPLRecovered(_lotIndex)

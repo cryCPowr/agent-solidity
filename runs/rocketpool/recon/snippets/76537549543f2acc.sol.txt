@@ -1,1 +1,0 @@
-emit PenaltyApplied(_megapool, _block, _amount, block.timestamp)

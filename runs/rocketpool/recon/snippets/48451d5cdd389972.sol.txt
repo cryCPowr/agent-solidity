@@ -1,1 +1,0 @@
-_upgradeProposalID > 0

@@ -1,1 +1,0 @@
-require(success, "Multicall2 aggregate: call failed")

@@ -1,3 +1,0 @@
-if (vaultBalance > 0) {
-            rocketVault.withdrawEther(vaultBalance);
-        }

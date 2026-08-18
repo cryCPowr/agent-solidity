@@ -1,4 +1,0 @@
-if (depositType != MinipoolDeposit.Variable) {
-            userDepositBalanceLegacy = 2 ** 256 - 1;
-            depositType = MinipoolDeposit.Variable;
-        }

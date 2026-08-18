@@ -1,1 +1,0 @@
-_depositType == MinipoolDeposit.Full

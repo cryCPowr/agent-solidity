@@ -1,6 +1,0 @@
-function getMemberQuorumVotesRequired() override external view returns (uint256) {
-        // Load contracts
-        RocketDAOProtocolSettingsSecurityInterface rocketDAOProtocolSettingsSecurity = RocketDAOProtocolSettingsSecurityInterface(getContractAddress("rocketDAOProtocolSettingsSecurity"));
-        // Calculate and return votes required
-        return getMemberCount() * rocketDAOProtocolSettingsSecurity.getQuorum();
-    }

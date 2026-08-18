@@ -1,1 +1,0 @@
-RocketMegapoolInterface(msg.sender).getNodeAddress()

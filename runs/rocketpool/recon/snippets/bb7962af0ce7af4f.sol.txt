@@ -1,1 +1,0 @@
-function setGuardian(address _newAddress) external;

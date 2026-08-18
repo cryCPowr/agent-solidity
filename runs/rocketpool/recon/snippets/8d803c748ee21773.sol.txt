@@ -1,3 +1,0 @@
-function _setTotalRETHSupply(uint256 _value) internal {
-        setUint(keccak256("network.balance.reth.supply"), _value);
-    }

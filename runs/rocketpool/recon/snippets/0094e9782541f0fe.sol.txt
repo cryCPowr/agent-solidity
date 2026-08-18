@@ -1,1 +1,0 @@
-withdrawalAddress == address(0)

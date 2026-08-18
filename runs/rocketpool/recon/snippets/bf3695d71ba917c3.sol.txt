@@ -1,1 +1,0 @@
-launchAmount.sub(preLaunchValue)

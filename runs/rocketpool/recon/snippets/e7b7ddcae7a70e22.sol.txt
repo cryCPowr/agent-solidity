@@ -1,1 +1,0 @@
-function placeBid(uint256 _lotIndex) external payable;

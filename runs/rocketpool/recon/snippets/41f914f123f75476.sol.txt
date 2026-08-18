@@ -1,1 +1,0 @@
-daoProposal.vote(msg.sender, 1 ether, _proposalID, _support)

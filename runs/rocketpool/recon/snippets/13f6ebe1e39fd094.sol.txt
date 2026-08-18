@@ -1,1 +1,0 @@
-function getDelegateExpiry(address _delegateAddress) external view returns (uint256);

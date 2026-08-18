@@ -1,3 +1,0 @@
-function getProposalMaxBlockAge() override external view returns (uint256) {
-        return getSettingUint("proposal.max.block.age");
-    }

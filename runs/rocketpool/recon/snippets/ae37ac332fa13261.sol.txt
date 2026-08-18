@@ -1,1 +1,0 @@
-getSettingUint("megapool.dissolve.penalty")

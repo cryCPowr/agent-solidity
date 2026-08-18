@@ -1,1 +1,0 @@
-distributorAddress.balance > 0

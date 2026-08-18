@@ -1,1 +1,0 @@
-claimAndStake(_nodeAddress, _claims, 0)

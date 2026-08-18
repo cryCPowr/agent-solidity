@@ -1,3 +1,0 @@
-constructor () {
-        self = address(this);
-    }

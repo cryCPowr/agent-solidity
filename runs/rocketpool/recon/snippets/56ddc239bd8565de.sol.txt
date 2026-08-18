@@ -1,1 +1,0 @@
-getUint(keccak256(abi.encodePacked("minipool.bond.reduction.value", _minipoolAddress)))

@@ -1,1 +1,0 @@
-_settingPaths.length == _types.length

@@ -1,1 +1,0 @@
-require(2 ** (_witnesses.length + 1) > _gindex, "Invalid witness length")

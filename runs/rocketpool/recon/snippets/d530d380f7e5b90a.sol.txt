@@ -1,3 +1,0 @@
-function getProxyBytecode() override public pure returns (bytes memory) {
-        return type(RocketNodeDistributor).creationCode;
-    }

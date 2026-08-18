@@ -1,1 +1,0 @@
-function register(address _trustedNode, bool _enable) external;

@@ -1,1 +1,0 @@
-require(status == MinipoolStatus.Prelaunch, "The minipool can only be dissolved while in prelaunch")

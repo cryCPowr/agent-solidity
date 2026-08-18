@@ -1,1 +1,0 @@
-require(!getBool(keccak256(abi.encodePacked("contract.exists", _contractAddress))), "Contract address is already in use")

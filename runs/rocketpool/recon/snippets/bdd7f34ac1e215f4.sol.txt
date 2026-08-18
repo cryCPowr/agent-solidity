@@ -1,1 +1,0 @@
-emit ProposalSecurityKickMulti(_memberAddresses, block.timestamp)

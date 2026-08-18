@@ -1,1 +1,0 @@
-_submission.nodeRPL[i] + _submission.trustedNodeRPL[i]

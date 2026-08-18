@@ -1,1 +1,0 @@
-require(getMinipoolByPubkey(_pubkey) == address(0x0), "Validator pubkey is in use")

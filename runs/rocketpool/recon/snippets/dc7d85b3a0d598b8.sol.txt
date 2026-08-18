@@ -1,1 +1,0 @@
-addUint(totalKey, _amount)

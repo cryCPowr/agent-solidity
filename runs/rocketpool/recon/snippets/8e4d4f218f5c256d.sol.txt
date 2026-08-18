@@ -1,1 +1,0 @@
-require(_submission.intervalsPassed > 0, "Invalid number of intervals passed")

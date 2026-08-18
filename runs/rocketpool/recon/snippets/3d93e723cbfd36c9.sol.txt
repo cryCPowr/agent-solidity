@@ -1,1 +1,0 @@
-_computeDepositDataRoot(pubkey, signature, SafeCast.toUint64(prestakeValue / 1 gwei))

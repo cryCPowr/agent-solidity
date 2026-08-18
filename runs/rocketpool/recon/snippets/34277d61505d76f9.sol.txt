@@ -1,4 +1,0 @@
-function balanceOf(string memory _networkContractName) override external view returns (uint256) {
-        // Return balance
-        return etherBalances[_networkContractName];
-    }

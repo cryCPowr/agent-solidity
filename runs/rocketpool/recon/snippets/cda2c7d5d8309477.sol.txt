@@ -1,1 +1,0 @@
-require(msg.sender == withdrawalAddress, "Only withdrawal address can withdraw ETH")

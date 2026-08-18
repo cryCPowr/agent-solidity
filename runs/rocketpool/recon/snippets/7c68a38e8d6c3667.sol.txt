@@ -1,1 +1,0 @@
-_load(_key, len - 1)

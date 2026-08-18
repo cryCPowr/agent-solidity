@@ -1,5 +1,0 @@
-if (_rewards == 0) {
-            // Last distribution time still gets updated
-            lastDistributionTime = block.timestamp;
-            return;
-        }

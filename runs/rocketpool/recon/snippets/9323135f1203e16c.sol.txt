@@ -1,1 +1,0 @@
-setSettingUint("auction.lot.value.maximum", 10 ether)

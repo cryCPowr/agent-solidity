@@ -1,1 +1,0 @@
-getUint(totalKey)

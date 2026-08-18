@@ -1,3 +1,0 @@
-function getMaxRethDelta() override external view returns (uint256) {
-        return getSettingUint("network.max.reth.balance.delta");
-    }

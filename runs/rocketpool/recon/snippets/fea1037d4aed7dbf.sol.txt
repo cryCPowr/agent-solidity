@@ -1,5 +1,0 @@
-if (status == MinipoolStatus.Dissolved) {
-            require(ownerCalling, "Only owner can distribute dissolved minipool");
-            distributeToOwner();
-            return;
-        }

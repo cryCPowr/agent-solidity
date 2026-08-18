@@ -1,1 +1,0 @@
-require(_validatorProof.validator.withdrawableEpoch < farFutureEpoch, "Validator not exiting")

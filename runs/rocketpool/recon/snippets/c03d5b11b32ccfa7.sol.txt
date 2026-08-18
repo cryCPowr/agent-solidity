@@ -1,3 +1,0 @@
-function getLotPriceByTotalBids(uint256 _index) override public view returns (uint256) {
-        return calcBase.mul(getLotTotalBidAmount(_index)).div(getLotTotalRPLAmount(_index));
-    }

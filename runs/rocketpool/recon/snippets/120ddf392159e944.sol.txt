@@ -1,3 +1,0 @@
-function getInflationIntervalRate() override external view returns (uint256) {
-        return getSettingUint("rpl.inflation.interval.rate");
-    }

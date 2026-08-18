@@ -1,1 +1,0 @@
-function notifyExit(uint32 _validatorId, uint64 _withdrawableEpoch, uint64 _recentEpoch) external;

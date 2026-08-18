@@ -1,1 +1,0 @@
-event ProposalSecurityReplace(address existingMemberAddress, string newMemberId, address newMemberAddress, uint256 time);

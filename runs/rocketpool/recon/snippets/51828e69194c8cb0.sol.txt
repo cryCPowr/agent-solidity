@@ -1,1 +1,0 @@
-function getLaunchBalance() external view returns (uint256);

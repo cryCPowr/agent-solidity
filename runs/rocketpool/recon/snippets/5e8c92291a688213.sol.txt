@@ -1,1 +1,0 @@
-require(proposalState == RocketDAOProtocolProposalInterface.ProposalState.Pending, "Can only challenge while proposal is Pending")

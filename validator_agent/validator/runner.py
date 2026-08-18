@@ -43,10 +43,8 @@ def build_workspace(workspace: str, repo_dir: str, attack: dict[str, Any],
             'test = "test"\n'
             'out = "out"\n'
             'libs = ["node_modules"]\n'
-            'solc_version = "0.8.28"\n'
+            'auto_detect_solc = true\n'
             'ffi = false\n'
-            'evm_version = "cancun"\n'
-            "via_ir = true\n"
             "optimizer = true\n"
             "optimizer_runs = 200\n"
             f"remappings = {json.dumps(remappings)}\n"

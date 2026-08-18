@@ -1,3 +1,0 @@
-function deleteInt(bytes32 _key) external onlyGuardian {
-        rocketStorage.deleteInt(_key);
-    }

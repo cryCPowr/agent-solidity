@@ -1,1 +1,0 @@
-(_index * (2 ** (getNextDepth(_index, nodeCount) - indexDepth))) - (2 ** (treeDepth * 2))

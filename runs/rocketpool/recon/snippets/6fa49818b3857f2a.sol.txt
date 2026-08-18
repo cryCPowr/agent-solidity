@@ -1,1 +1,0 @@
-require(depth < maxDepth * 2, "Invalid index depth")

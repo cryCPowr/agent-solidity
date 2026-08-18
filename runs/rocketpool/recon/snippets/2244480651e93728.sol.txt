@@ -1,1 +1,0 @@
-abi.encodePacked("megapool.penalty.submission", msg.sender, _megapool, _block, _amount)

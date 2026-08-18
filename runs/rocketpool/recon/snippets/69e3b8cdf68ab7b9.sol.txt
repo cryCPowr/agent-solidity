@@ -1,1 +1,0 @@
-index < count.sub(1)

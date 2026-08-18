@@ -1,1 +1,0 @@
-getLotClaimedRPLAmount(_index)

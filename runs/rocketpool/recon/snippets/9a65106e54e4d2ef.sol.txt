@@ -1,1 +1,0 @@
-function claimAndStake(address _nodeAddress, Claim[] calldata _claims, uint256 _stakeAmount) external;

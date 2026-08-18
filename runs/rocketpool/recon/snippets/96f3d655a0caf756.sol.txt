@@ -1,1 +1,0 @@
-keccak256(abi.encodePacked("auction.lot.rpl.total", lotIndex))

@@ -1,8 +1,0 @@
-function getNodeRPLWithdrawalAddress(address _nodeAddress) override public view returns (address) {
-        address withdrawalAddress = getAddress(keccak256(abi.encodePacked("node.rpl.withdrawal.address", _nodeAddress)));
-        if (withdrawalAddress == address(0)) {
-            // Defaults to current withdrawal address if unset
-            return rocketStorage.getNodeWithdrawalAddress(_nodeAddress);
-        }
-        return withdrawalAddress;
-    }

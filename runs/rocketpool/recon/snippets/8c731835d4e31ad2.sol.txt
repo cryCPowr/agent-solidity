@@ -1,1 +1,0 @@
-deleteBool(keccak256(abi.encodePacked("contract.exists", oldContractAddress)))

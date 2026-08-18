@@ -1,3 +1,0 @@
-function getTotalQueueLength() override external view returns (uint256) {
-        return getMinipoolQueueLength() + getExpressQueueLength() + getStandardQueueLength();
-    }

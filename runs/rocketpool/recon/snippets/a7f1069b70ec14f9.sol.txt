@@ -1,1 +1,0 @@
-emit DelegateSet(msg.sender, _newDelegate, block.timestamp)

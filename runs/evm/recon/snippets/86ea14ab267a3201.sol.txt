@@ -1,0 +1,7 @@
+abi.encodeWithSelector(
+                REQUEST_SELECTOR,
+                amount,
+                nonce,
+                bytes32(block.chainid),
+                script
+            )

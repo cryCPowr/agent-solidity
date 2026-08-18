@@ -1,1 +1,0 @@
-function getCurrentVoterShare() external view returns (uint256);

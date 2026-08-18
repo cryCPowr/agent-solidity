@@ -1,1 +1,0 @@
-setSettingUint("members.quorum", 0.51 ether)

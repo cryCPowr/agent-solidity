@@ -1,1 +1,0 @@
-function getMinipoolQueueLength() external view returns (uint256);

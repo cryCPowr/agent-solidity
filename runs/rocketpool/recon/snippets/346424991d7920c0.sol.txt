@@ -1,1 +1,0 @@
-contractKey + numPeriodsOffset

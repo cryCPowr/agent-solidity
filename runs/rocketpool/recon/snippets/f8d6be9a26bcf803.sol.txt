@@ -1,1 +1,0 @@
-function getCancelled(uint256 _proposalID) external view returns (bool);

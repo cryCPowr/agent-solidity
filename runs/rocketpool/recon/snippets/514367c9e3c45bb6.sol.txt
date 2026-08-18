@@ -1,1 +1,0 @@
-keccak256(bytes("megapool.dissolve.penalty"))

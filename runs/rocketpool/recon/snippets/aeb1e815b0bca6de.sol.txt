@@ -1,1 +1,0 @@
-len == 0 ? 0 : _timeAt(_key, len - 1)

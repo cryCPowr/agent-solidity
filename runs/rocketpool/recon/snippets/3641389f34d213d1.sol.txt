@@ -1,5 +1,0 @@
-function proposalSecurityReplace(address _existingMemberAddress, string calldata _newMemberId, address _newMemberAddress) override external onlyExecutingContracts() {
-        RocketDAOSecurityProposalsInterface rocketDAOSecurityProposals = RocketDAOSecurityProposalsInterface(getContractAddress("rocketDAOSecurityProposals"));
-        rocketDAOSecurityProposals.proposalReplace(_existingMemberAddress, _newMemberId, _newMemberAddress);
-        emit ProposalSecurityReplace(_existingMemberAddress, _newMemberId, _newMemberAddress, block.timestamp);
-    }

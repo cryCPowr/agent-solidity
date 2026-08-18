@@ -1,4 +1,0 @@
-modifier onlyBootstrapMode() {
-        require(getBool(daoTrustedBootstrapKey) == false, "Bootstrap mode not engaged");
-        _;
-    }

@@ -1,1 +1,0 @@
-votesFor >= getVotesRequired(_proposalID) && block.timestamp < getExpires(_proposalID)

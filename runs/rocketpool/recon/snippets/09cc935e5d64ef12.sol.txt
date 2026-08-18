@@ -1,4 +1,0 @@
-function bootstrapSettingClaimers(uint256 _trustedNodePercent, uint256 _protocolPercent, uint256 _nodePercent) override external onlyGuardian onlyBootstrapMode onlyLatestContract("rocketDAOProtocol", address(this)) {
-        RocketDAOProtocolProposalsInterface(getContractAddress("rocketDAOProtocolProposals")).proposalSettingRewardsClaimers(_trustedNodePercent, _protocolPercent, _nodePercent);
-        emit BootstrapSettingClaimers(_trustedNodePercent, _protocolPercent, _nodePercent, block.timestamp);
-    }

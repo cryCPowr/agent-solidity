@@ -1,1 +1,0 @@
-event BootstrapSettingAddressList(string settingContractName, string settingPath, address[] value, uint256 time);

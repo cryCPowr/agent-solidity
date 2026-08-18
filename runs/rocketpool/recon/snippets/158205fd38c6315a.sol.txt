@@ -1,1 +1,0 @@
-bytes32 private constant voterShareKey = keccak256(abi.encodePacked("network.revenue.voter.share"))

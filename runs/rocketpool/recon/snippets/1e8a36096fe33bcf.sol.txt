@@ -1,1 +1,0 @@
-Transfer(account, address(0), amount)

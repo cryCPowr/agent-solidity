@@ -1,3 +1,0 @@
-function reduceBondAmount() override external onlyRegisteredMinipool(msg.sender) onlyLatestContract("rocketMinipoolBondReducer", address(this)) returns (uint256) {
-        revert("Minipool bond reductions are no longer available");
-    }

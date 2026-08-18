@@ -1,3 +1,0 @@
-function _setNodeLastUnstakeTime(address _nodeAddress) internal {
-        setUint(keccak256(abi.encodePacked("rpl.megapool.unstake.time", _nodeAddress)), block.timestamp);
-    }

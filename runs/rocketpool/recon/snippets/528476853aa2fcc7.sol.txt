@@ -1,1 +1,0 @@
-function getRewardsClaimIntervalTime() external view returns (uint256);

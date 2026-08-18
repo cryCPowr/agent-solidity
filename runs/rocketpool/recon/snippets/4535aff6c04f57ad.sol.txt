@@ -1,1 +1,0 @@
-require(status == MinipoolStatus.Initialised, "Must be in initialised status")

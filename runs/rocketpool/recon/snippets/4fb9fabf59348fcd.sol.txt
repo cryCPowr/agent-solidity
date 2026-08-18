@@ -1,1 +1,0 @@
-require (delegateVote != _voteDirection, "Vote direction is the same as delegate")

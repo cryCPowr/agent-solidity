@@ -1,8 +1,0 @@
-function distributeSkimmedRewards() internal {
-        uint256 rewards = address(this).balance.sub(nodeRefundBalance);
-        uint256 nodeShare = calculateNodeRewards(nodeDepositBalance, getUserDepositBalance(), rewards);
-        // Pay node operator via refund mechanism
-        nodeRefundBalance = nodeRefundBalance.add(nodeShare);
-        // Deposit user share into rETH contract
-        payable(rocketTokenRETH).transfer(rewards.sub(nodeShare));
-    }

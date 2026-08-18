@@ -1,1 +1,0 @@
-if (rplSlashAmount > rplStake) {rplSlashAmount = rplStake;}

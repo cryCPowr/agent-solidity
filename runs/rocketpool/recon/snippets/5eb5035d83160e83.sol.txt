@@ -1,1 +1,0 @@
-_amount - rethRewards - voterRewards - protocolDAORewards

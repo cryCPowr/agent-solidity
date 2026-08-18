@@ -1,1 +1,0 @@
-function getNodeAverageCapitalRatioSince(address _nodeAddress, uint64 _sinceTime) external view returns (uint256);

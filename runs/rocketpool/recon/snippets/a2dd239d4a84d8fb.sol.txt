@@ -1,1 +1,0 @@
-require(storageState == StorageState.Undefined, "Already initialised")

@@ -1,1 +1,0 @@
-require(value >= -2**63 && value < 2**63, "SafeCast: value doesn\'t fit in 64 bits")

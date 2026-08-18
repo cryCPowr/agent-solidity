@@ -1,5 +1,0 @@
-function stakeRPL(uint256 _amount) override external onlyRegisteredNode(msg.sender) {
-        // Check caller here and skip `stakeRPLFor` to avoid unnecessary check for rocketMerkleDistributorMainnet caller
-        require(_callerAllowedFor(msg.sender), "Not allowed to stake for");
-        _stakeRPLFor(msg.sender, _amount);
-    }

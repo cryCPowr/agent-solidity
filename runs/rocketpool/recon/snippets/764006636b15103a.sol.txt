@@ -1,1 +1,0 @@
-setUint(valueKey, _initialVoterShare / shareScale)

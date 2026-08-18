@@ -1,1 +1,0 @@
-require(msg.sender == rplWithdrawalAddress, "Must be called from RPL withdrawal address")

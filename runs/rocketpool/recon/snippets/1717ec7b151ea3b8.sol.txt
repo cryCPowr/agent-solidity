@@ -1,1 +1,0 @@
-daoProposal.add(msg.sender, "rocketDAOSecurityUpgrade", _proposalMessage, block.timestamp + 1, rocketDAOProtocolSettingsSecurity.getVoteTime(), rocketDAOProtocolSettingsSecurity.getExecuteTime(), vetoQuorum, payload)

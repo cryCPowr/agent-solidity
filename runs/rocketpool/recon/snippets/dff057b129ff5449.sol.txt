@@ -1,1 +1,0 @@
-function getClaimIntervalExecutionBlock(uint256 _interval) external view returns(uint256);

@@ -1,1 +1,0 @@
-function getVacant() external view returns (bool);

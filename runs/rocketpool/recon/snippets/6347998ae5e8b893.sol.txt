@@ -1,1 +1,0 @@
-_burn(msg.sender, _rethAmount)

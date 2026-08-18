@@ -60,7 +60,9 @@ class AttackHypothesis:
     controlled_inputs: list[dict[str, Any]] = field(default_factory=list)
     propagation_path: list[dict[str, Any]] = field(default_factory=list)
     sensitive_sink: dict[str, Any] = field(default_factory=dict)
+    beneficiary_control: dict[str, Any] = field(default_factory=dict)
     capability_obtained: str = ""
+    capability_status: str = UNKNOWN
     affected_assets: list[str] = field(default_factory=list)
     expected_consequence: dict[str, Any] = field(default_factory=dict)
     attack_steps: list[AttackStep] = field(default_factory=list)
@@ -68,6 +70,8 @@ class AttackHypothesis:
     fact_ids: list[str] = field(default_factory=list)
     assumptions: list[str] = field(default_factory=list)
     uncertainty: list[str] = field(default_factory=list)
+    attack_gates: dict[str, Any] = field(default_factory=dict)
+    attack_graph: dict[str, Any] = field(default_factory=dict)
     validator_plan: dict[str, Any] = field(default_factory=dict)
     exploitability_score: float = 0.0
     exploitability_band: str = "low"
@@ -87,7 +91,9 @@ class AttackHypothesis:
             "controlled_inputs": self.controlled_inputs,
             "propagation_path": self.propagation_path,
             "sensitive_sink": self.sensitive_sink,
+            "beneficiary_control": self.beneficiary_control,
             "capability_obtained": self.capability_obtained,
+            "capability_status": self.capability_status,
             "affected_assets": self.affected_assets,
             "expected_consequence": self.expected_consequence,
             "attack_steps": [s.to_dict() for s in self.attack_steps],
@@ -95,6 +101,8 @@ class AttackHypothesis:
             "fact_ids": sorted(set(self.fact_ids)),
             "assumptions": self.assumptions,
             "uncertainty": self.uncertainty,
+            "attack_gates": self.attack_gates,
+            "attack_graph": self.attack_graph,
             "validator_plan": self.validator_plan,
             "exploitability_score": self.exploitability_score,
             "exploitability_band": self.exploitability_band,

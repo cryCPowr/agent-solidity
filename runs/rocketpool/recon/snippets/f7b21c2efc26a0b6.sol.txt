@@ -1,3 +1,0 @@
-function getTrustedNodeSubmitted(address _trustedNodeAddress, uint256 _rewardIndex) override external view returns (bool) {
-        return getBool(keccak256(abi.encode("rewards.snapshot.submitted.node", _trustedNodeAddress, _rewardIndex)));
-    }

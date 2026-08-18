@@ -1,3 +1,0 @@
-if (userShare > 0) {
-                userCapital -= userShare;
-            }

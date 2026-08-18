@@ -1,5 +1,0 @@
-if (capacity >= balance) {
-            return 0;
-        } else {
-            return balance - capacity;
-        }

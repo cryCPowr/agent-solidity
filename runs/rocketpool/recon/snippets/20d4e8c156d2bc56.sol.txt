@@ -1,1 +1,0 @@
-function getVoteDelayTime() external view returns(uint256);

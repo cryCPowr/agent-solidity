@@ -1,1 +1,0 @@
-function getMinimumDeposit() external view returns (uint256);

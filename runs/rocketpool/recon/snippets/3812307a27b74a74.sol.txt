@@ -1,3 +1,0 @@
-function getMaximumDepositPoolSize() override external view returns (uint256) {
-        return getSettingUint("deposit.pool.maximum");
-    }

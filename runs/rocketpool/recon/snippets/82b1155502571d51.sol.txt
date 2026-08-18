@@ -1,8 +1,0 @@
-if(_voteDirection == VoteDirection.Abstain) {
-            addUint(keccak256(abi.encodePacked(daoProposalNameSpace, "votes.abstained", _proposalID)), _votes);
-        } else {
-            if(_voteDirection == VoteDirection.AgainstWithVeto) {
-                addUint(keccak256(abi.encodePacked(daoProposalNameSpace, "votes.veto", _proposalID)), _votes);
-            }
-            addUint(keccak256(abi.encodePacked(daoProposalNameSpace, "votes.against", _proposalID)), _votes);
-        }

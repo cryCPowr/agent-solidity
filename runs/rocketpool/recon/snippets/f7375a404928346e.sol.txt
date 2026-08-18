@@ -1,1 +1,0 @@
-function stake(uint32 _validatorId) external;

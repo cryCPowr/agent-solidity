@@ -1,1 +1,0 @@
-SSZ.efficientSha256(_withdrawal.withdrawalCredentials, SSZ.toLittleEndian(_withdrawal.amountInGwei))

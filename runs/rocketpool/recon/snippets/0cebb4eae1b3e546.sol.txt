@@ -1,1 +1,0 @@
-require(_deposits.length > 0, "Must perform at least 1 deposit")

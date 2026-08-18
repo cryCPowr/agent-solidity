@@ -1,5 +1,0 @@
-if (!vacant && rocketDAONodeTrustedSettingsMinipool.getScrubPenaltyEnabled()){
-                _dissolve(scrubPenalty);
-            } else {
-                _dissolve(0);
-            }

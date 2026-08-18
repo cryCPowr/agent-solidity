@@ -1,4 +1,0 @@
-function toInt8(int256 value) internal pure returns (int8) {
-        require(value >= -2**7 && value < 2**7, "SafeCast: value doesn\'t fit in 8 bits");
-        return int8(value);
-    }

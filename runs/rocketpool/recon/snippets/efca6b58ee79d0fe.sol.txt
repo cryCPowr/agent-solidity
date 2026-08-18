@@ -1,1 +1,0 @@
-function getDepositUserAmount(MinipoolDeposit _depositType) external view returns (uint256);

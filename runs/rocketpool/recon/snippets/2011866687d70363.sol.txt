@@ -1,1 +1,0 @@
-if(keccak256(abi.encodePacked(_settingPath)) == keccak256(abi.encodePacked("members.quorum"))) require(_value > 0 ether && _value <= 0.9 ether, "Quorum setting must be > 0 & <= 90%")

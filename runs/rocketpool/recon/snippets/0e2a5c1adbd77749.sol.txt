@@ -1,1 +1,0 @@
-function notifyFinalBalance(uint32 _validatorId, uint64 _amountInGwei, address _caller, uint64 _withdrawalEpoch, uint64 _recentEpoch) external;

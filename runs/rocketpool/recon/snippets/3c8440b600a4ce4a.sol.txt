@@ -1,1 +1,0 @@
-rocketDAOProtocolProposal.destroy(_proposalID)

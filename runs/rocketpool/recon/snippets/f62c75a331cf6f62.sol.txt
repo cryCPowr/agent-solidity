@@ -1,7 +1,0 @@
-if(settingKey == keccak256(bytes("proposal.veto.quorum"))) {
-            // Must be >= 20% & < 75% (RPIP-64)
-            require(_value >= 0.20 ether && _value < 0.75 ether, "Value must be >= 20% & < 75%");
-        } else if(settingKey == keccak256(bytes("proposal.max.block.age"))) {
-            // Must be > 128 blocks & < 7200 blocks (RPIP-33)
-            require(_value > 128 && _value < 7200, "Value must be > 128 blocks & < 7200 blocks");
-        }

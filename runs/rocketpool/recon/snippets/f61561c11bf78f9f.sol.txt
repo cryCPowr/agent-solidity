@@ -1,1 +1,0 @@
-function getNodeDepositAssigned() override external view returns (bool) { return userDepositAssignedTime != 0; }

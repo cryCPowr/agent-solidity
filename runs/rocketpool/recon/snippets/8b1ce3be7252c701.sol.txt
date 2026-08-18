@@ -1,1 +1,0 @@
-require(_block > getPricesBlock(), "Network prices for an equal or higher block are set")

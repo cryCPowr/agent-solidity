@@ -1,1 +1,0 @@
-require(_value >= 0.05 ether && _value <= 0.2 ether, "The node fee maximum must be a value between 5% and 20%")

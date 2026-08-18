@@ -1,1 +1,0 @@
-rocketVault.balanceOfToken("rocketRewardsPool", IERC20(getContractAddress("rocketTokenRPL")))

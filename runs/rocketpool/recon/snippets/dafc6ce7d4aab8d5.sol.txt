@@ -1,1 +1,0 @@
-emit UpgradeVetoed(_upgradeProposalID, block.timestamp)

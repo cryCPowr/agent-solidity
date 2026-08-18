@@ -33,6 +33,9 @@ def recon_output(tmp_path_factory):
     metadata = json.load(open(os.path.join(out_dir, "metadata.json")))
     summary = json.load(open(os.path.join(out_dir, "summary.json")))
     schema = json.load(open(os.path.join(out_dir, "schema.json")))
+    coverage = json.load(open(os.path.join(out_dir, "coverage.json")))
+    protocol = json.load(open(os.path.join(out_dir, "protocol.json")))
+    dependencies = json.load(open(os.path.join(out_dir, "dependencies.json")))
 
     return {
         "dir": out_dir,
@@ -42,6 +45,9 @@ def recon_output(tmp_path_factory):
         "metadata": metadata,
         "summary": summary,
         "schema": schema,
+        "coverage": coverage,
+        "protocol": protocol,
+        "dependencies": dependencies,
     }
 
 
@@ -91,6 +97,22 @@ def test_all_fixtures_compile_and_analysis_completes(recon_output):
 def test_no_hard_compiler_errors(recon_output):
     hard_errors = [e for e in recon_output["metadata"]["errors"] if e.get("severity") == "error"]
     assert hard_errors == []
+
+
+def test_prd_recon_artifacts_exist_and_basic_shapes(recon_output):
+    assert isinstance(recon_output["coverage"], dict)
+    assert isinstance(recon_output["protocol"], dict)
+    assert isinstance(recon_output["dependencies"], dict)
+    assert "contracts" in recon_output["protocol"]
+    assert "dependency_files_added" in recon_output["dependencies"]
+    assert "source_coverage" in recon_output["coverage"]
+    assert "partial_source_coverage" in recon_output["coverage"]
+
+
+def test_partial_source_coverage_flag_is_false_on_clean_fixture_run(recon_output):
+    assert recon_output["coverage"]["partial_source_coverage"] is False
+    assert recon_output["metadata"]["partial_source_coverage"] is False
+    assert recon_output["summary"]["analysis_coverage"]["partial_source_coverage"] is False
 
 
 # ---------------------------------------------------------------------------
@@ -409,16 +431,82 @@ def test_proxy_fallback_delegatecall_in_assembly_detected(recon_output):
 
 def test_create_and_create2_distinguished(recon_output):
     facts = recon_output["facts"]
-    plain = _find(facts, "contract_creation", function="09_proxy_create.sol#1120::deployPlain#1085")
-    det = _find(facts, "contract_creation", function="09_proxy_create.sol#1120::deployDeterministic#1119")
+    plain = _find(facts, "contract_creation", function="09_proxy_create.sol#1155::deployPlain#1120")
+    det = _find(facts, "contract_creation", function="09_proxy_create.sol#1155::deployDeterministic#1154")
     assert plain is not None and det is not None
-    salt_feature = _find(facts, "special_evm_feature", function="09_proxy_create.sol#1120::deployDeterministic#1119")
+    salt_feature = _find(facts, "special_evm_feature", function="09_proxy_create.sol#1155::deployDeterministic#1154")
     assert salt_feature is not None
     assert salt_feature["properties"]["feature"] == "create2_salt_option"
 
     caps = _facts_of_type(facts, "capability")
     det_caps = {c["subject"]["capability"] for c in caps if c["subject"]["function"] == det["subject"]["function"]}
     assert "can_create_contracts_deterministically" in det_caps
+
+
+def test_proxy_upgradeability_facts_emitted(recon_output):
+    facts = recon_output["facts"]
+    proxy_contract = _find(facts, "contract_exists", name="GenericProxy")
+    assert proxy_contract is not None
+    proxy_key = proxy_contract["subject"]["contract"]
+    proxy_fact = _find(facts, "proxy_like_contract", contract=proxy_key)
+    impl_slot = _find(facts, "implementation_slot", contract=proxy_key)
+    upgrade_fn = _find(facts, "upgrade_function", contract=proxy_key)
+    assert proxy_fact is not None
+    assert impl_slot is not None
+    assert upgrade_fn is not None
+    assert impl_slot["subject"]["name"] == "implementation"
+    assert upgrade_fn["subject"]["name"] == "upgradeTo"
+
+
+def test_protocol_json_marks_proxy_upgradeability(recon_output):
+    contracts = recon_output["protocol"]["contracts"]
+    proxy = next(c for c in contracts if c["name"] == "GenericProxy")
+    info = proxy["proxy_upgradeability"]
+    assert info["proxy_like"] is True
+    assert info["implementation_slots"]
+    assert info["upgrade_functions"]
+    assert info["delegatecall_paths"]
+    assert info["upgrade_authorities"]
+    assert info["initializer_lifecycle"]
+    assert info["initializer_surfaces"]
+
+
+def test_proxy_delegatecall_path_and_upgrade_authority_emitted(recon_output):
+    facts = recon_output["facts"]
+    proxy_contract = _find(facts, "contract_exists", name="GenericProxy")
+    assert proxy_contract is not None
+    proxy_key = proxy_contract["subject"]["contract"]
+    delegate_path = _find(facts, "proxy_delegatecall_path", contract=proxy_key)
+    upgrade_authority = _find(facts, "upgrade_authority", contract=proxy_key)
+    assert delegate_path is not None
+    assert upgrade_authority is not None
+    assert delegate_path["properties"]["fallback_like"] is True
+    assert upgrade_authority["properties"]["basis_facts"]
+
+
+def test_initializer_lifecycle_and_surface_emitted(recon_output):
+    facts = recon_output["facts"]
+    proxy_contract = _find(facts, "contract_exists", name="GenericProxy")
+    assert proxy_contract is not None
+    proxy_key = proxy_contract["subject"]["contract"]
+    lifecycle = _find(facts, "initializer_lifecycle", contract=proxy_key)
+    surface = _find(facts, "initializer_surface", contract=proxy_key)
+    constructor_fact = _find(facts, "constructor_function", contract=proxy_key)
+    initializer_fact = _find(facts, "initializer_function", contract=proxy_key)
+    assert lifecycle is not None
+    assert surface is not None
+    assert constructor_fact is not None
+    assert initializer_fact is not None
+    assert surface["properties"]["writes_initialized_flag"] is True
+
+
+def test_capability_authority_surface_emitted(recon_output):
+    facts = recon_output["facts"]
+    fn = _function_key(facts, "setOperator", "05_authorization_signatures.sol")
+    cap_surface = _find(facts, "capability_authority_surface", function=fn, capability="can_modify_authorization_state")
+    assert cap_surface is not None
+    assert cap_surface["properties"]["authority_status"] == "guarded"
+    assert cap_surface["properties"]["writes_authorization_state"] is True
 
 
 # ---------------------------------------------------------------------------
@@ -461,7 +549,7 @@ def test_comment_claiming_fake_behavior_produces_no_matching_fact(recon_output):
 
 def test_dynamically_derived_call_target_marked_dynamic_not_resolved(recon_output):
     facts = recon_output["facts"]
-    call = _find(facts, "low_level_call", caller="10_negative.sol#1199::callDerivedAddress#1198")
+    call = _find(facts, "low_level_call", caller="10_negative.sol#1234::callDerivedAddress#1233")
     assert call is not None
     assert call["properties"]["target_status"] == "dynamic"
     assert call["properties"]["target_function"] is None

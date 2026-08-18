@@ -1,1 +1,0 @@
-uint256 constant internal activationBalanceInGwei = 32 ether / 1 gwei

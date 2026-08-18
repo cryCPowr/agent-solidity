@@ -1,1 +1,0 @@
-function getLotMaximumEthValue() external view returns (uint256);

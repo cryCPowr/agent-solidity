@@ -1,1 +1,0 @@
-function latest(bytes32 _key) external view returns (bool exists, uint64 time, uint192 value);

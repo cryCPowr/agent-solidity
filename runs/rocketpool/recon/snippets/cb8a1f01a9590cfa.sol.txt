@@ -1,1 +1,0 @@
-function isClaimed(uint256 _intervalIndex, address _claimer) external view returns (bool);

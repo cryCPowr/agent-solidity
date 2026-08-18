@@ -1,6 +1,0 @@
-function predictDeterministicAddress(
-        address implementation,
-        bytes32 salt
-    ) internal view returns (address predicted) {
-        return predictDeterministicAddress(implementation, salt, address(this));
-    }

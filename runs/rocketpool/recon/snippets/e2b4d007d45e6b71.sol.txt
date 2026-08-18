@@ -1,3 +1,0 @@
-for (uint256 i = 0; i < count; ++i) {
-            addressList[i] = getAddress(bytes32(key + i));
-        }

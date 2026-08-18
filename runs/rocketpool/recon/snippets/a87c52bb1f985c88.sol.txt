@@ -1,1 +1,0 @@
-startPrice.sub(startPrice.sub(endPrice).mul(tn).mul(tn).div(td).div(td))

@@ -1,1 +1,0 @@
-require(_value <= maxVoterValue, "Value must be <= voter share")

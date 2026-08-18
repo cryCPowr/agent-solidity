@@ -1,1 +1,0 @@
-function requestFunds(uint256 _bondAmount, uint32 _validatorId, uint256 _amount, bool _useExpressTicket) external;

@@ -1,3 +1,0 @@
-function setLotCount(uint256 _amount) private {
-        setUint(keccak256("auction.lots.count"), _amount);
-    }

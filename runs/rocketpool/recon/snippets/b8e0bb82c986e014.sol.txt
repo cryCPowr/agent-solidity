@@ -1,1 +1,0 @@
-require(getLength(_key) > 0, "Queue is empty")

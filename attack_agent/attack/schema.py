@@ -16,9 +16,10 @@ SCHEMA = {
           "attacker_model", "production_relevance", "attack_strategy",
           "strategy_status", "entry_point", "controlled_inputs",
           "propagation_path", "sensitive_sink", "capability_obtained",
-          "affected_assets", "expected_consequence", "attack_steps",
+          "capability_status", "affected_assets", "expected_consequence", "attack_steps",
           "evidence", "fact_ids", "assumptions", "uncertainty",
-          "validator_plan", "exploitability_score", "exploitability_band"
+          "attack_gates", "attack_graph", "validator_plan",
+          "exploitability_score", "exploitability_band"
         ],
         "properties": {
           "attack_id": {"type": "string"},
@@ -34,6 +35,7 @@ SCHEMA = {
           "propagation_path": {"type": "array", "items": {"type": "object"}},
           "sensitive_sink": {"type": "object"},
           "capability_obtained": {"type": "string"},
+          "capability_status": {"type": "string", "enum": ["PROVEN", "INFERRED", "POSSIBLE", "UNKNOWN"]},
           "affected_assets": {"type": "array", "items": {"type": "string"}},
           "expected_consequence": {"type": "object"},
           "attack_steps": {"type": "array", "items": {"type": "object", "properties": {
@@ -47,6 +49,8 @@ SCHEMA = {
           "fact_ids": {"type": "array", "items": {"type": "string"}},
           "assumptions": {"type": "array", "items": {"type": "string"}},
           "uncertainty": {"type": "array", "items": {"type": "string"}},
+          "attack_gates": {"type": "object"},
+          "attack_graph": {"type": "object"},
           "validator_plan": {"type": "object", "required": [
             "functions_to_test", "attacker_setup", "confirm_if", "reject_if"
           ]},

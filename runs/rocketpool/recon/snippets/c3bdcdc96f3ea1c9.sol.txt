@@ -1,3 +1,0 @@
-function getEnd(uint256 _upgradeProposalID) override public view returns (uint256) {
-        return getUint(keccak256(abi.encodePacked(daoUpgradeNameSpace, "end", _upgradeProposalID)));
-    }

@@ -1,3 +1,0 @@
-function getVotePhase1Time() override external view returns (uint256) {
-        return getSettingUint("proposal.vote.phase1.time");
-    }

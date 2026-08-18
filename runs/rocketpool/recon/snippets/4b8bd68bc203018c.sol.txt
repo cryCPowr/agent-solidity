@@ -1,3 +1,0 @@
-if (assignments > 0) {
-            _assignMinipools(assignments, _rocketDAOProtocolSettingsDeposit);
-        }

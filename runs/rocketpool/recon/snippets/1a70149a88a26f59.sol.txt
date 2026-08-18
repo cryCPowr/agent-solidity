@@ -1,1 +1,0 @@
-require(recipient != address(0), "ERC20: transfer to the zero address")

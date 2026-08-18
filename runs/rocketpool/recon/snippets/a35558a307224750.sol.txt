@@ -1,1 +1,0 @@
-function getSubmitBalancesEnabled() external view returns (bool);

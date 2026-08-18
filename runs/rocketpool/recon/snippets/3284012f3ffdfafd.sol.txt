@@ -1,1 +1,0 @@
-indexWordIndex != _claim[i].rewardIndex / 256

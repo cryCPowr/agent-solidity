@@ -1,1 +1,0 @@
-function withdrawCredit(uint256 _amount) external;

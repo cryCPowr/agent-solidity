@@ -1,1 +1,0 @@
-keccak256(bytes(a)) == keccak256(bytes(b))

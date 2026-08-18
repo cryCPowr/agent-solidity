@@ -1,1 +1,0 @@
-function getVoteTime() external view returns(uint256);

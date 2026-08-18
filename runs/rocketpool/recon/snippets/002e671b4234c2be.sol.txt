@@ -1,4 +1,0 @@
-abi.encodePacked(
-                        temp[i * 2].hash, temp[i * 2].sum,
-                        temp[i * 2 + 1].hash, temp[i * 2 + 1].sum
-                    )

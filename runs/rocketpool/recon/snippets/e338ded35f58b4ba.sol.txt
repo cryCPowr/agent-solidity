@@ -1,3 +1,0 @@
-function getAddress(bytes32 _key) override external view returns (address r) {
-        return addressStorage[_key];
-    }

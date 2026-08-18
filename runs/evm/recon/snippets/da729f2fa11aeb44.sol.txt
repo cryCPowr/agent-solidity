@@ -1,0 +1,3 @@
+function enableReceive() external {
+        canReceive = true;
+    }

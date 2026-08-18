@@ -1,1 +1,0 @@
-function getItem(bytes32 _namespace, uint256 _index) external view returns (DepositQueueValue memory);

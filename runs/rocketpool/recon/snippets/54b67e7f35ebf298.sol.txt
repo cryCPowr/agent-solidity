@@ -1,1 +1,0 @@
-function getRPLPrice() external view returns (uint256);

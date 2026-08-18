@@ -1,1 +1,0 @@
-function submitRoot(uint256 propId, uint256 index, Types.Node[] memory nodes) external;

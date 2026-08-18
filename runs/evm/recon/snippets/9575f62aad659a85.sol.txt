@@ -1,0 +1,4 @@
+function setRateLimits(
+        RateLimitConfig[] calldata _rateLimitConfigs,
+        RateLimitDirection direction
+    ) external;

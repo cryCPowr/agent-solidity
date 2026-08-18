@@ -1,0 +1,1 @@
+function getRateInQuoteSafe(address) external view returns (uint256);

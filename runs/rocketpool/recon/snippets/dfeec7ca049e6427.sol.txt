@@ -1,1 +1,0 @@
-function getDissolvePenalty() external view returns (uint256);

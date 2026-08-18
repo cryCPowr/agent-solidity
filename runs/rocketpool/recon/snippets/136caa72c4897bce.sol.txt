@@ -1,1 +1,0 @@
-_claim[i].amountVoterETH > 0

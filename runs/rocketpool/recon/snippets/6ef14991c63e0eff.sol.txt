@@ -1,1 +1,0 @@
-rocketStorage.getString(_key)

@@ -1,1 +1,0 @@
-RocketTokenRPLInterface(rocketTokenRPLAddress)

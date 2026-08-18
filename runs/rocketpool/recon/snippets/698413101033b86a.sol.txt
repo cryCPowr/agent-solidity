@@ -1,4 +1,0 @@
-function getOutstandingEth(address _address) external override view returns (uint256) {
-        bytes32 balanceKey = keccak256(abi.encodePacked('rewards.eth.balance', _address));
-        return getUint(balanceKey);
-    }

@@ -1,8 +1,0 @@
-if (debt > 0) {
-            uint256 amountToRepay = nodeAmount;
-            if (amountToRepay > debt) {
-                amountToRepay = debt;
-            }
-            nodeAmount -= amountToRepay;
-            _repayDebt(amountToRepay);
-        }

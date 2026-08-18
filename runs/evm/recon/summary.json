@@ -1,0 +1,1074 @@
+{
+  "analysis_coverage": {
+    "files_analyzed": 6,
+    "files_failed": 122,
+    "files_partially_analyzed": 0,
+    "partial_source_coverage": true,
+    "unresolved": {
+      "call_argument_dataflows": 2,
+      "event_emissions": 0,
+      "inheritance_bases": 0,
+      "internal_calls": 0
+    }
+  },
+  "asset_operation_count": 0,
+  "authorization_check_count": 0,
+  "callback_capable_call_count": 0,
+  "capabilities": {
+    "can_receive_native_value": 3
+  },
+  "contracts": [
+    {
+      "file": "contracts/LBTC/libraries/Redeem.sol",
+      "is_abstract": false,
+      "key": "contracts/LBTC/libraries/Redeem.sol#31",
+      "kind": "library",
+      "name": "Redeem"
+    },
+    {
+      "file": "contracts/consortium/ILombardTimelockController.sol",
+      "is_abstract": false,
+      "key": "contracts/consortium/ILombardTimelockController.sol#194",
+      "kind": "interface",
+      "name": "ITimelockController"
+    },
+    {
+      "file": "contracts/interfaces/IEfficientRateLimiterV1.sol",
+      "is_abstract": false,
+      "key": "contracts/interfaces/IEfficientRateLimiterV1.sol#218",
+      "kind": "interface",
+      "name": "IEfficientRateLimiterV1"
+    },
+    {
+      "file": "contracts/interfaces/IProxyAdmin.sol",
+      "is_abstract": false,
+      "key": "contracts/interfaces/IProxyAdmin.sol#237",
+      "kind": "interface",
+      "name": "IProxyAdmin"
+    },
+    {
+      "file": "contracts/mock/IRateProvider.sol",
+      "is_abstract": false,
+      "key": "contracts/mock/IRateProvider.sol#14",
+      "kind": "interface",
+      "name": "IRateProvider"
+    },
+    {
+      "file": "contracts/mock/MailboxTreasuryMock.sol",
+      "is_abstract": false,
+      "key": "contracts/mock/MailboxTreasuryMock.sol#243",
+      "kind": "interface",
+      "name": "IMailboxWithdrawFee"
+    },
+    {
+      "file": "contracts/mock/MailboxTreasuryMock.sol",
+      "is_abstract": false,
+      "key": "contracts/mock/MailboxTreasuryMock.sol#299",
+      "kind": "contract",
+      "name": "MailboxTreasuryMock"
+    }
+  ],
+  "error_count": 0,
+  "eth_transfer_count": 0,
+  "event_count": 0,
+  "external_call_count": 1,
+  "fact_status_counts": {
+    "derived": 9,
+    "observed": 199,
+    "unknown": 4
+  },
+  "fact_type_counts": {
+    "arithmetic_operation": 1,
+    "call_argument_dataflow": 7,
+    "call_argument_origin_chain": 7,
+    "call_unresolved": 1,
+    "capability": 3,
+    "capability_authority_surface": 3,
+    "constructor_function": 1,
+    "contract_exists": 7,
+    "encode_operation": 1,
+    "external_call": 1,
+    "external_call_surface": 1,
+    "function_body": 20,
+    "function_exists": 26,
+    "function_mutability": 26,
+    "function_parameter": 49,
+    "function_return": 12,
+    "function_visibility": 26,
+    "initializer_lifecycle": 1,
+    "input_origin": 1,
+    "local_variable_origin": 4,
+    "require_statement": 1,
+    "security_relationship_chain": 1,
+    "state_dependent_constraint": 1,
+    "state_read": 3,
+    "state_variable": 3,
+    "state_write": 4,
+    "upgrade_function": 1
+  },
+  "function_count": 26,
+  "graph_statistics": {
+    "edge_count": 37,
+    "edges_by_type": {
+      "CALLS": 1,
+      "DECLARES": 29,
+      "READS": 3,
+      "WRITES": 4
+    },
+    "node_count": 37,
+    "nodes_by_kind": {
+      "contract": 7,
+      "external_target": 1,
+      "function": 26,
+      "state_variable": 3
+    }
+  },
+  "interfaces": [
+    {
+      "file": "contracts/consortium/ILombardTimelockController.sol",
+      "key": "contracts/consortium/ILombardTimelockController.sol#194",
+      "name": "ITimelockController"
+    },
+    {
+      "file": "contracts/interfaces/IEfficientRateLimiterV1.sol",
+      "key": "contracts/interfaces/IEfficientRateLimiterV1.sol#218",
+      "name": "IEfficientRateLimiterV1"
+    },
+    {
+      "file": "contracts/interfaces/IProxyAdmin.sol",
+      "key": "contracts/interfaces/IProxyAdmin.sol#237",
+      "name": "IProxyAdmin"
+    },
+    {
+      "file": "contracts/mock/IRateProvider.sol",
+      "key": "contracts/mock/IRateProvider.sol#14",
+      "name": "IRateProvider"
+    },
+    {
+      "file": "contracts/mock/MailboxTreasuryMock.sol",
+      "key": "contracts/mock/MailboxTreasuryMock.sol#243",
+      "name": "IMailboxWithdrawFee"
+    }
+  ],
+  "libraries": [
+    {
+      "file": "contracts/LBTC/libraries/Redeem.sol",
+      "key": "contracts/LBTC/libraries/Redeem.sol#31",
+      "name": "Redeem"
+    }
+  ],
+  "state_variable_count": 3,
+  "warnings": [
+    {
+      "duration_seconds": 0.097,
+      "message": "phase duration",
+      "phase": "file_discovery_and_reading"
+    },
+    {
+      "duration_seconds": 0.522,
+      "message": "phase duration",
+      "phase": "dependency_expansion"
+    },
+    {
+      "hardhat.config.ts": {
+        "raw": "0.8.24",
+        "version": "0.8.24"
+      },
+      "message": "build metadata compiler hints found"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/AssetRouter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/BaseLBTC.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/BridgeTokenAdapter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/NativeLBTC.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/StakedLBTC.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/StakedLBTCOracle.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/interfaces/AggregatorV3Interface.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/interfaces/IAssetOperation.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/interfaces/IAssetRouter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/interfaces/IBaseLBTC.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/interfaces/INativeLBTC.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/interfaces/IOracle.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/interfaces/IStakedLBTC.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/libraries/Assert.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/libraries/Assets.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/libraries/Validation.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bascule/Bascule.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bascule/BasculeV2.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bascule/BasculeV3.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bascule/GMPBasculeV1.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bascule/GMPBasculeV2.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bascule/interfaces/IBascule.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bascule/interfaces/IGMPBascule.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/Bridge.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/BridgeV2.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/IBridge.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/IBridgeV2.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/adapters/AbstractAdapter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/adapters/CLAdapter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/adapters/IAdapter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/adapters/TokenPool.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/oft/EfficientRateLimitedOFTAdapter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/oft/EfficientRateLimiter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/oft/LBTCBurnMintOFTAdapter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/oft/LBTCOFTAdapter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/providers/BridgeTokenPool.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/providers/LombardTokenPoolV2.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/consortium/Consortium.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/consortium/INotaryConsortium.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/fbtc/PartnerVault.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/gmp/IHandler.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/gmp/IMailbox.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/gmp/Mailbox.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/gmp/libs/GMPUtils.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/gmp/libs/MessagePath.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/ibc/IBCVoucher.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/ibc/IIBCVoucher.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interfaces/IBridgeToken.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interfaces/IConsortiumConsumer.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interfaces/IERC20MintableBurnable.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/libs/Actions.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/libs/BitcoinUtils.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/libs/EIP1271SignatureUtils.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/libs/FeeUtils.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/libs/LChainId.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/libs/RateLimits.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/libs/RateLimitsV2.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/BridgeTokenMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "^0.8.0",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/ChainlinkFeedMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/ConsortiumMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/GMPHandlerMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/LockedFBTCMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/MailboxMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/RatioFeedMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "^0.8.10",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/SanctionListMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/ShardStrategyMocks.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/StakedLBTCMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/pmm/BTCB/BTCB.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/pmm/CBBTC.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/stakeAndBake/StakeAndBake.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/stakeAndBake/StakeAndBakeNativeToken.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/stakeAndBake/depositor/IDepositor.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/stakeAndBake/depositor/strategy/MultiAssetDepositStrategyDepositor.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/stakeAndBake/depositor/veda/ITeller.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/stakeAndBake/depositor/veda/TellerWithMultiAssetSupportDepositor.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/AsyncRedemptionUpgradeable.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/BlocklistOracle.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/FeeManagerUpgradeable.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/MAWARStrategyMigrated.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/MultiAssetDepositUpgradeable.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/MultiAssetWithAsyncRedemptionStrategy.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/ShareToken.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/converters/ChainlinkCompositeConverter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/converters/ChainlinkConverter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/converters/DirectConverter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/IAssetConverter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/IAsyncRedemption.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/IBlocklistOracle.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/IFeeManager.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/IMerkleCallAllowlist.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/IMultiAssetDeposit.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/ISanctionList.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/IShard.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/IShardExecValidator.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/IStrategy.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/libraries/PriceRateLimiter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/shards/RemoteShard.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/shards/Shard.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/shards/ShardBaseUpgradeable.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/validators/MerkleAllowlistValidator.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "files": [
+        "contracts/LBTC/libraries/Redeem.sol",
+        "contracts/consortium/ILombardTimelockController.sol",
+        "contracts/interfaces/IEfficientRateLimiterV1.sol",
+        "contracts/interfaces/IProxyAdmin.sol",
+        "contracts/mock/MailboxTreasuryMock.sol"
+      ],
+      "message": "constraint 0.8.24 not satisfied by the bundled compiler; resolved compatible solc 0.8.24 via cache_compatible"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/PoR/IPoR.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/PoR/PoR.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/interfaces/LegacyTokenPoolV2.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/consortium/DepositNotarizationBlacklist.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/consortium/IDepositNotarizationBlacklist.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/consortium/LombardTimeLock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/consortium/test/VerifySignatureTest.sol",
+      "message": "file failed to produce AST",
+      "pragma": "^0.8.19",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/factory/ProxyFactory.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/Auth.sol",
+      "message": "file failed to produce AST",
+      "pragma": ">=0.8.0",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/BoringVault.sol",
+      "message": "file failed to produce AST",
+      "pragma": "^0.8.21",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/BTCBMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/CCIPMocks.sol",
+      "message": "file failed to produce AST",
+      "pragma": "^0.8.4",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/CCIPRMNMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/ERC4626Mock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/LZEndpointMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/ProxyMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/TellerWithMultiAssetSupportMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/TokenMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/WBTCMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "duration_seconds": 1.628,
+      "message": "phase duration",
+      "phase": "compilation"
+    },
+    {
+      "duration_seconds": 0.007,
+      "message": "phase duration",
+      "phase": "inventory"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "modifier_analysis"
+    },
+    {
+      "duration_seconds": 0.007,
+      "message": "phase duration",
+      "phase": "function_analysis"
+    },
+    {
+      "duration_seconds": 0.001,
+      "message": "phase duration",
+      "phase": "capability_and_relationship_derivation"
+    },
+    {
+      "duration_seconds": 2.273,
+      "message": "phase duration",
+      "phase": "total"
+    }
+  ]
+}

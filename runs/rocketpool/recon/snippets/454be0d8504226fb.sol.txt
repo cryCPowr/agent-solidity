@@ -1,1 +1,0 @@
-require(msg.value > 0, "Invalid value received")

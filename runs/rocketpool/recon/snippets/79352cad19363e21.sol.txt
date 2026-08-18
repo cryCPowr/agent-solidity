@@ -1,6 +1,0 @@
-modifier onlyProtocolDAO() {
-        if(msg.sender != getAddress(keccak256(abi.encodePacked("contract.address", "rocketDAOProtocolSettingsNetwork")))) {
-            revert("Invalid or outdated network contract");
-        }
-        _;
-    }

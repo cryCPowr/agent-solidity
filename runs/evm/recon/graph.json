@@ -1,0 +1,753 @@
+{
+  "edges": [
+    {
+      "fact_ids": [],
+      "id": "edge:000e51cfb2c7c87f",
+      "properties": {},
+      "source": "node:7ba7821cfb8210ad",
+      "status": "observed",
+      "target": "node:b8bd678751326866",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:3f488e000862dfda"
+      ],
+      "id": "edge:07fa8050d668ce78",
+      "properties": {},
+      "source": "node:55acfee010934af1",
+      "status": "observed",
+      "target": "node:754c7ae14c1e3d49",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:09572bf65bcf11f1",
+      "properties": {},
+      "source": "node:7ba7821cfb8210ad",
+      "status": "observed",
+      "target": "node:9e6472d3a37d0109",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:0de170e9bc5d6d36",
+      "properties": {},
+      "source": "node:7ba7821cfb8210ad",
+      "status": "observed",
+      "target": "node:cc9bf09403253c27",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:130f0087f4c7fc2e",
+      "properties": {},
+      "source": "node:7ba7821cfb8210ad",
+      "status": "observed",
+      "target": "node:ce858a322621cb20",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:203c7dd8c1693e3c",
+      "properties": {},
+      "source": "node:527ef96db52aa50d",
+      "status": "observed",
+      "target": "node:a94f0a7048c1b3b8",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:85b3be9fa682cd05"
+      ],
+      "id": "edge:215108398fb8066c",
+      "properties": {},
+      "source": "node:9e784a60d7e35df1",
+      "status": "observed",
+      "target": "node:0c75698e91229e95",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:26d197ad01c3f3e2",
+      "properties": {},
+      "source": "node:7ba7821cfb8210ad",
+      "status": "observed",
+      "target": "node:12ecc1e2e079de15",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:279e561037376345",
+      "properties": {},
+      "source": "node:7ba7821cfb8210ad",
+      "status": "observed",
+      "target": "node:35e4e58cd1b87888",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:ac96bbb68fa1fd6c"
+      ],
+      "id": "edge:29404241ec96c83e",
+      "properties": {},
+      "source": "node:d5b5280b5aa31aab",
+      "status": "observed",
+      "target": "node:a94f0a7048c1b3b8",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:2b24083ffb2c5a35",
+      "properties": {},
+      "source": "node:e39621e7580b9994",
+      "status": "observed",
+      "target": "node:613cf77174b55b9f",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:49a7b6346a2db586",
+      "properties": {},
+      "source": "node:527ef96db52aa50d",
+      "status": "observed",
+      "target": "node:9e784a60d7e35df1",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:4cbc45c3c4e40db5",
+      "properties": {},
+      "source": "node:9699db62cf88ac16",
+      "status": "observed",
+      "target": "node:55acfee010934af1",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:510271c8b656e4bf",
+      "properties": {},
+      "source": "node:d4b3aab8168afadd",
+      "status": "observed",
+      "target": "node:56903cc2c441a2fa",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:5c5c6d2a443f77a5",
+      "properties": {},
+      "source": "node:7ba7821cfb8210ad",
+      "status": "observed",
+      "target": "node:3c701ade35577601",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:5ca05c27c3cb3384",
+      "properties": {},
+      "source": "node:7ba7821cfb8210ad",
+      "status": "observed",
+      "target": "node:5b7b6364684f060b",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:6ab16e722d6aee27",
+      "properties": {},
+      "source": "node:7ba7821cfb8210ad",
+      "status": "observed",
+      "target": "node:7363d0aed30fb23f",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:1e7f1cef2fb177b0"
+      ],
+      "id": "edge:6dfe7e1a80639956",
+      "properties": {},
+      "source": "node:9e784a60d7e35df1",
+      "status": "observed",
+      "target": "node:a94f0a7048c1b3b8",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [
+        "fact:9707354f2aac266b"
+      ],
+      "id": "edge:7e6f4fab86a8cc55",
+      "properties": {},
+      "source": "node:984a3b610e74bc40",
+      "status": "observed",
+      "target": "node:a94f0a7048c1b3b8",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:94a013d9871aae46",
+      "properties": {},
+      "source": "node:7ba7821cfb8210ad",
+      "status": "observed",
+      "target": "node:6738308b1cd63e82",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:97261bbe0310d5ef",
+      "properties": {},
+      "source": "node:dbf85b3aca6ae327",
+      "status": "observed",
+      "target": "node:97097e0f04db1589",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:97c4e96602e873fd",
+      "properties": {},
+      "source": "node:527ef96db52aa50d",
+      "status": "observed",
+      "target": "node:984a3b610e74bc40",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:d37aa8af26a2bda9"
+      ],
+      "id": "edge:999849e3f68175b6",
+      "properties": {
+        "call_type": "external",
+        "target_status": "dynamic"
+      },
+      "source": "node:c81545a0225e48e6",
+      "status": "observed",
+      "target": "node:43470714681d3426",
+      "type": "CALLS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:9afe7476c8d24b8b",
+      "properties": {},
+      "source": "node:527ef96db52aa50d",
+      "status": "observed",
+      "target": "node:c81545a0225e48e6",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:a314a8b90a5ad664",
+      "properties": {},
+      "source": "node:527ef96db52aa50d",
+      "status": "observed",
+      "target": "node:0c75698e91229e95",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:f1510dcfdd7d2c4b"
+      ],
+      "id": "edge:af07c3111cacc11c",
+      "properties": {},
+      "source": "node:210e39c6dca66dbd",
+      "status": "observed",
+      "target": "node:a94f0a7048c1b3b8",
+      "type": "WRITES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:b18a008eca7699c8",
+      "properties": {},
+      "source": "node:7ba7821cfb8210ad",
+      "status": "observed",
+      "target": "node:a3d34fb2c2f94769",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:b4d55c6ea493a186",
+      "properties": {},
+      "source": "node:134029c737ae9649",
+      "status": "observed",
+      "target": "node:28a1d9274af90c2c",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [
+        "fact:52ad801c915e8e60"
+      ],
+      "id": "edge:b52f8962ce9b16b1",
+      "properties": {},
+      "source": "node:c81545a0225e48e6",
+      "status": "observed",
+      "target": "node:0c75698e91229e95",
+      "type": "READS"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:c0b54a686ded5252",
+      "properties": {},
+      "source": "node:527ef96db52aa50d",
+      "status": "observed",
+      "target": "node:210e39c6dca66dbd",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:c5939d8d441103b8",
+      "properties": {},
+      "source": "node:9699db62cf88ac16",
+      "status": "observed",
+      "target": "node:754c7ae14c1e3d49",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:c950a37e398712da",
+      "properties": {},
+      "source": "node:e39621e7580b9994",
+      "status": "observed",
+      "target": "node:6427cd7cc227e4c4",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:d576f9fc418a1cb8",
+      "properties": {},
+      "source": "node:134029c737ae9649",
+      "status": "observed",
+      "target": "node:21daa023303c58ba",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:e3f44561e52218cd",
+      "properties": {},
+      "source": "node:7ba7821cfb8210ad",
+      "status": "observed",
+      "target": "node:076661619253f0b9",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:e6c80797401eebcd",
+      "properties": {},
+      "source": "node:527ef96db52aa50d",
+      "status": "observed",
+      "target": "node:d5b5280b5aa31aab",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:f046d7ade2c3ecac",
+      "properties": {},
+      "source": "node:7ba7821cfb8210ad",
+      "status": "observed",
+      "target": "node:f716cf67a3932c39",
+      "type": "DECLARES"
+    },
+    {
+      "fact_ids": [],
+      "id": "edge:fc05ef48142660fd",
+      "properties": {},
+      "source": "node:7ba7821cfb8210ad",
+      "status": "observed",
+      "target": "node:88b970b94cbbfa37",
+      "type": "DECLARES"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "node:076661619253f0b9",
+      "kind": "function",
+      "label": "scheduleBatch",
+      "properties": {
+        "kind": "function",
+        "signature": "scheduleBatch(address[],uint256[],bytes[],bytes32,bytes32,uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:0c75698e91229e95",
+      "kind": "state_variable",
+      "label": "mailbox",
+      "properties": {
+        "mutability": "mutable",
+        "type": "address",
+        "visibility": "internal"
+      }
+    },
+    {
+      "id": "node:12ecc1e2e079de15",
+      "kind": "function",
+      "label": "getTimestamp",
+      "properties": {
+        "kind": "function",
+        "signature": "getTimestamp(bytes32)",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:134029c737ae9649",
+      "kind": "contract",
+      "label": "IRateProvider",
+      "properties": {
+        "contract_kind": "interface",
+        "file": "contracts/mock/IRateProvider.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:210e39c6dca66dbd",
+      "kind": "function",
+      "label": "disableReceive",
+      "properties": {
+        "kind": "function",
+        "signature": "disableReceive()",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:21daa023303c58ba",
+      "kind": "function",
+      "label": "getRate",
+      "properties": {
+        "kind": "function",
+        "signature": "getRate()",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:28a1d9274af90c2c",
+      "kind": "function",
+      "label": "getRateInQuoteSafe",
+      "properties": {
+        "kind": "function",
+        "signature": "getRateInQuoteSafe(address)",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:35e4e58cd1b87888",
+      "kind": "function",
+      "label": "isOperationReady",
+      "properties": {
+        "kind": "function",
+        "signature": "isOperationReady(bytes32)",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:3c701ade35577601",
+      "kind": "function",
+      "label": "updateDelay",
+      "properties": {
+        "kind": "function",
+        "signature": "updateDelay(uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:43470714681d3426",
+      "kind": "external_target",
+      "label": "IMailboxWithdrawFee(mailbox)",
+      "properties": {
+        "member": "withdrawFee",
+        "target_status": "dynamic"
+      }
+    },
+    {
+      "id": "node:527ef96db52aa50d",
+      "kind": "contract",
+      "label": "MailboxTreasuryMock",
+      "properties": {
+        "contract_kind": "contract",
+        "file": "contracts/mock/MailboxTreasuryMock.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:55acfee010934af1",
+      "kind": "function",
+      "label": "encodeRequest",
+      "properties": {
+        "kind": "function",
+        "signature": "encodeRequest(uint256,uint256,bytes)",
+        "state_mutability": "view",
+        "visibility": "internal"
+      }
+    },
+    {
+      "id": "node:56903cc2c441a2fa",
+      "kind": "function",
+      "label": "withdrawFee",
+      "properties": {
+        "kind": "function",
+        "signature": "withdrawFee()",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:5b7b6364684f060b",
+      "kind": "function",
+      "label": "schedule",
+      "properties": {
+        "kind": "function",
+        "signature": "schedule(address,uint256,bytes,bytes32,bytes32,uint256)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:613cf77174b55b9f",
+      "kind": "function",
+      "label": "upgradeAndCall",
+      "properties": {
+        "kind": "function",
+        "signature": "upgradeAndCall(address,address,bytes)",
+        "state_mutability": "payable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:6427cd7cc227e4c4",
+      "kind": "function",
+      "label": "UPGRADE_INTERFACE_VERSION",
+      "properties": {
+        "kind": "function",
+        "signature": "UPGRADE_INTERFACE_VERSION()",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:6738308b1cd63e82",
+      "kind": "function",
+      "label": "cancel",
+      "properties": {
+        "kind": "function",
+        "signature": "cancel(bytes32)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:7363d0aed30fb23f",
+      "kind": "function",
+      "label": "execute",
+      "properties": {
+        "kind": "function",
+        "signature": "execute(address,uint256,bytes,bytes32,bytes32)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:754c7ae14c1e3d49",
+      "kind": "state_variable",
+      "label": "REQUEST_SELECTOR",
+      "properties": {
+        "mutability": "constant",
+        "type": "bytes4",
+        "visibility": "internal"
+      }
+    },
+    {
+      "id": "node:7ba7821cfb8210ad",
+      "kind": "contract",
+      "label": "ITimelockController",
+      "properties": {
+        "contract_kind": "interface",
+        "file": "contracts/consortium/ILombardTimelockController.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:88b970b94cbbfa37",
+      "kind": "function",
+      "label": "isOperationPending",
+      "properties": {
+        "kind": "function",
+        "signature": "isOperationPending(bytes32)",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:9699db62cf88ac16",
+      "kind": "contract",
+      "label": "Redeem",
+      "properties": {
+        "contract_kind": "library",
+        "file": "contracts/LBTC/libraries/Redeem.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:97097e0f04db1589",
+      "kind": "function",
+      "label": "setRateLimits",
+      "properties": {
+        "kind": "function",
+        "signature": "setRateLimits(struct,enum)",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:984a3b610e74bc40",
+      "kind": "function",
+      "label": "<receive>",
+      "properties": {
+        "kind": "receive",
+        "signature": null,
+        "state_mutability": "payable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:9e6472d3a37d0109",
+      "kind": "function",
+      "label": "getMinDelay",
+      "properties": {
+        "kind": "function",
+        "signature": "getMinDelay()",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:9e784a60d7e35df1",
+      "kind": "function",
+      "label": "<constructor>",
+      "properties": {
+        "kind": "constructor",
+        "signature": null,
+        "state_mutability": "nonpayable",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:a3d34fb2c2f94769",
+      "kind": "function",
+      "label": "hashOperation",
+      "properties": {
+        "kind": "function",
+        "signature": "hashOperation(address,uint256,bytes,bytes32,bytes32)",
+        "state_mutability": "pure",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:a94f0a7048c1b3b8",
+      "kind": "state_variable",
+      "label": "canReceive",
+      "properties": {
+        "mutability": "mutable",
+        "type": "bool",
+        "visibility": "public"
+      }
+    },
+    {
+      "id": "node:b8bd678751326866",
+      "kind": "function",
+      "label": "executeBatch",
+      "properties": {
+        "kind": "function",
+        "signature": "executeBatch(address[],uint256[],bytes[],bytes32,bytes32)",
+        "state_mutability": "payable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:c81545a0225e48e6",
+      "kind": "function",
+      "label": "withdrawFee",
+      "properties": {
+        "kind": "function",
+        "signature": "withdrawFee()",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:cc9bf09403253c27",
+      "kind": "function",
+      "label": "isOperationDone",
+      "properties": {
+        "kind": "function",
+        "signature": "isOperationDone(bytes32)",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:ce858a322621cb20",
+      "kind": "function",
+      "label": "isOperation",
+      "properties": {
+        "kind": "function",
+        "signature": "isOperation(bytes32)",
+        "state_mutability": "view",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:d4b3aab8168afadd",
+      "kind": "contract",
+      "label": "IMailboxWithdrawFee",
+      "properties": {
+        "contract_kind": "interface",
+        "file": "contracts/mock/MailboxTreasuryMock.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:d5b5280b5aa31aab",
+      "kind": "function",
+      "label": "enableReceive",
+      "properties": {
+        "kind": "function",
+        "signature": "enableReceive()",
+        "state_mutability": "nonpayable",
+        "visibility": "external"
+      }
+    },
+    {
+      "id": "node:dbf85b3aca6ae327",
+      "kind": "contract",
+      "label": "IEfficientRateLimiterV1",
+      "properties": {
+        "contract_kind": "interface",
+        "file": "contracts/interfaces/IEfficientRateLimiterV1.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:e39621e7580b9994",
+      "kind": "contract",
+      "label": "IProxyAdmin",
+      "properties": {
+        "contract_kind": "interface",
+        "file": "contracts/interfaces/IProxyAdmin.sol",
+        "is_abstract": false
+      }
+    },
+    {
+      "id": "node:f716cf67a3932c39",
+      "kind": "function",
+      "label": "hashOperationBatch",
+      "properties": {
+        "kind": "function",
+        "signature": "hashOperationBatch(address[],uint256[],bytes[],bytes32,bytes32)",
+        "state_mutability": "pure",
+        "visibility": "external"
+      }
+    }
+  ]
+}

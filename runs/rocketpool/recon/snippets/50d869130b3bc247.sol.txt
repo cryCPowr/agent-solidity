@@ -1,8 +1,0 @@
-function _calculateVotingPower(uint256 _rplStake, uint256 _bondedETH, uint256 _rplPrice, uint256 _maxStakePercent) internal pure returns (uint256) {
-        uint256 maximumStake = _bondedETH * _maxStakePercent / _rplPrice;
-        if (_rplStake > maximumStake) {
-            _rplStake = maximumStake;
-        }
-        // Return the calculated voting power as the square root of clamped RPL stake
-        return Math.sqrt(_rplStake * calcBase);
-    }

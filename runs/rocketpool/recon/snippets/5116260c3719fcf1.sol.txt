@@ -1,1 +1,0 @@
-newRatio - currentRatio <= maxChange

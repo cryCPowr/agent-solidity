@@ -1,1 +1,0 @@
-verifier.verifyValidator(_slotTimestamp, _slot, _proof)

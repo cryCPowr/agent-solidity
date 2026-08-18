@@ -1,8 +1,0 @@
-for (uint256 j = 0; j < uniqueTimezoneCount; ++j) {
-                if (keccak256(bytes(counts[j].timezone)) == keccak256(bytes(timezone))) {
-                    existing = true;
-                    // Increment the counter
-                    counts[j].count++;
-                    break;
-                }
-            }

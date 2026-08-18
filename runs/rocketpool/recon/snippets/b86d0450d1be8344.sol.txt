@@ -1,3 +1,0 @@
-function getChallengeCooldown() override external view returns (uint256) {
-        return getSettingUint("members.challenge.cooldown");
-    }

@@ -1,1 +1,0 @@
-function provisionExpressTickets(address _nodeAddress) external;

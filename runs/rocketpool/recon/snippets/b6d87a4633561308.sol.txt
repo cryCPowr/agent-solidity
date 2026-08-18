@@ -1,1 +1,0 @@
-rocketNodeManager.getNodeAt(_nodeIndex) != _voter

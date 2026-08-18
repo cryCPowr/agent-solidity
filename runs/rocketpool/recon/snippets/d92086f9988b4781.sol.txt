@@ -1,1 +1,0 @@
-rocketNetworkSnapshots.push(keccak256(abi.encodePacked("node.delegate", msg.sender)), uint224(uint160(msg.sender)))

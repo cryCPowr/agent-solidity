@@ -1,3 +1,0 @@
-function getUseLatestDelegate() external override view returns (bool) {
-        return useLatestDelegate;
-    }

@@ -1,3 +1,0 @@
-function upgradeDelegate(address _newDelegateAddress) override public onlyLatestContract("rocketMegapoolFactory", address(this)) onlyLatestNetworkContract() {
-        _upgradeDelegate(_newDelegateAddress);
-    }

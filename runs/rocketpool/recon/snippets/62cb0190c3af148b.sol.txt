@@ -1,3 +1,0 @@
-function _setBalancesTimestamp(uint256 _value) internal {
-        setUint(keccak256("network.balances.updated.timestamp"), _value);
-    }

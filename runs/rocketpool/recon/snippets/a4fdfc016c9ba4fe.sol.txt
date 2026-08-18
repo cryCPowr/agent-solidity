@@ -1,8 +1,0 @@
-if (len > 5 && len > _recency) {
-            uint256 mid = len - _recency;
-            if (_block < _blockAt(_key, mid)) {
-                high = mid;
-            } else {
-                low = mid + 1;
-            }
-        }

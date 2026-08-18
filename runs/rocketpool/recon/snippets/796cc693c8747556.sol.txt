@@ -1,1 +1,0 @@
-function getRewardsClaimerPerc(string memory _contractName) external view returns (uint256);

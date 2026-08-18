@@ -1,3 +1,0 @@
-function _getRocketDepositPool() internal view returns (RocketDepositPoolInterface) {
-        return RocketDepositPoolInterface(rocketStorage.getAddress(rocketDepositPoolKey));
-    }

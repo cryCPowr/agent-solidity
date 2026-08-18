@@ -1,1 +1,0 @@
-EtherWithdrawn(address(rocketDepositPool), userCapital + _penalty, block.timestamp)

@@ -1,1 +1,0 @@
-require(address(this) == getAddress(keccak256("contract.addressrocketDepositPool")), "Invalid or outdated contract")

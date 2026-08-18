@@ -1,1 +1,0 @@
-require(getAddress(key) == address(0x0), "Pubkey in use")

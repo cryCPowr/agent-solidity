@@ -1,7 +1,0 @@
-if (version == 1 || version == 2) {
-            try minipoolInterface.getDepositType{gas: 30000}() returns (MinipoolDeposit depositType) {
-                return depositType;
-            } catch (bytes memory /*lowLevelData*/) {
-                return MinipoolDeposit.Variable;
-            }
-        }

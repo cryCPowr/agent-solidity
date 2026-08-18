@@ -1,1 +1,0 @@
-function getTotalLength() external view returns (uint256);

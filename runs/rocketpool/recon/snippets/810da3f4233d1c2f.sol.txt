@@ -1,5 +1,0 @@
-if (rocketStorage.getDeployedStatus()) {
-            require(getBool(keccak256(abi.encodePacked("contract.exists", msg.sender))), "Invalid or outdated network contract");
-        } else {
-            require(msg.sender == rocketStorage.getGuardian(), "Not guardian");
-        }

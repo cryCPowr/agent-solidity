@@ -1,1 +1,0 @@
-function useExpressTicket(address _nodeAddress) external;

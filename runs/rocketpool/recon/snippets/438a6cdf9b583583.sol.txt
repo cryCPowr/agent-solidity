@@ -1,1 +1,0 @@
-LotCreated(lotIndex, msg.sender, lotRplAmount, block.timestamp)

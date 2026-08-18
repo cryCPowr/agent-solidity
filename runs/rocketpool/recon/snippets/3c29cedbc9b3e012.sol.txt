@@ -1,1 +1,0 @@
-emit BootstrapSettingMulti(_settingContractNames, _settingPaths, _types, _values, block.timestamp)

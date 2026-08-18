@@ -1,1 +1,0 @@
-setUint(keccak256(abi.encodePacked("auction.lot.block.start", lotIndex)), block.number)

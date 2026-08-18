@@ -1,7 +1,0 @@
-function removeMinipool(bytes32 _key, address _minipool) private {
-        // Remove
-        AddressQueueStorageInterface addressQueueStorage = AddressQueueStorageInterface(getContractAddress("addressQueueStorage"));
-        addressQueueStorage.removeItem(_key, _minipool);
-        // Emit removed event
-        emit MinipoolRemoved(_minipool, _key, block.timestamp);
-    }

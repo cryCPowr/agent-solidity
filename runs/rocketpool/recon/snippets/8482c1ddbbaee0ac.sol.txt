@@ -1,5 +1,0 @@
-function toIndex(Path memory _path) internal pure returns (uint256) {
-        uint256 pathLength = uint8(_path._data);
-        uint256 anchor = uint256(1) << pathLength;
-        return (_path._data >> 8) | anchor;
-    }

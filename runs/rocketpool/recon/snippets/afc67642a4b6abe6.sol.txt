@@ -1,1 +1,0 @@
-function getDepthPerRound() external pure returns (uint256);

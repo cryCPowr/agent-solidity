@@ -1,1 +1,0 @@
-require(memberInvitedTime > 0, "This node has not been invited to join")

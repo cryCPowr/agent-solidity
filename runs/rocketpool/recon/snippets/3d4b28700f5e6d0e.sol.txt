@@ -1,1 +1,0 @@
-function setNodeShare(uint256 _newShare) external;

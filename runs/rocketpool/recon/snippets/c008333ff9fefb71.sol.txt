@@ -1,5 +1,0 @@
-if (depositType == MinipoolDeposit.Full) {
-            // Update node balances
-            nodeDepositBalance = nodeDepositBalance.sub(msg.value);
-            nodeRefundBalance = nodeRefundBalance.add(msg.value);
-        }

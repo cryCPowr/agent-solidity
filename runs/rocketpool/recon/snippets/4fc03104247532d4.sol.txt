@@ -1,5 +1,0 @@
-function getDelegateExpired() public view returns (bool) {
-        RocketMegapoolDelegateBaseInterface megapoolDelegate = RocketMegapoolDelegateBaseInterface(rocketMegapoolDelegate);
-        uint256 expiry = megapoolDelegate.getExpirationTime();
-        return expiry != 0 && block.timestamp >= expiry;
-    }

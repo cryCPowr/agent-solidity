@@ -1,0 +1,4106 @@
+{
+  "analysis_status": "partial",
+  "analyzer_version": "0.1.0",
+  "build_dependency_graph": {
+    "dependency_files_added": [],
+    "import_prefix_aliases": {},
+    "sources_total": [
+      "contracts/LBTC/AssetRouter.sol",
+      "contracts/LBTC/BaseLBTC.sol",
+      "contracts/LBTC/BridgeTokenAdapter.sol",
+      "contracts/LBTC/NativeLBTC.sol",
+      "contracts/LBTC/StakedLBTC.sol",
+      "contracts/LBTC/StakedLBTCOracle.sol",
+      "contracts/LBTC/interfaces/AggregatorV3Interface.sol",
+      "contracts/LBTC/interfaces/IAssetOperation.sol",
+      "contracts/LBTC/interfaces/IAssetRouter.sol",
+      "contracts/LBTC/interfaces/IBaseLBTC.sol",
+      "contracts/LBTC/interfaces/INativeLBTC.sol",
+      "contracts/LBTC/interfaces/IOracle.sol",
+      "contracts/LBTC/interfaces/IStakedLBTC.sol",
+      "contracts/LBTC/libraries/Assert.sol",
+      "contracts/LBTC/libraries/Assets.sol",
+      "contracts/LBTC/libraries/Redeem.sol",
+      "contracts/LBTC/libraries/Validation.sol",
+      "contracts/PoR/IPoR.sol",
+      "contracts/PoR/PoR.sol",
+      "contracts/bascule/Bascule.sol",
+      "contracts/bascule/BasculeV2.sol",
+      "contracts/bascule/BasculeV3.sol",
+      "contracts/bascule/GMPBasculeV1.sol",
+      "contracts/bascule/GMPBasculeV2.sol",
+      "contracts/bascule/interfaces/IBascule.sol",
+      "contracts/bascule/interfaces/IGMPBascule.sol",
+      "contracts/bridge/Bridge.sol",
+      "contracts/bridge/BridgeV2.sol",
+      "contracts/bridge/IBridge.sol",
+      "contracts/bridge/IBridgeV2.sol",
+      "contracts/bridge/adapters/AbstractAdapter.sol",
+      "contracts/bridge/adapters/CLAdapter.sol",
+      "contracts/bridge/adapters/IAdapter.sol",
+      "contracts/bridge/adapters/TokenPool.sol",
+      "contracts/bridge/interfaces/LegacyTokenPoolV2.sol",
+      "contracts/bridge/oft/EfficientRateLimitedOFTAdapter.sol",
+      "contracts/bridge/oft/EfficientRateLimiter.sol",
+      "contracts/bridge/oft/LBTCBurnMintOFTAdapter.sol",
+      "contracts/bridge/oft/LBTCOFTAdapter.sol",
+      "contracts/bridge/providers/BridgeTokenPool.sol",
+      "contracts/bridge/providers/LombardTokenPoolV2.sol",
+      "contracts/consortium/Consortium.sol",
+      "contracts/consortium/DepositNotarizationBlacklist.sol",
+      "contracts/consortium/IDepositNotarizationBlacklist.sol",
+      "contracts/consortium/ILombardTimelockController.sol",
+      "contracts/consortium/INotaryConsortium.sol",
+      "contracts/consortium/LombardTimeLock.sol",
+      "contracts/consortium/test/VerifySignatureTest.sol",
+      "contracts/factory/ProxyFactory.sol",
+      "contracts/fbtc/PartnerVault.sol",
+      "contracts/gmp/IHandler.sol",
+      "contracts/gmp/IMailbox.sol",
+      "contracts/gmp/Mailbox.sol",
+      "contracts/gmp/libs/GMPUtils.sol",
+      "contracts/gmp/libs/MessagePath.sol",
+      "contracts/ibc/IBCVoucher.sol",
+      "contracts/ibc/IIBCVoucher.sol",
+      "contracts/interfaces/IBridgeToken.sol",
+      "contracts/interfaces/IConsortiumConsumer.sol",
+      "contracts/interfaces/IERC20MintableBurnable.sol",
+      "contracts/interfaces/IEfficientRateLimiterV1.sol",
+      "contracts/interfaces/IProxyAdmin.sol",
+      "contracts/libs/Actions.sol",
+      "contracts/libs/BitcoinUtils.sol",
+      "contracts/libs/EIP1271SignatureUtils.sol",
+      "contracts/libs/FeeUtils.sol",
+      "contracts/libs/LChainId.sol",
+      "contracts/libs/RateLimits.sol",
+      "contracts/libs/RateLimitsV2.sol",
+      "contracts/mock/Auth.sol",
+      "contracts/mock/BTCBMock.sol",
+      "contracts/mock/BoringVault.sol",
+      "contracts/mock/BridgeTokenMock.sol",
+      "contracts/mock/CCIPMocks.sol",
+      "contracts/mock/CCIPRMNMock.sol",
+      "contracts/mock/ChainlinkFeedMock.sol",
+      "contracts/mock/ConsortiumMock.sol",
+      "contracts/mock/ERC4626Mock.sol",
+      "contracts/mock/GMPHandlerMock.sol",
+      "contracts/mock/IRateProvider.sol",
+      "contracts/mock/LZEndpointMock.sol",
+      "contracts/mock/LockedFBTCMock.sol",
+      "contracts/mock/MailboxMock.sol",
+      "contracts/mock/MailboxTreasuryMock.sol",
+      "contracts/mock/ProxyMock.sol",
+      "contracts/mock/RatioFeedMock.sol",
+      "contracts/mock/SanctionListMock.sol",
+      "contracts/mock/ShardStrategyMocks.sol",
+      "contracts/mock/StakedLBTCMock.sol",
+      "contracts/mock/TellerWithMultiAssetSupportMock.sol",
+      "contracts/mock/TokenMock.sol",
+      "contracts/mock/WBTCMock.sol",
+      "contracts/pmm/BTCB/BTCB.sol",
+      "contracts/pmm/CBBTC.sol",
+      "contracts/stakeAndBake/StakeAndBake.sol",
+      "contracts/stakeAndBake/StakeAndBakeNativeToken.sol",
+      "contracts/stakeAndBake/depositor/IDepositor.sol",
+      "contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol",
+      "contracts/stakeAndBake/depositor/strategy/MultiAssetDepositStrategyDepositor.sol",
+      "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+      "contracts/stakeAndBake/depositor/veda/ITeller.sol",
+      "contracts/stakeAndBake/depositor/veda/TellerWithMultiAssetSupportDepositor.sol",
+      "contracts/strategy/AsyncRedemptionUpgradeable.sol",
+      "contracts/strategy/BlocklistOracle.sol",
+      "contracts/strategy/FeeManagerUpgradeable.sol",
+      "contracts/strategy/MAWARStrategyMigrated.sol",
+      "contracts/strategy/MultiAssetDepositUpgradeable.sol",
+      "contracts/strategy/MultiAssetWithAsyncRedemptionStrategy.sol",
+      "contracts/strategy/ShareToken.sol",
+      "contracts/strategy/StrategyBaseUpgradeable.sol",
+      "contracts/strategy/converters/ChainlinkCompositeConverter.sol",
+      "contracts/strategy/converters/ChainlinkConverter.sol",
+      "contracts/strategy/converters/DirectConverter.sol",
+      "contracts/strategy/interfaces/IAssetConverter.sol",
+      "contracts/strategy/interfaces/IAsyncRedemption.sol",
+      "contracts/strategy/interfaces/IBlocklistOracle.sol",
+      "contracts/strategy/interfaces/IFeeManager.sol",
+      "contracts/strategy/interfaces/IMerkleCallAllowlist.sol",
+      "contracts/strategy/interfaces/IMultiAssetDeposit.sol",
+      "contracts/strategy/interfaces/ISanctionList.sol",
+      "contracts/strategy/interfaces/IShard.sol",
+      "contracts/strategy/interfaces/IShardExecValidator.sol",
+      "contracts/strategy/interfaces/IStrategy.sol",
+      "contracts/strategy/libraries/PriceRateLimiter.sol",
+      "contracts/strategy/shards/RemoteShard.sol",
+      "contracts/strategy/shards/Shard.sol",
+      "contracts/strategy/shards/ShardBaseUpgradeable.sol",
+      "contracts/strategy/validators/MerkleAllowlistValidator.sol"
+    ],
+    "unresolved_imports": [
+      {
+        "importing_file": "contracts/LBTC/AssetRouter.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/AssetRouter.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/AssetRouter.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/AssetRouter.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/BaseLBTC.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/BaseLBTC.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/BaseLBTC.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/BaseLBTC.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PermitUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/BaseLBTC.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/BridgeTokenAdapter.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/BridgeTokenAdapter.sol",
+        "line": 13,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/BridgeTokenAdapter.sol",
+        "line": 14,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/BridgeTokenAdapter.sol",
+        "line": 15,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/NativeLBTC.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/StakedLBTCOracle.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/StakedLBTCOracle.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/Ownable2StepUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/StakedLBTCOracle.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/libraries/Validation.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/PoR/PoR.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/Bascule.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/Pausable.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/Bascule.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/access/extensions/AccessControlDefaultAdminRules.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/BasculeV2.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/Pausable.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/BasculeV2.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/access/AccessControl.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/BasculeV2.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/access/extensions/AccessControlDefaultAdminRules.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/BasculeV3.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/Pausable.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/BasculeV3.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/access/AccessControl.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/BasculeV3.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/access/extensions/AccessControlDefaultAdminRules.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/BasculeV3.sol",
+        "line": 9,
+        "raw_path": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/GMPBasculeV1.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/Pausable.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/GMPBasculeV1.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/access/AccessControl.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/GMPBasculeV1.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/access/extensions/AccessControlDefaultAdminRules.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/GMPBasculeV1.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/GMPBasculeV2.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/Pausable.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/GMPBasculeV2.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/access/AccessControl.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/GMPBasculeV2.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/access/extensions/AccessControlDefaultAdminRules.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/GMPBasculeV2.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/Bridge.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/Bridge.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/Ownable2StepUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/Bridge.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/Bridge.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/Bridge.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/BridgeV2.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/BridgeV2.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/Ownable2StepUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/BridgeV2.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/BridgeV2.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/BridgeV2.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/AbstractAdapter.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/Context.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/CLAdapter.sol",
+        "line": 4,
+        "raw_path": "@chainlink/contracts-ccip/contracts/interfaces/IRouterClient.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/CLAdapter.sol",
+        "line": 5,
+        "raw_path": "@chainlink/contracts-ccip/contracts/libraries/Client.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/CLAdapter.sol",
+        "line": 8,
+        "raw_path": "@chainlink/contracts-ccip/contracts/libraries/Pool.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/CLAdapter.sol",
+        "line": 10,
+        "raw_path": "@openzeppelin/contracts/access/Ownable.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/CLAdapter.sol",
+        "line": 11,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/CLAdapter.sol",
+        "line": 12,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/CLAdapter.sol",
+        "line": 13,
+        "raw_path": "@openzeppelin/contracts/utils/ReentrancyGuard.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/TokenPool.sol",
+        "line": 4,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/TokenPool.sol",
+        "line": 5,
+        "raw_path": "@chainlink/contracts-ccip/contracts/interfaces/IRouterClient.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/TokenPool.sol",
+        "line": 6,
+        "raw_path": "@chainlink/contracts-ccip/contracts/libraries/Client.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/TokenPool.sol",
+        "line": 7,
+        "raw_path": "@chainlink/contracts-ccip/contracts/libraries/Pool.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/TokenPool.sol",
+        "line": 8,
+        "raw_path": "@chainlink/contracts-ccip/contracts/pools/TokenPool.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/interfaces/LegacyTokenPoolV2.sol",
+        "line": 4,
+        "raw_path": "@chainlink/contracts-ccip/contracts/pools/TokenPool.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/oft/EfficientRateLimitedOFTAdapter.sol",
+        "line": 4,
+        "raw_path": "@layerzerolabs/oft-evm/contracts/OFTAdapter.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/oft/LBTCBurnMintOFTAdapter.sol",
+        "line": 4,
+        "raw_path": "@layerzerolabs/oft-evm/contracts/OFTAdapter.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/oft/LBTCBurnMintOFTAdapter.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/access/Ownable.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/oft/LBTCOFTAdapter.sol",
+        "line": 4,
+        "raw_path": "@layerzerolabs/oft-evm/contracts/OFTAdapter.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/oft/LBTCOFTAdapter.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/access/Ownable.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/providers/BridgeTokenPool.sol",
+        "line": 4,
+        "raw_path": "@chainlink/contracts-ccip/contracts/libraries/Pool.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/providers/BridgeTokenPool.sol",
+        "line": 5,
+        "raw_path": "@chainlink/contracts-ccip/contracts/pools/TokenPool.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/providers/BridgeTokenPool.sol",
+        "line": 7,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/extensions/IERC20Metadata.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/providers/BridgeTokenPool.sol",
+        "line": 8,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/providers/LombardTokenPoolV2.sol",
+        "line": 4,
+        "raw_path": "@chainlink/contracts/src/v0.8/shared/interfaces/ITypeAndVersion.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/providers/LombardTokenPoolV2.sol",
+        "line": 6,
+        "raw_path": "@chainlink/contracts-ccip/contracts/libraries/Pool.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/providers/LombardTokenPoolV2.sol",
+        "line": 7,
+        "raw_path": "@chainlink/contracts-ccip/contracts/pools/TokenPool.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/providers/LombardTokenPoolV2.sol",
+        "line": 9,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/extensions/IERC20Metadata.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/providers/LombardTokenPoolV2.sol",
+        "line": 10,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/consortium/Consortium.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/Ownable2StepUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/consortium/Consortium.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/consortium/Consortium.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol"
+      },
+      {
+        "importing_file": "contracts/consortium/Consortium.sol",
+        "line": 9,
+        "raw_path": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol"
+      },
+      {
+        "importing_file": "contracts/consortium/DepositNotarizationBlacklist.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/consortium/INotaryConsortium.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol"
+      },
+      {
+        "importing_file": "contracts/consortium/LombardTimeLock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/governance/TimelockController.sol"
+      },
+      {
+        "importing_file": "contracts/consortium/test/VerifySignatureTest.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol"
+      },
+      {
+        "importing_file": "contracts/factory/ProxyFactory.sol",
+        "line": 4,
+        "raw_path": "solmate/src/utils/CREATE3.sol"
+      },
+      {
+        "importing_file": "contracts/factory/ProxyFactory.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol"
+      },
+      {
+        "importing_file": "contracts/factory/ProxyFactory.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/access/AccessControl.sol"
+      },
+      {
+        "importing_file": "contracts/fbtc/PartnerVault.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/fbtc/PartnerVault.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/fbtc/PartnerVault.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/fbtc/PartnerVault.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/fbtc/PartnerVault.sol",
+        "line": 9,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/gmp/IHandler.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/introspection/IERC165.sol"
+      },
+      {
+        "importing_file": "contracts/gmp/Mailbox.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/gmp/Mailbox.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/gmp/Mailbox.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/gmp/Mailbox.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/gmp/Mailbox.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol"
+      },
+      {
+        "importing_file": "contracts/gmp/Mailbox.sol",
+        "line": 9,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/ibc/IBCVoucher.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/ibc/IBCVoucher.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/ibc/IBCVoucher.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/ibc/IBCVoucher.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/ibc/IBCVoucher.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/interfaces/IBridgeToken.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol"
+      },
+      {
+        "importing_file": "contracts/interfaces/IERC20MintableBurnable.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/libs/BitcoinUtils.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/libs/EIP1271SignatureUtils.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/interfaces/IERC1271.sol"
+      },
+      {
+        "importing_file": "contracts/libs/EIP1271SignatureUtils.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol"
+      },
+      {
+        "importing_file": "contracts/libs/FeeUtils.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BTCBMock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/Context.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BTCBMock.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BoringVault.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/Address.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BoringVault.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BoringVault.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BoringVault.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BridgeTokenMock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/Context.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BridgeTokenMock.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/Address.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BridgeTokenMock.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BridgeTokenMock.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BridgeTokenMock.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPMocks.sol",
+        "line": 4,
+        "raw_path": "@chainlink/contracts-ccip/contracts/interfaces/IAny2EVMMessageReceiver.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPMocks.sol",
+        "line": 5,
+        "raw_path": "@chainlink/contracts-ccip/contracts/interfaces/IRouter.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPMocks.sol",
+        "line": 6,
+        "raw_path": "@chainlink/contracts-ccip/contracts/interfaces/IRouterClient.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPMocks.sol",
+        "line": 8,
+        "raw_path": "@chainlink/contracts-ccip/contracts/libraries/Client.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPMocks.sol",
+        "line": 9,
+        "raw_path": "@chainlink/contracts-ccip/contracts/libraries/Internal.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPMocks.sol",
+        "line": 10,
+        "raw_path": "@chainlink/contracts/src/v0.8/shared/call/CallWithExactGas.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPMocks.sol",
+        "line": 12,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPMocks.sol",
+        "line": 13,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPMocks.sol",
+        "line": 14,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v5.0.2/contracts/utils/introspection/ERC165Checker.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPRMNMock.sol",
+        "line": 4,
+        "raw_path": "@chainlink/contracts-ccip/contracts/interfaces/IRMN.sol"
+      },
+      {
+        "importing_file": "contracts/mock/ERC4626Mock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/extensions/ERC4626.sol"
+      },
+      {
+        "importing_file": "contracts/mock/ERC4626Mock.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/ERC4626Mock.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/LZEndpointMock.sol",
+        "line": 4,
+        "raw_path": "@layerzerolabs/test-devtools-evm-hardhat/contracts/mocks/EndpointV2Mock.sol"
+      },
+      {
+        "importing_file": "contracts/mock/LockedFBTCMock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/mock/ProxyMock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol"
+      },
+      {
+        "importing_file": "contracts/mock/RatioFeedMock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/mock/ShardStrategyMocks.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/ShardStrategyMocks.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/TellerWithMultiAssetSupportMock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/TellerWithMultiAssetSupportMock.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/TokenMock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/WBTCMock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/pmm/BTCB/BTCB.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/pmm/BTCB/BTCB.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/pmm/BTCB/BTCB.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol"
+      },
+      {
+        "importing_file": "contracts/pmm/BTCB/BTCB.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/pmm/CBBTC.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/pmm/CBBTC.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/pmm/CBBTC.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol"
+      },
+      {
+        "importing_file": "contracts/pmm/CBBTC.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBake.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBake.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBake.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBake.sol",
+        "line": 9,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBake.sol",
+        "line": 10,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBake.sol",
+        "line": 11,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBakeNativeToken.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBakeNativeToken.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBakeNativeToken.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBakeNativeToken.sol",
+        "line": 9,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBakeNativeToken.sol",
+        "line": 10,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBakeNativeToken.sol",
+        "line": 11,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/interfaces/IERC4626.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/utils/ReentrancyGuard.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/strategy/MultiAssetDepositStrategyDepositor.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/strategy/MultiAssetDepositStrategyDepositor.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/strategy/MultiAssetDepositStrategyDepositor.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/utils/ReentrancyGuard.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+        "line": 9,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PermitUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+        "line": 10,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC4626Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+        "line": 11,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+        "line": 13,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ITeller.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/TellerWithMultiAssetSupportDepositor.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/TellerWithMultiAssetSupportDepositor.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/TellerWithMultiAssetSupportDepositor.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/utils/ReentrancyGuard.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/AsyncRedemptionUpgradeable.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/AsyncRedemptionUpgradeable.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/AsyncRedemptionUpgradeable.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/BlocklistOracle.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/BlocklistOracle.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/structs/EnumerableSet.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/FeeManagerUpgradeable.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MAWARStrategyMigrated.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MAWARStrategyMigrated.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MAWARStrategyMigrated.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MAWARStrategyMigrated.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MAWARStrategyMigrated.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/utils/structs/EnumerableSet.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MAWARStrategyMigrated.sol",
+        "line": 9,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MAWARStrategyMigrated.sol",
+        "line": 10,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MAWARStrategyMigrated.sol",
+        "line": 11,
+        "raw_path": "@openzeppelin/contracts/interfaces/IERC20Metadata.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MAWARStrategyMigrated.sol",
+        "line": 12,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MultiAssetDepositUpgradeable.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MultiAssetDepositUpgradeable.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MultiAssetDepositUpgradeable.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/utils/structs/EnumerableSet.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MultiAssetDepositUpgradeable.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MultiAssetWithAsyncRedemptionStrategy.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MultiAssetWithAsyncRedemptionStrategy.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MultiAssetWithAsyncRedemptionStrategy.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/utils/introspection/IERC165.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/utils/structs/EnumerableSet.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+        "line": 9,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+        "line": 10,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+        "line": 11,
+        "raw_path": "@openzeppelin/contracts/interfaces/IERC20Metadata.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+        "line": 12,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/converters/ChainlinkCompositeConverter.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/converters/ChainlinkCompositeConverter.sol",
+        "line": 6,
+        "raw_path": "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/converters/ChainlinkConverter.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/converters/ChainlinkConverter.sol",
+        "line": 6,
+        "raw_path": "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/converters/DirectConverter.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/interfaces/IAssetConverter.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/interfaces/IMultiAssetDeposit.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/introspection/IERC165.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/interfaces/IStrategy.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/libraries/PriceRateLimiter.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/shards/Shard.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/shards/Shard.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/shards/ShardBaseUpgradeable.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/shards/ShardBaseUpgradeable.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/shards/ShardBaseUpgradeable.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/utils/Address.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/validators/MerkleAllowlistValidator.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/validators/MerkleAllowlistValidator.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/access/Ownable2Step.sol"
+      }
+    ]
+  },
+  "build_metadata_hints": {
+    "by_file": {
+      "hardhat.config.ts": {
+        "raw": "0.8.24",
+        "version": "0.8.24"
+      }
+    },
+    "conflicting": false,
+    "primary": "0.8.24"
+  },
+  "compiler": {
+    "bundled_version": "0.8.28",
+    "engine": "solc-js (npm)",
+    "runs": [
+      {
+        "attempted_versions": [],
+        "error_count": 1,
+        "files": [
+          "contracts/LBTC/AssetRouter.sol",
+          "contracts/LBTC/BaseLBTC.sol",
+          "contracts/LBTC/BridgeTokenAdapter.sol",
+          "contracts/LBTC/NativeLBTC.sol",
+          "contracts/LBTC/StakedLBTC.sol",
+          "contracts/LBTC/StakedLBTCOracle.sol",
+          "contracts/LBTC/interfaces/AggregatorV3Interface.sol",
+          "contracts/LBTC/interfaces/IAssetOperation.sol",
+          "contracts/LBTC/interfaces/IAssetRouter.sol",
+          "contracts/LBTC/interfaces/IBaseLBTC.sol",
+          "contracts/LBTC/interfaces/INativeLBTC.sol",
+          "contracts/LBTC/interfaces/IOracle.sol",
+          "contracts/LBTC/interfaces/IStakedLBTC.sol",
+          "contracts/LBTC/libraries/Assert.sol",
+          "contracts/LBTC/libraries/Assets.sol",
+          "contracts/LBTC/libraries/Validation.sol",
+          "contracts/bascule/Bascule.sol",
+          "contracts/bascule/BasculeV2.sol",
+          "contracts/bascule/BasculeV3.sol",
+          "contracts/bascule/GMPBasculeV1.sol",
+          "contracts/bascule/GMPBasculeV2.sol",
+          "contracts/bascule/interfaces/IBascule.sol",
+          "contracts/bascule/interfaces/IGMPBascule.sol",
+          "contracts/bridge/Bridge.sol",
+          "contracts/bridge/BridgeV2.sol",
+          "contracts/bridge/IBridge.sol",
+          "contracts/bridge/IBridgeV2.sol",
+          "contracts/bridge/adapters/AbstractAdapter.sol",
+          "contracts/bridge/adapters/CLAdapter.sol",
+          "contracts/bridge/adapters/IAdapter.sol",
+          "contracts/bridge/adapters/TokenPool.sol",
+          "contracts/bridge/oft/EfficientRateLimitedOFTAdapter.sol",
+          "contracts/bridge/oft/EfficientRateLimiter.sol",
+          "contracts/bridge/oft/LBTCBurnMintOFTAdapter.sol",
+          "contracts/bridge/oft/LBTCOFTAdapter.sol",
+          "contracts/bridge/providers/BridgeTokenPool.sol",
+          "contracts/bridge/providers/LombardTokenPoolV2.sol",
+          "contracts/consortium/Consortium.sol",
+          "contracts/consortium/INotaryConsortium.sol",
+          "contracts/fbtc/PartnerVault.sol",
+          "contracts/gmp/IHandler.sol",
+          "contracts/gmp/IMailbox.sol",
+          "contracts/gmp/Mailbox.sol",
+          "contracts/gmp/libs/GMPUtils.sol",
+          "contracts/gmp/libs/MessagePath.sol",
+          "contracts/ibc/IBCVoucher.sol",
+          "contracts/ibc/IIBCVoucher.sol",
+          "contracts/interfaces/IBridgeToken.sol",
+          "contracts/interfaces/IConsortiumConsumer.sol",
+          "contracts/interfaces/IERC20MintableBurnable.sol",
+          "contracts/libs/Actions.sol",
+          "contracts/libs/BitcoinUtils.sol",
+          "contracts/libs/EIP1271SignatureUtils.sol",
+          "contracts/libs/FeeUtils.sol",
+          "contracts/libs/LChainId.sol",
+          "contracts/libs/RateLimits.sol",
+          "contracts/libs/RateLimitsV2.sol",
+          "contracts/mock/BridgeTokenMock.sol",
+          "contracts/mock/ChainlinkFeedMock.sol",
+          "contracts/mock/ConsortiumMock.sol",
+          "contracts/mock/GMPHandlerMock.sol",
+          "contracts/mock/LockedFBTCMock.sol",
+          "contracts/mock/MailboxMock.sol",
+          "contracts/mock/RatioFeedMock.sol",
+          "contracts/mock/SanctionListMock.sol",
+          "contracts/mock/ShardStrategyMocks.sol",
+          "contracts/mock/StakedLBTCMock.sol",
+          "contracts/pmm/BTCB/BTCB.sol",
+          "contracts/pmm/CBBTC.sol",
+          "contracts/stakeAndBake/StakeAndBake.sol",
+          "contracts/stakeAndBake/StakeAndBakeNativeToken.sol",
+          "contracts/stakeAndBake/depositor/IDepositor.sol",
+          "contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol",
+          "contracts/stakeAndBake/depositor/strategy/MultiAssetDepositStrategyDepositor.sol",
+          "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+          "contracts/stakeAndBake/depositor/veda/ITeller.sol",
+          "contracts/stakeAndBake/depositor/veda/TellerWithMultiAssetSupportDepositor.sol",
+          "contracts/strategy/AsyncRedemptionUpgradeable.sol",
+          "contracts/strategy/BlocklistOracle.sol",
+          "contracts/strategy/FeeManagerUpgradeable.sol",
+          "contracts/strategy/MAWARStrategyMigrated.sol",
+          "contracts/strategy/MultiAssetDepositUpgradeable.sol",
+          "contracts/strategy/MultiAssetWithAsyncRedemptionStrategy.sol",
+          "contracts/strategy/ShareToken.sol",
+          "contracts/strategy/StrategyBaseUpgradeable.sol",
+          "contracts/strategy/converters/ChainlinkCompositeConverter.sol",
+          "contracts/strategy/converters/ChainlinkConverter.sol",
+          "contracts/strategy/converters/DirectConverter.sol",
+          "contracts/strategy/interfaces/IAssetConverter.sol",
+          "contracts/strategy/interfaces/IAsyncRedemption.sol",
+          "contracts/strategy/interfaces/IBlocklistOracle.sol",
+          "contracts/strategy/interfaces/IFeeManager.sol",
+          "contracts/strategy/interfaces/IMerkleCallAllowlist.sol",
+          "contracts/strategy/interfaces/IMultiAssetDeposit.sol",
+          "contracts/strategy/interfaces/ISanctionList.sol",
+          "contracts/strategy/interfaces/IShard.sol",
+          "contracts/strategy/interfaces/IShardExecValidator.sol",
+          "contracts/strategy/interfaces/IStrategy.sol",
+          "contracts/strategy/libraries/PriceRateLimiter.sol",
+          "contracts/strategy/shards/RemoteShard.sol",
+          "contracts/strategy/shards/Shard.sol",
+          "contracts/strategy/shards/ShardBaseUpgradeable.sol",
+          "contracts/strategy/validators/MerkleAllowlistValidator.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": null,
+        "ok": false,
+        "reason": "",
+        "requested_version": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+        "resolution_method": "missing_import",
+        "resolved_version": null,
+        "used_fallback": false,
+        "version_verified": false
+      },
+      {
+        "attempted_versions": [],
+        "error_count": 0,
+        "files": [
+          "contracts/LBTC/libraries/Redeem.sol",
+          "contracts/consortium/ILombardTimelockController.sol",
+          "contracts/interfaces/IEfficientRateLimiterV1.sol",
+          "contracts/interfaces/IProxyAdmin.sol",
+          "contracts/mock/MailboxTreasuryMock.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": "0.8.24",
+        "ok": true,
+        "reason": "",
+        "requested_version": "0.8.24",
+        "resolution_method": "cache_compatible",
+        "resolved_version": "0.8.24",
+        "used_fallback": true,
+        "version_verified": true
+      },
+      {
+        "attempted_versions": [],
+        "error_count": 1,
+        "files": [
+          "contracts/PoR/IPoR.sol",
+          "contracts/PoR/PoR.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": null,
+        "ok": false,
+        "reason": "",
+        "requested_version": "0.8.24",
+        "resolution_method": "missing_import",
+        "resolved_version": null,
+        "used_fallback": false,
+        "version_verified": false
+      },
+      {
+        "attempted_versions": [],
+        "error_count": 1,
+        "files": [
+          "contracts/bridge/interfaces/LegacyTokenPoolV2.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": null,
+        "ok": false,
+        "reason": "",
+        "requested_version": "0.8.24",
+        "resolution_method": "missing_import",
+        "resolved_version": null,
+        "used_fallback": false,
+        "version_verified": false
+      },
+      {
+        "attempted_versions": [],
+        "error_count": 1,
+        "files": [
+          "contracts/consortium/DepositNotarizationBlacklist.sol",
+          "contracts/consortium/IDepositNotarizationBlacklist.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": null,
+        "ok": false,
+        "reason": "",
+        "requested_version": "0.8.24",
+        "resolution_method": "missing_import",
+        "resolved_version": null,
+        "used_fallback": false,
+        "version_verified": false
+      },
+      {
+        "attempted_versions": [],
+        "error_count": 1,
+        "files": [
+          "contracts/consortium/LombardTimeLock.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": null,
+        "ok": false,
+        "reason": "",
+        "requested_version": "0.8.24",
+        "resolution_method": "missing_import",
+        "resolved_version": null,
+        "used_fallback": false,
+        "version_verified": false
+      },
+      {
+        "attempted_versions": [],
+        "error_count": 1,
+        "files": [
+          "contracts/consortium/test/VerifySignatureTest.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": null,
+        "ok": false,
+        "reason": "",
+        "requested_version": "^0.8.19",
+        "resolution_method": "missing_import",
+        "resolved_version": null,
+        "used_fallback": false,
+        "version_verified": false
+      },
+      {
+        "attempted_versions": [],
+        "error_count": 1,
+        "files": [
+          "contracts/factory/ProxyFactory.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": null,
+        "ok": false,
+        "reason": "",
+        "requested_version": "0.8.24",
+        "resolution_method": "missing_import",
+        "resolved_version": null,
+        "used_fallback": false,
+        "version_verified": false
+      },
+      {
+        "attempted_versions": [],
+        "error_count": 1,
+        "files": [
+          "contracts/mock/Auth.sol",
+          "contracts/mock/BoringVault.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": null,
+        "ok": false,
+        "reason": "",
+        "requested_version": ">=0.8.0 AND ^0.8.21",
+        "resolution_method": "missing_import",
+        "resolved_version": null,
+        "used_fallback": false,
+        "version_verified": false
+      },
+      {
+        "attempted_versions": [],
+        "error_count": 1,
+        "files": [
+          "contracts/mock/BTCBMock.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": null,
+        "ok": false,
+        "reason": "",
+        "requested_version": "0.8.24",
+        "resolution_method": "missing_import",
+        "resolved_version": null,
+        "used_fallback": false,
+        "version_verified": false
+      },
+      {
+        "attempted_versions": [],
+        "error_count": 1,
+        "files": [
+          "contracts/mock/CCIPMocks.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": null,
+        "ok": false,
+        "reason": "",
+        "requested_version": "^0.8.4",
+        "resolution_method": "missing_import",
+        "resolved_version": null,
+        "used_fallback": false,
+        "version_verified": false
+      },
+      {
+        "attempted_versions": [],
+        "error_count": 1,
+        "files": [
+          "contracts/mock/CCIPRMNMock.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": null,
+        "ok": false,
+        "reason": "",
+        "requested_version": "0.8.24",
+        "resolution_method": "missing_import",
+        "resolved_version": null,
+        "used_fallback": false,
+        "version_verified": false
+      },
+      {
+        "attempted_versions": [],
+        "error_count": 1,
+        "files": [
+          "contracts/mock/ERC4626Mock.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": null,
+        "ok": false,
+        "reason": "",
+        "requested_version": "0.8.24",
+        "resolution_method": "missing_import",
+        "resolved_version": null,
+        "used_fallback": false,
+        "version_verified": false
+      },
+      {
+        "attempted_versions": [],
+        "error_count": 0,
+        "files": [
+          "contracts/mock/IRateProvider.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": "0.8.28",
+        "ok": true,
+        "reason": "",
+        "requested_version": "^0.8.0",
+        "resolution_method": "bundled_compatible",
+        "resolved_version": "0.8.28",
+        "used_fallback": false,
+        "version_verified": true
+      },
+      {
+        "attempted_versions": [],
+        "error_count": 1,
+        "files": [
+          "contracts/mock/LZEndpointMock.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": null,
+        "ok": false,
+        "reason": "",
+        "requested_version": "0.8.24",
+        "resolution_method": "missing_import",
+        "resolved_version": null,
+        "used_fallback": false,
+        "version_verified": false
+      },
+      {
+        "attempted_versions": [],
+        "error_count": 1,
+        "files": [
+          "contracts/mock/ProxyMock.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": null,
+        "ok": false,
+        "reason": "",
+        "requested_version": "0.8.24",
+        "resolution_method": "missing_import",
+        "resolved_version": null,
+        "used_fallback": false,
+        "version_verified": false
+      },
+      {
+        "attempted_versions": [],
+        "error_count": 1,
+        "files": [
+          "contracts/mock/TellerWithMultiAssetSupportMock.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": null,
+        "ok": false,
+        "reason": "",
+        "requested_version": "0.8.24",
+        "resolution_method": "missing_import",
+        "resolved_version": null,
+        "used_fallback": false,
+        "version_verified": false
+      },
+      {
+        "attempted_versions": [],
+        "error_count": 1,
+        "files": [
+          "contracts/mock/TokenMock.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": null,
+        "ok": false,
+        "reason": "",
+        "requested_version": "0.8.24",
+        "resolution_method": "missing_import",
+        "resolved_version": null,
+        "used_fallback": false,
+        "version_verified": false
+      },
+      {
+        "attempted_versions": [],
+        "error_count": 1,
+        "files": [
+          "contracts/mock/WBTCMock.sol"
+        ],
+        "hint": "0.8.24",
+        "invoked_version": null,
+        "ok": false,
+        "reason": "",
+        "requested_version": "0.8.24",
+        "resolution_method": "missing_import",
+        "resolved_version": null,
+        "used_fallback": false,
+        "version_verified": false
+      }
+    ]
+  },
+  "coverage": {
+    "ast_coverage": {
+      "coverage_ratio": 0.0469,
+      "files_with_ast": 6
+    },
+    "call_graph_coverage": {
+      "coverage_ratio": 1.0,
+      "resolved_edges": 1,
+      "total_candidates": 1
+    },
+    "compile_coverage": {
+      "contracts_modeled": 7,
+      "coverage_ratio": 0.0469
+    },
+    "contract_coverage": {
+      "contracts_modeled": 7,
+      "coverage_ratio": 0.0469
+    },
+    "coverage_percent": 4.7,
+    "dataflow_coverage": {
+      "coverage_ratio": 0.7857,
+      "resolved_paths": 11,
+      "total_candidates": 14
+    },
+    "dependency_coverage": {
+      "coverage_ratio": 0.0,
+      "resolved": 0,
+      "total": 229
+    },
+    "files_discovered": 128,
+    "files_failed": 122,
+    "files_partial": 0,
+    "files_with_ast": 6,
+    "function_coverage": {
+      "coverage_ratio": 1.0,
+      "functions_modeled": 26
+    },
+    "partial_source_coverage": true,
+    "proxy_coverage": {
+      "coverage_ratio": 1.0,
+      "delegate_edges": 0,
+      "delegatecall_facts": 0
+    },
+    "source_coverage": 0.0469,
+    "storage_coverage": {
+      "coverage_ratio": 0.0469,
+      "state_variables_modeled": 3
+    }
+  },
+  "dependency_files_added": [],
+  "errors": [
+    {
+      "message": "unresolved import(s) block compilation of this unit: contracts/LBTC/AssetRouter.sol:4 imports '@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol' (not found in the analyzed source set); contracts/LBTC/AssetRouter.sol:5 imports '@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol' (not found in the analyzed source set); contracts/LBTC/AssetRouter.sol:6 imports '@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol' (not found in the analyzed source set); contracts/LBTC/AssetRouter.sol:7 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/LBTC/BaseLBTC.sol:4 imports '@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol' (not found in the analyzed source set); contracts/LBTC/BaseLBTC.sol:5 imports '@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol' (not found in the analyzed source set); contracts/LBTC/BaseLBTC.sol:6 imports '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol' (not found in the analyzed source set); contracts/LBTC/BaseLBTC.sol:7 imports '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PermitUpgradeable.sol' (not found in the analyzed source set); contracts/LBTC/BaseLBTC.sol:8 imports '@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol' (not found in the analyzed source set); contracts/LBTC/BridgeTokenAdapter.sol:4 imports '@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol' (not found in the analyzed source set); contracts/LBTC/BridgeTokenAdapter.sol:13 imports '@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol' (not found in the analyzed source set); contracts/LBTC/BridgeTokenAdapter.sol:14 imports '@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol' (not found in the analyzed source set); contracts/LBTC/BridgeTokenAdapter.sol:15 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/LBTC/NativeLBTC.sol:4 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/LBTC/StakedLBTCOracle.sol:4 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/LBTC/StakedLBTCOracle.sol:5 imports '@openzeppelin/contracts-upgradeable/access/Ownable2StepUpgradeable.sol' (not found in the analyzed source set); contracts/LBTC/StakedLBTCOracle.sol:6 imports '@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol' (not found in the analyzed source set); contracts/LBTC/libraries/Validation.sol:4 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/bascule/Bascule.sol:5 imports '@openzeppelin/contracts/utils/Pausable.sol' (not found in the analyzed source set); contracts/bascule/Bascule.sol:6 imports '@openzeppelin/contracts/access/extensions/AccessControlDefaultAdminRules.sol' (not found in the analyzed source set); contracts/bascule/BasculeV2.sol:5 imports '@openzeppelin/contracts/utils/Pausable.sol' (not found in the analyzed source set); contracts/bascule/BasculeV2.sol:6 imports '@openzeppelin/contracts/access/AccessControl.sol' (not found in the analyzed source set); contracts/bascule/BasculeV2.sol:7 imports '@openzeppelin/contracts/access/extensions/AccessControlDefaultAdminRules.sol' (not found in the analyzed source set); contracts/bascule/BasculeV3.sol:5 imports '@openzeppelin/contracts/utils/Pausable.sol' (not found in the analyzed source set); contracts/bascule/BasculeV3.sol:6 imports '@openzeppelin/contracts/access/AccessControl.sol' (not found in the analyzed source set); contracts/bascule/BasculeV3.sol:7 imports '@openzeppelin/contracts/access/extensions/AccessControlDefaultAdminRules.sol' (not found in the analyzed source set); contracts/bascule/BasculeV3.sol:9 imports '@openzeppelin/contracts/utils/cryptography/ECDSA.sol' (not found in the analyzed source set); contracts/bascule/GMPBasculeV1.sol:5 imports '@openzeppelin/contracts/utils/Pausable.sol' (not found in the analyzed source set); contracts/bascule/GMPBasculeV1.sol:6 imports '@openzeppelin/contracts/access/AccessControl.sol' (not found in the analyzed source set); contracts/bascule/GMPBasculeV1.sol:7 imports '@openzeppelin/contracts/access/extensions/AccessControlDefaultAdminRules.sol' (not found in the analyzed source set); contracts/bascule/GMPBasculeV1.sol:8 imports '@openzeppelin/contracts/utils/cryptography/ECDSA.sol' (not found in the analyzed source set); contracts/bascule/GMPBasculeV2.sol:5 imports '@openzeppelin/contracts/utils/Pausable.sol' (not found in the analyzed source set); contracts/bascule/GMPBasculeV2.sol:6 imports '@openzeppelin/contracts/access/AccessControl.sol' (not found in the analyzed source set); contracts/bascule/GMPBasculeV2.sol:7 imports '@openzeppelin/contracts/access/extensions/AccessControlDefaultAdminRules.sol' (not found in the analyzed source set); contracts/bascule/GMPBasculeV2.sol:8 imports '@openzeppelin/contracts/utils/cryptography/ECDSA.sol' (not found in the analyzed source set); contracts/bridge/Bridge.sol:4 imports '@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol' (not found in the analyzed source set); contracts/bridge/Bridge.sol:5 imports '@openzeppelin/contracts-upgradeable/access/Ownable2StepUpgradeable.sol' (not found in the analyzed source set); contracts/bridge/Bridge.sol:6 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/bridge/Bridge.sol:7 imports '@openzeppelin/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/bridge/Bridge.sol:8 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/bridge/BridgeV2.sol:4 imports '@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol' (not found in the analyzed source set); contracts/bridge/BridgeV2.sol:5 imports '@openzeppelin/contracts-upgradeable/access/Ownable2StepUpgradeable.sol' (not found in the analyzed source set); contracts/bridge/BridgeV2.sol:6 imports '@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol' (not found in the analyzed source set); contracts/bridge/BridgeV2.sol:7 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/bridge/BridgeV2.sol:8 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/bridge/adapters/AbstractAdapter.sol:5 imports '@openzeppelin/contracts/utils/Context.sol' (not found in the analyzed source set); contracts/bridge/adapters/CLAdapter.sol:4 imports '@chainlink/contracts-ccip/contracts/interfaces/IRouterClient.sol' (not found in the analyzed source set); contracts/bridge/adapters/CLAdapter.sol:5 imports '@chainlink/contracts-ccip/contracts/libraries/Client.sol' (not found in the analyzed source set); contracts/bridge/adapters/CLAdapter.sol:8 imports '@chainlink/contracts-ccip/contracts/libraries/Pool.sol' (not found in the analyzed source set); contracts/bridge/adapters/CLAdapter.sol:10 imports '@openzeppelin/contracts/access/Ownable.sol' (not found in the analyzed source set); contracts/bridge/adapters/CLAdapter.sol:11 imports '@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/bridge/adapters/CLAdapter.sol:12 imports '@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/bridge/adapters/CLAdapter.sol:13 imports '@openzeppelin/contracts/utils/ReentrancyGuard.sol' (not found in the analyzed source set); contracts/bridge/adapters/TokenPool.sol:4 imports '@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/bridge/adapters/TokenPool.sol:5 imports '@chainlink/contracts-ccip/contracts/interfaces/IRouterClient.sol' (not found in the analyzed source set); contracts/bridge/adapters/TokenPool.sol:6 imports '@chainlink/contracts-ccip/contracts/libraries/Client.sol' (not found in the analyzed source set); contracts/bridge/adapters/TokenPool.sol:7 imports '@chainlink/contracts-ccip/contracts/libraries/Pool.sol' (not found in the analyzed source set); contracts/bridge/adapters/TokenPool.sol:8 imports '@chainlink/contracts-ccip/contracts/pools/TokenPool.sol' (not found in the analyzed source set); contracts/bridge/oft/EfficientRateLimitedOFTAdapter.sol:4 imports '@layerzerolabs/oft-evm/contracts/OFTAdapter.sol' (not found in the analyzed source set); contracts/bridge/oft/LBTCBurnMintOFTAdapter.sol:4 imports '@layerzerolabs/oft-evm/contracts/OFTAdapter.sol' (not found in the analyzed source set); contracts/bridge/oft/LBTCBurnMintOFTAdapter.sol:5 imports '@openzeppelin/contracts/access/Ownable.sol' (not found in the analyzed source set); contracts/bridge/oft/LBTCOFTAdapter.sol:4 imports '@layerzerolabs/oft-evm/contracts/OFTAdapter.sol' (not found in the analyzed source set); contracts/bridge/oft/LBTCOFTAdapter.sol:5 imports '@openzeppelin/contracts/access/Ownable.sol' (not found in the analyzed source set); contracts/bridge/providers/BridgeTokenPool.sol:4 imports '@chainlink/contracts-ccip/contracts/libraries/Pool.sol' (not found in the analyzed source set); contracts/bridge/providers/BridgeTokenPool.sol:5 imports '@chainlink/contracts-ccip/contracts/pools/TokenPool.sol' (not found in the analyzed source set); contracts/bridge/providers/BridgeTokenPool.sol:7 imports '@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/extensions/IERC20Metadata.sol' (not found in the analyzed source set); contracts/bridge/providers/BridgeTokenPool.sol:8 imports '@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/bridge/providers/LombardTokenPoolV2.sol:4 imports '@chainlink/contracts/src/v0.8/shared/interfaces/ITypeAndVersion.sol' (not found in the analyzed source set); contracts/bridge/providers/LombardTokenPoolV2.sol:6 imports '@chainlink/contracts-ccip/contracts/libraries/Pool.sol' (not found in the analyzed source set); contracts/bridge/providers/LombardTokenPoolV2.sol:7 imports '@chainlink/contracts-ccip/contracts/pools/TokenPool.sol' (not found in the analyzed source set); contracts/bridge/providers/LombardTokenPoolV2.sol:9 imports '@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/extensions/IERC20Metadata.sol' (not found in the analyzed source set); contracts/bridge/providers/LombardTokenPoolV2.sol:10 imports '@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/consortium/Consortium.sol:4 imports '@openzeppelin/contracts-upgradeable/access/Ownable2StepUpgradeable.sol' (not found in the analyzed source set); contracts/consortium/Consortium.sol:5 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/consortium/Consortium.sol:6 imports '@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol' (not found in the analyzed source set); contracts/consortium/Consortium.sol:9 imports '@openzeppelin/contracts/utils/cryptography/ECDSA.sol' (not found in the analyzed source set); contracts/consortium/INotaryConsortium.sol:4 imports '@openzeppelin/contracts/utils/cryptography/ECDSA.sol' (not found in the analyzed source set); contracts/fbtc/PartnerVault.sol:5 imports '@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol' (not found in the analyzed source set); contracts/fbtc/PartnerVault.sol:6 imports '@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol' (not found in the analyzed source set); contracts/fbtc/PartnerVault.sol:7 imports '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol' (not found in the analyzed source set); contracts/fbtc/PartnerVault.sol:8 imports '@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol' (not found in the analyzed source set); contracts/fbtc/PartnerVault.sol:9 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/gmp/IHandler.sol:4 imports '@openzeppelin/contracts/utils/introspection/IERC165.sol' (not found in the analyzed source set); contracts/gmp/Mailbox.sol:4 imports '@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol' (not found in the analyzed source set); contracts/gmp/Mailbox.sol:5 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/gmp/Mailbox.sol:6 imports '@openzeppelin/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/gmp/Mailbox.sol:7 imports '@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol' (not found in the analyzed source set); contracts/gmp/Mailbox.sol:8 imports '@openzeppelin/contracts/utils/introspection/ERC165Checker.sol' (not found in the analyzed source set); contracts/gmp/Mailbox.sol:9 imports '@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol' (not found in the analyzed source set); contracts/ibc/IBCVoucher.sol:4 imports '@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol' (not found in the analyzed source set); contracts/ibc/IBCVoucher.sol:5 imports '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol' (not found in the analyzed source set); contracts/ibc/IBCVoucher.sol:6 imports '@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol' (not found in the analyzed source set); contracts/ibc/IBCVoucher.sol:7 imports '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol' (not found in the analyzed source set); contracts/ibc/IBCVoucher.sol:8 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/interfaces/IBridgeToken.sol:4 imports '@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol' (not found in the analyzed source set); contracts/interfaces/IERC20MintableBurnable.sol:4 imports '@openzeppelin/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/libs/BitcoinUtils.sol:4 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/libs/EIP1271SignatureUtils.sol:4 imports '@openzeppelin/contracts/interfaces/IERC1271.sol' (not found in the analyzed source set); contracts/libs/EIP1271SignatureUtils.sol:5 imports '@openzeppelin/contracts/utils/cryptography/ECDSA.sol' (not found in the analyzed source set); contracts/libs/FeeUtils.sol:4 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/mock/BridgeTokenMock.sol:4 imports '@openzeppelin/contracts/utils/Context.sol' (not found in the analyzed source set); contracts/mock/BridgeTokenMock.sol:5 imports '@openzeppelin/contracts/utils/Address.sol' (not found in the analyzed source set); contracts/mock/BridgeTokenMock.sol:6 imports '@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol' (not found in the analyzed source set); contracts/mock/BridgeTokenMock.sol:7 imports '@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol' (not found in the analyzed source set); contracts/mock/BridgeTokenMock.sol:8 imports '@openzeppelin/contracts/token/ERC20/ERC20.sol' (not found in the analyzed source set); contracts/mock/LockedFBTCMock.sol:4 imports '@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol' (not found in the analyzed source set); contracts/mock/RatioFeedMock.sol:4 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/mock/ShardStrategyMocks.sol:4 imports '@openzeppelin/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/mock/ShardStrategyMocks.sol:5 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/pmm/BTCB/BTCB.sol:4 imports '@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol' (not found in the analyzed source set); contracts/pmm/BTCB/BTCB.sol:5 imports '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol' (not found in the analyzed source set); contracts/pmm/BTCB/BTCB.sol:6 imports '@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol' (not found in the analyzed source set); contracts/pmm/BTCB/BTCB.sol:7 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/pmm/CBBTC.sol:4 imports '@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol' (not found in the analyzed source set); contracts/pmm/CBBTC.sol:5 imports '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol' (not found in the analyzed source set); contracts/pmm/CBBTC.sol:6 imports '@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol' (not found in the analyzed source set); contracts/pmm/CBBTC.sol:7 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/stakeAndBake/StakeAndBake.sol:5 imports '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol' (not found in the analyzed source set); contracts/stakeAndBake/StakeAndBake.sol:6 imports '@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol' (not found in the analyzed source set); contracts/stakeAndBake/StakeAndBake.sol:7 imports '@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol' (not found in the analyzed source set); contracts/stakeAndBake/StakeAndBake.sol:9 imports '@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol' (not found in the analyzed source set); contracts/stakeAndBake/StakeAndBake.sol:10 imports '@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol' (not found in the analyzed source set); contracts/stakeAndBake/StakeAndBake.sol:11 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/stakeAndBake/StakeAndBakeNativeToken.sol:5 imports '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol' (not found in the analyzed source set); contracts/stakeAndBake/StakeAndBakeNativeToken.sol:6 imports '@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol' (not found in the analyzed source set); contracts/stakeAndBake/StakeAndBakeNativeToken.sol:7 imports '@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol' (not found in the analyzed source set); contracts/stakeAndBake/StakeAndBakeNativeToken.sol:9 imports '@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol' (not found in the analyzed source set); contracts/stakeAndBake/StakeAndBakeNativeToken.sol:10 imports '@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol' (not found in the analyzed source set); contracts/stakeAndBake/StakeAndBakeNativeToken.sol:11 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol:4 imports '@openzeppelin/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol:5 imports '@openzeppelin/contracts/interfaces/IERC4626.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol:6 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol:8 imports '@openzeppelin/contracts/utils/ReentrancyGuard.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/strategy/MultiAssetDepositStrategyDepositor.sol:4 imports '@openzeppelin/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/strategy/MultiAssetDepositStrategyDepositor.sol:5 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/strategy/MultiAssetDepositStrategyDepositor.sol:7 imports '@openzeppelin/contracts/utils/ReentrancyGuard.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol:4 imports '@openzeppelin/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol:5 imports '@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol:6 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol:7 imports '@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol:8 imports '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol:9 imports '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PermitUpgradeable.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol:10 imports '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC4626Upgradeable.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol:11 imports '@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol:13 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/veda/ITeller.sol:4 imports '@openzeppelin/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/veda/TellerWithMultiAssetSupportDepositor.sol:4 imports '@openzeppelin/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/veda/TellerWithMultiAssetSupportDepositor.sol:5 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/stakeAndBake/depositor/veda/TellerWithMultiAssetSupportDepositor.sol:7 imports '@openzeppelin/contracts/utils/ReentrancyGuard.sol' (not found in the analyzed source set); contracts/strategy/AsyncRedemptionUpgradeable.sol:4 imports '@openzeppelin/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/strategy/AsyncRedemptionUpgradeable.sol:5 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/strategy/AsyncRedemptionUpgradeable.sol:6 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/strategy/BlocklistOracle.sol:4 imports '@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol' (not found in the analyzed source set); contracts/strategy/BlocklistOracle.sol:5 imports '@openzeppelin/contracts/utils/structs/EnumerableSet.sol' (not found in the analyzed source set); contracts/strategy/FeeManagerUpgradeable.sol:4 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/strategy/MAWARStrategyMigrated.sol:4 imports '@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol' (not found in the analyzed source set); contracts/strategy/MAWARStrategyMigrated.sol:5 imports '@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol' (not found in the analyzed source set); contracts/strategy/MAWARStrategyMigrated.sol:6 imports '@openzeppelin/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/strategy/MAWARStrategyMigrated.sol:7 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/strategy/MAWARStrategyMigrated.sol:8 imports '@openzeppelin/contracts/utils/structs/EnumerableSet.sol' (not found in the analyzed source set); contracts/strategy/MAWARStrategyMigrated.sol:9 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/strategy/MAWARStrategyMigrated.sol:10 imports '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol' (not found in the analyzed source set); contracts/strategy/MAWARStrategyMigrated.sol:11 imports '@openzeppelin/contracts/interfaces/IERC20Metadata.sol' (not found in the analyzed source set); contracts/strategy/MAWARStrategyMigrated.sol:12 imports '@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol' (not found in the analyzed source set); contracts/strategy/MultiAssetDepositUpgradeable.sol:4 imports '@openzeppelin/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/strategy/MultiAssetDepositUpgradeable.sol:5 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/strategy/MultiAssetDepositUpgradeable.sol:6 imports '@openzeppelin/contracts/utils/structs/EnumerableSet.sol' (not found in the analyzed source set); contracts/strategy/MultiAssetDepositUpgradeable.sol:7 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/strategy/MultiAssetWithAsyncRedemptionStrategy.sol:4 imports '@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol' (not found in the analyzed source set); contracts/strategy/MultiAssetWithAsyncRedemptionStrategy.sol:5 imports '@openzeppelin/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/strategy/MultiAssetWithAsyncRedemptionStrategy.sol:6 imports '@openzeppelin/contracts/utils/introspection/IERC165.sol' (not found in the analyzed source set); contracts/strategy/StrategyBaseUpgradeable.sol:4 imports '@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol' (not found in the analyzed source set); contracts/strategy/StrategyBaseUpgradeable.sol:5 imports '@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol' (not found in the analyzed source set); contracts/strategy/StrategyBaseUpgradeable.sol:6 imports '@openzeppelin/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/strategy/StrategyBaseUpgradeable.sol:7 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/strategy/StrategyBaseUpgradeable.sol:8 imports '@openzeppelin/contracts/utils/structs/EnumerableSet.sol' (not found in the analyzed source set); contracts/strategy/StrategyBaseUpgradeable.sol:9 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/strategy/StrategyBaseUpgradeable.sol:10 imports '@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol' (not found in the analyzed source set); contracts/strategy/StrategyBaseUpgradeable.sol:11 imports '@openzeppelin/contracts/interfaces/IERC20Metadata.sol' (not found in the analyzed source set); contracts/strategy/StrategyBaseUpgradeable.sol:12 imports '@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol' (not found in the analyzed source set); contracts/strategy/converters/ChainlinkCompositeConverter.sol:4 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/strategy/converters/ChainlinkCompositeConverter.sol:6 imports '@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol' (not found in the analyzed source set); contracts/strategy/converters/ChainlinkConverter.sol:4 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/strategy/converters/ChainlinkConverter.sol:6 imports '@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol' (not found in the analyzed source set); contracts/strategy/converters/DirectConverter.sol:4 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/strategy/interfaces/IAssetConverter.sol:4 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/strategy/interfaces/IMultiAssetDeposit.sol:4 imports '@openzeppelin/contracts/utils/introspection/IERC165.sol' (not found in the analyzed source set); contracts/strategy/interfaces/IStrategy.sol:4 imports '@openzeppelin/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/strategy/libraries/PriceRateLimiter.sol:4 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set); contracts/strategy/shards/Shard.sol:4 imports '@openzeppelin/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/strategy/shards/Shard.sol:5 imports '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/strategy/shards/ShardBaseUpgradeable.sol:4 imports '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol' (not found in the analyzed source set); contracts/strategy/shards/ShardBaseUpgradeable.sol:5 imports '@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol' (not found in the analyzed source set); contracts/strategy/shards/ShardBaseUpgradeable.sol:6 imports '@openzeppelin/contracts/utils/Address.sol' (not found in the analyzed source set); contracts/strategy/validators/MerkleAllowlistValidator.sol:4 imports '@openzeppelin/contracts/utils/cryptography/MerkleProof.sol' (not found in the analyzed source set); contracts/strategy/validators/MerkleAllowlistValidator.sol:5 imports '@openzeppelin/contracts/access/Ownable2Step.sol' (not found in the analyzed source set)",
+      "severity": "error"
+    },
+    {
+      "message": "unresolved import(s) block compilation of this unit: contracts/PoR/PoR.sol:4 imports '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol' (not found in the analyzed source set)",
+      "severity": "error"
+    },
+    {
+      "message": "unresolved import(s) block compilation of this unit: contracts/bridge/interfaces/LegacyTokenPoolV2.sol:4 imports '@chainlink/contracts-ccip/contracts/pools/TokenPool.sol' (not found in the analyzed source set)",
+      "severity": "error"
+    },
+    {
+      "message": "unresolved import(s) block compilation of this unit: contracts/consortium/DepositNotarizationBlacklist.sol:4 imports '@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol' (not found in the analyzed source set)",
+      "severity": "error"
+    },
+    {
+      "message": "unresolved import(s) block compilation of this unit: contracts/consortium/LombardTimeLock.sol:4 imports '@openzeppelin/contracts/governance/TimelockController.sol' (not found in the analyzed source set)",
+      "severity": "error"
+    },
+    {
+      "message": "unresolved import(s) block compilation of this unit: contracts/consortium/test/VerifySignatureTest.sol:4 imports '@openzeppelin/contracts/utils/cryptography/ECDSA.sol' (not found in the analyzed source set)",
+      "severity": "error"
+    },
+    {
+      "message": "unresolved import(s) block compilation of this unit: contracts/factory/ProxyFactory.sol:4 imports 'solmate/src/utils/CREATE3.sol' (not found in the analyzed source set); contracts/factory/ProxyFactory.sol:5 imports '@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol' (not found in the analyzed source set); contracts/factory/ProxyFactory.sol:6 imports '@openzeppelin/contracts/access/AccessControl.sol' (not found in the analyzed source set)",
+      "severity": "error"
+    },
+    {
+      "message": "unresolved import(s) block compilation of this unit: contracts/mock/BoringVault.sol:4 imports '@openzeppelin/contracts/utils/Address.sol' (not found in the analyzed source set); contracts/mock/BoringVault.sol:5 imports '@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol' (not found in the analyzed source set); contracts/mock/BoringVault.sol:6 imports '@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol' (not found in the analyzed source set); contracts/mock/BoringVault.sol:7 imports '@openzeppelin/contracts/token/ERC20/ERC20.sol' (not found in the analyzed source set)",
+      "severity": "error"
+    },
+    {
+      "message": "unresolved import(s) block compilation of this unit: contracts/mock/BTCBMock.sol:4 imports '@openzeppelin/contracts/utils/Context.sol' (not found in the analyzed source set); contracts/mock/BTCBMock.sol:5 imports '@openzeppelin/contracts/utils/math/Math.sol' (not found in the analyzed source set)",
+      "severity": "error"
+    },
+    {
+      "message": "unresolved import(s) block compilation of this unit: contracts/mock/CCIPMocks.sol:4 imports '@chainlink/contracts-ccip/contracts/interfaces/IAny2EVMMessageReceiver.sol' (not found in the analyzed source set); contracts/mock/CCIPMocks.sol:5 imports '@chainlink/contracts-ccip/contracts/interfaces/IRouter.sol' (not found in the analyzed source set); contracts/mock/CCIPMocks.sol:6 imports '@chainlink/contracts-ccip/contracts/interfaces/IRouterClient.sol' (not found in the analyzed source set); contracts/mock/CCIPMocks.sol:8 imports '@chainlink/contracts-ccip/contracts/libraries/Client.sol' (not found in the analyzed source set); contracts/mock/CCIPMocks.sol:9 imports '@chainlink/contracts-ccip/contracts/libraries/Internal.sol' (not found in the analyzed source set); contracts/mock/CCIPMocks.sol:10 imports '@chainlink/contracts/src/v0.8/shared/call/CallWithExactGas.sol' (not found in the analyzed source set); contracts/mock/CCIPMocks.sol:12 imports '@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/mock/CCIPMocks.sol:13 imports '@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/utils/SafeERC20.sol' (not found in the analyzed source set); contracts/mock/CCIPMocks.sol:14 imports '@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v5.0.2/contracts/utils/introspection/ERC165Checker.sol' (not found in the analyzed source set)",
+      "severity": "error"
+    },
+    {
+      "message": "unresolved import(s) block compilation of this unit: contracts/mock/CCIPRMNMock.sol:4 imports '@chainlink/contracts-ccip/contracts/interfaces/IRMN.sol' (not found in the analyzed source set)",
+      "severity": "error"
+    },
+    {
+      "message": "unresolved import(s) block compilation of this unit: contracts/mock/ERC4626Mock.sol:4 imports '@openzeppelin/contracts/token/ERC20/extensions/ERC4626.sol' (not found in the analyzed source set); contracts/mock/ERC4626Mock.sol:5 imports '@openzeppelin/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set); contracts/mock/ERC4626Mock.sol:6 imports '@openzeppelin/contracts/token/ERC20/ERC20.sol' (not found in the analyzed source set)",
+      "severity": "error"
+    },
+    {
+      "message": "unresolved import(s) block compilation of this unit: contracts/mock/LZEndpointMock.sol:4 imports '@layerzerolabs/test-devtools-evm-hardhat/contracts/mocks/EndpointV2Mock.sol' (not found in the analyzed source set)",
+      "severity": "error"
+    },
+    {
+      "message": "unresolved import(s) block compilation of this unit: contracts/mock/ProxyMock.sol:4 imports '@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol' (not found in the analyzed source set)",
+      "severity": "error"
+    },
+    {
+      "message": "unresolved import(s) block compilation of this unit: contracts/mock/TellerWithMultiAssetSupportMock.sol:4 imports '@openzeppelin/contracts/token/ERC20/ERC20.sol' (not found in the analyzed source set); contracts/mock/TellerWithMultiAssetSupportMock.sol:5 imports '@openzeppelin/contracts/token/ERC20/IERC20.sol' (not found in the analyzed source set)",
+      "severity": "error"
+    },
+    {
+      "message": "unresolved import(s) block compilation of this unit: contracts/mock/TokenMock.sol:4 imports '@openzeppelin/contracts/token/ERC20/ERC20.sol' (not found in the analyzed source set)",
+      "severity": "error"
+    },
+    {
+      "message": "unresolved import(s) block compilation of this unit: contracts/mock/WBTCMock.sol:4 imports '@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol' (not found in the analyzed source set)",
+      "severity": "error"
+    }
+  ],
+  "file_diagnostics": {
+    "contracts/LBTC/AssetRouter.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/LBTC/BaseLBTC.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/LBTC/BridgeTokenAdapter.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/LBTC/NativeLBTC.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/LBTC/StakedLBTC.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/LBTC/StakedLBTCOracle.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/LBTC/interfaces/AggregatorV3Interface.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/LBTC/interfaces/IAssetOperation.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/LBTC/interfaces/IAssetRouter.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/LBTC/interfaces/IBaseLBTC.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/LBTC/interfaces/INativeLBTC.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/LBTC/interfaces/IOracle.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/LBTC/interfaces/IStakedLBTC.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/LBTC/libraries/Assert.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/LBTC/libraries/Assets.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/LBTC/libraries/Validation.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/PoR/IPoR.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 2,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/PoR/PoR.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 2,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bascule/Bascule.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bascule/BasculeV2.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bascule/BasculeV3.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bascule/GMPBasculeV1.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bascule/GMPBasculeV2.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bascule/interfaces/IBascule.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bascule/interfaces/IGMPBascule.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bridge/Bridge.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bridge/BridgeV2.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bridge/IBridge.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bridge/IBridgeV2.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bridge/adapters/AbstractAdapter.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bridge/adapters/CLAdapter.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bridge/adapters/IAdapter.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bridge/adapters/TokenPool.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bridge/interfaces/LegacyTokenPoolV2.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 1,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bridge/oft/EfficientRateLimitedOFTAdapter.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bridge/oft/EfficientRateLimiter.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bridge/oft/LBTCBurnMintOFTAdapter.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bridge/oft/LBTCOFTAdapter.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bridge/providers/BridgeTokenPool.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/bridge/providers/LombardTokenPoolV2.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/consortium/Consortium.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/consortium/DepositNotarizationBlacklist.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 2,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/consortium/IDepositNotarizationBlacklist.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 2,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/consortium/INotaryConsortium.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/consortium/LombardTimeLock.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 1,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/consortium/test/VerifySignatureTest.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 1,
+      "has_ast": false,
+      "pragma": "^0.8.19",
+      "requested_constraint": "^0.8.19",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/factory/ProxyFactory.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 1,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/fbtc/PartnerVault.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/gmp/IHandler.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/gmp/IMailbox.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/gmp/Mailbox.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/gmp/libs/GMPUtils.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/gmp/libs/MessagePath.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/ibc/IBCVoucher.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/ibc/IIBCVoucher.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/interfaces/IBridgeToken.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/interfaces/IConsortiumConsumer.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/interfaces/IERC20MintableBurnable.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/libs/Actions.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/libs/BitcoinUtils.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/libs/EIP1271SignatureUtils.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/libs/FeeUtils.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/libs/LChainId.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/libs/RateLimits.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/libs/RateLimitsV2.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/Auth.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 2,
+      "has_ast": false,
+      "pragma": ">=0.8.0",
+      "requested_constraint": ">=0.8.0 AND ^0.8.21",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/BTCBMock.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 1,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/BoringVault.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 2,
+      "has_ast": false,
+      "pragma": "^0.8.21",
+      "requested_constraint": ">=0.8.0 AND ^0.8.21",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/BridgeTokenMock.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "^0.8.0",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/CCIPMocks.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 1,
+      "has_ast": false,
+      "pragma": "^0.8.4",
+      "requested_constraint": "^0.8.4",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/CCIPRMNMock.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 1,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/ChainlinkFeedMock.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/ConsortiumMock.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/ERC4626Mock.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 1,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/GMPHandlerMock.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/LZEndpointMock.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 1,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/LockedFBTCMock.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/MailboxMock.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/ProxyMock.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 1,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/RatioFeedMock.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "^0.8.10",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/SanctionListMock.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/ShardStrategyMocks.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/StakedLBTCMock.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/TellerWithMultiAssetSupportMock.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 1,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/TokenMock.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 1,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/mock/WBTCMock.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 1,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/pmm/BTCB/BTCB.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/pmm/CBBTC.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/stakeAndBake/StakeAndBake.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/stakeAndBake/StakeAndBakeNativeToken.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/stakeAndBake/depositor/IDepositor.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/stakeAndBake/depositor/strategy/MultiAssetDepositStrategyDepositor.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/stakeAndBake/depositor/veda/ITeller.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/stakeAndBake/depositor/veda/TellerWithMultiAssetSupportDepositor.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/AsyncRedemptionUpgradeable.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/BlocklistOracle.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/FeeManagerUpgradeable.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/MAWARStrategyMigrated.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/MultiAssetDepositUpgradeable.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/MultiAssetWithAsyncRedemptionStrategy.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/ShareToken.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/StrategyBaseUpgradeable.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/converters/ChainlinkCompositeConverter.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/converters/ChainlinkConverter.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/converters/DirectConverter.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/interfaces/IAssetConverter.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/interfaces/IAsyncRedemption.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/interfaces/IBlocklistOracle.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/interfaces/IFeeManager.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/interfaces/IMerkleCallAllowlist.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/interfaces/IMultiAssetDeposit.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/interfaces/ISanctionList.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/interfaces/IShard.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/interfaces/IShardExecValidator.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/interfaces/IStrategy.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/libraries/PriceRateLimiter.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/shards/RemoteShard.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/shards/Shard.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/shards/ShardBaseUpgradeable.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    },
+    "contracts/strategy/validators/MerkleAllowlistValidator.sol": {
+      "compiler_compatible": false,
+      "failure_reason": "compiler resolution failed: missing_import",
+      "group_size": 103,
+      "has_ast": false,
+      "pragma": "0.8.24",
+      "requested_constraint": "0.8.24 AND ^0.8.0 AND ^0.8.10",
+      "resolution_method": "missing_import",
+      "resolved_compiler": null
+    }
+  },
+  "files_analyzed": [
+    "contracts/LBTC/libraries/Redeem.sol",
+    "contracts/consortium/ILombardTimelockController.sol",
+    "contracts/interfaces/IEfficientRateLimiterV1.sol",
+    "contracts/interfaces/IProxyAdmin.sol",
+    "contracts/mock/IRateProvider.sol",
+    "contracts/mock/MailboxTreasuryMock.sol"
+  ],
+  "files_failed": [
+    "contracts/LBTC/AssetRouter.sol",
+    "contracts/LBTC/BaseLBTC.sol",
+    "contracts/LBTC/BridgeTokenAdapter.sol",
+    "contracts/LBTC/NativeLBTC.sol",
+    "contracts/LBTC/StakedLBTC.sol",
+    "contracts/LBTC/StakedLBTCOracle.sol",
+    "contracts/LBTC/interfaces/AggregatorV3Interface.sol",
+    "contracts/LBTC/interfaces/IAssetOperation.sol",
+    "contracts/LBTC/interfaces/IAssetRouter.sol",
+    "contracts/LBTC/interfaces/IBaseLBTC.sol",
+    "contracts/LBTC/interfaces/INativeLBTC.sol",
+    "contracts/LBTC/interfaces/IOracle.sol",
+    "contracts/LBTC/interfaces/IStakedLBTC.sol",
+    "contracts/LBTC/libraries/Assert.sol",
+    "contracts/LBTC/libraries/Assets.sol",
+    "contracts/LBTC/libraries/Validation.sol",
+    "contracts/PoR/IPoR.sol",
+    "contracts/PoR/PoR.sol",
+    "contracts/bascule/Bascule.sol",
+    "contracts/bascule/BasculeV2.sol",
+    "contracts/bascule/BasculeV3.sol",
+    "contracts/bascule/GMPBasculeV1.sol",
+    "contracts/bascule/GMPBasculeV2.sol",
+    "contracts/bascule/interfaces/IBascule.sol",
+    "contracts/bascule/interfaces/IGMPBascule.sol",
+    "contracts/bridge/Bridge.sol",
+    "contracts/bridge/BridgeV2.sol",
+    "contracts/bridge/IBridge.sol",
+    "contracts/bridge/IBridgeV2.sol",
+    "contracts/bridge/adapters/AbstractAdapter.sol",
+    "contracts/bridge/adapters/CLAdapter.sol",
+    "contracts/bridge/adapters/IAdapter.sol",
+    "contracts/bridge/adapters/TokenPool.sol",
+    "contracts/bridge/interfaces/LegacyTokenPoolV2.sol",
+    "contracts/bridge/oft/EfficientRateLimitedOFTAdapter.sol",
+    "contracts/bridge/oft/EfficientRateLimiter.sol",
+    "contracts/bridge/oft/LBTCBurnMintOFTAdapter.sol",
+    "contracts/bridge/oft/LBTCOFTAdapter.sol",
+    "contracts/bridge/providers/BridgeTokenPool.sol",
+    "contracts/bridge/providers/LombardTokenPoolV2.sol",
+    "contracts/consortium/Consortium.sol",
+    "contracts/consortium/DepositNotarizationBlacklist.sol",
+    "contracts/consortium/IDepositNotarizationBlacklist.sol",
+    "contracts/consortium/INotaryConsortium.sol",
+    "contracts/consortium/LombardTimeLock.sol",
+    "contracts/consortium/test/VerifySignatureTest.sol",
+    "contracts/factory/ProxyFactory.sol",
+    "contracts/fbtc/PartnerVault.sol",
+    "contracts/gmp/IHandler.sol",
+    "contracts/gmp/IMailbox.sol",
+    "contracts/gmp/Mailbox.sol",
+    "contracts/gmp/libs/GMPUtils.sol",
+    "contracts/gmp/libs/MessagePath.sol",
+    "contracts/ibc/IBCVoucher.sol",
+    "contracts/ibc/IIBCVoucher.sol",
+    "contracts/interfaces/IBridgeToken.sol",
+    "contracts/interfaces/IConsortiumConsumer.sol",
+    "contracts/interfaces/IERC20MintableBurnable.sol",
+    "contracts/libs/Actions.sol",
+    "contracts/libs/BitcoinUtils.sol",
+    "contracts/libs/EIP1271SignatureUtils.sol",
+    "contracts/libs/FeeUtils.sol",
+    "contracts/libs/LChainId.sol",
+    "contracts/libs/RateLimits.sol",
+    "contracts/libs/RateLimitsV2.sol",
+    "contracts/mock/Auth.sol",
+    "contracts/mock/BTCBMock.sol",
+    "contracts/mock/BoringVault.sol",
+    "contracts/mock/BridgeTokenMock.sol",
+    "contracts/mock/CCIPMocks.sol",
+    "contracts/mock/CCIPRMNMock.sol",
+    "contracts/mock/ChainlinkFeedMock.sol",
+    "contracts/mock/ConsortiumMock.sol",
+    "contracts/mock/ERC4626Mock.sol",
+    "contracts/mock/GMPHandlerMock.sol",
+    "contracts/mock/LZEndpointMock.sol",
+    "contracts/mock/LockedFBTCMock.sol",
+    "contracts/mock/MailboxMock.sol",
+    "contracts/mock/ProxyMock.sol",
+    "contracts/mock/RatioFeedMock.sol",
+    "contracts/mock/SanctionListMock.sol",
+    "contracts/mock/ShardStrategyMocks.sol",
+    "contracts/mock/StakedLBTCMock.sol",
+    "contracts/mock/TellerWithMultiAssetSupportMock.sol",
+    "contracts/mock/TokenMock.sol",
+    "contracts/mock/WBTCMock.sol",
+    "contracts/pmm/BTCB/BTCB.sol",
+    "contracts/pmm/CBBTC.sol",
+    "contracts/stakeAndBake/StakeAndBake.sol",
+    "contracts/stakeAndBake/StakeAndBakeNativeToken.sol",
+    "contracts/stakeAndBake/depositor/IDepositor.sol",
+    "contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol",
+    "contracts/stakeAndBake/depositor/strategy/MultiAssetDepositStrategyDepositor.sol",
+    "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+    "contracts/stakeAndBake/depositor/veda/ITeller.sol",
+    "contracts/stakeAndBake/depositor/veda/TellerWithMultiAssetSupportDepositor.sol",
+    "contracts/strategy/AsyncRedemptionUpgradeable.sol",
+    "contracts/strategy/BlocklistOracle.sol",
+    "contracts/strategy/FeeManagerUpgradeable.sol",
+    "contracts/strategy/MAWARStrategyMigrated.sol",
+    "contracts/strategy/MultiAssetDepositUpgradeable.sol",
+    "contracts/strategy/MultiAssetWithAsyncRedemptionStrategy.sol",
+    "contracts/strategy/ShareToken.sol",
+    "contracts/strategy/StrategyBaseUpgradeable.sol",
+    "contracts/strategy/converters/ChainlinkCompositeConverter.sol",
+    "contracts/strategy/converters/ChainlinkConverter.sol",
+    "contracts/strategy/converters/DirectConverter.sol",
+    "contracts/strategy/interfaces/IAssetConverter.sol",
+    "contracts/strategy/interfaces/IAsyncRedemption.sol",
+    "contracts/strategy/interfaces/IBlocklistOracle.sol",
+    "contracts/strategy/interfaces/IFeeManager.sol",
+    "contracts/strategy/interfaces/IMerkleCallAllowlist.sol",
+    "contracts/strategy/interfaces/IMultiAssetDeposit.sol",
+    "contracts/strategy/interfaces/ISanctionList.sol",
+    "contracts/strategy/interfaces/IShard.sol",
+    "contracts/strategy/interfaces/IShardExecValidator.sol",
+    "contracts/strategy/interfaces/IStrategy.sol",
+    "contracts/strategy/libraries/PriceRateLimiter.sol",
+    "contracts/strategy/shards/RemoteShard.sol",
+    "contracts/strategy/shards/Shard.sol",
+    "contracts/strategy/shards/ShardBaseUpgradeable.sol",
+    "contracts/strategy/validators/MerkleAllowlistValidator.sol"
+  ],
+  "files_partially_analyzed": [],
+  "import_prefix_aliases": {},
+  "partial_source_coverage": true,
+  "schema_version": "1.2.0",
+  "source_root": "/home/farhanagil/Dokumen/Workshop/agent/agent_solidity/benchmarks/evm-smart-contracts",
+  "warnings": [
+    {
+      "duration_seconds": 0.097,
+      "message": "phase duration",
+      "phase": "file_discovery_and_reading"
+    },
+    {
+      "duration_seconds": 0.522,
+      "message": "phase duration",
+      "phase": "dependency_expansion"
+    },
+    {
+      "hardhat.config.ts": {
+        "raw": "0.8.24",
+        "version": "0.8.24"
+      },
+      "message": "build metadata compiler hints found"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/AssetRouter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/BaseLBTC.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/BridgeTokenAdapter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/NativeLBTC.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/StakedLBTC.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/StakedLBTCOracle.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/interfaces/AggregatorV3Interface.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/interfaces/IAssetOperation.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/interfaces/IAssetRouter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/interfaces/IBaseLBTC.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/interfaces/INativeLBTC.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/interfaces/IOracle.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/interfaces/IStakedLBTC.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/libraries/Assert.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/libraries/Assets.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/LBTC/libraries/Validation.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bascule/Bascule.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bascule/BasculeV2.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bascule/BasculeV3.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bascule/GMPBasculeV1.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bascule/GMPBasculeV2.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bascule/interfaces/IBascule.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bascule/interfaces/IGMPBascule.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/Bridge.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/BridgeV2.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/IBridge.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/IBridgeV2.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/adapters/AbstractAdapter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/adapters/CLAdapter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/adapters/IAdapter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/adapters/TokenPool.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/oft/EfficientRateLimitedOFTAdapter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/oft/EfficientRateLimiter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/oft/LBTCBurnMintOFTAdapter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/oft/LBTCOFTAdapter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/providers/BridgeTokenPool.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/providers/LombardTokenPoolV2.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/consortium/Consortium.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/consortium/INotaryConsortium.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/fbtc/PartnerVault.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/gmp/IHandler.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/gmp/IMailbox.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/gmp/Mailbox.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/gmp/libs/GMPUtils.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/gmp/libs/MessagePath.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/ibc/IBCVoucher.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/ibc/IIBCVoucher.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interfaces/IBridgeToken.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interfaces/IConsortiumConsumer.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/interfaces/IERC20MintableBurnable.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/libs/Actions.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/libs/BitcoinUtils.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/libs/EIP1271SignatureUtils.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/libs/FeeUtils.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/libs/LChainId.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/libs/RateLimits.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/libs/RateLimitsV2.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/BridgeTokenMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "^0.8.0",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/ChainlinkFeedMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/ConsortiumMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/GMPHandlerMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/LockedFBTCMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/MailboxMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/RatioFeedMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "^0.8.10",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/SanctionListMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/ShardStrategyMocks.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/StakedLBTCMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/pmm/BTCB/BTCB.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/pmm/CBBTC.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/stakeAndBake/StakeAndBake.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/stakeAndBake/StakeAndBakeNativeToken.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/stakeAndBake/depositor/IDepositor.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/stakeAndBake/depositor/strategy/MultiAssetDepositStrategyDepositor.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/stakeAndBake/depositor/veda/ITeller.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/stakeAndBake/depositor/veda/TellerWithMultiAssetSupportDepositor.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/AsyncRedemptionUpgradeable.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/BlocklistOracle.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/FeeManagerUpgradeable.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/MAWARStrategyMigrated.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/MultiAssetDepositUpgradeable.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/MultiAssetWithAsyncRedemptionStrategy.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/ShareToken.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/converters/ChainlinkCompositeConverter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/converters/ChainlinkConverter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/converters/DirectConverter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/IAssetConverter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/IAsyncRedemption.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/IBlocklistOracle.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/IFeeManager.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/IMerkleCallAllowlist.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/IMultiAssetDeposit.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/ISanctionList.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/IShard.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/IShardExecValidator.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/interfaces/IStrategy.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/libraries/PriceRateLimiter.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/shards/RemoteShard.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/shards/Shard.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/shards/ShardBaseUpgradeable.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/strategy/validators/MerkleAllowlistValidator.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "files": [
+        "contracts/LBTC/libraries/Redeem.sol",
+        "contracts/consortium/ILombardTimelockController.sol",
+        "contracts/interfaces/IEfficientRateLimiterV1.sol",
+        "contracts/interfaces/IProxyAdmin.sol",
+        "contracts/mock/MailboxTreasuryMock.sol"
+      ],
+      "message": "constraint 0.8.24 not satisfied by the bundled compiler; resolved compatible solc 0.8.24 via cache_compatible"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/PoR/IPoR.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/PoR/PoR.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/bridge/interfaces/LegacyTokenPoolV2.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/consortium/DepositNotarizationBlacklist.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/consortium/IDepositNotarizationBlacklist.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/consortium/LombardTimeLock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/consortium/test/VerifySignatureTest.sol",
+      "message": "file failed to produce AST",
+      "pragma": "^0.8.19",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/factory/ProxyFactory.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/Auth.sol",
+      "message": "file failed to produce AST",
+      "pragma": ">=0.8.0",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/BoringVault.sol",
+      "message": "file failed to produce AST",
+      "pragma": "^0.8.21",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/BTCBMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/CCIPMocks.sol",
+      "message": "file failed to produce AST",
+      "pragma": "^0.8.4",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/CCIPRMNMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/ERC4626Mock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/LZEndpointMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/ProxyMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/TellerWithMultiAssetSupportMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/TokenMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "compiler_version": null,
+      "file": "contracts/mock/WBTCMock.sol",
+      "message": "file failed to produce AST",
+      "pragma": "0.8.24",
+      "resolution_method": "missing_import"
+    },
+    {
+      "duration_seconds": 1.628,
+      "message": "phase duration",
+      "phase": "compilation"
+    },
+    {
+      "duration_seconds": 0.007,
+      "message": "phase duration",
+      "phase": "inventory"
+    },
+    {
+      "duration_seconds": 0.0,
+      "message": "phase duration",
+      "phase": "modifier_analysis"
+    },
+    {
+      "duration_seconds": 0.007,
+      "message": "phase duration",
+      "phase": "function_analysis"
+    },
+    {
+      "duration_seconds": 0.001,
+      "message": "phase duration",
+      "phase": "capability_and_relationship_derivation"
+    },
+    {
+      "duration_seconds": 2.273,
+      "message": "phase duration",
+      "phase": "total"
+    }
+  ]
+}

@@ -1,8 +1,0 @@
-function propose(string memory _proposalMessage, bytes memory _payload) override external onlySecurityMember() onlyLatestContract("rocketDAOSecurityProposals", address(this)) returns (uint256) {
-        // Load contracts
-        RocketDAOProposalInterface daoProposal = RocketDAOProposalInterface(getContractAddress("rocketDAOProposal"));
-        RocketDAOSecurityInterface daoSecurity = RocketDAOSecurityInterface(getContractAddress("rocketDAOSecurity"));
-        RocketDAOProtocolSettingsSecurityInterface rocketDAOProtocolSettingsSecurity = RocketDAOProtocolSettingsSecurityInterface(getContractAddress("rocketDAOProtocolSettingsSecurity"));
-        // Create the proposal
-        return daoProposal.add(msg.sender, "rocketDAOSecurityProposals", _proposalMessage, block.timestamp + 1, rocketDAOPro
-/* … truncated … */

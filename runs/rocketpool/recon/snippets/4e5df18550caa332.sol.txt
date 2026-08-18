@@ -1,1 +1,0 @@
-function getVacantMinipoolsEnabled() external view returns (bool);

@@ -1,1 +1,0 @@
-function getSubmissionCount(RewardSubmission calldata _submission) external view returns (uint256);

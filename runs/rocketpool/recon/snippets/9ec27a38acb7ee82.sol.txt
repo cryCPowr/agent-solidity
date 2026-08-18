@@ -1,1 +1,0 @@
-event QueueExited(address indexed nodeAddress, uint256 time);

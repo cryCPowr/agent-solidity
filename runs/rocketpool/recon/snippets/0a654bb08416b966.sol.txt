@@ -1,4 +1,0 @@
-function getEthBalance() override external view returns (uint256) {
-        RocketVaultInterface rocketVault = RocketVaultInterface(getContractAddress("rocketVault"));
-        return rocketVault.balanceOf("rocketRewardsPool");
-    }

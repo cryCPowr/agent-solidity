@@ -1,1 +1,0 @@
-rocketStorage.getUint(keccak256(abi.encodePacked("snapshot.time.length", _key)))

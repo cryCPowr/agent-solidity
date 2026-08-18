@@ -1,1 +1,0 @@
-require(isNodeCalling(msg.sender), "Not allowed")

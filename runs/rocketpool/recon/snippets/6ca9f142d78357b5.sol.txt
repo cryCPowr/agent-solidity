@@ -1,1 +1,0 @@
-uint256 constant internal farFutureEpoch = 2 ** 64 - 1

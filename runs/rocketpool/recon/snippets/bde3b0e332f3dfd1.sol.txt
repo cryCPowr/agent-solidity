@@ -1,1 +1,0 @@
-setAddress(bytes32(contractKey + recipientOffset), _recipientAddress)

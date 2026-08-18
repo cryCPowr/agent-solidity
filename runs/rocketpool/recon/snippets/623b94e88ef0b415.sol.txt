@@ -1,1 +1,0 @@
-remainingRplAmount.mul(getLotPriceAtCurrentBlock(_lotIndex))

@@ -1,1 +1,0 @@
-setSettingUint("members.rplbond", 1750 ether)

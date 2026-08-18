@@ -1,6 +1,0 @@
-function verifyWithdrawal(uint64 _slotTimestamp, uint64 _slot, WithdrawalProof calldata _proof) override external view returns(bool) {
-        if (disabled) {
-            return true;
-        }
-        return verifier.verifyWithdrawal(_slotTimestamp, _slot, _proof);
-    }

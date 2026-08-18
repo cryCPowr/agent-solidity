@@ -1,4 +1,0 @@
-if (!rocketStorage.getDeployedStatus()) {
-            _insert(keccak256("network.prices.rpl"), 0.01 ether);
-            _insert(keccak256("node.voting.power.stake.maximum"), 1.5 ether);
-        }

@@ -1,1 +1,0 @@
-function getNodeAddress() override external view returns (address) { return nodeAddress; }

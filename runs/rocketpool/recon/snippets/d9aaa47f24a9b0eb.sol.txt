@@ -1,1 +1,0 @@
-rocketMinipoolManager.getNodeStakingMinipoolCountBySize(_nodeAddress, depositSizes[i])

@@ -1,3 +1,0 @@
-if (_balance > userCapital) {
-            nodeShare = _balance.sub(userCapital);
-        }

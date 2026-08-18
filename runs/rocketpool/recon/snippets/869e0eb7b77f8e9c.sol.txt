@@ -1,1 +1,0 @@
-function stake(RocketMegapoolInterface megapool, uint32 _validatorId, uint64 _slotTimestamp, ValidatorProof calldata _proof, SlotProof calldata _slotProof) external;

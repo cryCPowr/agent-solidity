@@ -1,1 +1,0 @@
-rocketDAONode.getMemberRPLBondAmount(_nodeAddress)

@@ -1,1 +1,0 @@
-function getScrubVoted(address _member) override external view returns (bool) { return memberScrubVotes[_member]; }

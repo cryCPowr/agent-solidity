@@ -1,4 +1,0 @@
-function getHeadIndex(bytes32 _namespace) override external view returns (uint256) {
-        uint256 data = getUint(keccak256(abi.encodePacked(_namespace, ".data")));
-        return uint64(data >> startOffset);
-    }

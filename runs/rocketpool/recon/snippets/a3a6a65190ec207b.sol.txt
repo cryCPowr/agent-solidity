@@ -1,1 +1,0 @@
-contractAddress != address(0x0)

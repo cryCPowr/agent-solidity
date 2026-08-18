@@ -1,3 +1,0 @@
-function getUserDistributeDelayWithShortfall() override external view returns (uint256) {
-        return getSettingUint("user.distribute.delay.shortfall");
-    }

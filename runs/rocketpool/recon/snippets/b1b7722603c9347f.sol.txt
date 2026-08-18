@@ -1,3 +1,0 @@
-if (!rocketStorage.getDeployedStatus()) {
-            initialise();
-        }

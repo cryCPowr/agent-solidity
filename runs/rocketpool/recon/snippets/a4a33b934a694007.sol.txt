@@ -1,1 +1,0 @@
-bytes32 internal constant queueMovedKey = keccak256("megapool.queue.moved")

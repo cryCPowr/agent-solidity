@@ -1,1 +1,0 @@
-_megapool.notifyFinalBalance(_validatorId, _withdrawalProof.withdrawal.amountInGwei, msg.sender, withdrawalEpoch, recentEpoch)

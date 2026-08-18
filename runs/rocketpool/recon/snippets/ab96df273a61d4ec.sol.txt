@@ -1,3 +1,0 @@
-function getMemberLastProposalTime(address _nodeAddress) override external view returns (uint256) {
-        return getUint(keccak256(abi.encodePacked(daoNameSpace, "member.proposal.lasttime", _nodeAddress)));
-    }

@@ -1,7 +1,0 @@
-function proposeVeto(string memory _proposalMessage, uint256 _upgradeProposalID) override external onlySecurityMember() onlyLatestContract("rocketDAOSecurityUpgrade", address(this)) returns (uint256) {
-        // Load contracts
-        RocketDAOProposalInterface daoProposal = RocketDAOProposalInterface(getContractAddress("rocketDAOProposal"));
-        RocketDAOSecurityInterface daoSecurity = RocketDAOSecurityInterface(getContractAddress("rocketDAOSecurity"));
-        RocketDAOProtocolSettingsSecurityInterface rocketDAOProtocolSettingsSecurity = RocketDAOProtocolSettingsSecurityInterface(getContractAddress("rocketDAOProtocolSettingsSecurity"));
-        RocketDAONodeTrustedUpgradeInterface rocketDAONodeTrustedUpgrade = RocketDAONodeTrustedUpgradeInterface(getContractAddress("rocketDAONodeTru
-/* … truncated … */

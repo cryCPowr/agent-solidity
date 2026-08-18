@@ -1,3 +1,0 @@
-function packItem(DepositQueueValue memory _item) public pure returns (uint256 packed) {
-        return _packItem(_item);
-    }

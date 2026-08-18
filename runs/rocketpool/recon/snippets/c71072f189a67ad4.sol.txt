@@ -1,6 +1,0 @@
-function getNodeCount(uint32 _block) external override view returns (uint256) {
-        // Get contracts
-        RocketNetworkSnapshotsInterface rocketNetworkSnapshots = RocketNetworkSnapshotsInterface(getContractAddress("rocketNetworkSnapshots"));
-        bytes32 key = keccak256(abi.encodePacked("node.count"));
-        return uint256(rocketNetworkSnapshots.lookupRecent(key, _block, 10));
-    }

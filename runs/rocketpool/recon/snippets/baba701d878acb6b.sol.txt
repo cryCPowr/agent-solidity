@@ -1,1 +1,0 @@
-require(remainingRplAmount > 0, "Lot RPL allocation has been exhausted")

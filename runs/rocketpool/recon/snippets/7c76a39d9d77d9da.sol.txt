@@ -1,7 +1,0 @@
-function updatePrices(uint256 _block, uint256 _slotTimestamp, uint256 _rplPrice) private {
-        // Update price
-        setRPLPrice(_rplPrice);
-        setPricesBlock(_block);
-        // Emit prices updated event
-        emit PricesUpdated(_block, _slotTimestamp, _rplPrice, block.timestamp);
-    }

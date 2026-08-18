@@ -1,1 +1,0 @@
-withdrawalAddress.call{value: totalAmountSmoothingPoolETH, gas: 10000}("")

@@ -1,1 +1,0 @@
-require(_value >= 300 ether && _value <= 5000 ether, "Value must be >= 300 ETH & <= 5000 ETH")

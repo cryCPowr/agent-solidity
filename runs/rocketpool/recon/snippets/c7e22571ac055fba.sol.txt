@@ -1,3 +1,0 @@
-if (periodsToPay == 0) {
-            return;
-        }

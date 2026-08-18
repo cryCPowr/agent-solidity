@@ -1,1 +1,0 @@
-daoNodeTrusted.getMemberJoinedTime(msg.sender)

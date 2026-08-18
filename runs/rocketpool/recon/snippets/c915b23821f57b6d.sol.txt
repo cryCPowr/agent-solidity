@@ -1,1 +1,0 @@
-require(_submission.rewardIndex <= rewardIndex, "Can only submit snapshot for periods up to next")

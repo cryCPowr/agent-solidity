@@ -1,0 +1,3 @@
+interface IMailboxWithdrawFee {
+    function withdrawFee() external;
+}

@@ -1,1 +1,0 @@
-function unsetRPLWithdrawalAddress(address _nodeAddress) external;

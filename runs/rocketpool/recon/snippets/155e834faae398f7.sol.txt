@@ -1,1 +1,0 @@
-require(rocketDAONodeTrustedSettingsRewards.getNetworkEnabled(_network), "Network is not enabled")

@@ -1,1 +1,0 @@
-require(_value >= 6750 && _value <= 40500, "Value must be >= 6750 & <= 40500 epochs")

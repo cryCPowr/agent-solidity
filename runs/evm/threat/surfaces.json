@@ -1,0 +1,101 @@
+{
+  "count": 5,
+  "surfaces": [
+    {
+      "id": "surface:external_interaction",
+      "category": "External Interaction",
+      "description": "Calls to external contracts/targets",
+      "functions": [
+        "contracts/mock/MailboxTreasuryMock.sol#299::withdrawFee#271"
+      ],
+      "assets": [],
+      "capabilities": [
+        "can_call_arbitrary_target"
+      ],
+      "entrypoints": [
+        "contracts/mock/MailboxTreasuryMock.sol#299::withdrawFee#271"
+      ],
+      "evidence_fact_ids": [
+        "fact:d37aa8af26a2bda9"
+      ],
+      "cross_contract_reach": false
+    },
+    {
+      "id": "surface:arithmetic_and_accounting",
+      "category": "Arithmetic and Accounting",
+      "description": "Calculations influencing protocol state or asset allocation",
+      "functions": [
+        "contracts/mock/MailboxTreasuryMock.sol#299::<receive>#298"
+      ],
+      "assets": [],
+      "capabilities": [],
+      "entrypoints": [
+        "contracts/mock/MailboxTreasuryMock.sol#299::<receive>#298"
+      ],
+      "evidence_fact_ids": [
+        "fact:a6a4255334ca8b85"
+      ],
+      "cross_contract_reach": false
+    },
+    {
+      "id": "surface:lifecycle",
+      "category": "Lifecycle",
+      "description": "Contract creation, initialization, or destruction surfaces that affect deployment-time state",
+      "functions": [],
+      "assets": [],
+      "capabilities": [
+        "has_initializer_lifecycle_model"
+      ],
+      "entrypoints": [],
+      "evidence_fact_ids": [
+        "fact:d48f0de1f20364bd"
+      ],
+      "cross_contract_reach": false
+    },
+    {
+      "id": "surface:upgradeability",
+      "category": "Upgradeability",
+      "description": "Components related to proxy patterns, delegatecall-based execution, and logic upgrades",
+      "functions": [
+        "contracts/interfaces/IProxyAdmin.sol#237::upgradeAndCall#236"
+      ],
+      "assets": [],
+      "capabilities": [
+        "has_upgrade_function"
+      ],
+      "entrypoints": [
+        "contracts/interfaces/IProxyAdmin.sol#237::upgradeAndCall#236"
+      ],
+      "evidence_fact_ids": [
+        "fact:430e184c2a5d1d30"
+      ],
+      "cross_contract_reach": false
+    },
+    {
+      "id": "surface:authority_and_capability",
+      "category": "Authority and Capability",
+      "description": "Observed capabilities together with their current authorization surfaces",
+      "functions": [
+        "contracts/consortium/ILombardTimelockController.sol#194::executeBatch#187",
+        "contracts/interfaces/IProxyAdmin.sol#237::upgradeAndCall#236",
+        "contracts/mock/MailboxTreasuryMock.sol#299::<receive>#298"
+      ],
+      "assets": [],
+      "capabilities": [
+        "can_receive_native_value",
+        "capability_without_observed_authorization"
+      ],
+      "entrypoints": [
+        "contracts/consortium/ILombardTimelockController.sol#194::executeBatch#187",
+        "contracts/interfaces/IProxyAdmin.sol#237::upgradeAndCall#236",
+        "contracts/mock/MailboxTreasuryMock.sol#299::<receive>#298"
+      ],
+      "evidence_fact_ids": [
+        "fact:7c7de749636a6800",
+        "fact:8988f7a5e318cf09",
+        "fact:a89608458a67fcf8"
+      ],
+      "cross_contract_reach": false
+    }
+  ]
+}

@@ -1,1 +1,0 @@
-_settingContractNames.length == _settingPaths.length && _settingPaths.length == _types.length && _types.length == _data.length

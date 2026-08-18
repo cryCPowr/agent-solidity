@@ -1,1 +1,0 @@
-if (index >= capacity) { index = index.sub(capacity); }

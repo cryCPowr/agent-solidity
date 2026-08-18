@@ -1,8 +1,0 @@
-function withdrawDepositCollateral(uint256 _ethRequired) private {
-        // Check rETH contract balance
-        uint256 ethBalance = address(this).balance;
-        if (ethBalance >= _ethRequired) { return; }
-        // Withdraw
-        RocketDepositPoolInterface rocketDepositPool = RocketDepositPoolInterface(getContractAddress("rocketDepositPool"));
-        rocketDepositPool.withdrawExcessBalance(_ethRequired.sub(ethBalance));
-    }

@@ -1,1 +1,0 @@
-function deleteBool(bytes32 _key) internal { rocketStorage.deleteBool(_key); }

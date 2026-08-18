@@ -1,1 +1,0 @@
-if(rplToken.balanceOf(address(rocketVault)) >= rplBondRefundAmount) rocketVault.withdrawToken(_nodeAddress, IERC20(getContractAddress("rocketTokenRPL")), rplBondRefundAmount)

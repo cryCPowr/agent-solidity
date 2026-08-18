@@ -1,1 +1,0 @@
-require(remainder == 0, "Invalid index")

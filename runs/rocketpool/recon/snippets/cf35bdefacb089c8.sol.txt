@@ -1,1 +1,0 @@
-function getMemberProposalExecutedTime(string memory _proposalType, address _nodeAddress) external view returns (uint256);

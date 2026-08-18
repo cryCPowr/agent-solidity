@@ -1,1 +1,0 @@
-revert("Minipool bond reductions are no longer available")

@@ -191,22 +191,28 @@ def generate_hypotheses(
     # --- Category 6: Cross-Contract Trust ---
     _generate_cross_contract_hypotheses(recon, hypotheses, _next_id, invariants)
 
-    # --- Category 7: DoS/Griefing ---
+    # --- Category 7: Upgradeability ---
+    _generate_upgrade_hypotheses(recon, hypotheses, _next_id, invariants)
+
+    # --- Category 8: Initialization ---
+    _generate_initialization_hypotheses(recon, hypotheses, _next_id, invariants)
+
+    # --- Category 9: DoS/Griefing ---
     _generate_dos_hypotheses(recon, hypotheses, _next_id, invariants)
 
-    # --- Category 8: Economic Manipulation ---
+    # --- Category 10: Economic Manipulation ---
     _generate_economic_hypotheses(recon, hypotheses, _next_id, invariants)
 
-    # --- Category 9: Gas DoS ---
+    # --- Category 11: Gas DoS ---
     _generate_gas_dos_hypotheses(recon, hypotheses, _next_id, invariants)
 
-    # --- Category 10: Arithmetic Bound Violation ---
+    # --- Category 12: Arithmetic Bound Violation ---
     _generate_arithmetic_overflow_hypotheses(recon, hypotheses, _next_id, invariants)
 
-    # --- Category 11: Frontrun Vulnerability ---
+    # --- Category 13: Frontrun Vulnerability ---
     _generate_frontrun_hypotheses(recon, hypotheses, _next_id, invariants)
 
-    # --- Category 12: Randomness Manipulation ---
+    # --- Category 14: Randomness Manipulation ---
     _generate_randomness_bias_hypotheses(recon, hypotheses, _next_id, invariants)
 
     # --- Generic composition layer: catches signal combinations that don't
@@ -252,6 +258,66 @@ def _find_function_facts(recon: loader.ReconArtifact, fn_key: str) -> list[dict[
     return loader.facts_for_function(recon, fn_key)
 
 
+
+def _effectful_callers(recon: loader.ReconArtifact, callee_fn: str) -> list[dict[str, Any]]:
+    """Observed callers of `callee_fn` that themselves move assets or mutate
+    security-relevant state.
+
+    This lets Threat lift helper/view math into the effectful runtime path
+    that actually settles value or state, which is closer to benchmark-style
+    findings than reporting the helper in isolation.
+
+    Important: `post_call_state_effect` alone is too weak here because Recon
+    can emit it as structural adjacency. Treat explicit asset movement or
+    state writes as the primary effect anchors.
+    """
+    anchors: list[dict[str, Any]] = []
+    for fact in recon.facts_obj.by_type.get("internal_call", []):
+        props = fact.get("properties") or {}
+        if props.get("callee_function") != callee_fn:
+            continue
+        subject = fact.get("subject") or {}
+        caller_fn = subject.get("caller") or subject.get("function") or ""
+        if not caller_fn:
+            continue
+        caller_facts = _find_function_facts(recon, caller_fn)
+        has_asset = any(f["type"] in ("asset_operation", "eth_transfer") for f in caller_facts)
+        has_state_write = any(f["type"] == "state_write" for f in caller_facts)
+        if not (has_asset or has_state_write):
+            continue
+        anchors.append({
+            "caller": caller_fn,
+            "internal_call_fact": fact,
+            "caller_facts": caller_facts,
+            "has_asset": has_asset,
+            "has_state_write": has_state_write,
+        })
+    return anchors
+
+
+
+def _find_invariant_id(invariants: list[InvariantCandidate], category: str) -> str:
+    for inv in invariants:
+        if inv.category == category:
+            return inv.id
+    return ""
+
+
+def _analysis_coverage_warning(recon: loader.ReconArtifact) -> str:
+    coverage = recon.coverage.raw if isinstance(recon.coverage.raw, dict) else {}
+    source_cov = coverage.get("source_coverage")
+    analyzed = None
+    if isinstance(source_cov, dict):
+        analyzed = source_cov.get("analyzed_ratio")
+        if not isinstance(analyzed, (int, float)):
+            analyzed = source_cov.get("coverage_ratio")
+    elif isinstance(source_cov, (int, float)):
+        analyzed = source_cov
+    if isinstance(analyzed, (int, float)) and analyzed < 0.5:
+        return " Recon reported low analysis coverage (<50%), so absence of supporting evidence should be treated as uncertainty, not safety."
+    return ""
+
+
 def _generate_arbitrary_execution(
     recon: loader.ReconArtifact,
     out: list[ThreatHypothesis],
@@ -283,6 +349,11 @@ def _generate_arbitrary_execution(
         if not token_caps:
             continue
 
+        authority_surfaces = [
+            f for f in _find_function_facts(recon, fn_key)
+            if f["type"] == "capability_authority_surface"
+        ]
+
         # HIGH/VERY_HIGH interest: has arbitrary call + token control
         h = ThreatHypothesis(
             hypothesis_id=next_id(),
@@ -299,13 +370,15 @@ def _generate_arbitrary_execution(
                 "Attacker controls calldata",
                 "Target responds to callback",
             ],
-            observed_facts=[c["id"] for c in caps],
+            observed_facts=[c["id"] for c in caps] + [f["id"] for f in authority_surfaces],
             affected_functions=[fn_key],
             affected_assets=["protocol tokens", "protocol ETH"],
             uncertainty=(
                 "Whether the target is user-controlled depends on dataflow "
-                "from parameters through the function body. Verification "
-                "requires examining _src_text values."
+                "from parameters through the function body. Observed authority "
+                "surfaces indicate guarding/no-guarding structure only; they do "
+                "not prove caller reachability or privilege acquisition."
+                + _analysis_coverage_warning(recon)
             ),
             suggested_next_investigation=(
                 f"Trace dataflow from function parameters to call target "
@@ -337,7 +410,7 @@ def _generate_arbitrary_execution(
             fn_facts = _find_function_facts(recon, fn_key) if fn_key else []
             related_caps = [
                 f["id"] for f in fn_facts
-                if f["type"] == "capability"
+                if f["type"] in ("capability", "capability_authority_surface")
             ]
             h = ThreatHypothesis(
                 hypothesis_id=next_id(),
@@ -349,7 +422,12 @@ def _generate_arbitrary_execution(
                 actor="caller",
                 observed_facts=[llc["id"]] + related_caps,
                 affected_functions=[fn_key] if fn_key else [],
-                uncertainty="Target derivation depends on function dataflow.",
+                uncertainty=(
+                    "Target derivation depends on function dataflow. Threat stage "
+                    "records the dynamic execution surface but does not prove the "
+                    "caller can satisfy any required authority boundary."
+                    + _analysis_coverage_warning(recon)
+                ),
                 suggested_next_investigation=(
                     "Trace how the call target expression is constructed: "
                     "is it a direct parameter, state variable, or derived?"
@@ -420,12 +498,10 @@ def _generate_accounting_hypotheses(
 ) -> None:
     """H-00X: Accounting mismatch patterns.
 
-    Focus: functions that decode external data AND perform calculations
-    that influence asset distribution.
+    Focus: externally influenced values that are ingested/decoded and then
+    drive asset-moving or state-mutating accounting without an obvious
+    reconciliation boundary.
     """
-    # Look for functions with both:
-    # - digest/encoding operations (signatures, calldata parsing)
-    # - state writes or arithmetic
     digest_ops = recon.facts_obj.by_type.get("digest_construction_operation", [])
     if not digest_ops:
         return
@@ -435,46 +511,58 @@ def _generate_accounting_hypotheses(
         if not fn_key:
             continue
         fn_facts = _find_function_facts(recon, fn_key)
-        has_arithmetic = any(f["type"] == "arithmetic_operation" for f in fn_facts)
         has_state_write = any(f["type"] == "state_write" for f in fn_facts)
-        has_asset = any(f["type"] == "asset_operation" for f in fn_facts)
+        has_asset = any(f["type"] in ("asset_operation", "eth_transfer") for f in fn_facts)
+        has_post_effect = any(f["type"] == "post_call_state_effect" for f in fn_facts)
+        has_input_flow = any(f["type"] in ("call_argument_origin_chain", "call_argument_dataflow", "input_origin") for f in fn_facts)
+        has_reconciliation_math = any(f["type"] in ("arithmetic_operation", "division_operation") for f in fn_facts)
+        mutability = {
+            str((f.get("properties") or {}).get("state_mutability") or (f.get("properties") or {}).get("mutability") or "").lower()
+            for f in fn_facts if f["type"] == "function_mutability"
+        }
 
-        if has_arithmetic or has_state_write:
-            observed = [do["id"]] + [
-                f["id"] for f in fn_facts
-                if f["type"] in ("arithmetic_operation", "state_write", "asset_operation")
-            ]
-            h = ThreatHypothesis(
-                hypothesis_id=next_id(),
-                category="accounting_mismatch",
-                statement=(
-                    f"Function {fn_key} constructs digests/signatures AND "
-                    f"{'performs arithmetic' if has_arithmetic else ''}"
-                    f"{' and modifies state' if has_state_write else ''}"
-                    f"{' and moves assets' if has_asset else ''}. "
-                    f"If external data is decoded and used in calculations, "
-                    f"there may be a semantic mismatch between expected and actual values."
-                ),
-                actor="external_user",
-                observed_facts=observed,
-                affected_functions=[fn_key],
-                preconditions=[
-                    "External data is decoded from calldata or signatures",
-                    "Decoded values influence accounting calculations",
-                ],
-                uncertainty=(
-                    "Whether the decoded data flows into accounting depends on "
-                    "dataflow analysis of the function body."
-                ),
-                suggested_next_investigation=(
-                    "Trace the decoded values: do they flow into any arithmetic "
-                    "operations, state variable assignments, or asset transfers?"
-                ),
-                priority="high_interest",
-                priority_rationale="Digest construction + state/arithmetic is a semantic mismatch surface",
+        # Benchmark-style accounting mismatches need an observed bookkeeping
+        # mutation, not just a computed storage key plus transfers/adjacency.
+        if mutability & {"view", "pure"}:
+            continue
+        if not has_input_flow or not has_state_write:
+            continue
+
+        observed = [do["id"]] + [
+            f["id"] for f in fn_facts
+            if f["type"] in (
+                "arithmetic_operation", "division_operation", "state_write",
+                "asset_operation", "post_call_state_effect",
+                "call_argument_origin_chain", "call_argument_dataflow", "input_origin",
             )
-            h.evidence_tier = classify_evidence(h.observed_facts, h.graph_nodes, h.graph_edges, recon)
-            out.append(h)
+        ]
+        h = ThreatHypothesis(
+            hypothesis_id=next_id(),
+            category="accounting_mismatch",
+            statement=(
+                f"Function {fn_key} ingests externally influenced data and uses it in "
+                f"{'asset-moving' if has_asset else 'state-mutating'} accounting logic"
+                f"{' with arithmetic reconciliation' if has_reconciliation_math else ''}. "
+                f"If liabilities, netting, or state reconciliation are incomplete, the resulting accounting may diverge from actual value flow."
+            ),
+            actor="external_user",
+            observed_facts=observed,
+            affected_functions=[fn_key],
+            preconditions=[
+                "Externally influenced data reaches accounting-affecting state or asset logic",
+                "The protocol does not fully reconcile the updated state against all relevant assets or liabilities",
+            ],
+            uncertainty=(
+                "Threat stage shows externally influenced accounting/state effects, but does not yet prove which asset/liability dimension is omitted or mis-netted."
+            ),
+            suggested_next_investigation=(
+                "Trace the influenced values into state updates, emitted accounting values, and asset transfers. Check whether any liability, debt, fee, or netting dimension is omitted."
+            ),
+            priority="high_interest" if has_asset else "medium_interest",
+            priority_rationale="Externally influenced accounting with state/asset effects can create gross-vs-net or partial-accounting mismatches",
+        )
+        h.evidence_tier = classify_evidence(h.observed_facts, h.graph_nodes, h.graph_edges, recon)
+        out.append(h)
 
 
 def _generate_rounding_hypotheses(
@@ -485,7 +573,12 @@ def _generate_rounding_hypotheses(
 ) -> None:
     """H-00X: Rounding/truncation allocation.
 
-    Focus: division operations that influence asset allocation or rewards.
+    Focus: division operations that feed allocation, reward, state-update,
+    or post-condition boundaries -- not arbitrary informational getters.
+
+    If the division sits in a helper/view function, try to lift the
+    hypothesis to an observed effectful caller so downstream Attack work is
+    anchored to the runtime path that actually settles value or state.
     """
     divisions = recon.facts_obj.by_type.get("division_operation", [])
     if not divisions:
@@ -494,51 +587,120 @@ def _generate_rounding_hypotheses(
     for div in divisions:
         fn_key = div["subject"].get("function")
         props = div.get("properties", {})
-        consumer = props.get("immediate_consumer")
+        consumer = str(props.get("immediate_consumer") or "")
         left = props.get("left_operand", "?")
         right = props.get("right_operand", "?")
 
         fn_facts = _find_function_facts(recon, fn_key) if fn_key else []
-        has_asset = any(f["type"] == "asset_operation" for f in fn_facts)
-        observed = [div["id"]] + [f["id"] for f in fn_facts if f["type"] == "asset_operation"]
+        has_asset = any(f["type"] in ("asset_operation", "eth_transfer") for f in fn_facts)
+        has_state_write = any(f["type"] == "state_write" for f in fn_facts)
+        has_post_state_effect = any(f["type"] == "post_call_state_effect" for f in fn_facts)
+        has_input_flow = any(f["type"] in ("call_argument_origin_chain", "call_argument_dataflow", "input_origin") for f in fn_facts)
+        has_boundary = any(f["type"] == "require_statement" for f in fn_facts)
+        mutability = {
+            str((f.get("properties") or {}).get("state_mutability") or (f.get("properties") or {}).get("mutability") or "").lower()
+            for f in fn_facts if f["type"] == "function_mutability"
+        }
+        direct_effectful = has_asset or has_state_write
+        lifted_callers = _effectful_callers(recon, fn_key) if fn_key and not direct_effectful else []
 
-        h = ThreatHypothesis(
-            hypothesis_id=next_id(),
-            category="rounding_allocation",
-            statement=(
-                f"Division in {fn_key}: ({left}) / ({right}) with "
-                f"consumer={consumer}. Integer division truncates towards zero. "
-                f"{'Asset transfer is involved, creating rounding advantage potential.' if has_asset else 'If this calculation influences any allocation, rounding may create advantage.'}"
-            ),
-            actor="caller",
-            observed_facts=observed,
-            affected_functions=[fn_key] if fn_key else [],
-            affected_assets=["shares", "rewards"] if has_asset else ["calculation results"],
-            preconditions=[
-                "Division result influences allocation or distribution",
-                "Rounding favors the caller",
-            ],
-            uncertainty=(
-                "Whether rounding advantage is realized depends on: "
-                "1) The magnitude of the remainder vs. denominator "
-                "2) Whether multiple divisions accumulate rounding bias "
-                "3) Who receives the truncated remainder"
-            ),
-            suggested_next_investigation=(
-                f"Check if {fn_key}'s division result feeds into any "
-                f"state variable, return value, or token transfer. "
-                f"If the function distributes assets, check for a "
-                f"reconciliation mechanism that accounts for truncated values."
-            ),
-            priority="high_interest" if has_asset else "medium_interest",
-            priority_rationale=(
-                "Division in allocation context with asset involvement "
-                "creates rounding advantage opportunity" if has_asset else
-                "Division affects calculation; potential for rounding bias"
-            ),
-            evidence_tier=classify_evidence(observed, [], [], recon),
-        )
-        out.append(h)
+        if consumer not in {
+            "call_argument", "return_value", "variable_initializer", "tuple_component",
+            "ifstatement", "assignment", "binary_op", "return_statement",
+        }:
+            continue
+
+        if direct_effectful:
+            observed = [div["id"]] + [
+                f["id"] for f in fn_facts
+                if f["type"] in (
+                    "asset_operation", "state_write", "post_call_state_effect",
+                    "call_argument_origin_chain", "call_argument_dataflow", "input_origin",
+                    "require_statement",
+                )
+            ]
+            h = ThreatHypothesis(
+                hypothesis_id=next_id(),
+                category="rounding_allocation",
+                statement=(
+                    f"Division in {fn_key}: ({left}) / ({right}) with consumer={consumer}. Integer division truncates towards zero. "
+                    f"This result feeds a state/asset effect{' (with nearby post-call structural evidence)' if has_post_state_effect else ''}, so mixed rounding may create allocation skew or flip a boundary condition."
+                ),
+                actor="caller",
+                observed_facts=sorted(set(observed)),
+                affected_functions=[fn_key] if fn_key else [],
+                affected_assets=["shares", "rewards"] if has_asset else ["calculation results"],
+                preconditions=[
+                    "Division result influences allocation, reward settlement, or a safety boundary",
+                    "Rounding direction or truncation can favor one side or accumulate drift",
+                ],
+                uncertainty=(
+                    "Threat stage shows truncating division in an effectful runtime path, but not yet whether repeated execution, inverse math, or remainder handling creates a material edge or DoS condition."
+                ),
+                suggested_next_investigation=(
+                    f"Check whether {fn_key}'s division result feeds reward splits, share/accounting math, or require boundaries; then compare the rounding direction against any inverse or follow-up calculation."
+                ),
+                priority="high_interest" if has_asset else "medium_interest",
+                priority_rationale=(
+                    "Division reaches asset/state settlement logic, making benchmark-style rounding bugs plausible"
+                ),
+                evidence_tier=classify_evidence(sorted(set(observed)), [], [], recon),
+            )
+            out.append(h)
+            continue
+
+        if mutability & {"view", "pure"} and not lifted_callers:
+            continue
+        if not lifted_callers:
+            continue
+
+        for anchor in lifted_callers:
+            caller_fn = anchor["caller"]
+            caller_facts = anchor["caller_facts"]
+            caller_has_asset = anchor["has_asset"]
+            caller_has_state_write = anchor["has_state_write"]
+            observed = [div["id"], anchor["internal_call_fact"]["id"]] + [
+                f["id"] for f in fn_facts
+                if f["type"] in (
+                    "call_argument_origin_chain", "call_argument_dataflow", "input_origin",
+                    "require_statement",
+                )
+            ] + [
+                f["id"] for f in caller_facts
+                if f["type"] in (
+                    "asset_operation", "state_write", "post_call_state_effect",
+                    "call_argument_origin_chain", "call_argument_dataflow", "input_origin",
+                    "require_statement",
+                )
+            ]
+            h = ThreatHypothesis(
+                hypothesis_id=next_id(),
+                category="rounding_allocation",
+                statement=(
+                    f"Division in helper {fn_key}: ({left}) / ({right}) with consumer={consumer} feeds effectful caller {caller_fn}. "
+                    f"Integer division truncates towards zero, and the helper result flows into caller-side {'asset settlement' if caller_has_asset else 'state transition'} logic where mixed rounding may create allocation skew or flip a boundary condition."
+                ),
+                actor="caller",
+                observed_facts=sorted(set(observed)),
+                affected_functions=[caller_fn, fn_key] if fn_key else [caller_fn],
+                affected_assets=["shares", "rewards"] if caller_has_asset else ["calculation results"],
+                preconditions=[
+                    "Division result from the helper feeds a caller that settles value or mutates security-relevant state",
+                    "Rounding direction or truncation can favor one side or accumulate drift across the caller's runtime path",
+                ],
+                uncertainty=(
+                    "Threat stage shows a truncating helper feeding an observed effectful caller, but not yet whether repeated execution, inverse math, or remainder handling creates a material edge or DoS condition."
+                ),
+                suggested_next_investigation=(
+                    f"Trace the value returned by {fn_key} into {caller_fn}'s settlement path and compare the rounding direction against any inverse, complementary, or remainder-sensitive calculation."
+                ),
+                priority="high_interest" if caller_has_asset else "medium_interest",
+                priority_rationale=(
+                    "Helper division is lifted into an observed effectful caller, matching benchmark-style reward/allocation bug structure"
+                ),
+                evidence_tier=classify_evidence(sorted(set(observed)), [], [], recon),
+            )
+            out.append(h)
 
 
 def _generate_signature_hypotheses(
@@ -760,6 +922,190 @@ def _generate_cross_contract_hypotheses(
             )
             h.evidence_tier = classify_evidence(h.observed_facts, h.graph_nodes, h.graph_edges, recon)
             out.append(h)
+
+
+def _generate_upgrade_hypotheses(
+    recon: loader.ReconArtifact,
+    out: list[ThreatHypothesis],
+    next_id,
+    invariants: list[InvariantCandidate],
+) -> None:
+    """Structural upgradeability hypotheses.
+
+    These hypotheses stay at Threat level: they identify upgrade and
+    delegatecall control surfaces plus their observed authority boundary,
+    without asserting attacker reachability or privilege acquisition.
+    """
+    upgrade_functions = recon.facts_obj.by_type.get("upgrade_function", [])
+    upgrade_authorities = recon.facts_obj.by_type.get("upgrade_authority", [])
+    proxy_paths = recon.facts_obj.by_type.get("proxy_delegatecall_path", [])
+    proxy_like = recon.facts_obj.by_type.get("proxy_like_contract", [])
+    if not (upgrade_functions or upgrade_authorities or proxy_paths or proxy_like):
+        return
+
+    authority_by_function = {
+        f["subject"].get("function"): f
+        for f in upgrade_authorities
+        if f["subject"].get("function")
+    }
+    proxy_by_contract = {
+        f["subject"].get("contract"): f
+        for f in proxy_like
+        if f["subject"].get("contract")
+    }
+    delegatecall_by_contract: dict[str, list[dict[str, Any]]] = {}
+    for f in proxy_paths:
+        contract_key = f["subject"].get("contract")
+        if contract_key:
+            delegatecall_by_contract.setdefault(contract_key, []).append(f)
+
+    functions_by_contract: dict[str, list[dict[str, Any]]] = {}
+    for f in upgrade_functions:
+        contract_key = f["subject"].get("contract")
+        if contract_key:
+            functions_by_contract.setdefault(contract_key, []).append(f)
+
+    inv_id = _find_invariant_id(invariants, "upgrade_authority_coherence")
+    for contract_key in sorted(set(functions_by_contract) | set(delegatecall_by_contract) | set(proxy_by_contract)):
+        fn_facts = functions_by_contract.get(contract_key, [])
+        path_facts = delegatecall_by_contract.get(contract_key, [])
+        proxy_fact = proxy_by_contract.get(contract_key)
+        observed = [f["id"] for f in fn_facts + path_facts]
+        if proxy_fact:
+            observed.append(proxy_fact["id"])
+
+        affected_functions = [f["subject"].get("function", "") for f in fn_facts + path_facts]
+        affected_functions = [fn for fn in affected_functions if fn]
+        authority_facts = [authority_by_function.get(fn) for fn in affected_functions]
+        authority_facts = [f for f in authority_facts if f is not None]
+        observed.extend(f["id"] for f in authority_facts)
+
+        has_observed_authority = bool(authority_facts)
+        has_delegatecall = bool(path_facts)
+        actor = "unknown_actor" if has_observed_authority else "external_user"
+        priority = "high_interest" if has_delegatecall and not has_observed_authority else "medium_interest"
+        rationale = (
+            "Proxy/delegatecall execution path exists without an observed upgrade authority boundary"
+            if priority == "high_interest"
+            else "Upgrade-related execution path exists and requires authority-boundary review"
+        )
+        contract_label = contract_key.rsplit("/", 1)[-1]
+        statement = (
+            f"Contract {contract_label} exposes upgrade-related execution surfaces "
+            f"through {len(fn_facts)} upgrade function(s)"
+            f"{' and delegatecall-backed proxy routing' if has_delegatecall else ''}. "
+            f"If the observed authority boundary or implementation source is misaligned "
+            f"with intended behavior, logic changes could alter protected state or execution context."
+        )
+        uncertainty = (
+            "Threat stage records only structural upgradeability evidence and observed authorization surfaces. "
+            "It does not prove whether any caller can legitimately or illegitimately reach the upgrade path."
+            + _analysis_coverage_warning(recon)
+        )
+        out.append(
+            ThreatHypothesis(
+                hypothesis_id=next_id(),
+                category="upgrade_risk",
+                statement=statement,
+                actor=actor,
+                preconditions=[
+                    "Upgrade path remains callable in deployed configuration",
+                    "Implementation source or authority boundary is security-relevant for this contract",
+                ],
+                observed_facts=sorted(set(observed)),
+                affected_functions=sorted(set(affected_functions)),
+                affected_assets=["implementation_address", "execution_context"],
+                invariant_candidate_id=inv_id,
+                uncertainty=uncertainty,
+                priority=priority,
+                priority_rationale=rationale,
+                suggested_next_investigation=(
+                    "Review who controls the implementation address, whether upgrade authority is intentionally scoped, "
+                    "and whether delegatecall routing is constrained to intended code."
+                ),
+                evidence_tier=classify_evidence(sorted(set(observed)), [], [], recon),
+            )
+        )
+
+
+
+def _generate_initialization_hypotheses(
+    recon: loader.ReconArtifact,
+    out: list[ThreatHypothesis],
+    next_id,
+    invariants: list[InvariantCandidate],
+) -> None:
+    """Structural initialization/lifecycle hypotheses.
+
+    These hypotheses describe initializer reachability/lifecycle surfaces,
+    not confirmed initialization bugs.
+    """
+    initializer_surfaces = recon.facts_obj.by_type.get("initializer_surface", [])
+    initializer_lifecycles = recon.facts_obj.by_type.get("initializer_lifecycle", [])
+    if not (initializer_surfaces or initializer_lifecycles):
+        return
+
+    lifecycle_by_contract = {
+        f["subject"].get("contract"): f
+        for f in initializer_lifecycles
+        if f["subject"].get("contract")
+    }
+    inv_id = _find_invariant_id(invariants, "initialization_coherence")
+
+    for surface in initializer_surfaces:
+        fn_key = surface["subject"].get("function", "")
+        contract_key = surface["subject"].get("contract", "")
+        if not fn_key:
+            continue
+        lifecycle = lifecycle_by_contract.get(contract_key)
+        props = surface.get("properties", {})
+        observed = [surface["id"]]
+        if lifecycle:
+            observed.append(lifecycle["id"])
+        auth_status = props.get("authorization_status")
+        writes_initialized = bool(props.get("writes_initialized_flag"))
+        actor = "external_user" if auth_status == "none_observed" else "unknown_actor"
+        priority = "high_interest" if auth_status == "none_observed" and writes_initialized else "medium_interest"
+        rationale = (
+            "Initializer mutates observed initialization state without an observed authorization boundary"
+            if priority == "high_interest"
+            else "Initializer lifecycle should be checked against intended deployment sequencing"
+        )
+        statement = (
+            f"Initializer surface {fn_key} participates in deployment-time state setup"
+            f"{' and writes an initialization flag' if writes_initialized else ''}. "
+            f"If it remains callable outside the intended lifecycle or sequencing assumptions are wrong, "
+            f"configuration state may diverge from intended initialization semantics."
+        )
+        out.append(
+            ThreatHypothesis(
+                hypothesis_id=next_id(),
+                category="initialization_vulnerability",
+                statement=statement,
+                actor=actor,
+                preconditions=[
+                    "Initializer is reachable in deployed configuration",
+                    "Deployment sequencing or one-time-use assumptions matter for protocol safety",
+                ],
+                observed_facts=sorted(set(observed)),
+                affected_functions=[fn_key],
+                affected_assets=["deployment_state", "configuration_state"],
+                invariant_candidate_id=inv_id,
+                uncertainty=(
+                    "Observed authorization/no-authorization on the initializer is only structural evidence. "
+                    "Threat stage does not determine whether post-deployment invocation is actually possible or intended."
+                    + _analysis_coverage_warning(recon)
+                ),
+                priority=priority,
+                priority_rationale=rationale,
+                suggested_next_investigation=(
+                    "Check how deployment and upgrade flows invoke this initializer, whether it is one-shot by design, "
+                    "and whether an external/public path can still reach it after setup."
+                ),
+                evidence_tier=classify_evidence(sorted(set(observed)), [], [], recon),
+            )
+        )
+
 
 
 def _generate_dos_hypotheses(
@@ -1077,56 +1423,63 @@ def _generate_frontrun_hypotheses(
     next_id,
     invariants: list[InvariantCandidate],
 ) -> None:
-    """Detect frontrunnable governance patterns (F-112 pattern).
-    
-    Looks for state-dependent constraints in external functions.
+    """Detect benchmark-style live-state frontrun patterns.
+
+    Focus: externally reachable, authorization-sensitive actions whose
+    success depends on mutable live state and whose outcome also mutates
+    state -- a closer match to config/governance blocking than generic
+    stateful require() usage.
     """
-    # Find MEV exposure indicators
     mev_facts = recon.facts_obj.by_type.get("mev_exposure_indicator", [])
-    
+
     for mev_fact in mev_facts:
         fn_key = mev_fact["subject"].get("function", "")
         if not fn_key:
             continue
-        
-        # Find related state_dependent_constraint facts
+
         fn_facts = _find_function_facts(recon, fn_key)
-        constraint_facts = [
-            f for f in fn_facts
-            if f["type"] == "state_dependent_constraint"
-        ]
-        
+        constraint_facts = [f for f in fn_facts if f["type"] == "state_dependent_constraint"]
+        auth_facts = [f for f in fn_facts if f["type"] in ("access_controlled_function", "modifier_usage")]
+        effect_facts = [f for f in fn_facts if f["type"] in ("state_write", "post_call_state_effect")]
+        visibility_facts = [f for f in fn_facts if f["type"] == "function_visibility"]
+        mutability_facts = [f for f in fn_facts if f["type"] == "function_mutability"]
+        vis = {str((f.get("properties") or {}).get("visibility") or "").lower() for f in visibility_facts}
+        mut = {str((f.get("properties") or {}).get("state_mutability") or (f.get("properties") or {}).get("mutability") or "").lower() for f in mutability_facts}
+
+        if not constraint_facts or not auth_facts or not effect_facts:
+            continue
+        if vis and vis.isdisjoint({"external", "public"}):
+            continue
+        if mut & {"view", "pure"}:
+            continue
+
         constraint_count = mev_fact["properties"].get("constraint_count", 0)
         frontrun_risk = mev_fact["properties"].get("frontrun_risk", "medium")
-        
+        observed = [mev_fact["id"]] + [cf["id"] for cf in constraint_facts] + [af["id"] for af in auth_facts] + [ef["id"] for ef in effect_facts]
+
         out.append(
             ThreatHypothesis(
                 hypothesis_id=next_id(),
                 category="frontrun_vulnerability",
                 statement=(
-                    f"Function has {constraint_count} state-dependent constraint(s) vulnerable to frontrunning. "
-                    f"Attacker can observe pending transaction and frontrun with state manipulation, "
-                    f"causing victim transaction to revert or behave unexpectedly (MEV exploitation)."
+                    f"Function {fn_key} combines {constraint_count} mutable-state constraint(s) with an authorization-sensitive state transition. "
+                    f"If an attacker can move the live state before execution, the protected action may revert or settle under attacker-favorable timing."
                 ),
                 actor="mev_searcher",
                 preconditions=[
-                    "Function has require/revert conditions that depend on mutable state",
-                    "State can be manipulated by other external functions",
-                    "Transaction observable in mempool",
+                    "Protected action validates against mutable live state rather than a stable snapshot",
+                    "Adversary can change that state through a separate reachable transaction before inclusion order is finalized",
+                    "The blocked or altered action is security- or economically relevant",
                 ],
-                observed_facts=[mev_fact["id"]] + [cf["id"] for cf in constraint_facts],
+                observed_facts=sorted(set(observed)),
                 graph_nodes=[],
                 graph_edges=[],
                 affected_functions=[fn_key],
                 affected_assets=[],
                 priority="high_interest" if frontrun_risk == "high" else "medium_interest",
-                priority_rationale="MEV/frontrunning can DoS governance or manipulate outcomes",
-                evidence_tier=classify_evidence(
-                    [mev_fact["id"]] + [cf["id"] for cf in constraint_facts],
-                    [],
-                    [],
-                    recon
-                ).name,
+                priority_rationale="Authorization-sensitive live-state transition matches benchmark-style governance/MEV blocking pattern",
+                uncertainty="Threat stage shows mutable-state gating and protected state effects, but does not yet identify the exact competing transaction that can pre-position the blocking state.",
+                evidence_tier=classify_evidence(sorted(set(observed)), [], [], recon).name,
             )
         )
 
@@ -1137,93 +1490,68 @@ def _generate_randomness_bias_hypotheses(
     next_id,
     invariants: list[InvariantCandidate],
 ) -> None:
-    """Detect randomness reuse patterns (F-262 pattern).
-    
-    Looks for multiple randomness draws from same source in same function.
+    """Detect benchmark-style randomness reuse/correlation patterns.
+
+    Focus: repeated consumption of the same randomness source in a function
+    whose inputs are externally influenceable or whose outcome has state/
+    asset effects. Single predictable-source usage alone is too weak.
     """
-    # Find repeated randomness consumers
     reuse_facts = recon.facts_obj.by_type.get("repeated_randomness_consumer", [])
-    
+
     for reuse_fact in reuse_facts:
         fn_key = reuse_fact["subject"].get("function", "")
         if not fn_key:
             continue
-        
-        # Find related randomness source facts
+
         fn_facts = _find_function_facts(recon, fn_key)
-        source_facts = [
-            f for f in fn_facts
-            if f["type"] == "randomness_source_usage"
-        ]
-        
+        source_facts = [f for f in fn_facts if f["type"] == "randomness_source_usage"]
+        input_facts = [f for f in fn_facts if f["type"] in ("call_argument_origin_chain", "call_argument_dataflow", "input_origin")]
+        effect_facts = [f for f in fn_facts if f["type"] in ("asset_operation", "eth_transfer", "state_write")]
+        mutability = {
+            str((f.get("properties") or {}).get("state_mutability") or (f.get("properties") or {}).get("mutability") or "").lower()
+            for f in fn_facts if f["type"] == "function_mutability"
+        }
+        if mutability & {"view", "pure"}:
+            continue
+        if not input_facts or not effect_facts:
+            continue
+
+        meaningful_consumers = {
+            "assignment", "variable_initializer", "tuple_component",
+            "return_value", "return_statement", "ifstatement", "binary_op",
+        }
+        has_meaningful_draw = any(
+            str((sf.get("properties") or {}).get("immediate_consumer") or "") in meaningful_consumers
+            for sf in source_facts
+        )
+        if not has_meaningful_draw:
+            continue
+
         usage_count = reuse_fact["properties"].get("usage_count", 0)
-        
+        observed = [reuse_fact["id"]] + [sf["id"] for sf in source_facts] + [f["id"] for f in input_facts + effect_facts]
+
         out.append(
             ThreatHypothesis(
                 hypothesis_id=next_id(),
                 category="randomness_manipulation",
                 statement=(
-                    f"Function uses randomness source {usage_count} times. "
-                    f"If same seed is reused for multiple independent draws, "
-                    f"attacker can exploit correlation to gain statistical advantage."
+                    f"Function {fn_key} consumes the same randomness source {usage_count} times along an externally influenceable path with state/asset effects. "
+                    f"If those draws are expected to be independent, source reuse can create exploitable correlation."
                 ),
                 actor="strategic_player",
                 preconditions=[
-                    "Same randomness seed used for multiple draws",
-                    "Draws should be independent but share correlation",
-                    "Attacker can choose inputs that exploit correlation",
+                    "Same randomness seed or source is reused for multiple draws",
+                    "The draws are expected to be independent for fairness or safety",
+                    "Attacker can influence inputs or sequencing to benefit from the correlation",
                 ],
-                observed_facts=[reuse_fact["id"]] + [sf["id"] for sf in source_facts],
+                observed_facts=sorted(set(observed)),
                 graph_nodes=[],
                 graph_edges=[],
                 affected_functions=[fn_key],
                 affected_assets=[],
                 priority="medium_interest",
-                priority_rationale="Statistical bias can provide unfair advantage",
-                evidence_tier=classify_evidence(
-                    [reuse_fact["id"]] + [sf["id"] for sf in source_facts],
-                    [],
-                    [],
-                    recon
-                ).name,
+                priority_rationale="Repeated randomness consumption with attacker influence and state/asset effects can create benchmark-style statistical bias",
+                uncertainty="Threat stage shows repeated source consumption, external influence, and state/asset effects, but not yet the exact payout or fairness metric the correlation would bias.",
+                evidence_tier=classify_evidence(sorted(set(observed)), [], [], recon).name,
             )
         )
-    
-    # Also check for single randomness usage (still noteworthy)
-    single_rand_facts = recon.facts_obj.by_type.get("randomness_source_usage", [])
-    for rand_fact in single_rand_facts:
-        fn_key = rand_fact["subject"].get("function", "")
-        if not fn_key:
-            continue
-        
-        # Skip if already covered by reuse_facts
-        if any(rf["subject"].get("function") == fn_key for rf in reuse_facts):
-            continue
-        
-        source = rand_fact["properties"].get("source", "unknown")
-        predictability = rand_fact["properties"].get("predictability", "medium")
-        
-        if predictability == "high":
-            out.append(
-                ThreatHypothesis(
-                    hypothesis_id=next_id(),
-                    category="randomness_manipulation",
-                    statement=(
-                        f"Function uses predictable randomness source ({source}). "
-                        f"On-chain randomness is manipulable by miners/validators."
-                    ),
-                    actor="miner_validator",
-                    preconditions=[
-                        "Function relies on on-chain randomness for security-critical decision",
-                        "Randomness source is predictable or manipulable",
-                    ],
-                    observed_facts=[rand_fact["id"]],
-                    graph_nodes=[],
-                    graph_edges=[],
-                    affected_functions=[fn_key],
-                    affected_assets=[],
-                    priority="low_interest",
-                    priority_rationale="Predictable randomness - common knowledge issue",
-                    evidence_tier=classify_evidence([rand_fact["id"]], [], [], recon).name,
-                )
-            )

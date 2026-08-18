@@ -1,3 +1,0 @@
-function getUpgradeDelay() override external view returns (uint256) {
-        return getSettingUint("upgrade.delay");
-    }

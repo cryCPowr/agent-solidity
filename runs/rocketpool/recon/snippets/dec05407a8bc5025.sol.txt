@@ -1,1 +1,0 @@
-getSettingBool("network.submit.rewards.enabled")

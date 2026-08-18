@@ -1,1 +1,0 @@
-require(rplToken.transferFrom(_nodeAddress, address(this), _amount), "Could not transfer RPL to staking contract")

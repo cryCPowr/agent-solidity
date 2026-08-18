@@ -1,1 +1,0 @@
-expressHeadMoved ? uint128(block.number) : uint128(packed >> 0)

@@ -1,5 +1,0 @@
-if (_rewardsRPL > 0) {
-            IERC20 rocketTokenRPL = IERC20(getAddress(rocketTokenRPLKey));
-            rocketTokenRPL.approve(address(rocketVault), _rewardsRPL);
-            rocketVault.depositToken("rocketMerkleDistributorMainnet", rocketTokenRPL, _rewardsRPL);
-        }

@@ -1,1 +1,0 @@
-emit EtherWithdrawn(contractName, _to, _amount, block.timestamp)

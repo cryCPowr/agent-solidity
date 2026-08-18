@@ -1,1 +1,0 @@
-require(address(this).balance >= depositAmount, "Insufficient balance to begin staking")

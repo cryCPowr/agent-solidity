@@ -1,1 +1,0 @@
-calcBase * submissionCount / rocketDAONodeTrusted.getMemberCount()

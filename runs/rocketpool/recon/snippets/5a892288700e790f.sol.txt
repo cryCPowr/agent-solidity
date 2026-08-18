@@ -1,1 +1,0 @@
-require(_withdrawalProof.withdrawal.validatorIndex == _validatorProof.validatorIndex, "Withdrawal validator not matching")

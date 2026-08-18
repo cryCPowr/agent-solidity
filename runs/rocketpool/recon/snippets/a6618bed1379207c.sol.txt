@@ -1,1 +1,0 @@
-string constant internal protocolDaoSettingNamespace = "dao.protocol.setting."

@@ -1,1 +1,0 @@
-rocketDAONodeTrustedSettings.setSettingUint(_settingPath, _value)

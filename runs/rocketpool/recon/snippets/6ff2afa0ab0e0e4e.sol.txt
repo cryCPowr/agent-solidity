@@ -1,6 +1,0 @@
-function getNodeMegapoolETHBonded(address _nodeAddress) public view returns (uint256) {
-        RocketNetworkSnapshotsInterface rocketNetworkSnapshots = RocketNetworkSnapshotsInterface(getContractAddress("rocketNetworkSnapshots"));
-        bytes32 key = keccak256(abi.encodePacked("megapool.eth.provided.node.amount", _nodeAddress));
-        (, , uint224 value) = rocketNetworkSnapshots.latest(key);
-        return uint256(value);
-    }

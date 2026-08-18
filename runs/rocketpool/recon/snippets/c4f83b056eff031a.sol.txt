@@ -1,3 +1,0 @@
-function getExecuted(uint256 _upgradeProposalID) override public view returns (bool) {
-        return getBool(keccak256(abi.encodePacked(daoUpgradeNameSpace, "executed", _upgradeProposalID)));
-    }

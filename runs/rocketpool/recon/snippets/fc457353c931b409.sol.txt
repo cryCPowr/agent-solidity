@@ -1,1 +1,0 @@
-bytes32 internal constant nodeBalanceKey = "deposit.pool.node.balance"

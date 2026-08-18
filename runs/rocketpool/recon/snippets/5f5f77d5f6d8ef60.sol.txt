@@ -1,1 +1,0 @@
-_value >= 300 ether && _value <= 5000 ether

@@ -1,3 +1,0 @@
-function getVariableDepositAmount() override external pure returns (uint256) {
-        return getLaunchBalance() - getPreLaunchValue();
-    }

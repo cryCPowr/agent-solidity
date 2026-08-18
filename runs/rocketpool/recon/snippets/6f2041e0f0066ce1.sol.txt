@@ -1,1 +1,0 @@
-rocketMinipoolQueue.dequeueMinipools(_count)

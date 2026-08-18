@@ -1,4 +1,0 @@
-function _isHistoricalProof(uint64 _proofSlot, uint64 _targetSlot) internal view returns (bool) {
-        require(_proofSlot > _targetSlot, "Invalid slot for proof");
-        return _targetSlot + slotsPerHistoricalRoot < _proofSlot;
-    }

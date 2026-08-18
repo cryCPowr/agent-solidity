@@ -1,3 +1,0 @@
-function getSubmissionFromNodeExists(address _trustedNodeAddress, RewardSubmission calldata _submission) override external view returns (bool) {
-        return getBool(keccak256(abi.encode("rewards.snapshot.submitted.node.key", _trustedNodeAddress, _submission)));
-    }

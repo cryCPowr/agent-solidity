@@ -1,1 +1,0 @@
-abi.encodePacked(bytes1(0xff), address(this), uint256(0), keccak256(initCode))

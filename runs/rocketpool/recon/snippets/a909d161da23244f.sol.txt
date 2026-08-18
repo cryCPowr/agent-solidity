@@ -1,1 +1,0 @@
-function getLotAddressBidAmount(uint256 _index, address _bidder) external view returns (uint256);

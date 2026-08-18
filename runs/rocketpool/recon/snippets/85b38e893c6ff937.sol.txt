@@ -1,1 +1,0 @@
-function getSettingUint(string memory _settingPath) external view returns (uint256);

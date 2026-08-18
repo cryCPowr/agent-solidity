@@ -1,1 +1,0 @@
-require(uint256(_recentEpoch) >= _withdrawalEpoch + userDistributeDelay, "Not enough time has passed")

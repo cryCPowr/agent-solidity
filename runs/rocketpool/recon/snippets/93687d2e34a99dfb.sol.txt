@@ -1,1 +1,0 @@
-setBytes(keccak256(abi.encodePacked("minipool.pubkey", _minipool)), _pubkey)

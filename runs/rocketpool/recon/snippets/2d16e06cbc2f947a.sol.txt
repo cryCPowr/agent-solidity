@@ -1,3 +1,0 @@
-function increaseLotTotalBidAmount(uint256 _index, uint256 _amount) private {
-        addUint(keccak256(abi.encodePacked("auction.lot.bid.total", _index)), _amount);
-    }

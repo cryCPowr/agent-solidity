@@ -1,1 +1,0 @@
-function setWithdrawalAddress(address _nodeAddress, address _newWithdrawalAddress, bool _confirm) external;

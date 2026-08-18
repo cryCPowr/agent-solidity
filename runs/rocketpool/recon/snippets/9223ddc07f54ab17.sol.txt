@@ -1,1 +1,0 @@
-function mint(uint256 _ethAmount, address _to) external;

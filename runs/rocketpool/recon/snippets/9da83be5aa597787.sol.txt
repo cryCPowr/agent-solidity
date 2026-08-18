@@ -1,1 +1,0 @@
-require(rocketDAONode.getMemberIsValid(msg.sender), "Not a trusted member")

@@ -1,6 +1,0 @@
-function getNodeStakedRPL(address _nodeAddress) override public view returns (uint256) {
-        bytes32 key = keccak256(abi.encodePacked("rpl.staked.node.amount", _nodeAddress));
-        RocketNetworkSnapshotsInterface rocketNetworkSnapshots = RocketNetworkSnapshotsInterface(getContractAddress("rocketNetworkSnapshots"));
-        (,, uint224 value) = rocketNetworkSnapshots.latest(key);
-        return uint256(value);
-    }

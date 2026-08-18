@@ -1,6 +1,0 @@
-function _initialiseFeeDistributor(address _nodeAddress) internal {
-        // Load contracts
-        RocketNodeDistributorFactoryInterface rocketNodeDistributorFactory = RocketNodeDistributorFactoryInterface(getContractAddress("rocketNodeDistributorFactory"));
-        // Create the distributor proxy
-        rocketNodeDistributorFactory.createProxy(_nodeAddress);
-    }

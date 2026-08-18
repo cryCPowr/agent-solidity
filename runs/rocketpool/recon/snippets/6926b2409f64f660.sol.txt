@@ -1,1 +1,0 @@
-event MinipoolPromoted(uint256 time);

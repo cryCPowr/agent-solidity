@@ -1,8 +1,0 @@
-if (distributorAddress.balance > 0) {
-            // Get contracts
-            RocketNodeManagerInterface rocketNodeManager = RocketNodeManagerInterface(getContractAddress("rocketNodeManager"));
-            // Ensure distributor has been initialised
-            require(rocketNodeManager.getFeeDistributorInitialised(_nodeAddress), "Distributor not initialised");
-            RocketNodeDistributorInterface distributor = RocketNodeDistributorInterface(distributorAddress);
-            distributor.distribute();
-        }

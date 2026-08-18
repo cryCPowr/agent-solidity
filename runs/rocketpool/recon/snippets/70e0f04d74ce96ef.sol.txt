@@ -1,3 +1,0 @@
-if (!rocketDAOProtocolSettingsDeposit.getDepositEnabled()) {
-            return 0;
-        }

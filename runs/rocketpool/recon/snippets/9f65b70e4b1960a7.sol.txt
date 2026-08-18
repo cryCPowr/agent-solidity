@@ -1,9 +1,0 @@
-function _stakeRPLFor(address _nodeAddress, uint256 _amount) internal {
-        // Transfer RPL in and increase stake
-        _transferRPLIn(msg.sender, _amount);
-        _increaseNodeRPLStake(_nodeAddress, _amount);
-        // Update last staked time
-        _setNodeLastStakeTime(_nodeAddress);
-        // Emit event
-        emit RPLStaked(_nodeAddress, msg.sender, _amount, block.timestamp);
-    }

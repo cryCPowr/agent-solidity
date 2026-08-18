@@ -1,1 +1,0 @@
-RocketNetworkSnapshotsInterface(getContractAddress("rocketNetworkSnapshots"))

@@ -1,1 +1,0 @@
-event NodeSmoothingPoolStateChanged(address indexed node, bool state);

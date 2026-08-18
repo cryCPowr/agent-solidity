@@ -1,1 +1,0 @@
-event DepositAssigned(address indexed minipool, uint256 amount, uint256 time);

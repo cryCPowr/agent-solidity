@@ -1,1 +1,0 @@
-getVotingPowerVeto(_proposalID)

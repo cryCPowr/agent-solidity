@@ -1,1 +1,0 @@
-_vote(msg.sender, _votingPower, _proposalID, _voteDirection, true)

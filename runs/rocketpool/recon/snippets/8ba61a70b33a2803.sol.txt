@@ -1,1 +1,0 @@
-require(_phase1Duration > 0, "Proposal cannot have a duration of 0")

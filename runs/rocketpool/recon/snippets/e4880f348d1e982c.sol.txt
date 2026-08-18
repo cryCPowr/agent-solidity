@@ -1,1 +1,0 @@
-totalValue + 1

@@ -1,1 +1,0 @@
-RocketDAOSecurityInterface(getContractAddress("rocketDAOSecurity"))

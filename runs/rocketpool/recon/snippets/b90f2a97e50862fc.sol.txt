@@ -1,1 +1,0 @@
-event BootstrapSettingUint(string settingContractName, string settingPath, uint256 value, uint256 time);

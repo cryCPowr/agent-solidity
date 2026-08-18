@@ -1,1 +1,0 @@
-rocketStorage.setString(_key, _value)

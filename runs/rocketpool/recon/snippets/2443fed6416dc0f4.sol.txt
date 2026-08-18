@@ -1,1 +1,0 @@
-function getTotalRETHSupply() external view returns (uint256);

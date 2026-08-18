@@ -1,1 +1,0 @@
-require(pubkey.length == 48, "Invalid pubkey length")

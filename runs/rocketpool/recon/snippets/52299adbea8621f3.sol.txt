@@ -1,3 +1,0 @@
-if (msg.value > 0) {
-            rocketVault.depositEther{value: msg.value}();
-        }

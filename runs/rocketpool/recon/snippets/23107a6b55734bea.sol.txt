@@ -1,3 +1,0 @@
-if (withdrawalAddress == address(0)) {
-            return _nodeAddress;
-        }

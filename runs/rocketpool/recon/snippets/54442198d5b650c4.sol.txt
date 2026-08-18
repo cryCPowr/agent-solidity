@@ -1,3 +1,0 @@
-if (isAtHead) {
-                _setQueueMoved(true, false);
-            }

@@ -1,3 +1,0 @@
-function setInt(bytes32 _key, int _value) external onlyGuardian {
-        rocketStorage.setInt(_key, _value);
-    }

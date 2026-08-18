@@ -1,8 +1,0 @@
-function setTimezoneLocation(string calldata _timezoneLocation) override external onlyLatestContract("rocketNodeManager", address(this)) onlyRegisteredNode(msg.sender) {
-        // Check timezone location
-        require(bytes(_timezoneLocation).length >= 4, "The timezone location is invalid");
-        // Set timezone location
-        setString(keccak256(abi.encodePacked("node.timezone.location", msg.sender)), _timezoneLocation);
-        // Emit node timezone location set event
-        emit NodeTimezoneLocationSet(msg.sender, block.timestamp);
-    }

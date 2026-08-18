@@ -1,1 +1,0 @@
-require(_validatorProof.validator.withdrawalCredentials == withdrawalCredentials, "Invalid withdrawal credentials")

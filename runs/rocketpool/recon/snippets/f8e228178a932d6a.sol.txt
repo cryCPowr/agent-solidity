@@ -1,1 +1,0 @@
-function challengeExit(ExitChallenge[] calldata _challenges) external;

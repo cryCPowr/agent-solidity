@@ -1,1 +1,0 @@
-rocketDAOSecurityProposals.proposalReplace(_existingMemberAddress, _newMemberId, _newMemberAddress)

@@ -1,1 +1,0 @@
-require(_value >= 0.01 ether, "The max rETH balance delta must be >= 1%")

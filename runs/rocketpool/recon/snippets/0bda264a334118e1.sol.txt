@@ -1,4 +1,0 @@
-function getDelegateExpiry(address _delegateAddress) override external view returns (uint256) {
-        RocketMegapoolDelegateBaseInterface deprecatedDelegate = RocketMegapoolDelegateBaseInterface(_delegateAddress);
-        return deprecatedDelegate.getExpirationTime();
-    }

@@ -1,3 +1,0 @@
-function getNodeShare() override public view returns (uint256) {
-        return getSettingUint("network.node.commission.share");
-    }

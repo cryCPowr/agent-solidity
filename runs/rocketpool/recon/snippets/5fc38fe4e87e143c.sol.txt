@@ -1,1 +1,0 @@
-_setSettingUint("network.penalty.per.rate", 0.1 ether)

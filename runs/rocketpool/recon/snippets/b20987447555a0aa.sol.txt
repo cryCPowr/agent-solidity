@@ -1,1 +1,0 @@
-function getAssignedValue() external view returns (uint256);

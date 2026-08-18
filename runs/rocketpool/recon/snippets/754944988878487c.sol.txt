@@ -1,1 +1,0 @@
-function slashRPL(address _nodeAddress, uint256 _ethSlashAmount) external;

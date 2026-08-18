@@ -1,1 +1,0 @@
-SSZ.intoVector(uint248(_pastSlot % slotsPerHistoricalRoot), 13)

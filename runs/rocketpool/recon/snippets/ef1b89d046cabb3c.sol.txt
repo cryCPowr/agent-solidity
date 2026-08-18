@@ -1,5 +1,0 @@
-if (recycleValue < toUser) {
-            uint256 shortFall = toUser - recycleValue;
-            toUser -= shortFall;
-            _increaseDebt(shortFall);
-        }

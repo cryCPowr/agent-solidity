@@ -1,4 +1,0 @@
-modifier onlySecurityMember() {
-        require(getBool(keccak256(abi.encodePacked(daoNameSpace, "member", msg.sender))), "Sender is not a security council member");
-        _;
-    }

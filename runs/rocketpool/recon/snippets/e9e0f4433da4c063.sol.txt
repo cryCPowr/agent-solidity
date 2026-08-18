@@ -1,8 +1,0 @@
-function getNodeLegacyStakedRPL(address _nodeAddress) override public view returns (uint256) {
-        bytes32 migratedKey = keccak256(abi.encodePacked("rpl.legacy.staked.node.migrated", _nodeAddress));
-        if (getBool(migratedKey)) {
-            bytes32 legacyKey = keccak256(abi.encodePacked("rpl.legacy.staked.node.amount", _nodeAddress));
-            return getUint(legacyKey);
-        }
-        return getNodeStakedRPL(_nodeAddress);
-    }

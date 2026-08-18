@@ -1,3 +1,0 @@
-if(keccak256(abi.encodePacked(_settingPath)) == keccak256(abi.encodePacked("rewards.network.enabled", uint256(0)))) {
-                revert("Cannot disable network 0");
-            }

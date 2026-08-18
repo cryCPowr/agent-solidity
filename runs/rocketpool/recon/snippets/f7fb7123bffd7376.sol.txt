@@ -1,1 +1,0 @@
-event RPLLockingAllowed(address indexed node, bool allowed, uint256 time);

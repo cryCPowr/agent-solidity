@@ -1,1 +1,0 @@
-_insert(keccak256("node.voting.power.stake.maximum"), 1.5 ether)

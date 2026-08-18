@@ -1,1 +1,0 @@
-setSettingUint("minipool.cancel.bond.reduction.quorum", 0.51 ether)

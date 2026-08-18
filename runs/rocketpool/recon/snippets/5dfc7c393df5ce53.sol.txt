@@ -1,6 +1,0 @@
-if (last._time == blockTimestamp) {
-                last._value = _value;
-                _set(_key, pos - 1, last);
-            } else {
-                _push(_key, Checkpoint192({_time: blockTimestamp, _value: _value}));
-            }

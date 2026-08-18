@@ -1,1 +1,0 @@
-require(success, "Failed to send funds to withdrawal address")

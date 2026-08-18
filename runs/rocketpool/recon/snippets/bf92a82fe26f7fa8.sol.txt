@@ -1,9 +1,0 @@
-function provisionExpressTickets(address _nodeAddress) external override onlyLatestContract("rocketNodeManager", address(this)) onlyRegisteredNode(_nodeAddress) {
-        bytes32 provisionedKey = keccak256(abi.encodePacked("node.express.provisioned", _nodeAddress));
-        if (getBool(provisionedKey)) {
-            return;
-        }
-        uint256 tickets = getExpressTicketCount(_nodeAddress);
-        setBool(provisionedKey, true);
-        setUint(keccak256(abi.encodePacked("node.express.tickets", _nodeAddress)), tickets);
-    }

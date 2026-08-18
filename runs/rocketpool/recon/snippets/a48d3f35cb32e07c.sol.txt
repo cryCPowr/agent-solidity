@@ -1,3 +1,0 @@
-if (block.timestamp > lastPaymentTime) {
-            _payOutContract(_contractName);
-        }

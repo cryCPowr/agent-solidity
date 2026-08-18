@@ -1,1 +1,0 @@
-emit MinipoolCreated(contractAddress, _nodeAddress, block.timestamp)

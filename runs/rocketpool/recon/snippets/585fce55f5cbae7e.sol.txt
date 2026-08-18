@@ -1,3 +1,0 @@
-function getVoteDelayTime() override external view returns (uint256) {
-        return getSettingUint("proposal.vote.delay.time");
-    }

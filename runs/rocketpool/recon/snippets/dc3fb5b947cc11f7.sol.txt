@@ -1,1 +1,0 @@
-require(owner != address(0), "ERC20: approve from the zero address")

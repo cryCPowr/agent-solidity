@@ -1,1 +1,0 @@
-addUint(keccak256(abi.encodePacked("node.deposit.credit.balance", _nodeAddress)), _amount)

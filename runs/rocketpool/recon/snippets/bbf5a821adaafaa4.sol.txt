@@ -1,3 +1,0 @@
-function getAssignDepositsEnabled() override external view returns (bool) {
-        return getSettingBool("deposit.assign.enabled");
-    }

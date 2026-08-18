@@ -1,1 +1,0 @@
-bytes32 private constant nodeShareKey = keccak256(abi.encodePacked("network.revenue.node.share"))

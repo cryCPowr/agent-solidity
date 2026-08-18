@@ -1,1 +1,0 @@
-function getNodeExists(address _nodeAddress) external view returns (bool);

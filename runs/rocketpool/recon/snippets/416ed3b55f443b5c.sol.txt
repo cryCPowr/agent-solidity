@@ -1,1 +1,0 @@
-uint256 constant internal bondBurnPercent = 0.2 ether

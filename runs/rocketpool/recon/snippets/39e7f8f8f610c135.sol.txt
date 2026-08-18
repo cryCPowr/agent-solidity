@@ -1,9 +1,0 @@
-function getNodeUsableCredit(address _nodeAddress) override public view returns (uint256) {
-        RocketDepositPoolInterface rocketDepositPool = RocketDepositPoolInterface(getContractAddress("rocketDepositPool"));
-        uint256 depositPoolBalance = rocketDepositPool.getBalance();
-        uint256 usableCredit = getNodeDepositCredit(_nodeAddress);
-        if (usableCredit > depositPoolBalance) {
-            usableCredit = depositPoolBalance;
-        }
-        return usableCredit;
-    }

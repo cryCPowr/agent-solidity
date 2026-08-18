@@ -1,1 +1,0 @@
-function applyPenalty(uint256 _amount) external;

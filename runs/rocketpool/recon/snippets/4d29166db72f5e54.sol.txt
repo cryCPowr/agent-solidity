@@ -1,1 +1,0 @@
-RPLTreasuryContractUpdated(_contractName, _recipientAddress, _amountPerPeriod, _periodLength, _numPeriods)

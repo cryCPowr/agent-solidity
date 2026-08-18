@@ -1,1 +1,0 @@
-_withdrawalProof.withdrawalSlot / slotsPerEpoch

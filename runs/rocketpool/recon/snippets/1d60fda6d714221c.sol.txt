@@ -1,1 +1,0 @@
-function setProtocolDAOShare(uint256 _value) external;

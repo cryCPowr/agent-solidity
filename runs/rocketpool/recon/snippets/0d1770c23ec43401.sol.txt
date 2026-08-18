@@ -1,9 +1,0 @@
-if (nodeIndex < _nodeCount && delegateIndex < _nodeCount) {
-                // Calculate the node and the delegate referred to by this leaf node
-                address nodeAddress = rocketNodeManager.getNodeAt(nodeIndex);
-                address actualDelegate = rocketNetworkVoting.getDelegate(nodeAddress, blockNumber32);
-                // If a delegation exists, retrieve the node's voting power
-                if (actualDelegate == rocketNodeManager.getNodeAt(delegateIndex)) {
-                    actual = rocketNetworkVoting.getVotingPower(nodeAddress, blockNumber32);
-                }
-            }

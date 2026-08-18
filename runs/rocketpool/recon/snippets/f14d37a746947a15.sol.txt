@@ -1,1 +1,0 @@
-uint256(_item._time) << 192 | uint256(_item._value)

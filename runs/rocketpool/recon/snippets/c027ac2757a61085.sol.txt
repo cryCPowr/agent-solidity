@@ -1,1 +1,0 @@
-function getState(uint256 _upgradeProposalID) external view returns (UpgradeProposalState);

@@ -1,4 +1,0 @@
-function claimAndStake(address _nodeAddress, Claim[] calldata _claims, uint256 _stakeAmount) public override {
-        _verifyClaim(_nodeAddress, _claims);
-        _claimAndStake(_nodeAddress, _claims, _stakeAmount);
-    }

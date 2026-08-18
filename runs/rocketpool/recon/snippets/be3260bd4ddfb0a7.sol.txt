@@ -1,1 +1,0 @@
-event BootstrapSettingClaimers(uint256 trustedNodePercent, uint256 protocolPercent, uint256 nodePercent, uint256 time);

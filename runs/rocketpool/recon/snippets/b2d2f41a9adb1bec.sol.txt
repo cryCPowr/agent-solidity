@@ -1,1 +1,0 @@
-emit Transfer(address(0), account, amount)

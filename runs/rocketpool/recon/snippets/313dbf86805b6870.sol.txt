@@ -1,1 +1,0 @@
-function latestValue(bytes32 _key) external view returns (uint192);

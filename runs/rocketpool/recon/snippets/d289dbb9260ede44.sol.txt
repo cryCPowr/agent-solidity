@@ -1,1 +1,0 @@
-settingKey == keccak256(bytes("network.consensus.threshold"))

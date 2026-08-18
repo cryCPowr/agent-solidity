@@ -1,1 +1,0 @@
-setAddress(bytes32(setKey + tail), _newDelegateAddress)

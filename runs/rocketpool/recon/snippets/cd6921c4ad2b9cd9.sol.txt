@@ -1,6 +1,0 @@
-function _packItem(DepositQueueValue memory _item) internal pure returns (uint256 packed) {
-        packed |= uint256(uint160(_item.receiver)) << receiverOffset;
-        packed |= uint256(_item.validatorId) << indexOffset;
-        packed |= uint256(_item.suppliedValue) << suppliedOffset;
-        packed |= uint256(_item.requestedValue);
-    }

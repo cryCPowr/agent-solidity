@@ -1,1 +1,0 @@
-event BidPlaced(uint256 indexed lotIndex, address indexed by, uint256 bidAmount, uint256 time);

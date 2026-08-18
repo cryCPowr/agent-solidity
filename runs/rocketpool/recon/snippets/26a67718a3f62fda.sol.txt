@@ -1,1 +1,0 @@
-require(length > 0, "Queue can't be empty")

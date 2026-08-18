@@ -1,1 +1,0 @@
-votesFor <= votesAgainst || votesFor < getVotesRequired(_proposalID)

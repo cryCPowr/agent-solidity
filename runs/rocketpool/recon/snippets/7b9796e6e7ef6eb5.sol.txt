@@ -1,1 +1,0 @@
-getUint(keccak256(abi.encodePacked("node.smoothing.pool.changed.time", _nodeAddress)))

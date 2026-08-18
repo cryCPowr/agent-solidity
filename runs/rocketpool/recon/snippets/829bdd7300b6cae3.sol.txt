@@ -1,1 +1,0 @@
-setUint(keccak256(abi.encodePacked(daoProposalNameSpace, "receipt.direction", _proposalID, _nodeOperator)), uint256(_voteDirection))

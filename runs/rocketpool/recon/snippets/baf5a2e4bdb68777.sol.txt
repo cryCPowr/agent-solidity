@@ -1,1 +1,0 @@
-keccak256(abi.encodePacked("node.stake.for.allowed", _nodeAddress, _caller))

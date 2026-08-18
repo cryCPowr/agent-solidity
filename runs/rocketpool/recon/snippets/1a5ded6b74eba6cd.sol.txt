@@ -1,1 +1,0 @@
-abi.encodePacked("\x19Ethereum Signed Message:\n", Strings.toString(message.length), message)

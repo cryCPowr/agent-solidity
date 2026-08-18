@@ -1,1 +1,0 @@
-if (ethBalance >= _ethRequired) { return; }

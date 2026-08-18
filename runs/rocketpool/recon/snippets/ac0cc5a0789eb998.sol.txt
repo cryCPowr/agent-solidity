@@ -1,1 +1,0 @@
-setUint(keccak256(abi.encodePacked("node.average.fee.numerator", msg.sender)), numerator)

@@ -1,3 +1,0 @@
-if (!express && standardQueueLength == 0) {
-            express = true;
-        }

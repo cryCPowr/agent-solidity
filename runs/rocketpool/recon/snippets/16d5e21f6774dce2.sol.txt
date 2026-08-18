@@ -1,1 +1,0 @@
-emit ProposalSecurityReplace(_existingMemberAddress, _newMemberId, _newMemberAddress, block.timestamp)

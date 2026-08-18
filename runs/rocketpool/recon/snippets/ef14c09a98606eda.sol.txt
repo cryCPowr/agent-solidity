@@ -1,4 +1,0 @@
-if (nNodeDemand >= calcBase) {
-            if (nNodeDemandSign) { return maxFee; }
-            return minFee;
-        }

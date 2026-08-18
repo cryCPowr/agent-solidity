@@ -1,1 +1,0 @@
-getSettingUint("auction.price.reserve")

@@ -1,1 +1,0 @@
-ecrecover(prefixedHash, _v, _r, _s)

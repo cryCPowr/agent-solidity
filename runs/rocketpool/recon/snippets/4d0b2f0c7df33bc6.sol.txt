@@ -1,1 +1,0 @@
-function getExpirationTime() external view returns (uint256);

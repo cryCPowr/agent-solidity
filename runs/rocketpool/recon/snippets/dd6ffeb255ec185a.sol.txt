@@ -1,1 +1,0 @@
-rocketDAONode.getMemberIsChallenged(_nodeAddress)

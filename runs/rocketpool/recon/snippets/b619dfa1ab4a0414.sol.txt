@@ -1,1 +1,0 @@
-if (block.number >= getLotEndBlock(_index)) { return true; }

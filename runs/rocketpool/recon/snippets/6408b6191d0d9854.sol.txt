@@ -1,2 +1,0 @@
-if (bidPrice > blockPrice) { return bidPrice; }
-        else { return blockPrice; }

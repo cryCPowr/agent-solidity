@@ -1,5 +1,0 @@
-if (_gindex % 2 == 1) {
-                value = efficientSha256(_witnesses[i], value);
-            } else {
-                value = efficientSha256(value, _witnesses[i]);
-            }

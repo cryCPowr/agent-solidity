@@ -1,6 +1,0 @@
-function lookupRecentGas(string calldata _key, uint32 _block, uint256 _recency) external view returns (uint256) {
-        bytes32 key = keccak256(abi.encodePacked(_key));
-        uint256 gasBefore = gasleft();
-        snapshots.lookupRecent(key, _block, _recency);
-        return gasBefore - gasleft();
-    }

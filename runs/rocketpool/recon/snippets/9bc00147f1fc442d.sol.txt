@@ -1,1 +1,0 @@
-userPortion.mul(nodeFee)

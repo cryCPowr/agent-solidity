@@ -1,3 +1,0 @@
-if(settingKey == keccak256(bytes("upgrade.delay"))) {
-                require(_value >= 1 days && _value <= 30 days, "Value must be >= 1 day & <= 30 days");
-            }

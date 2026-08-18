@@ -1,8 +1,0 @@
-constructor(RocketStorageInterface _rocketStorageAddress, IERC20 _rocketTokenRPLFixedSupplyAddress) RocketBase(_rocketStorageAddress) ERC20("Rocket Pool Protocol", "RPL") {
-        // Version
-        version = 1;
-        // Set the mainnet RPL fixed supply token address
-        rplFixedSupplyContract = IERC20(_rocketTokenRPLFixedSupplyAddress);
-        // Mint the 18m tokens that currently exist and allow them to be sent to people burning existing fixed supply RPL
-        _mint(address(this), totalInitialSupply);
-    }

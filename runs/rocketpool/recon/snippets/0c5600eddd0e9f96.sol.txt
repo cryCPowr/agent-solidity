@@ -1,1 +1,0 @@
-rocketNetworkVoting.getVotingPower(nodeAddress, blockNumber32)

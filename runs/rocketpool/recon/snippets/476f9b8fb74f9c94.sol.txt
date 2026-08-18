@@ -1,1 +1,0 @@
-function executeRewardSnapshot(RewardSubmission calldata _submission) external;

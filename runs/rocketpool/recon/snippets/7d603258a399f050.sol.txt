@@ -1,7 +1,0 @@
-function calculateNodeRewards(uint256 _nodeCapital, uint256 _userCapital, uint256 _rewards) internal view returns (uint256) {
-        // Calculate node and user portion based on proportions of capital provided
-        uint256 nodePortion = _rewards.mul(_nodeCapital).div(_userCapital.add(_nodeCapital));
-        uint256 userPortion = _rewards.sub(nodePortion);
-        // Calculate final node amount as combination of node capital, node share and commission on user share
-        return nodePortion.add(userPortion.mul(nodeFee).div(calcBase));
-    }

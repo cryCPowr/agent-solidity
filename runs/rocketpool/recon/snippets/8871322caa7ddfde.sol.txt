@@ -1,6 +1,0 @@
-while (total < _count && nextIndex != 0) {
-            uint256 packedValue = getUint(keccak256(abi.encodePacked(_namespace, ".item", nextIndex)));
-            entries[total] = _unpackItem(packedValue);
-            nextIndex = getUint(keccak256(abi.encodePacked(_namespace, ".next", nextIndex)));
-            total++;
-        }

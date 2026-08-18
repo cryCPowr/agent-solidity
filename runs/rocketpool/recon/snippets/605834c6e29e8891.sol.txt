@@ -1,1 +1,0 @@
-require(_nodes.length == 2 ** (getNextDepth(_index, nodeCount) - indexDepth), "Invalid node count")

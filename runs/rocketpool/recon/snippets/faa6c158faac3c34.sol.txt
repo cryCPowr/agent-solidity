@@ -1,1 +1,0 @@
-function getStatusTime() external view returns (uint256);

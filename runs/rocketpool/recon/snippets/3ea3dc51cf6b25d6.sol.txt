@@ -1,1 +1,0 @@
-function getCurrentNodeShare() external view returns (uint256);

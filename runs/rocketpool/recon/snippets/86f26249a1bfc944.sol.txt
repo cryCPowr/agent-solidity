@@ -1,1 +1,0 @@
-require(bytes(_url).length >= 6, "The URL for this new member must be at least 6 characters")

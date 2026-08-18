@@ -1,3 +1,0 @@
-if (_nodeShare > nodeBond) {
-            _nodeShare = nodeBond;
-        }

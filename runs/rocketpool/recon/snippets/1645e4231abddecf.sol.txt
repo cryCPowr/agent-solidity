@@ -1,1 +1,0 @@
-storedValue != _value / shareScale

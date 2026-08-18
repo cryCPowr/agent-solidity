@@ -1,1 +1,0 @@
-bytes(_url).length >= 6

@@ -1,5 +1,0 @@
-function fundsReturned(address _nodeAddress, uint256 _nodeAmount, uint256 _userAmount) override external onlyRegisteredMegapool(msg.sender) onlyThisLatestContract {
-        // Update collateral balances
-        _decreaseETHBonded(_nodeAddress, _nodeAmount);
-        _decreaseETHBorrowed(_nodeAddress, _userAmount);
-    }

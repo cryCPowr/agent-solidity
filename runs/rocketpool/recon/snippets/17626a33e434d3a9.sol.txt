@@ -1,1 +1,0 @@
-function deleteString(bytes32 _key) internal { rocketStorage.deleteString(_key); }

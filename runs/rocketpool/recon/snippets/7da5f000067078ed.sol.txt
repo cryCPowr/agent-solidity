@@ -1,4 +1,0 @@
-modifier onlyRocketMegapoolManager() {
-        require(msg.sender == rocketStorage.getAddress(rocketMegapoolManagerKey), "Invalid or outdated contract");
-        _;
-    }

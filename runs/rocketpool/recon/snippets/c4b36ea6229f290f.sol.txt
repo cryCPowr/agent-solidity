@@ -1,1 +1,0 @@
-function getNodeCount(uint32 _block) external view returns (uint256);

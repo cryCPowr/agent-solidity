@@ -1,3 +1,0 @@
-function getChallengeWindow() override external view returns (uint256) {
-        return getSettingUint("members.challenge.window");
-    }

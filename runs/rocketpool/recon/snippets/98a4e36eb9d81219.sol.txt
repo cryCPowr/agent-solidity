@@ -1,3 +1,0 @@
-function setNodeShareSecurityCouncilAdder(uint256 _value) override external onlyAllowListedController {
-        _setNodeShareSecurityCouncilAdder(_value);
-    }

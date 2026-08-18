@@ -1,1 +1,0 @@
-oldContractAddress != address(0x0)

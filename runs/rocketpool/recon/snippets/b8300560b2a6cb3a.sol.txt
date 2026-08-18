@@ -1,1 +1,0 @@
-rocketNodeDistributorFactory.getProxyAddress(_nodeAddress)

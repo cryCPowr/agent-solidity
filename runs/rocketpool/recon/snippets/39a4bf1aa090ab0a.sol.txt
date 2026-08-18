@@ -1,3 +1,0 @@
-function getDepositFee() override external view returns (uint256) {
-        return getSettingUint("deposit.fee");
-    }

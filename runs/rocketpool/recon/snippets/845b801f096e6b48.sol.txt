@@ -1,1 +1,0 @@
-updateRPLWithdrawalAddress(_nodeAddress, _newRPLWithdrawalAddress)

@@ -1,1 +1,0 @@
-require(_value > 20 ether, "Value must be higher than 20 RPL")

@@ -1,1 +1,0 @@
-bytes32 immutable internal priceKey = keccak256("network.prices.rpl")

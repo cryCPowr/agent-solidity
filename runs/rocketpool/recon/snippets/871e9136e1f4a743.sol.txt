@@ -1,1 +1,0 @@
-_proposalID > 0

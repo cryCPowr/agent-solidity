@@ -1,1 +1,0 @@
-function getRewardsClaimersTrustedNodePerc() external view returns (uint256);

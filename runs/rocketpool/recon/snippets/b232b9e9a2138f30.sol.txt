@@ -1,1 +1,0 @@
-bytes(contractName).length > 0

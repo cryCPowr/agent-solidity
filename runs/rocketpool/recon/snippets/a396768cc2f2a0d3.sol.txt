@@ -1,1 +1,0 @@
-_upgradeABI(_name, _contractAbi)

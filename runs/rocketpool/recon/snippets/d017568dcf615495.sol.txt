@@ -1,1 +1,0 @@
-setUint(totalKey, totalValue - 1)

@@ -1,1 +1,0 @@
-require(_submission.smoothingPoolETH <= smoothingPoolBalance, "Invalid smoothing pool balance")

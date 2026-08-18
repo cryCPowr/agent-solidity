@@ -1,1 +1,0 @@
-function cancel(address _member, uint256 _proposalID) external;

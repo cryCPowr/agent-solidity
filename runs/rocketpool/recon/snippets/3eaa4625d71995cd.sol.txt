@@ -1,1 +1,0 @@
-if (totalEthBalance == 0) { return calcBase; }

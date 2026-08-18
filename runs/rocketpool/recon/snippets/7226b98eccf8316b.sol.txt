@@ -1,1 +1,0 @@
-require(!getBool(finalisedKey), "Minipool has already been finalised")

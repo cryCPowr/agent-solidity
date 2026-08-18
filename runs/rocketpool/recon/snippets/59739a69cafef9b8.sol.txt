@@ -1,3 +1,0 @@
-if (amountToRepay > debt) {
-                amountToRepay = debt;
-            }

@@ -1,1 +1,0 @@
-function register(address _nodeAddress, bool _enable) external;

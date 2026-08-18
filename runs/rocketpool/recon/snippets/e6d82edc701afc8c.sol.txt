@@ -1,4 +1,0 @@
-function from(uint248 _gindex, uint8 _length) internal pure returns (Path memory) {
-        require(_gindex < 2 ** _length, "Gindex exceeds length");
-        return Path((uint256(_gindex) << 8) | uint256(_length));
-    }

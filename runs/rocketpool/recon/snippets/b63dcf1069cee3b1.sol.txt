@@ -1,1 +1,0 @@
-require(msg.value > 0, "No valid amount of ETH given to deposit")

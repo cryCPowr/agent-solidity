@@ -1,1 +1,0 @@
-RocketNodeManagerInterface(rocketStorage.getAddress(rocketNodeManagerKey))

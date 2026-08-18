@@ -1,3 +1,0 @@
-if (!_callerAllowedFor(_nodeAddress)) {
-                require(getBool(keccak256(abi.encodePacked("node.stake.for.allowed", _nodeAddress, msg.sender))), "Not allowed to stake for");
-            }

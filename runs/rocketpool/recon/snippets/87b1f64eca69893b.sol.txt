@@ -1,3 +1,0 @@
-require((
-                booleanStorage[keccak256(abi.encodePacked("contract.exists", msg.sender))] || tx.origin == guardian
-            ), "Invalid or outdated network contract attempting access during deployment")

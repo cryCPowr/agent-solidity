@@ -1,1 +1,0 @@
-function unstakeRPL(uint256 _amount) external;

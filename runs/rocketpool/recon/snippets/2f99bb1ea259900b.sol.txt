@@ -1,1 +1,0 @@
-if (length > 0) { return (MinipoolDeposit.Half, length); }

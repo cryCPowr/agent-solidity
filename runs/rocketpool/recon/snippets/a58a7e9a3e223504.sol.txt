@@ -1,3 +1,0 @@
-function getExchangeRate() override external view returns (uint256) {
-        return getEthValue(1 ether);
-    }

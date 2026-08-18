@@ -1,1 +1,0 @@
-require(tokenContract.transfer(_withdrawalAddress, _amount), "Rocket Vault token withdrawal unsuccessful")

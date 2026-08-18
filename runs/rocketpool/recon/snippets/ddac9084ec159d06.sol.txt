@@ -1,1 +1,0 @@
-function bootstrapEnableGovernance() external;

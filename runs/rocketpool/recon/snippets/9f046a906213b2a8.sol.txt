@@ -1,1 +1,0 @@
-actual.sum == expected.sum

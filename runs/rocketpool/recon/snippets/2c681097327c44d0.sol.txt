@@ -1,5 +1,0 @@
-modifier onlyDAOContract(string memory _daoName) {
-        // Load contracts
-        require(keccak256(abi.encodePacked(getContractName(msg.sender))) == keccak256(abi.encodePacked(_daoName)), "Sender is not the required DAO contract");
-        _;
-    }

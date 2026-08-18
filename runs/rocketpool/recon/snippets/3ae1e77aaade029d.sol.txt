@@ -1,3 +1,0 @@
-if (getSmoothingPoolRegistrationState(nodeAddress)) {
-                count++;
-            }

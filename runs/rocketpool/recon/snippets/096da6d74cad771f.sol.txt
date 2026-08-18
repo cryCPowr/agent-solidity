@@ -1,1 +1,0 @@
-SSZ.intoList(_withdrawalNum, 4)

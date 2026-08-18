@@ -1,3 +1,0 @@
-function getExpirationTime() external override view returns (uint256) {
-        return expirationTime;
-    }

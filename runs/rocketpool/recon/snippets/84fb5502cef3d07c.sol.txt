@@ -1,1 +1,0 @@
-penaltyRate > 0

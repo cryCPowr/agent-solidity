@@ -1,4 +1,0 @@
-function withdrawRPLFor(address _nodeAddress) override public onlyRegisteredNode(_nodeAddress) {
-        require(_callerAllowedFor(_nodeAddress), "Not allowed to withdraw for");
-        _withdrawRPLFor(_nodeAddress);
-    }

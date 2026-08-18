@@ -1,1 +1,0 @@
-function getNodeWithdrawalAddress(address _nodeAddress) external view returns (address);

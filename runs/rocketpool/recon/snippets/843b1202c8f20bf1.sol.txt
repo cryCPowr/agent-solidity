@@ -1,9 +1,0 @@
-function _merkleiseValidator(Validator calldata _validator) internal view returns (bytes32) {
-        bytes32 a = SSZ.efficientSha256(SSZ.merkleisePubkey(_validator.pubkey), _validator.withdrawalCredentials);
-        bytes32 b = SSZ.efficientSha256(SSZ.toLittleEndian(_validator.effectiveBalance), SSZ.toLittleEndian(_validator.slashed ? 1 : 0));
-        bytes32 c = SSZ.efficientSha256(SSZ.toLittleEndian(uint256(_validator.activationEligibilityEpoch)), SSZ.toLittleEndian(uint256(_validator.activationEpoch)));
-        bytes32 d = SSZ.efficientSha256(SSZ.toLittleEndian(uint256(_validator.exitEpoch)), SSZ.toLittleEndian(uint256(_validator.withdrawableEpoch)));
-        a = SSZ.efficientSha256(a, b);
-        b = SSZ.efficientSha256(c, d);
-        return SSZ.efficientSha256(a,b);
-    }

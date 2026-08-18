@@ -1,1 +1,0 @@
-nodeShare.sub(penaltyAmount)

@@ -1,1 +1,0 @@
-getUint(keccak256(abi.encodePacked("network.penalties.penalty", _minipool)))

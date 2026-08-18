@@ -1,1 +1,0 @@
-rocketNodeStaking.unlockRPL(challenger, challengeBond)

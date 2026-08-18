@@ -1,1 +1,0 @@
-_setSettingUint("network.submit.prices.frequency", 1 days)

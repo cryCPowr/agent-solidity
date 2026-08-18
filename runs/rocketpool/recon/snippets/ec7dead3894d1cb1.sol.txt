@@ -1,1 +1,0 @@
-require(status == MinipoolStatus.Staking, "Minipool must be staking")

@@ -1,6 +1,0 @@
-function getClaimingContractPerc(string memory _claimingContract) override public view returns (uint256) {
-        // Load contract
-        RocketDAOProtocolSettingsRewardsInterface daoSettingsRewards = RocketDAOProtocolSettingsRewardsInterface(getContractAddress("rocketDAOProtocolSettingsRewards"));
-        // Get the % amount allocated to this claim contract
-        return daoSettingsRewards.getRewardsClaimerPerc(_claimingContract);
-    }

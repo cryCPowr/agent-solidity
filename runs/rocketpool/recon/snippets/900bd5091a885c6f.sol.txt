@@ -1,1 +1,0 @@
-borrowedETH == 0 || bondedETH == 0

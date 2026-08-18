@@ -1,3 +1,0 @@
-function getHalfDepositUserAmount() override public pure returns (uint256) {
-        return getLaunchBalance() / 2;
-    }

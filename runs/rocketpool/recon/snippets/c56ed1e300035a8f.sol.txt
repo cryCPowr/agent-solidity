@@ -1,1 +1,0 @@
-event BalancesUpdated(uint256 indexed block, uint256 slotTimestamp, uint256 totalEth, uint256 stakingEth, uint256 rethSupply, uint256 blockTimestamp);

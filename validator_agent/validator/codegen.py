@@ -83,7 +83,9 @@ pragma solidity ^0.8.20;
 interface Vm {{
     function startPrank(address) external;
     function stopPrank() external;
+    function prank(address) external;
     function label(address, string calldata) external;
+    function deal(address, uint256) external;
 }}
 
 interface IERC20Minimal {{

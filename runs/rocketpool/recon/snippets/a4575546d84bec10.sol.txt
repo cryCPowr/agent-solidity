@@ -1,1 +1,0 @@
-daoProposal.getState(_proposalID)

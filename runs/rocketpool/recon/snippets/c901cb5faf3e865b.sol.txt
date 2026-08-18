@@ -1,1 +1,0 @@
-function getPenaltyRunningTotalAtTime(uint64 _time) external view returns (uint256);

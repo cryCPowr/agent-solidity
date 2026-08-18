@@ -1,3 +1,0 @@
-function setProtocolDAOShare(uint256 _value) override external onlyAllowListedController {
-        _setProtocolDAOShare(_value);
-    }

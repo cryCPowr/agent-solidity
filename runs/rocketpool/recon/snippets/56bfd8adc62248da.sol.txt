@@ -1,1 +1,0 @@
-(currentLength + 1) << lengthOffset

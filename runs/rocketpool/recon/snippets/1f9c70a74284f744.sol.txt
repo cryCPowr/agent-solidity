@@ -1,1 +1,0 @@
-bytes32 internal constant rocketNodeManagerKey = keccak256(abi.encodePacked("contract.address", "rocketNodeManager"))

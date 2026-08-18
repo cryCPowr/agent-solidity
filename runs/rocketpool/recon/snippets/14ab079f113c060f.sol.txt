@@ -1,1 +1,0 @@
-_balance < 8 ether

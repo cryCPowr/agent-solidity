@@ -1,1 +1,0 @@
-function getNodeDepositBalance() external view returns (uint256);

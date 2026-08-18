@@ -1,1 +1,0 @@
-require(getState(_upgradeProposalID) == UpgradeProposalState.Succeeded, "Proposal has not succeeded or has been vetoed or executed")

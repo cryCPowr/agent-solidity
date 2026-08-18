@@ -1,1 +1,0 @@
-function getNodeAddress() external view returns (address);

@@ -1,3 +1,0 @@
-function getUnclaimedRewards(address _nodeAddress) external view returns (uint256) {
-        return getUint(keccak256(abi.encodePacked("node.unclaimed.rewards", _nodeAddress)));
-    }

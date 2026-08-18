@@ -1,8 +1,0 @@
-if(settingKey == keccak256(bytes("reduced.bond"))) {
-                require(_value % milliToWei == 0, "Value must be divisible by milliwei");
-                require(_value >= 1 ether && _value <= 4 ether, "Value must be >= 1 ETH & <= 4 ETH");
-            } else if(settingKey == keccak256(bytes("node.unstaking.period"))) {
-                require(_value <= 6 weeks, "Value must be <= 6 weeks");
-            } else if(settingKey == keccak256(bytes("node.withdrawal.cooldown"))) {
-                require(_value <= 6 weeks, "Value must be <= 6 weeks");
-            }

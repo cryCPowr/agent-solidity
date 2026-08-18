@@ -1,1 +1,0 @@
-RocketDAOProtocolSettingsNodeInterface(getContractAddress("rocketDAOProtocolSettingsNode"))

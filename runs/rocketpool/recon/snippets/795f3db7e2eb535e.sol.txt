@@ -1,1 +1,0 @@
-require(downcasted == value, "SafeCast: value doesn't fit in 24 bits")

@@ -56,6 +56,8 @@ class ProjectContext:
 
     warnings: list = field(default_factory=list)
     coverage: dict = field(default_factory=dict)
+    dependency_graph: dict = field(default_factory=dict)
+    partial_source_coverage: bool = False
 
     _fact_ids_seen: set = field(default_factory=set)
     _fact_id_collision_counts: dict = field(default_factory=dict)

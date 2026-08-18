@@ -1,5 +1,0 @@
-if (settingKey == keccak256(bytes("network.voter.share"))) {
-                return _setVoterShare(_value);
-            } else if (settingKey == keccak256(bytes("network.pdao.share"))) {
-                return _setProtocolDAOShare(_value);
-            }

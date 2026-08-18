@@ -1,1 +1,0 @@
-function subUint(bytes32 _key, uint256 _amount) internal { rocketStorage.subUint(_key, _amount); }

@@ -1,1 +1,0 @@
-require(_value >= 0.20 ether && _value < 0.75 ether, "Value must be >= 20% & < 75%")

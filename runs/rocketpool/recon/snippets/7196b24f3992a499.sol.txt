@@ -1,1 +1,0 @@
-require(proposalState >= RocketDAOProtocolProposalInterface.ProposalState.QuorumNotMet, "Invalid proposal state")

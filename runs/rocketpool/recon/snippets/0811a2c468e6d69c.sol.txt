@@ -1,3 +1,0 @@
-function getDelegate() external override view returns (address) {
-        return rocketMegapoolDelegate;
-    }

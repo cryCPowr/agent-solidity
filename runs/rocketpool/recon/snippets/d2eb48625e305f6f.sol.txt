@@ -1,1 +1,0 @@
-abi.encodePacked("validator.minipool", pubkey)

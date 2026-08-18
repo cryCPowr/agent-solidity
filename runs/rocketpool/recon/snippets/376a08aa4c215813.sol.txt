@@ -1,1 +1,0 @@
-calculateNodeRewards(nodeCapital, userCapital, rewards)

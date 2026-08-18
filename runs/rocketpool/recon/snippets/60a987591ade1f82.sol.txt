@@ -1,7 +1,0 @@
-unchecked {
-            uint256 borrowedPortion = _amount - (_amount * averageCapitalRatio / calcBase );
-            rethRewards = rethShare * borrowedPortion / calcBase;
-            voterRewards = voterShare * borrowedPortion / calcBase;
-            protocolDAORewards = protocolDAOShare * borrowedPortion / calcBase;
-            nodeRewards = _amount - rethRewards - voterRewards - protocolDAORewards;
-        }

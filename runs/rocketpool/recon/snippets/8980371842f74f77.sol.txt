@@ -1,1 +1,0 @@
-function getChallengeBond() external view returns(uint256);

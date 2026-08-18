@@ -1,1 +1,0 @@
-setBool(keccak256(abi.encodePacked(daoNameSpace, "member", _nodeAddress)), false)

@@ -1,1 +1,0 @@
-event ProposalSecurityKickMulti(address[] memberAddresses, uint256 time);

@@ -1,3 +1,0 @@
-function getClaimIntervalTimeStart() override public view returns (uint256) {
-        return getUint(keccak256("rewards.pool.claim.interval.time.start"));
-    }

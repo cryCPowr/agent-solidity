@@ -1,1 +1,0 @@
-emit RewardsDistributed(nodeAmount, voterAmount, rethAmount, protocolDAOAmount, block.timestamp)

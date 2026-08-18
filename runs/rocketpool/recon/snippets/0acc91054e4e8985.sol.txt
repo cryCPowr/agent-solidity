@@ -1,1 +1,0 @@
-function getExpressTicketsProvisioned(address _nodeAddress) external view returns (bool);

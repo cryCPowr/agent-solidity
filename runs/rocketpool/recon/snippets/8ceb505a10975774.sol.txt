@@ -1,1 +1,0 @@
-rocketNetworkSnapshots.lookupRecent(priceKey, _block, 14)

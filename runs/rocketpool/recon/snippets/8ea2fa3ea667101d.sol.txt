@@ -1,1 +1,0 @@
-rocketDAOSecurityProposals.proposalKick(_memberAddress)

@@ -1,1 +1,0 @@
-function getChallengePeriod() external view returns(uint256);

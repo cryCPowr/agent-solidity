@@ -1,1 +1,0 @@
-getLengthLegacy(queueKeyHalf) > 0

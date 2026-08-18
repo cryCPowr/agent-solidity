@@ -1,4 +1,0 @@
-constructor() {
-        // Set the guardian upon deployment
-        guardian = msg.sender;
-    }

@@ -1,1 +1,0 @@
-_blockAt(_key, len - 1)

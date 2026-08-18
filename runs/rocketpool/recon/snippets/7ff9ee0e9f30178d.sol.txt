@@ -1,1 +1,0 @@
-require(defeatIndex == 0, "Proposal already defeated")

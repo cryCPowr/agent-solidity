@@ -1,1 +1,0 @@
-require(!getLotRPLRecovered(_lotIndex), "Unclaimed RPL has already been recovered from the lot")

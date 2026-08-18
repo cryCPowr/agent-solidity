@@ -1,1 +1,0 @@
-totalRewardsETH + _submission.nodeETH[i]

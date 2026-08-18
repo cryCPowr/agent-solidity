@@ -6,7 +6,7 @@ SCHEMA_VERSION whenever a field is added, removed, or its meaning changes.
 
 from __future__ import annotations
 
-SCHEMA_VERSION = "1.1.0"
+SCHEMA_VERSION = "1.2.0"
 
 
 def build_schema() -> dict:
@@ -135,6 +135,9 @@ def build_schema() -> dict:
             "schema.json": "this document",
             "metadata.json": "run metadata: versions, coverage inputs, timestamps, warnings/errors",
             "summary.json": "machine-readable index over facts/graph; not authoritative, derived from facts.jsonl+graph.json",
+            "coverage.json": "standalone multi-dimensional coverage report for the recon run",
+            "protocol.json": "contract/function inventory extracted by recon",
+            "dependencies.json": "dependency-expansion and import-resolution artifact",
             "facts.jsonl": "authoritative atomic fact database, one Fact per line",
             "graph.json": "{nodes: GraphNode[], edges: GraphEdge[]}",
             "snippets/": "concise source snippets referenced by Evidence.snippet_path",

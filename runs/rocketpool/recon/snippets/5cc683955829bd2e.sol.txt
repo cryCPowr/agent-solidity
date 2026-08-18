@@ -1,1 +1,0 @@
-require(recoverSigner(msg.sender, _v, _r, _s) == _signer, "Invalid signature")

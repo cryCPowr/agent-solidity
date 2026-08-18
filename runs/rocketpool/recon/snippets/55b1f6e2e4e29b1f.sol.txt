@@ -1,1 +1,0 @@
-getNextDepth(_index, nodeCount) - indexDepth

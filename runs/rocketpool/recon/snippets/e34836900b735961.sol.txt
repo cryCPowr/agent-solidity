@@ -1,1 +1,0 @@
-MegapoolValidatorExiting(_validatorId, block.timestamp)

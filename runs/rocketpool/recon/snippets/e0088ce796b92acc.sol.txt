@@ -1,1 +1,0 @@
-require(_amount <= maxReduce, "New bond is too low")

@@ -1,1 +1,0 @@
-function getProxyBytecode() external pure returns (bytes memory);

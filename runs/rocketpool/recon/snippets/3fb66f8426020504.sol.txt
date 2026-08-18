@@ -1,8 +1,0 @@
-modifier onlyProtocolOrSecurityDAO() {
-        if(msg.sender != getAddress(keccak256(abi.encodePacked("contract.address", "rocketDAOProtocolSettingsNetwork")))) {
-            if(msg.sender != getAddress(keccak256(abi.encodePacked("contract.address", "rocketDAOSecurityProposals")))) {
-                revert("Invalid or outdated network contract");
-            }
-        }
-        _;
-    }

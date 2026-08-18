@@ -1,3 +1,0 @@
-_validatorProof.validator.withdrawalCredentials == withdrawalCredentials &&
-            _validatorProof.validator.withdrawableEpoch == farFutureEpoch &&
-            _validatorProof.validator.exitEpoch == farFutureEpoch

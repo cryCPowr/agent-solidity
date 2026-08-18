@@ -1,6 +1,0 @@
-for (uint256 i = 0; i < count; ++i) {
-                RocketMinipoolInterface minipool = RocketMinipoolInterface(rocketMinipoolManager.getNodeMinipoolAt(msg.sender, i));
-                if (minipool.getStatus() == MinipoolStatus.Staking) {
-                    numerator = numerator + minipool.getNodeFee();
-                }
-            }

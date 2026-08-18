@@ -1,1 +1,0 @@
-function getFinalisedMinipoolCount() external view returns (uint256);

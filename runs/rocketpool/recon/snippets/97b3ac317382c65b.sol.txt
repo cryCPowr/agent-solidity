@@ -1,3 +1,0 @@
-function setMinipoolPubkey(bytes calldata _pubkey) override public onlyLatestContract("rocketMinipoolManager", address(this)) onlyRegisteredMinipool(msg.sender) {
-        _setMinipoolPubkey(msg.sender, _pubkey);
-    }

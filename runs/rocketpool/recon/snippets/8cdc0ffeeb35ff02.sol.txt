@@ -1,1 +1,0 @@
-abi.encodePacked("megapool.exists", address(_challenges[i].megapool))

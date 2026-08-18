@@ -1,1 +1,0 @@
-emit ActionChallengeMade(_nodeAddress, msg.sender, block.timestamp)

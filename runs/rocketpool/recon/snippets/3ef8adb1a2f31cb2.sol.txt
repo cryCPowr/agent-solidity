@@ -1,1 +1,0 @@
-event StatusUpdated(uint8 indexed status, uint256 time);

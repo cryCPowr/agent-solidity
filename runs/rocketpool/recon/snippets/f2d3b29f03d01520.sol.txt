@@ -1,1 +1,0 @@
-setSettingUint("proposal.challenge.period", 30 minutes)

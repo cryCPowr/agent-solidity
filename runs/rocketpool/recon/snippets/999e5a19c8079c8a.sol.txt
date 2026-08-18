@@ -1,1 +1,0 @@
-revert("BalanceChecker does not accept payments")

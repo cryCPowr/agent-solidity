@@ -1,4 +1,0 @@
-function getPendingETHRewards() override public view returns (uint256) {
-        address rocketSmoothingPoolAddress = getContractAddress("rocketSmoothingPool");
-        return rocketSmoothingPoolAddress.balance;
-    }

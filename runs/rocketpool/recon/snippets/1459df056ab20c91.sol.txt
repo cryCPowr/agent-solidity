@@ -1,1 +1,0 @@
-function withdrawEth(address _nodeAddress, uint256 _amount) external;

@@ -1,1 +1,0 @@
-require(_existingMemberAddress != _newMemberAddress, "New member address must not be the same")

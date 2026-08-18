@@ -1,1 +1,0 @@
-NodeRewardNetworkChanged(_nodeAddress, _network)

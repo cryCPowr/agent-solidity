@@ -1,3 +1,0 @@
-function getMaxDepth(uint256 _nodeCount) internal pure returns (uint256) {
-        return Math.log2(_nodeCount, Math.Rounding.Up);
-    }

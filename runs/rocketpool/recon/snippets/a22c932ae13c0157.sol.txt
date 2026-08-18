@@ -1,1 +1,0 @@
-emit MegapoolValidatorExited(_validatorId, block.timestamp)

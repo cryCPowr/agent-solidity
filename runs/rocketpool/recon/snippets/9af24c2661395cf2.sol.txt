@@ -1,8 +1,0 @@
-if (withdrawalBalance < depositBalance) {
-                    uint256 shortfall = depositBalance - withdrawalBalance;
-                    if (shortfall > toNode) {
-                        toNode = 0;
-                    } else {
-                        toNode -= shortfall;
-                    }
-                }

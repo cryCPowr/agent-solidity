@@ -1,1 +1,0 @@
-mapping(bytes32 => string)     private stringStorage

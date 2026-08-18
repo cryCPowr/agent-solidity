@@ -1,1 +1,0 @@
-function addUint(bytes32 _key, uint256 _amount) internal { rocketStorage.addUint(_key, _amount); }

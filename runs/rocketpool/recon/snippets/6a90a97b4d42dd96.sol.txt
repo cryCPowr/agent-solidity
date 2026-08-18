@@ -1,1 +1,0 @@
-rplPrice.mul(rocketAuctionSettings.getReservePriceRatio()).div(calcBase)

@@ -1,1 +1,0 @@
-function finalise(uint256 _proposalID) external;

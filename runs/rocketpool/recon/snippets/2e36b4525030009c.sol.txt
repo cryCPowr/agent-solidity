@@ -1,1 +1,0 @@
-rocketDAONodeTrustedSettingsRewards.getNetworkEnabled(_network)

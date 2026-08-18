@@ -1,6 +1,0 @@
-if(version == 1) {
-            bytes32 node = keccak256(abi.encodePacked(_nodeAddress, network, _claim.amountRPL, _claim.amountSmoothingPoolETH, _claim.amountVoterETH));
-            bytes32 key = keccak256(abi.encodePacked('rewards.merkle.root', _claim.rewardIndex));
-            bytes32 merkleRoot = getBytes32(key);
-            return MerkleProof.verify(_claim.merkleProof, merkleRoot, node);
-        }

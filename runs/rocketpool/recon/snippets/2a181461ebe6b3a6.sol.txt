@@ -1,1 +1,0 @@
-_assignMinipools(minipoolQueueLength, _rocketDAOProtocolSettingsDeposit)

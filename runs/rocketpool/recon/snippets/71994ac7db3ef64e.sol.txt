@@ -1,1 +1,0 @@
-function withdrawRPLFor(address _nodeAddress) external;

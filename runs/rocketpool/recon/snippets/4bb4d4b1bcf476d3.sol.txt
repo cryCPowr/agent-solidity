@@ -1,5 +1,0 @@
-function getDepositUserAmount(MinipoolDeposit _depositType) override external pure returns (uint256) {
-        if (_depositType == MinipoolDeposit.Full) { return getFullDepositUserAmount(); }
-        if (_depositType == MinipoolDeposit.Half) { return getHalfDepositUserAmount(); }
-        return 0;
-    }

@@ -1,6 +1,0 @@
-_validatorProof.validator.withdrawalCredentials == withdrawalCredentials &&
-            _validatorProof.validator.withdrawableEpoch == farFutureEpoch &&
-            _validatorProof.validator.exitEpoch == farFutureEpoch &&
-            _validatorProof.validator.effectiveBalance < activationBalanceInGwei &&
-            _validatorProof.validator.activationEligibilityEpoch == farFutureEpoch &&
-            _validatorProof.validator.activationEpoch == farFutureEpoch

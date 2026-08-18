@@ -1,1 +1,0 @@
-require(msg.value <= totalBond, "Excess bond value supplied")

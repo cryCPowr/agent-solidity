@@ -1,1 +1,0 @@
-beaconRoots.staticcall(abi.encode(_slotTimestamp))

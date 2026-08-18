@@ -1,3 +1,0 @@
-if (previousSigner != address(0)) {
-            delete signerToNode[previousSigner];
-        }

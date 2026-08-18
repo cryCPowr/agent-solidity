@@ -1,8 +1,0 @@
-function execute(uint256 _upgradeProposalID) override external onlyTrustedNode(msg.sender) {
-        // Validate proposal state
-        require(getState(_upgradeProposalID) == UpgradeProposalState.Succeeded, "Proposal has not succeeded or has been vetoed or executed");
-        // Mark as executed
-        setBool(keccak256(abi.encodePacked(daoUpgradeNameSpace, "executed", _upgradeProposalID)), true);
-        // Execute the upgrade
-        _execute(getType(_upgradeProposalID), getName(_upgradeProposalID), getUpgradeABI(_upgradeProposalID), getUpgradeAddress(_upgradeProposalID));
-    }

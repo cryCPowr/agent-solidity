@@ -1,1 +1,0 @@
-useLatestDelegate != _state

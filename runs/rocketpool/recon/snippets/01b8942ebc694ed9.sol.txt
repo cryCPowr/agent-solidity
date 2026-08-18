@@ -1,1 +1,0 @@
-require(rocketDAOProtocolSettingsNode.getDepositEnabled(), "Node deposits are currently disabled")

@@ -1,1 +1,0 @@
-RocketVaultWithdrawerInterface(msg.sender)

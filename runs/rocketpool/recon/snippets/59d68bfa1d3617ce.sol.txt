@@ -1,6 +1,0 @@
-if (!validator.locked) {
-            validator.locked = true;
-            unchecked { // Infeasible overflow
-                numLockedValidators += 1;
-            }
-        }

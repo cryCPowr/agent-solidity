@@ -1,3 +1,0 @@
-if (actualDelegate == rocketNodeManager.getNodeAt(delegateIndex)) {
-                    actual = rocketNetworkVoting.getVotingPower(nodeAddress, blockNumber32);
-                }

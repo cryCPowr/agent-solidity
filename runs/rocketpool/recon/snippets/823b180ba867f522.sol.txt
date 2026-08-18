@@ -1,4 +1,0 @@
-function applyPenalty(uint256 _amount) override external onlyLatestContract("rocketMegapoolPenalties", msg.sender) {
-        _increaseDebt(_amount);
-        emit MegapoolPenaltyApplied(_amount, block.timestamp);
-    }

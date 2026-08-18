@@ -1,1 +1,0 @@
-function getRPLLockingAllowed(address _nodeAddress) external view returns (bool);

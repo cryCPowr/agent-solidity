@@ -1,3 +1,0 @@
-function getNodeEthBalance(address _nodeAddress) override public view returns (uint256) {
-        return getUint(keccak256(abi.encodePacked("node.eth.balance", _nodeAddress)));
-    }

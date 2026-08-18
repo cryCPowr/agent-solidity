@@ -1,1 +1,0 @@
-rocketMinipoolBase.predictDeterministicAddress(salt, address(this))

@@ -1,3 +1,0 @@
-function getNodeTimezoneLocation(address _nodeAddress) override public view returns (string memory) {
-        return getString(keccak256(abi.encodePacked("node.timezone.location", _nodeAddress)));
-    }

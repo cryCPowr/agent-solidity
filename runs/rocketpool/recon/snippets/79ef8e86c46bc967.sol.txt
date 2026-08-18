@@ -1,5 +1,0 @@
-if (_depositSize == 16 ether){
-            nodeKey = keccak256(abi.encodePacked("node.minipools.staking.count", _nodeAddress));
-        } else {
-            nodeKey = keccak256(abi.encodePacked("node.minipools.staking.count", _nodeAddress, _depositSize));
-        }

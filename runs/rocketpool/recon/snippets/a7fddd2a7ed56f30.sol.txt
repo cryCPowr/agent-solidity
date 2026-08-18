@@ -1,4 +1,0 @@
-function getVariableCapacity() internal view returns (uint256) {
-        RocketDAOProtocolSettingsMinipoolInterface rocketDAOProtocolSettingsMinipool = RocketDAOProtocolSettingsMinipoolInterface(getContractAddress("rocketDAOProtocolSettingsMinipool"));
-        return getLength().mul(rocketDAOProtocolSettingsMinipool.getVariableDepositAmount());
-    }

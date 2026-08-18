@@ -1,5 +1,0 @@
-function _recycleValue() internal {
-        // Recycle ETH
-        emit DepositRecycled(msg.sender, msg.value, block.timestamp);
-        processDeposit();
-    }

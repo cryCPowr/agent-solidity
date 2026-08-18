@@ -1,6 +1,0 @@
-function updateWithdrawalAddress(address _nodeAddress, address _newWithdrawalAddress) private {
-        // Set new withdrawal address
-        withdrawalAddresses[_nodeAddress] = _newWithdrawalAddress;
-        // Emit withdrawal address set event
-        emit NodeWithdrawalAddressSet(_nodeAddress, _newWithdrawalAddress, block.timestamp);
-    }

@@ -1,1 +1,0 @@
-function claimBid(uint256 _lotIndex) external;

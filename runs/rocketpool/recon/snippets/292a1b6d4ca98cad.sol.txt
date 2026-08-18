@@ -1,1 +1,0 @@
-_submission.intervalsPassed > 0

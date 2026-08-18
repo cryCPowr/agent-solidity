@@ -1,6 +1,0 @@
-function updateRPLWithdrawalAddress(address _nodeAddress, address _newRPLWithdrawalAddress) private {
-        // Set new withdrawal address
-        setAddress(keccak256(abi.encodePacked("node.rpl.withdrawal.address", _nodeAddress)), _newRPLWithdrawalAddress);
-        // Emit withdrawal address set event
-        emit NodeRPLWithdrawalAddressSet(_nodeAddress, _newRPLWithdrawalAddress, block.timestamp);
-    }

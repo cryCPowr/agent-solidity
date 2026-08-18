@@ -1,1 +1,0 @@
-rocketNodeStakingInterface.lockRPL(_nodeAddress, _amount)

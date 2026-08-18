@@ -1,1 +1,0 @@
-rocketMegapoolProxy != address(0)

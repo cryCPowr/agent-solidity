@@ -1,1 +1,0 @@
-_addABI(_name, _contractAbi)

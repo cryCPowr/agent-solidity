@@ -1,1 +1,0 @@
-ProposalBondBurned(_proposalID, proposer, proposalBond, block.timestamp)

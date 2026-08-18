@@ -1,1 +1,0 @@
-function getNodeRegistrationTime(address _nodeAddress) external view returns (uint256);

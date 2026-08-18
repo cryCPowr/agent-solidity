@@ -1,8 +1,0 @@
-interface RocketDAOSecurityUpgradeInterface {
-    function proposeVeto(string memory _proposalMessage, uint256 _upgradeProposalId) external returns (uint256);
-    function vote(uint256 _proposalID, bool _support) external;
-    function cancel(uint256 _proposalID) external;
-    function execute(uint256 _proposalID) external;
-
-    function proposalVeto(uint256 _upgradeProposalId) external;
-}

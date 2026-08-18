@@ -1,1 +1,0 @@
-previousBond.sub(newBond)

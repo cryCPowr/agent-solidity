@@ -1,4 +1,0 @@
-function getMemberCount() override public view returns (uint256) {
-        AddressSetStorageInterface addressSetStorage = AddressSetStorageInterface(getContractAddress("addressSetStorage"));
-        return addressSetStorage.getCount(keccak256(abi.encodePacked(daoNameSpace, "member.index")));
-    }

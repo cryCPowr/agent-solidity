@@ -1,3 +1,0 @@
-if(_voteDirection == VoteDirection.AgainstWithVeto) {
-                addUint(keccak256(abi.encodePacked(daoProposalNameSpace, "votes.veto", _proposalID)), _votes);
-            }

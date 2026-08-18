@@ -1,1 +1,0 @@
-_balances[account].sub(amount, "ERC20: burn amount exceeds balance")

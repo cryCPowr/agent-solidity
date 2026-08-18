@@ -1,5 +1,0 @@
-if (nextIndex == 0) {
-            uint256 data = getUint(keccak256(abi.encodePacked(_namespace, ".data")));
-            uint256 start = uint64(data >> startOffset);
-            nextIndex = start;
-        }

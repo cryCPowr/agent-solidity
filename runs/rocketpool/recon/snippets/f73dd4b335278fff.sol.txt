@@ -1,1 +1,0 @@
-event BootstrapDisabled(uint256 time);

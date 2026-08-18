@@ -1,4 +1,0 @@
-constructor(RocketStorageInterface _rocketStorageAddress) RocketBase(_rocketStorageAddress) ERC20("Rocket Pool ETH", "rETH") {
-        // Version
-        version = 1;
-    }

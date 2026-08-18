@@ -1,1 +1,0 @@
-emit DelegateUpgraded(oldDelegate, newDelegate, block.timestamp)

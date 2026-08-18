@@ -1,1 +1,0 @@
-lastIndex.sub(1)

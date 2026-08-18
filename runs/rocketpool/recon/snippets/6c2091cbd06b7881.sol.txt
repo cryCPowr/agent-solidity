@@ -1,1 +1,0 @@
-require(keccak256(_validatorProof.validator.pubkey) == keccak256(pubkey), "Pubkey does not match")

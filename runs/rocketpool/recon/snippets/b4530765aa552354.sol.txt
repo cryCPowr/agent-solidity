@@ -1,4 +1,0 @@
-function getValidatorInfo(uint32 _validatorId) override external view returns (ValidatorInfo memory) {
-        require(_validatorId < numValidators, "Validator does not exist");
-        return validators[_validatorId];
-    }

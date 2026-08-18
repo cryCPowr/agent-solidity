@@ -1,1 +1,0 @@
-rocketTokenRPL.approve(address(rocketVault), _rewardsRPL)

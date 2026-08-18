@@ -1,1 +1,0 @@
-require(balanceOf(msg.sender) >= _rethAmount, "Insufficient rETH balance")

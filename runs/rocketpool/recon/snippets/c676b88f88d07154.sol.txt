@@ -1,9 +1,0 @@
-function notifyFinalBalance(RocketMegapoolInterface _megapool, uint32 _validatorId, uint64 _slotTimestamp, WithdrawalProof calldata _withdrawalProof, ValidatorProof calldata _validatorProof, SlotProof calldata _slotProof) override external onlyRegisteredMegapool(address(_megapool)) {
-        // Require a recent proof
-        require(_slotTimestamp + slotRecencyThreshold >= block.timestamp, "Slot proof too old");
-        // Check that the withdrawal occurred on or after `withdrawable_epoch`
-        uint64 withdrawalEpoch = _withdrawalProof.withdrawalSlot / slotsPerEpoch;
-        require(withdrawalEpoch >= _validatorProof.validator.withdrawableEpoch, "Not full withdrawal");
-        // Verify state proofs
-        BeaconStateVerifierInterface beaconStateVerifier = BeaconStateVerifierInterface(
-/* … truncated … */

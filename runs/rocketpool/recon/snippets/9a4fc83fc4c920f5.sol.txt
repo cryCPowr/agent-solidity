@@ -1,3 +1,0 @@
-if (addressQueueStorage.getLength(queueKeyMinipoolVariable) > 0) {
-            return (address(0x0), false, 0);
-        }

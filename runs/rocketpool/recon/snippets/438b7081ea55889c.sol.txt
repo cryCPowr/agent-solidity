@@ -1,1 +1,0 @@
-DelegateUpgraded(rocketMinipoolDelegatePrev, rocketMinipoolDelegate, block.timestamp)

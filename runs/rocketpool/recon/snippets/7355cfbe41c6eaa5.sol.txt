@@ -1,5 +1,0 @@
-function proposalSettingBool(string memory _settingContractName, string memory _settingPath, bool _value) override public onlyExecutingContracts() {
-        RocketDAOProtocolSettingsInterface rocketDAOProtocolSettings = RocketDAOProtocolSettingsInterface(getContractAddress(_settingContractName));
-        rocketDAOProtocolSettings.setSettingBool(_settingPath, _value);
-        emit ProposalSettingBool(_settingContractName, _settingPath, _value, block.timestamp);
-    }

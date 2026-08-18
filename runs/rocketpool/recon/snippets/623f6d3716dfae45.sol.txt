@@ -1,1 +1,0 @@
-SSZ.concat(path, SSZ.intoList(uint248(uint256(_pastSlot) / slotsPerHistoricalRoot - historicalSummaryOffset), 24))

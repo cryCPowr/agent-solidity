@@ -1,1 +1,0 @@
-emit MegapoolValidatorUnlocked(_validatorId, block.timestamp)

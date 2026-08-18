@@ -1,1 +1,0 @@
-function getNodeRPLWithdrawalAddressIsSet(address _nodeAddress) external view returns (bool);

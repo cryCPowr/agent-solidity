@@ -1,1 +1,0 @@
-emit EtherWithdrawn(nodeWithdrawalAddress, refundAmount, block.timestamp)

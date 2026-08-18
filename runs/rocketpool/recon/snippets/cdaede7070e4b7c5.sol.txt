@@ -1,1 +1,0 @@
-require(storageState == StorageState.Uninitialised, "Storage state already initialised")

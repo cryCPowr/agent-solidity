@@ -1,7 +1,0 @@
-function getUserDepositBalance() override public view returns (uint256) {
-        if (depositType == MinipoolDeposit.Variable) {
-            return userDepositBalance;
-        } else {
-            return userDepositBalanceLegacy;
-        }
-    }

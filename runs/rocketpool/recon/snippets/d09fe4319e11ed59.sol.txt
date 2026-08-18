@@ -1,1 +1,0 @@
-require(amountToPay <= rocketVault.balanceOfToken("rocketClaimDAO", rplToken), "Insufficient treasury balance for payout")

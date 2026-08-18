@@ -1,1 +1,0 @@
-function getLastChallenger() external view returns (address);

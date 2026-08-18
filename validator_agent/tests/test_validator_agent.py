@@ -7,7 +7,7 @@ import os
 
 import pytest
 
-from validator import codegen, planner, verdicts
+from validator import codegen, planner, runner, verdicts
 from validator.model import CONFIRM, INCONCLUSIVE, REJECT
 from validator.pipeline import run_validator
 
@@ -73,6 +73,18 @@ def test_preflight_blocked_on_incomplete_plan(tmp_path):
     repo = tmp_path / "repo"; repo.mkdir()
     pre = planner.preflight(attack, str(repo), None)
     assert pre["status"] == "BLOCKED_NO_HARNESS"
+
+
+def test_preflight_ignores_generated_scaffold(tmp_path):
+    attack = _attack(root="contracts/Bridge.sol#10::claim#20")
+    repo = tmp_path / "repo"; repo.mkdir()
+    hdir = tmp_path / "harnesses"; hdir.mkdir()
+    (hdir / "contracts_Bridge_sol.sol").write_text(
+        codegen.render_harness_scaffold(attack, "ScaffoldHarness")
+    )
+    pre = planner.preflight(attack, str(repo), str(hdir))
+    assert pre["status"] == "BLOCKED_NO_HARNESS"
+    assert pre["harness"] is None
 
 
 # --- codegen ---------------------------------------------------------------
@@ -223,6 +235,10 @@ def test_pipeline_confirm_reject_inconclusive(tmp_path, fake_forge):
 
     summary = json.load(open(out / "summary.json"))
     assert summary["verdict_counts"] == {CONFIRM: 1, REJECT: 1, INCONCLUSIVE: 1}
+    assert summary["executed_attacks"] == 2
+    assert summary["blocked_attacks"] == 1
+    assert summary["readiness_counts"]["READY"] == 2
+    assert summary["readiness_counts"]["BLOCKED_NO_HARNESS"] == 1
     assert summary["confirmed"][0]["attack_id"] == "A-confirm"
     # blocked attacks get a scaffold written for the orchestrator
     scaffold = hdir / "contracts_Bridge_sol.sol"
@@ -248,6 +264,28 @@ def test_workspace_isolation_and_repo_untouched(tmp_path, fake_forge):
     ws = out / "workspace" / "A-1"
     assert (ws / "test").is_dir()
     assert list((repo / "contracts").iterdir()) == []
+
+
+def test_build_workspace_uses_auto_detect_solc_for_mixed_version_repos(tmp_path):
+    repo = tmp_path / "repo"
+    (repo / "contracts").mkdir(parents=True)
+    hdir = tmp_path / "harnesses"
+    hdir.mkdir()
+    harness_path = hdir / "contracts_Bridge_sol.sol"
+    harness_path.write_text("contract SuppliedHarness { function setup() external {} }")
+    ws = tmp_path / "ws"
+    attack = _attack("A-mixed")
+    runner.build_workspace(
+        str(ws),
+        str(repo),
+        attack,
+        {"path": str(harness_path), "contract": "SuppliedHarness"},
+    )
+    foundry = (ws / "foundry.toml").read_text()
+    assert 'auto_detect_solc = true' in foundry
+    assert 'solc_version = ' not in foundry
+    assert 'evm_version = ' not in foundry
+    assert 'via_ir = true' not in foundry
 
 
 def test_function_scoped_harness_preferred_over_contract(tmp_path):

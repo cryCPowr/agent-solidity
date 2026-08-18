@@ -1,1 +1,0 @@
-require(SSZ.length(path) == _proof.witnesses.length, "Invalid witness length")

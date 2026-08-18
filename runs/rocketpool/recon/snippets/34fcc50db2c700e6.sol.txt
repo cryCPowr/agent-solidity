@@ -1,5 +1,0 @@
-if (depositType == MinipoolDeposit.Variable) {
-            return userDepositBalance;
-        } else {
-            return userDepositBalanceLegacy;
-        }

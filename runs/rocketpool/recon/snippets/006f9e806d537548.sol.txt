@@ -1,1 +1,0 @@
-function getPreMigrationBalance() external view returns (uint256);

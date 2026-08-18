@@ -1,1 +1,0 @@
-RootSubmitted(_proposalID, _proposer, _blockNumber, 1, root, _treeNodes, block.timestamp)

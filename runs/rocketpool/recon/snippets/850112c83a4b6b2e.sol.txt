@@ -1,1 +1,0 @@
-_rplBondRefundAddress != address(0x0)

@@ -1,0 +1,1 @@
+function getRate() external view returns (uint256);

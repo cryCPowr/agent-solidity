@@ -1,3 +1,0 @@
-function setLotRPLRecovered(uint256 _index, bool _recovered) private {
-        setBool(keccak256(abi.encodePacked("auction.lot.rpl.recovered", _index)), _recovered);
-    }

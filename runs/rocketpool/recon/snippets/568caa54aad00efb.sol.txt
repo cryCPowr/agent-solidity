@@ -1,1 +1,0 @@
-getSettingUint("minipool.maximum.penalty.count")

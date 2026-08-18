@@ -1,1 +1,0 @@
-currentTotalEthBalance > 0

@@ -1,1 +1,0 @@
-if (bidAmount > maximumBidAmount) { bidAmount = maximumBidAmount; }

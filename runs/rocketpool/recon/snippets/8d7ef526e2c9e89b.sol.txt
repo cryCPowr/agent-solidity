@@ -1,1 +1,0 @@
-getNode(_proposalID, _index)

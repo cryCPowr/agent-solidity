@@ -1,1 +1,0 @@
-processMultiProof(proof, proofFlags, leaves)

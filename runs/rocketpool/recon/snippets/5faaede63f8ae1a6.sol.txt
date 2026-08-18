@@ -1,1 +1,0 @@
-require(block.timestamp >= lastChange + rewardInterval, "Not enough time has passed since changing state")

@@ -1,1 +1,0 @@
-function getMemberIsChallenged(address _nodeAddress) external view returns (bool);

@@ -1,7 +1,0 @@
-if (!_state) {
-            // Upon disabling use latest, set their current delegate to the latest
-            address newDelegate = getContractAddress("rocketMegapoolDelegate");
-            if (newDelegate != rocketMegapoolDelegate) {
-                delegateUpgrade();
-            }
-        }

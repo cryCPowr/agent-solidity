@@ -1,8 +1,9 @@
 """Recon artifact loader.
 
-Loads facts.jsonl, graph.json, summary.json, metadata.json from Recon output
-directory. Provides a unified, structured view for downstream Threat Agent
-modules. Does NOT re-parse Solidity sources.
+Loads facts.jsonl, graph.json, summary.json, metadata.json and the PRD-style
+auxiliary Recon artifacts (coverage.json, protocol.json, dependencies.json)
+from a Recon output directory. Provides a unified, structured view for
+ downstream Threat Agent modules. Does NOT re-parse Solidity sources.
 """
 
 from __future__ import annotations
@@ -50,14 +51,32 @@ class ReconMetadata:
 
 
 @dataclass
+class ReconCoverage:
+    raw: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
+class ReconProtocol:
+    raw: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
+class ReconDependencies:
+    raw: dict[str, Any] = field(default_factory=dict)
+
+
+@dataclass
 class ReconArtifact:
     """Combined Recon artifact set, primary input for Threat Agent."""
 
-    facts_obj: ReconFacts
-    graph: ReconGraph
-    summary: ReconSummary
-    metadata: ReconMetadata
-    output_dir: str
+    facts_obj: ReconFacts = field(default_factory=ReconFacts)
+    graph: ReconGraph = field(default_factory=ReconGraph)
+    summary: ReconSummary = field(default_factory=ReconSummary)
+    metadata: ReconMetadata = field(default_factory=ReconMetadata)
+    coverage: ReconCoverage = field(default_factory=ReconCoverage)
+    protocol: ReconProtocol = field(default_factory=ReconProtocol)
+    dependencies: ReconDependencies = field(default_factory=ReconDependencies)
+    output_dir: str = ""
 
 
 def load_facts(path: str) -> ReconFacts:
@@ -124,17 +143,31 @@ def load_metadata(path: str) -> ReconMetadata:
         return ReconMetadata(raw=json.load(f))
 
 
+def _load_optional_json(path: str):
+    if not os.path.exists(path):
+        return {}
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+
 def load_recon(output_dir: str) -> ReconArtifact:
     """Load all Recon artifacts from a given output directory."""
     facts_obj = load_facts(os.path.join(output_dir, "facts.jsonl"))
     graph = load_graph(os.path.join(output_dir, "graph.json"))
     summary = load_summary(os.path.join(output_dir, "summary.json"))
     metadata = load_metadata(os.path.join(output_dir, "metadata.json"))
+    coverage = ReconCoverage(raw=_load_optional_json(os.path.join(output_dir, "coverage.json")))
+    protocol = ReconProtocol(raw=_load_optional_json(os.path.join(output_dir, "protocol.json")))
+    dependencies = ReconDependencies(raw=_load_optional_json(os.path.join(output_dir, "dependencies.json")))
     return ReconArtifact(
         facts_obj=facts_obj,
         graph=graph,
         summary=summary,
         metadata=metadata,
+        coverage=coverage,
+        protocol=protocol,
+        dependencies=dependencies,
         output_dir=output_dir,
     )
 

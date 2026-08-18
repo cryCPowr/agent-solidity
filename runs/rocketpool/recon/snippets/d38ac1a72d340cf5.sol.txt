@@ -1,8 +1,0 @@
-function latest(bytes32 _key) external view returns (bool exists, uint64 time, uint192 value) {
-        uint256 len = length(_key);
-        if (len == 0) {
-            return (false, 0, 0);
-        }
-        Checkpoint192 memory checkpoint = _load(_key, len - 1);
-        return (true, checkpoint._time, checkpoint._value);
-    }

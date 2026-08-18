@@ -1,7 +1,0 @@
-if (_confirm) {
-            updateWithdrawalAddress(_nodeAddress, _newWithdrawalAddress);
-        }
-        // Set pending withdrawal address if not confirmed
-        else {
-            pendingWithdrawalAddresses[_nodeAddress] = _newWithdrawalAddress;
-        }

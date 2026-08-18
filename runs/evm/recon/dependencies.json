@@ -1,0 +1,1290 @@
+{
+  "build_dependency_graph": {
+    "dependency_files_added": [],
+    "import_prefix_aliases": {},
+    "sources_total": [
+      "contracts/LBTC/AssetRouter.sol",
+      "contracts/LBTC/BaseLBTC.sol",
+      "contracts/LBTC/BridgeTokenAdapter.sol",
+      "contracts/LBTC/NativeLBTC.sol",
+      "contracts/LBTC/StakedLBTC.sol",
+      "contracts/LBTC/StakedLBTCOracle.sol",
+      "contracts/LBTC/interfaces/AggregatorV3Interface.sol",
+      "contracts/LBTC/interfaces/IAssetOperation.sol",
+      "contracts/LBTC/interfaces/IAssetRouter.sol",
+      "contracts/LBTC/interfaces/IBaseLBTC.sol",
+      "contracts/LBTC/interfaces/INativeLBTC.sol",
+      "contracts/LBTC/interfaces/IOracle.sol",
+      "contracts/LBTC/interfaces/IStakedLBTC.sol",
+      "contracts/LBTC/libraries/Assert.sol",
+      "contracts/LBTC/libraries/Assets.sol",
+      "contracts/LBTC/libraries/Redeem.sol",
+      "contracts/LBTC/libraries/Validation.sol",
+      "contracts/PoR/IPoR.sol",
+      "contracts/PoR/PoR.sol",
+      "contracts/bascule/Bascule.sol",
+      "contracts/bascule/BasculeV2.sol",
+      "contracts/bascule/BasculeV3.sol",
+      "contracts/bascule/GMPBasculeV1.sol",
+      "contracts/bascule/GMPBasculeV2.sol",
+      "contracts/bascule/interfaces/IBascule.sol",
+      "contracts/bascule/interfaces/IGMPBascule.sol",
+      "contracts/bridge/Bridge.sol",
+      "contracts/bridge/BridgeV2.sol",
+      "contracts/bridge/IBridge.sol",
+      "contracts/bridge/IBridgeV2.sol",
+      "contracts/bridge/adapters/AbstractAdapter.sol",
+      "contracts/bridge/adapters/CLAdapter.sol",
+      "contracts/bridge/adapters/IAdapter.sol",
+      "contracts/bridge/adapters/TokenPool.sol",
+      "contracts/bridge/interfaces/LegacyTokenPoolV2.sol",
+      "contracts/bridge/oft/EfficientRateLimitedOFTAdapter.sol",
+      "contracts/bridge/oft/EfficientRateLimiter.sol",
+      "contracts/bridge/oft/LBTCBurnMintOFTAdapter.sol",
+      "contracts/bridge/oft/LBTCOFTAdapter.sol",
+      "contracts/bridge/providers/BridgeTokenPool.sol",
+      "contracts/bridge/providers/LombardTokenPoolV2.sol",
+      "contracts/consortium/Consortium.sol",
+      "contracts/consortium/DepositNotarizationBlacklist.sol",
+      "contracts/consortium/IDepositNotarizationBlacklist.sol",
+      "contracts/consortium/ILombardTimelockController.sol",
+      "contracts/consortium/INotaryConsortium.sol",
+      "contracts/consortium/LombardTimeLock.sol",
+      "contracts/consortium/test/VerifySignatureTest.sol",
+      "contracts/factory/ProxyFactory.sol",
+      "contracts/fbtc/PartnerVault.sol",
+      "contracts/gmp/IHandler.sol",
+      "contracts/gmp/IMailbox.sol",
+      "contracts/gmp/Mailbox.sol",
+      "contracts/gmp/libs/GMPUtils.sol",
+      "contracts/gmp/libs/MessagePath.sol",
+      "contracts/ibc/IBCVoucher.sol",
+      "contracts/ibc/IIBCVoucher.sol",
+      "contracts/interfaces/IBridgeToken.sol",
+      "contracts/interfaces/IConsortiumConsumer.sol",
+      "contracts/interfaces/IERC20MintableBurnable.sol",
+      "contracts/interfaces/IEfficientRateLimiterV1.sol",
+      "contracts/interfaces/IProxyAdmin.sol",
+      "contracts/libs/Actions.sol",
+      "contracts/libs/BitcoinUtils.sol",
+      "contracts/libs/EIP1271SignatureUtils.sol",
+      "contracts/libs/FeeUtils.sol",
+      "contracts/libs/LChainId.sol",
+      "contracts/libs/RateLimits.sol",
+      "contracts/libs/RateLimitsV2.sol",
+      "contracts/mock/Auth.sol",
+      "contracts/mock/BTCBMock.sol",
+      "contracts/mock/BoringVault.sol",
+      "contracts/mock/BridgeTokenMock.sol",
+      "contracts/mock/CCIPMocks.sol",
+      "contracts/mock/CCIPRMNMock.sol",
+      "contracts/mock/ChainlinkFeedMock.sol",
+      "contracts/mock/ConsortiumMock.sol",
+      "contracts/mock/ERC4626Mock.sol",
+      "contracts/mock/GMPHandlerMock.sol",
+      "contracts/mock/IRateProvider.sol",
+      "contracts/mock/LZEndpointMock.sol",
+      "contracts/mock/LockedFBTCMock.sol",
+      "contracts/mock/MailboxMock.sol",
+      "contracts/mock/MailboxTreasuryMock.sol",
+      "contracts/mock/ProxyMock.sol",
+      "contracts/mock/RatioFeedMock.sol",
+      "contracts/mock/SanctionListMock.sol",
+      "contracts/mock/ShardStrategyMocks.sol",
+      "contracts/mock/StakedLBTCMock.sol",
+      "contracts/mock/TellerWithMultiAssetSupportMock.sol",
+      "contracts/mock/TokenMock.sol",
+      "contracts/mock/WBTCMock.sol",
+      "contracts/pmm/BTCB/BTCB.sol",
+      "contracts/pmm/CBBTC.sol",
+      "contracts/stakeAndBake/StakeAndBake.sol",
+      "contracts/stakeAndBake/StakeAndBakeNativeToken.sol",
+      "contracts/stakeAndBake/depositor/IDepositor.sol",
+      "contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol",
+      "contracts/stakeAndBake/depositor/strategy/MultiAssetDepositStrategyDepositor.sol",
+      "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+      "contracts/stakeAndBake/depositor/veda/ITeller.sol",
+      "contracts/stakeAndBake/depositor/veda/TellerWithMultiAssetSupportDepositor.sol",
+      "contracts/strategy/AsyncRedemptionUpgradeable.sol",
+      "contracts/strategy/BlocklistOracle.sol",
+      "contracts/strategy/FeeManagerUpgradeable.sol",
+      "contracts/strategy/MAWARStrategyMigrated.sol",
+      "contracts/strategy/MultiAssetDepositUpgradeable.sol",
+      "contracts/strategy/MultiAssetWithAsyncRedemptionStrategy.sol",
+      "contracts/strategy/ShareToken.sol",
+      "contracts/strategy/StrategyBaseUpgradeable.sol",
+      "contracts/strategy/converters/ChainlinkCompositeConverter.sol",
+      "contracts/strategy/converters/ChainlinkConverter.sol",
+      "contracts/strategy/converters/DirectConverter.sol",
+      "contracts/strategy/interfaces/IAssetConverter.sol",
+      "contracts/strategy/interfaces/IAsyncRedemption.sol",
+      "contracts/strategy/interfaces/IBlocklistOracle.sol",
+      "contracts/strategy/interfaces/IFeeManager.sol",
+      "contracts/strategy/interfaces/IMerkleCallAllowlist.sol",
+      "contracts/strategy/interfaces/IMultiAssetDeposit.sol",
+      "contracts/strategy/interfaces/ISanctionList.sol",
+      "contracts/strategy/interfaces/IShard.sol",
+      "contracts/strategy/interfaces/IShardExecValidator.sol",
+      "contracts/strategy/interfaces/IStrategy.sol",
+      "contracts/strategy/libraries/PriceRateLimiter.sol",
+      "contracts/strategy/shards/RemoteShard.sol",
+      "contracts/strategy/shards/Shard.sol",
+      "contracts/strategy/shards/ShardBaseUpgradeable.sol",
+      "contracts/strategy/validators/MerkleAllowlistValidator.sol"
+    ],
+    "unresolved_imports": [
+      {
+        "importing_file": "contracts/LBTC/AssetRouter.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/AssetRouter.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/AssetRouter.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/AssetRouter.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/BaseLBTC.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/BaseLBTC.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/BaseLBTC.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/BaseLBTC.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PermitUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/BaseLBTC.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/BridgeTokenAdapter.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/BridgeTokenAdapter.sol",
+        "line": 13,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/BridgeTokenAdapter.sol",
+        "line": 14,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/BridgeTokenAdapter.sol",
+        "line": 15,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/NativeLBTC.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/StakedLBTCOracle.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/StakedLBTCOracle.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/Ownable2StepUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/StakedLBTCOracle.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/LBTC/libraries/Validation.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/PoR/PoR.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/Bascule.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/Pausable.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/Bascule.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/access/extensions/AccessControlDefaultAdminRules.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/BasculeV2.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/Pausable.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/BasculeV2.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/access/AccessControl.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/BasculeV2.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/access/extensions/AccessControlDefaultAdminRules.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/BasculeV3.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/Pausable.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/BasculeV3.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/access/AccessControl.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/BasculeV3.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/access/extensions/AccessControlDefaultAdminRules.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/BasculeV3.sol",
+        "line": 9,
+        "raw_path": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/GMPBasculeV1.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/Pausable.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/GMPBasculeV1.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/access/AccessControl.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/GMPBasculeV1.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/access/extensions/AccessControlDefaultAdminRules.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/GMPBasculeV1.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/GMPBasculeV2.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/Pausable.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/GMPBasculeV2.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/access/AccessControl.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/GMPBasculeV2.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/access/extensions/AccessControlDefaultAdminRules.sol"
+      },
+      {
+        "importing_file": "contracts/bascule/GMPBasculeV2.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/Bridge.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/Bridge.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/Ownable2StepUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/Bridge.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/Bridge.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/Bridge.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/BridgeV2.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/BridgeV2.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/Ownable2StepUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/BridgeV2.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/BridgeV2.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/BridgeV2.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/AbstractAdapter.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/Context.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/CLAdapter.sol",
+        "line": 4,
+        "raw_path": "@chainlink/contracts-ccip/contracts/interfaces/IRouterClient.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/CLAdapter.sol",
+        "line": 5,
+        "raw_path": "@chainlink/contracts-ccip/contracts/libraries/Client.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/CLAdapter.sol",
+        "line": 8,
+        "raw_path": "@chainlink/contracts-ccip/contracts/libraries/Pool.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/CLAdapter.sol",
+        "line": 10,
+        "raw_path": "@openzeppelin/contracts/access/Ownable.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/CLAdapter.sol",
+        "line": 11,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/CLAdapter.sol",
+        "line": 12,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/CLAdapter.sol",
+        "line": 13,
+        "raw_path": "@openzeppelin/contracts/utils/ReentrancyGuard.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/TokenPool.sol",
+        "line": 4,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/TokenPool.sol",
+        "line": 5,
+        "raw_path": "@chainlink/contracts-ccip/contracts/interfaces/IRouterClient.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/TokenPool.sol",
+        "line": 6,
+        "raw_path": "@chainlink/contracts-ccip/contracts/libraries/Client.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/TokenPool.sol",
+        "line": 7,
+        "raw_path": "@chainlink/contracts-ccip/contracts/libraries/Pool.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/adapters/TokenPool.sol",
+        "line": 8,
+        "raw_path": "@chainlink/contracts-ccip/contracts/pools/TokenPool.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/interfaces/LegacyTokenPoolV2.sol",
+        "line": 4,
+        "raw_path": "@chainlink/contracts-ccip/contracts/pools/TokenPool.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/oft/EfficientRateLimitedOFTAdapter.sol",
+        "line": 4,
+        "raw_path": "@layerzerolabs/oft-evm/contracts/OFTAdapter.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/oft/LBTCBurnMintOFTAdapter.sol",
+        "line": 4,
+        "raw_path": "@layerzerolabs/oft-evm/contracts/OFTAdapter.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/oft/LBTCBurnMintOFTAdapter.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/access/Ownable.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/oft/LBTCOFTAdapter.sol",
+        "line": 4,
+        "raw_path": "@layerzerolabs/oft-evm/contracts/OFTAdapter.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/oft/LBTCOFTAdapter.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/access/Ownable.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/providers/BridgeTokenPool.sol",
+        "line": 4,
+        "raw_path": "@chainlink/contracts-ccip/contracts/libraries/Pool.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/providers/BridgeTokenPool.sol",
+        "line": 5,
+        "raw_path": "@chainlink/contracts-ccip/contracts/pools/TokenPool.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/providers/BridgeTokenPool.sol",
+        "line": 7,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/extensions/IERC20Metadata.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/providers/BridgeTokenPool.sol",
+        "line": 8,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/providers/LombardTokenPoolV2.sol",
+        "line": 4,
+        "raw_path": "@chainlink/contracts/src/v0.8/shared/interfaces/ITypeAndVersion.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/providers/LombardTokenPoolV2.sol",
+        "line": 6,
+        "raw_path": "@chainlink/contracts-ccip/contracts/libraries/Pool.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/providers/LombardTokenPoolV2.sol",
+        "line": 7,
+        "raw_path": "@chainlink/contracts-ccip/contracts/pools/TokenPool.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/providers/LombardTokenPoolV2.sol",
+        "line": 9,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/extensions/IERC20Metadata.sol"
+      },
+      {
+        "importing_file": "contracts/bridge/providers/LombardTokenPoolV2.sol",
+        "line": 10,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/consortium/Consortium.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/Ownable2StepUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/consortium/Consortium.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/consortium/Consortium.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol"
+      },
+      {
+        "importing_file": "contracts/consortium/Consortium.sol",
+        "line": 9,
+        "raw_path": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol"
+      },
+      {
+        "importing_file": "contracts/consortium/DepositNotarizationBlacklist.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/consortium/INotaryConsortium.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol"
+      },
+      {
+        "importing_file": "contracts/consortium/LombardTimeLock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/governance/TimelockController.sol"
+      },
+      {
+        "importing_file": "contracts/consortium/test/VerifySignatureTest.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol"
+      },
+      {
+        "importing_file": "contracts/factory/ProxyFactory.sol",
+        "line": 4,
+        "raw_path": "solmate/src/utils/CREATE3.sol"
+      },
+      {
+        "importing_file": "contracts/factory/ProxyFactory.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol"
+      },
+      {
+        "importing_file": "contracts/factory/ProxyFactory.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/access/AccessControl.sol"
+      },
+      {
+        "importing_file": "contracts/fbtc/PartnerVault.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/fbtc/PartnerVault.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/fbtc/PartnerVault.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/fbtc/PartnerVault.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/fbtc/PartnerVault.sol",
+        "line": 9,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/gmp/IHandler.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/introspection/IERC165.sol"
+      },
+      {
+        "importing_file": "contracts/gmp/Mailbox.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/gmp/Mailbox.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/gmp/Mailbox.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/gmp/Mailbox.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/gmp/Mailbox.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol"
+      },
+      {
+        "importing_file": "contracts/gmp/Mailbox.sol",
+        "line": 9,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/ibc/IBCVoucher.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/ibc/IBCVoucher.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/ibc/IBCVoucher.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/ibc/IBCVoucher.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/ibc/IBCVoucher.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/interfaces/IBridgeToken.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol"
+      },
+      {
+        "importing_file": "contracts/interfaces/IERC20MintableBurnable.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/libs/BitcoinUtils.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/libs/EIP1271SignatureUtils.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/interfaces/IERC1271.sol"
+      },
+      {
+        "importing_file": "contracts/libs/EIP1271SignatureUtils.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/cryptography/ECDSA.sol"
+      },
+      {
+        "importing_file": "contracts/libs/FeeUtils.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BTCBMock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/Context.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BTCBMock.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BoringVault.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/Address.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BoringVault.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BoringVault.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BoringVault.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BridgeTokenMock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/Context.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BridgeTokenMock.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/Address.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BridgeTokenMock.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BridgeTokenMock.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol"
+      },
+      {
+        "importing_file": "contracts/mock/BridgeTokenMock.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPMocks.sol",
+        "line": 4,
+        "raw_path": "@chainlink/contracts-ccip/contracts/interfaces/IAny2EVMMessageReceiver.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPMocks.sol",
+        "line": 5,
+        "raw_path": "@chainlink/contracts-ccip/contracts/interfaces/IRouter.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPMocks.sol",
+        "line": 6,
+        "raw_path": "@chainlink/contracts-ccip/contracts/interfaces/IRouterClient.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPMocks.sol",
+        "line": 8,
+        "raw_path": "@chainlink/contracts-ccip/contracts/libraries/Client.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPMocks.sol",
+        "line": 9,
+        "raw_path": "@chainlink/contracts-ccip/contracts/libraries/Internal.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPMocks.sol",
+        "line": 10,
+        "raw_path": "@chainlink/contracts/src/v0.8/shared/call/CallWithExactGas.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPMocks.sol",
+        "line": 12,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPMocks.sol",
+        "line": 13,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v4.8.3/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPMocks.sol",
+        "line": 14,
+        "raw_path": "@chainlink/contracts/src/v0.8/vendor/openzeppelin-solidity/v5.0.2/contracts/utils/introspection/ERC165Checker.sol"
+      },
+      {
+        "importing_file": "contracts/mock/CCIPRMNMock.sol",
+        "line": 4,
+        "raw_path": "@chainlink/contracts-ccip/contracts/interfaces/IRMN.sol"
+      },
+      {
+        "importing_file": "contracts/mock/ERC4626Mock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/extensions/ERC4626.sol"
+      },
+      {
+        "importing_file": "contracts/mock/ERC4626Mock.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/ERC4626Mock.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/LZEndpointMock.sol",
+        "line": 4,
+        "raw_path": "@layerzerolabs/test-devtools-evm-hardhat/contracts/mocks/EndpointV2Mock.sol"
+      },
+      {
+        "importing_file": "contracts/mock/LockedFBTCMock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/mock/ProxyMock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol"
+      },
+      {
+        "importing_file": "contracts/mock/RatioFeedMock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/mock/ShardStrategyMocks.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/ShardStrategyMocks.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/TellerWithMultiAssetSupportMock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/TellerWithMultiAssetSupportMock.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/TokenMock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      },
+      {
+        "importing_file": "contracts/mock/WBTCMock.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/pmm/BTCB/BTCB.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/pmm/BTCB/BTCB.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/pmm/BTCB/BTCB.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol"
+      },
+      {
+        "importing_file": "contracts/pmm/BTCB/BTCB.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/pmm/CBBTC.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/pmm/CBBTC.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/pmm/CBBTC.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol"
+      },
+      {
+        "importing_file": "contracts/pmm/CBBTC.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBake.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBake.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBake.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBake.sol",
+        "line": 9,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBake.sol",
+        "line": 10,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBake.sol",
+        "line": 11,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBakeNativeToken.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBakeNativeToken.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBakeNativeToken.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBakeNativeToken.sol",
+        "line": 9,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBakeNativeToken.sol",
+        "line": 10,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/StakeAndBakeNativeToken.sol",
+        "line": 11,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/interfaces/IERC4626.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/erc4626/ERC4626Depositor.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/utils/ReentrancyGuard.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/strategy/MultiAssetDepositStrategyDepositor.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/strategy/MultiAssetDepositStrategyDepositor.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/strategy/MultiAssetDepositStrategyDepositor.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/utils/ReentrancyGuard.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+        "line": 9,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PermitUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+        "line": 10,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC4626Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+        "line": 11,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ERC4626VaultWrapper.sol",
+        "line": 13,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/ITeller.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/TellerWithMultiAssetSupportDepositor.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/TellerWithMultiAssetSupportDepositor.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/stakeAndBake/depositor/veda/TellerWithMultiAssetSupportDepositor.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/utils/ReentrancyGuard.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/AsyncRedemptionUpgradeable.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/AsyncRedemptionUpgradeable.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/AsyncRedemptionUpgradeable.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/BlocklistOracle.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/BlocklistOracle.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/utils/structs/EnumerableSet.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/FeeManagerUpgradeable.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MAWARStrategyMigrated.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MAWARStrategyMigrated.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MAWARStrategyMigrated.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MAWARStrategyMigrated.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MAWARStrategyMigrated.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/utils/structs/EnumerableSet.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MAWARStrategyMigrated.sol",
+        "line": 9,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MAWARStrategyMigrated.sol",
+        "line": 10,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MAWARStrategyMigrated.sol",
+        "line": 11,
+        "raw_path": "@openzeppelin/contracts/interfaces/IERC20Metadata.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MAWARStrategyMigrated.sol",
+        "line": 12,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MultiAssetDepositUpgradeable.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MultiAssetDepositUpgradeable.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MultiAssetDepositUpgradeable.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/utils/structs/EnumerableSet.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MultiAssetDepositUpgradeable.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MultiAssetWithAsyncRedemptionStrategy.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MultiAssetWithAsyncRedemptionStrategy.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/MultiAssetWithAsyncRedemptionStrategy.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/utils/introspection/IERC165.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/extensions/AccessControlDefaultAdminRulesUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+        "line": 7,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+        "line": 8,
+        "raw_path": "@openzeppelin/contracts/utils/structs/EnumerableSet.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+        "line": 9,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+        "line": 10,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20PausableUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+        "line": 11,
+        "raw_path": "@openzeppelin/contracts/interfaces/IERC20Metadata.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/StrategyBaseUpgradeable.sol",
+        "line": 12,
+        "raw_path": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/converters/ChainlinkCompositeConverter.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/converters/ChainlinkCompositeConverter.sol",
+        "line": 6,
+        "raw_path": "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/converters/ChainlinkConverter.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/converters/ChainlinkConverter.sol",
+        "line": 6,
+        "raw_path": "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/converters/DirectConverter.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/interfaces/IAssetConverter.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/interfaces/IMultiAssetDeposit.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/introspection/IERC165.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/interfaces/IStrategy.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/libraries/PriceRateLimiter.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/math/Math.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/shards/Shard.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/shards/Shard.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/shards/ShardBaseUpgradeable.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/shards/ShardBaseUpgradeable.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/shards/ShardBaseUpgradeable.sol",
+        "line": 6,
+        "raw_path": "@openzeppelin/contracts/utils/Address.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/validators/MerkleAllowlistValidator.sol",
+        "line": 4,
+        "raw_path": "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol"
+      },
+      {
+        "importing_file": "contracts/strategy/validators/MerkleAllowlistValidator.sol",
+        "line": 5,
+        "raw_path": "@openzeppelin/contracts/access/Ownable2Step.sol"
+      }
+    ]
+  },
+  "dependency_coverage": {
+    "coverage_ratio": 0.0,
+    "resolved": 0,
+    "total": 229
+  },
+  "dependency_files_added": [],
+  "import_prefix_aliases": {}
+}

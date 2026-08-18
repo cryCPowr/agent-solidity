@@ -1,1 +1,0 @@
-function setMaxPenaltyRate(uint256 _rate) external;

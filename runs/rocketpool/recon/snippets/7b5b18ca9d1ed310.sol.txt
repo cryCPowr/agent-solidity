@@ -1,1 +1,0 @@
-function bootstrapSettingAddress(string memory _settingContractName, string memory _settingPath, address _value) external;

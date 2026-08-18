@@ -1,1 +1,0 @@
-RPLTreasuryContractCreated(_contractName, _recipientAddress, _amountPerPeriod, _startTime, _periodLength, _numPeriods)

@@ -1,1 +1,0 @@
-function inflationCalculate() external view returns (uint256);

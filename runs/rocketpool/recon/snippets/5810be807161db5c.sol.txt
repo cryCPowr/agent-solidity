@@ -1,1 +1,0 @@
-Math.sqrt(_rplStake * calcBase)

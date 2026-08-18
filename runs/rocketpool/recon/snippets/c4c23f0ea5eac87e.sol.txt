@@ -1,1 +1,0 @@
-function getUserDistributeWindowStart() external view returns (uint256);

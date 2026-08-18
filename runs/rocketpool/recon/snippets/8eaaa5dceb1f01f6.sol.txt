@@ -1,1 +1,0 @@
-require(_block < block.number, "Balances can not be submitted for a future block")

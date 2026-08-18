@@ -1,6 +1,0 @@
-function _unpackItem(uint256 _packedValue) internal pure returns (DepositQueueValue memory item) {
-        item.receiver = address(uint160(_packedValue >> receiverOffset));
-        item.validatorId = uint32(_packedValue >> indexOffset);
-        item.suppliedValue = uint32(_packedValue >> suppliedOffset);
-        item.requestedValue = uint32(_packedValue);
-    }

@@ -1,1 +1,0 @@
-keccak256(abi.encodePacked("node.average.fee.numerator", nodeAddress, _previousBond))

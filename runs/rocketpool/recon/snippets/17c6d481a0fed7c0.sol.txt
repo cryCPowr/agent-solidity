@@ -1,1 +1,0 @@
-function getPricesBlock() external view returns (uint256);

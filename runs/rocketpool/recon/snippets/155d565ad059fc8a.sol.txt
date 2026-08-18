@@ -1,1 +1,0 @@
-isRewardedIndex(defeatIndex, _indices[i])

@@ -1,1 +1,0 @@
-event MegapoolValidatorExited(uint32 indexed validatorId, uint256 time);

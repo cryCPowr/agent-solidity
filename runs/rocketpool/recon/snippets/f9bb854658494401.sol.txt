@@ -1,1 +1,0 @@
-if (!checkpointExists) return 0

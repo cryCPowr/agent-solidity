@@ -1,3 +1,0 @@
-function getLeaveTime() override external view returns (uint256) {
-        return getSettingUint("members.leave.time");
-    }

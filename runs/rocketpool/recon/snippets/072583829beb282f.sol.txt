@@ -1,1 +1,0 @@
-abi.encodePacked("minipool.destroyed", msg.sender)

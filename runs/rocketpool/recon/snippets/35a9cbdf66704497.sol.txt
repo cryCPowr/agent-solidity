@@ -1,1 +1,0 @@
-require(rocketMegapoolFactory.getMegapoolDeployed(_nodeAddress), "Megapool must be deployed")

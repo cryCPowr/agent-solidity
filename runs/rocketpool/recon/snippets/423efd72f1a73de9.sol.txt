@@ -1,1 +1,0 @@
-daoNodeTrusted.getMemberIsValid(_nodeAddress)

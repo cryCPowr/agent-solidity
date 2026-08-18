@@ -1,1 +1,0 @@
-function getReservePriceRatio() external view returns (uint256);

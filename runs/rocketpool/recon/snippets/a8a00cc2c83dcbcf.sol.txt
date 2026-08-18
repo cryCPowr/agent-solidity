@@ -1,1 +1,0 @@
-bytes32 constant internal penaltyKey = keccak256(abi.encodePacked("megapool.running.penalty"))

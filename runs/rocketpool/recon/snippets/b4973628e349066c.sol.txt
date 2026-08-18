@@ -1,7 +1,0 @@
-constructor(address _nodeAddress, address _rocketStorage) {
-        rocketStorage = RocketStorageInterface(_rocketStorage);
-        nodeAddress = _nodeAddress;
-
-        // Precompute storage key for rocketNodeDistributorDelegate
-        distributorStorageKey = keccak256(abi.encodePacked("contract.address", "rocketNodeDistributorDelegate"));
-    }

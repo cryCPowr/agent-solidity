@@ -1,1 +1,0 @@
-function getFullDepositUserAmount() external view returns (uint256);

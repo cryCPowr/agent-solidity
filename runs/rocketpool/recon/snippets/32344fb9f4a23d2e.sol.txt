@@ -1,3 +1,0 @@
-function setLotAddressBidAmount(uint256 _index, address _bidder, uint256 _amount) private {
-        setUint(keccak256(abi.encodePacked("auction.lot.bid.address", _index, _bidder)), _amount);
-    }

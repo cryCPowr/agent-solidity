@@ -1,7 +1,0 @@
-if (nextDepth > maxDepth * 2) {
-            return maxDepth * 2;
-        } else if (nextDepth > maxDepth) {
-            if (currentDepth < maxDepth) {
-                return maxDepth;
-            }
-        }

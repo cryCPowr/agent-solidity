@@ -1,3 +1,0 @@
-for (uint256 i = 0; i < proof.length; i++) {
-            computedHash = _hashPair(computedHash, proof[i]);
-        }

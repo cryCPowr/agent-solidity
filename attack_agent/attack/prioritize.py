@@ -72,7 +72,15 @@ def exploitability_score(attack, hypothesis: dict[str, Any]) -> tuple[float, str
         relevance.DEPENDENCY: 0.1,
     }.get(attack.production_relevance, 0.4)
 
-    score = round(min(score, 10.0), 2)
+    # Attack-gate quality penalty: executable candidates should have very
+    # few UNKNOWN gates and zero BLOCKED gates.
+    gates = attack.attack_gates or {}
+    blocked = sum(1 for g in gates.values() if (g or {}).get("status") == "BLOCKED")
+    unknown = sum(1 for g in gates.values() if (g or {}).get("status") == "UNKNOWN")
+    score -= blocked * 2.5
+    score -= min(unknown * 0.25, 1.0)
+
+    score = round(max(0.0, min(score, 10.0)), 2)
     band = "high" if score >= 7.0 else ("medium" if score >= 4.0 else "low")
     return score, band
 

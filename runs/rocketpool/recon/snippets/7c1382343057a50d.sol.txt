@@ -1,1 +1,0 @@
-require(this.transfer(msg.sender, _amount), "Token transfer from RPL inflation contract was not successful")

@@ -1,3 +1,0 @@
-if (lastDistributionTime == 0) {
-            _calculateAndSaveCapitalRatio();
-        }

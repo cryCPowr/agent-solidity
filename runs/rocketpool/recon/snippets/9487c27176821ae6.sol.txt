@@ -1,3 +1,0 @@
-if (!rocketDAOProtocolSettingsDeposit.getAssignDepositsEnabled()) {
-            assignmentPossible = false;
-        }

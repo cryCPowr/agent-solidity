@@ -1,1 +1,0 @@
-_setSettingUint("late.notify.fine", 0.05 ether)

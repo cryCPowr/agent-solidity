@@ -1,1 +1,0 @@
-require(_value > 128 && _value < 7200, "Value must be > 128 blocks & < 7200 blocks")

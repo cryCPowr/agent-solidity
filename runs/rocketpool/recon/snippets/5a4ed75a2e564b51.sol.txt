@@ -1,4 +1,0 @@
-function getMemberAt(uint256 _index) override external view returns (address) {
-        AddressSetStorageInterface addressSetStorage = AddressSetStorageInterface(getContractAddress("addressSetStorage"));
-        return addressSetStorage.getItem(keccak256(abi.encodePacked(daoNameSpace, "member.index")), _index);
-    }

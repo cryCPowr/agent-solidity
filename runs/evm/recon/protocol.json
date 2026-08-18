@@ -1,0 +1,214 @@
+{
+  "contracts": [
+    {
+      "bases": [],
+      "errors": [],
+      "events": [],
+      "file": "contracts/LBTC/libraries/Redeem.sol",
+      "functions": [
+        "contracts/LBTC/libraries/Redeem.sol#31::encodeRequest#30"
+      ],
+      "is_abstract": false,
+      "key": "contracts/LBTC/libraries/Redeem.sol#31",
+      "kind": "library",
+      "modifiers": [],
+      "name": "Redeem",
+      "proxy_upgradeability": {
+        "delegatecall_paths": [],
+        "implementation_slots": [],
+        "initializer_functions": [],
+        "initializer_lifecycle": {},
+        "initializer_surfaces": [],
+        "proxy_like": false,
+        "upgrade_authorities": [],
+        "upgrade_functions": []
+      },
+      "state_variables": [
+        "contracts/LBTC/libraries/Redeem.sol#31::REQUEST_SELECTOR#5"
+      ]
+    },
+    {
+      "bases": [],
+      "errors": [],
+      "events": [],
+      "file": "contracts/consortium/ILombardTimelockController.sol",
+      "functions": [
+        "contracts/consortium/ILombardTimelockController.sol#194::isOperation#42",
+        "contracts/consortium/ILombardTimelockController.sol#194::isOperationPending#50",
+        "contracts/consortium/ILombardTimelockController.sol#194::isOperationReady#58",
+        "contracts/consortium/ILombardTimelockController.sol#194::isOperationDone#66",
+        "contracts/consortium/ILombardTimelockController.sol#194::getTimestamp#74",
+        "contracts/consortium/ILombardTimelockController.sol#194::getMinDelay#80",
+        "contracts/consortium/ILombardTimelockController.sol#194::hashOperation#96",
+        "contracts/consortium/ILombardTimelockController.sol#194::hashOperationBatch#115",
+        "contracts/consortium/ILombardTimelockController.sol#194::schedule#131",
+        "contracts/consortium/ILombardTimelockController.sol#194::scheduleBatch#150",
+        "contracts/consortium/ILombardTimelockController.sol#194::cancel#156",
+        "contracts/consortium/ILombardTimelockController.sol#194::execute#170",
+        "contracts/consortium/ILombardTimelockController.sol#194::executeBatch#187",
+        "contracts/consortium/ILombardTimelockController.sol#194::updateDelay#193"
+      ],
+      "is_abstract": false,
+      "key": "contracts/consortium/ILombardTimelockController.sol#194",
+      "kind": "interface",
+      "modifiers": [],
+      "name": "ITimelockController",
+      "proxy_upgradeability": {
+        "delegatecall_paths": [],
+        "implementation_slots": [],
+        "initializer_functions": [],
+        "initializer_lifecycle": {},
+        "initializer_surfaces": [],
+        "proxy_like": false,
+        "upgrade_authorities": [],
+        "upgrade_functions": []
+      },
+      "state_variables": []
+    },
+    {
+      "bases": [],
+      "errors": [],
+      "events": [],
+      "file": "contracts/interfaces/IEfficientRateLimiterV1.sol",
+      "functions": [
+        "contracts/interfaces/IEfficientRateLimiterV1.sol#218::setRateLimits#217"
+      ],
+      "is_abstract": false,
+      "key": "contracts/interfaces/IEfficientRateLimiterV1.sol#218",
+      "kind": "interface",
+      "modifiers": [],
+      "name": "IEfficientRateLimiterV1",
+      "proxy_upgradeability": {
+        "delegatecall_paths": [],
+        "implementation_slots": [],
+        "initializer_functions": [],
+        "initializer_lifecycle": {},
+        "initializer_surfaces": [],
+        "proxy_like": false,
+        "upgrade_authorities": [],
+        "upgrade_functions": []
+      },
+      "state_variables": []
+    },
+    {
+      "bases": [],
+      "errors": [],
+      "events": [],
+      "file": "contracts/interfaces/IProxyAdmin.sol",
+      "functions": [
+        "contracts/interfaces/IProxyAdmin.sol#237::UPGRADE_INTERFACE_VERSION#226",
+        "contracts/interfaces/IProxyAdmin.sol#237::upgradeAndCall#236"
+      ],
+      "is_abstract": false,
+      "key": "contracts/interfaces/IProxyAdmin.sol#237",
+      "kind": "interface",
+      "modifiers": [],
+      "name": "IProxyAdmin",
+      "proxy_upgradeability": {
+        "delegatecall_paths": [],
+        "implementation_slots": [],
+        "initializer_functions": [],
+        "initializer_lifecycle": {},
+        "initializer_surfaces": [],
+        "proxy_like": false,
+        "upgrade_authorities": [],
+        "upgrade_functions": [
+          "contracts/interfaces/IProxyAdmin.sol#237::upgradeAndCall#236"
+        ]
+      },
+      "state_variables": []
+    },
+    {
+      "bases": [],
+      "errors": [],
+      "events": [],
+      "file": "contracts/mock/IRateProvider.sol",
+      "functions": [
+        "contracts/mock/IRateProvider.sol#14::getRate#6",
+        "contracts/mock/IRateProvider.sol#14::getRateInQuoteSafe#13"
+      ],
+      "is_abstract": false,
+      "key": "contracts/mock/IRateProvider.sol#14",
+      "kind": "interface",
+      "modifiers": [],
+      "name": "IRateProvider",
+      "proxy_upgradeability": {
+        "delegatecall_paths": [],
+        "implementation_slots": [],
+        "initializer_functions": [],
+        "initializer_lifecycle": {},
+        "initializer_surfaces": [],
+        "proxy_like": false,
+        "upgrade_authorities": [],
+        "upgrade_functions": []
+      },
+      "state_variables": []
+    },
+    {
+      "bases": [],
+      "errors": [],
+      "events": [],
+      "file": "contracts/mock/MailboxTreasuryMock.sol",
+      "functions": [
+        "contracts/mock/MailboxTreasuryMock.sol#243::withdrawFee#242"
+      ],
+      "is_abstract": false,
+      "key": "contracts/mock/MailboxTreasuryMock.sol#243",
+      "kind": "interface",
+      "modifiers": [],
+      "name": "IMailboxWithdrawFee",
+      "proxy_upgradeability": {
+        "delegatecall_paths": [],
+        "implementation_slots": [],
+        "initializer_functions": [],
+        "initializer_lifecycle": {},
+        "initializer_surfaces": [],
+        "proxy_like": false,
+        "upgrade_authorities": [],
+        "upgrade_functions": []
+      },
+      "state_variables": []
+    },
+    {
+      "bases": [],
+      "errors": [],
+      "events": [],
+      "file": "contracts/mock/MailboxTreasuryMock.sol",
+      "functions": [
+        "contracts/mock/MailboxTreasuryMock.sol#299::<constructor>#261",
+        "contracts/mock/MailboxTreasuryMock.sol#299::withdrawFee#271",
+        "contracts/mock/MailboxTreasuryMock.sol#299::enableReceive#279",
+        "contracts/mock/MailboxTreasuryMock.sol#299::disableReceive#287",
+        "contracts/mock/MailboxTreasuryMock.sol#299::<receive>#298"
+      ],
+      "is_abstract": false,
+      "key": "contracts/mock/MailboxTreasuryMock.sol#299",
+      "kind": "contract",
+      "modifiers": [],
+      "name": "MailboxTreasuryMock",
+      "proxy_upgradeability": {
+        "delegatecall_paths": [],
+        "implementation_slots": [],
+        "initializer_functions": [],
+        "initializer_lifecycle": {
+          "basis_facts": [
+            "fact:fd2e7392dd09c2d5"
+          ],
+          "constructor_functions": [
+            "contracts/mock/MailboxTreasuryMock.sol#299::<constructor>#261"
+          ],
+          "initialized_state_variables": [],
+          "initializer_functions": []
+        },
+        "initializer_surfaces": [],
+        "proxy_like": false,
+        "upgrade_authorities": [],
+        "upgrade_functions": []
+      },
+      "state_variables": [
+        "contracts/mock/MailboxTreasuryMock.sol#299::canReceive#245",
+        "contracts/mock/MailboxTreasuryMock.sol#299::mailbox#247"
+      ]
+    }
+  ]
+}

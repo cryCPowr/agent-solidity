@@ -1,3 +1,0 @@
-if (_submission.treasuryRPL > 0) {
-            rocketVault.transferToken("rocketClaimDAO", rplContract, _submission.treasuryRPL);
-        }

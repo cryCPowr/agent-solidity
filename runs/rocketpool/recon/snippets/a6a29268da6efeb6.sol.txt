@@ -1,1 +1,0 @@
-_nodes.length == 2 ** (getNextDepth(_index, nodeCount) - indexDepth)

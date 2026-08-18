@@ -1,1 +1,0 @@
-function getMessage(uint256 _proposalID) external view returns (string memory);

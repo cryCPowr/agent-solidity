@@ -1,1 +1,0 @@
-_proof.slot >= slotElectra

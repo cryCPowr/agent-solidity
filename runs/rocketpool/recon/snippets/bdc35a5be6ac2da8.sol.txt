@@ -1,1 +1,0 @@
-weightedAverage + (numerator * depositWeights[i] / depositCounts[i])

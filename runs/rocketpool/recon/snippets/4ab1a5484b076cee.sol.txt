@@ -1,1 +1,0 @@
-rootFromWitness.sum == _expected.sum

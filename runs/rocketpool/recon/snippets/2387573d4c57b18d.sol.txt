@@ -1,3 +1,0 @@
-for (uint256 i = 0; i < depositSizes.length; ++i) {
-            depositWeights[i] = depositWeights[i] * calcBase / depositWeightTotal;
-        }

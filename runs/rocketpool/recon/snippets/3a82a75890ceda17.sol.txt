@@ -1,1 +1,0 @@
-RocketMinipoolBondReducerInterface(getContractAddress("rocketMinipoolBondReducer"))

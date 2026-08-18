@@ -1,5 +1,0 @@
-if (!existing) {
-                counts[uniqueTimezoneCount].timezone = timezone;
-                counts[uniqueTimezoneCount].count = 1;
-                uniqueTimezoneCount++;
-            }

@@ -1,3 +1,0 @@
-function actionJoin() override external onlyRegisteredNode(msg.sender) onlyLatestContract("rocketDAONodeTrustedActions", address(this)) {
-        _memberJoin(msg.sender);
-    }

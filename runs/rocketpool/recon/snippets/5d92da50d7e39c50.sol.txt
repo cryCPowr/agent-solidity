@@ -1,5 +1,0 @@
-abstract contract RocketNodeDistributorStorageLayout {
-    RocketStorageInterface internal rocketStorage;
-    address internal nodeAddress;
-    uint256 internal lock;   // Reentrancy guard
-}

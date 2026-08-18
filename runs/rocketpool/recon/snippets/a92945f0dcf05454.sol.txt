@@ -1,1 +1,0 @@
-function getMaximumStakeForVotingPower() external view returns (uint256);

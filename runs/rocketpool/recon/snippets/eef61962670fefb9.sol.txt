@@ -1,1 +1,0 @@
-getSettingUint("rpl.inflation.interval.rate") + 0.01 ether

@@ -1,1 +1,0 @@
-if (max > totalNodes || _limit == 0) {max = totalNodes;}

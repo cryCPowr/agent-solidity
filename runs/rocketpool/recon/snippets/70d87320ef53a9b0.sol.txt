@@ -1,1 +1,0 @@
-minFee.add(targetFee.sub(minFee).mul(calcBase.sub(t)).div(calcBase))

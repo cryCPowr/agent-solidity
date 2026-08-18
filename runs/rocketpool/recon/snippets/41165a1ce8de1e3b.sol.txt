@@ -1,1 +1,0 @@
-abi.encodePacked("node.deposit.credit.balance", _nodeAddress)

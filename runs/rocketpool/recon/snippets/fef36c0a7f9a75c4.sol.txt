@@ -1,4 +1,0 @@
-function getMinipoolCount() override public view returns (uint256) {
-        AddressSetStorageInterface addressSetStorage = AddressSetStorageInterface(getContractAddress("addressSetStorage"));
-        return addressSetStorage.getCount(keccak256(bytes("minipools.index")));
-    }

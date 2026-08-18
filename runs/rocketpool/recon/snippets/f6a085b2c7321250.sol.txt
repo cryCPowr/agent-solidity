@@ -1,1 +1,0 @@
-uint256 constant internal minipoolUserDistributeWindowStart = 90 days

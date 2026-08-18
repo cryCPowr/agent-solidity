@@ -1,5 +1,0 @@
-function getMaximumStakeForVotingPower() override external view returns (uint256) {
-        bytes32 settingKey = keccak256(bytes("node.voting.power.stake.maximum"));
-        RocketNetworkSnapshotsInterface rocketNetworkSnapshots = RocketNetworkSnapshotsInterface(getContractAddress("rocketNetworkSnapshots"));
-        return uint256(rocketNetworkSnapshots.latestValue(settingKey));
-    }

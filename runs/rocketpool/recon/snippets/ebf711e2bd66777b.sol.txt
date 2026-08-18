@@ -1,1 +1,0 @@
-function getPendingETHRewards() external view returns (uint256);

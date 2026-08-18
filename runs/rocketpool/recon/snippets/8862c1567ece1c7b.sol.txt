@@ -1,1 +1,0 @@
-function canStake() external view returns (bool);

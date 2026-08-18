@@ -1,5 +1,0 @@
-if (_balance < 8 ether) {
-            return calculateNodeRewards(nodeDepositBalance, getUserDepositBalance(), _balance);
-        } else {
-            return _calculateNodeShare(_balance);
-        }

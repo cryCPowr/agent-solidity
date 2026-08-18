@@ -1,1 +1,0 @@
-require(getBool(bytes32(contractKey + existsOffset)) == true, "Contract does not exist")

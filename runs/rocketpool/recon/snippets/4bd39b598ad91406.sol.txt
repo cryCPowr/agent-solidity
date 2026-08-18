@@ -1,3 +1,0 @@
-if (beaconRoots[timestamp] != 0) {
-            return abi.encode(beaconRoots[timestamp]);
-        }

@@ -1,1 +1,0 @@
-function lookupRecent(bytes32 _key, uint64 _time, uint256 _recency) external view returns (uint192);

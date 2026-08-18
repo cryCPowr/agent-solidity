@@ -6,13 +6,24 @@ pragma solidity ^0.8.24;
 /// be any particular known proxy standard.
 contract GenericProxy {
     address public implementation;
+    bool public initialized;
 
     constructor(address impl) {
         implementation = impl;
     }
 
-    function upgradeTo(address newImplementation) external {
+    function initialize(address impl) external onlyOwner {
+        implementation = impl;
+        initialized = true;
+    }
+
+    function upgradeTo(address newImplementation) external onlyOwner {
         implementation = newImplementation;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == address(0xBEEF), "not owner");
+        _;
     }
 
     fallback() external payable {

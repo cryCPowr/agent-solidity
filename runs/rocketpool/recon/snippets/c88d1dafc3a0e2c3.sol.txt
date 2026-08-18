@@ -1,1 +1,0 @@
-function getPreviousDelegate() external view returns (address);

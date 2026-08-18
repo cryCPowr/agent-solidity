@@ -41,6 +41,9 @@ class ReconArtifact:
     graph: GraphIndex
     summary: dict[str, Any] = field(default_factory=dict)
     metadata: dict[str, Any] = field(default_factory=dict)
+    coverage: dict[str, Any] = field(default_factory=dict)
+    protocol: dict[str, Any] = field(default_factory=dict)
+    dependencies: dict[str, Any] = field(default_factory=dict)
     output_dir: str = ""
 
     def facts_for_function(self, fn_key: str) -> list[dict[str, Any]]:
@@ -71,6 +74,8 @@ class ReconArtifact:
 class ThreatArtifact:
     hypotheses: list[dict[str, Any]] = field(default_factory=list)
     invariants: list[dict[str, Any]] = field(default_factory=list)
+    surfaces: list[dict[str, Any]] = field(default_factory=list)
+    threat_model: dict[str, Any] = field(default_factory=dict)
     summary: dict[str, Any] = field(default_factory=dict)
     output_dir: str = ""
 
@@ -129,6 +134,9 @@ def load_recon(output_dir: str) -> ReconArtifact:
         graph=_index_graph(graph_raw.get("nodes"), graph_raw.get("edges")),
         summary=_json("summary.json"),
         metadata=_json("metadata.json"),
+        coverage=_json("coverage.json"),
+        protocol=_json("protocol.json"),
+        dependencies=_json("dependencies.json"),
         output_dir=output_dir,
     )
 
@@ -149,6 +157,19 @@ def load_threat(output_dir: str) -> ThreatArtifact:
             data = json.load(f)
         invariants = data.get("invariants") or []
 
+    surfaces: list[dict[str, Any]] = []
+    surf_path = os.path.join(output_dir, "surfaces.json")
+    if os.path.exists(surf_path):
+        with open(surf_path, encoding="utf-8") as f:
+            data = json.load(f)
+        surfaces = data.get("surfaces") or []
+
+    threat_model: dict[str, Any] = {}
+    tm_path = os.path.join(output_dir, "threat_model.json")
+    if os.path.exists(tm_path):
+        with open(tm_path, encoding="utf-8") as f:
+            threat_model = json.load(f)
+
     summary: dict[str, Any] = {}
     sum_path = os.path.join(output_dir, "summary.json")
     if os.path.exists(sum_path):
@@ -158,6 +179,8 @@ def load_threat(output_dir: str) -> ThreatArtifact:
     return ThreatArtifact(
         hypotheses=hypotheses,
         invariants=invariants,
+        surfaces=surfaces,
+        threat_model=threat_model,
         summary=summary,
         output_dir=output_dir,
     )

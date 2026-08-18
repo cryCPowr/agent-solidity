@@ -1,6 +1,0 @@
-unchecked {
-            // Prevent overflow of length into path
-            require(lenA + lenB <= 248, "Path too long");
-            _left._data = (_left._data - lenA) << lenB;
-            _left._data += _right._data + lenA;
-        }

@@ -1,1 +1,0 @@
-function proposalSecurityInvite(string memory _id, address _memberAddress) external;

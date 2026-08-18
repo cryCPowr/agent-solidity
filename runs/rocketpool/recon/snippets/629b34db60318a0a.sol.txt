@@ -1,7 +1,0 @@
-if (!finalised && userDistributed) {
-            // Note: _refund is called inside _finalise
-            _finalise();
-        } else {
-            // Refund node
-            _refund();
-        }

@@ -1,6 +1,0 @@
-function actionKick(address _memberAddress) override public onlyLatestContract("rocketDAOSecurityProposals", msg.sender) {
-        // Remove the member now
-        _memberRemove(_memberAddress);
-        // Log it
-        emit ActionKick(_memberAddress, block.timestamp);
-    }

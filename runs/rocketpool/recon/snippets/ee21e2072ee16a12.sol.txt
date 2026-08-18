@@ -1,1 +1,0 @@
-keccak256(abi.encodePacked(daoProposalNameSpace, "destroyed", _proposalID))

@@ -1,4 +1,0 @@
-function setSettingBool(string memory _settingPath, bool _value) virtual public override onlyDAOProtocolProposal {
-        // Update setting now
-        setBool(keccak256(abi.encodePacked(settingNameSpace, _settingPath)), _value);
-    }

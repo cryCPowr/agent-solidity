@@ -1,4 +1,0 @@
-modifier onlyBootstrapMode() {
-        require(getBootstrapModeDisabled() == false, "Bootstrap mode not engaged");
-        _;
-    }

@@ -1,1 +1,0 @@
-function getMaxPenaltyRate() external view returns (uint256);

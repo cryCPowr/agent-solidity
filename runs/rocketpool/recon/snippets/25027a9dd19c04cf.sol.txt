@@ -1,1 +1,0 @@
-function recycleDissolvedDeposit() external payable;

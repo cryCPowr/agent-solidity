@@ -1,1 +1,0 @@
-require(_nodeAddress == nodeAddress, "Invalid minipool owner")

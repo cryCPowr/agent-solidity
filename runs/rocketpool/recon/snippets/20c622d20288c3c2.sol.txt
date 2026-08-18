@@ -1,3 +1,0 @@
-function getActionTime() override external view returns (uint256) {
-        return getSettingUint("proposal.action.time");
-    }

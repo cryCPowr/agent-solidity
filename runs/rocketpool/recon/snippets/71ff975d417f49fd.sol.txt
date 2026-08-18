@@ -1,1 +1,0 @@
-uint256 constant internal suppliedOffset = 256 - 160 - 32 - 32

@@ -1,1 +1,0 @@
-function delegateRollback() external;

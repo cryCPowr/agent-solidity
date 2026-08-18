@@ -1,1 +1,0 @@
-event ReductionCancelled(address indexed minipool, uint256 time);

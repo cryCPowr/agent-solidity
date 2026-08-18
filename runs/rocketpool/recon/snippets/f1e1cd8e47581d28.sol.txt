@@ -1,1 +1,0 @@
-function getVariableDepositAmount() external view returns (uint256);

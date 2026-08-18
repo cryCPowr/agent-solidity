@@ -1,4 +1,0 @@
-if (rplBondRefundAmount > 0) {
-            // Send tokens now if the vault can cover it
-            if(rplToken.balanceOf(address(rocketVault)) >= rplBondRefundAmount) rocketVault.withdrawToken(_nodeAddress, IERC20(getContractAddress("rocketTokenRPL")), rplBondRefundAmount);
-        }

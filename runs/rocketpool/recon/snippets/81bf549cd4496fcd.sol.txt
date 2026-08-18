@@ -1,1 +1,0 @@
-function getNodeStakingMinipoolCount(address _nodeAddress) external view returns (uint256);

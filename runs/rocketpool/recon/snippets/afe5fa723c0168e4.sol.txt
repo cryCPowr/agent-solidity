@@ -1,1 +1,0 @@
-event BeginBondReduction(address indexed minipool, uint256 time);

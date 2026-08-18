@@ -1,3 +1,0 @@
-if (penaltyRate > maxPenaltyRate) {
-            return maxPenaltyRate;
-        }

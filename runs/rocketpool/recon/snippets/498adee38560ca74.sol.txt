@@ -1,1 +1,0 @@
-function calculateSplit(uint64 _sinceTime) external view returns (uint256 nodeShare, uint256 voterShare, uint256 protocolDAOShare, uint256 rethShare);

@@ -1,1 +1,0 @@
-calcBase.mul(rocketAuctionSettings.getLotMaximumEthValue())

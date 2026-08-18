@@ -54,6 +54,7 @@ _SECURITY_RELEVANT_CAPABILITIES = {
 
 _TOKEN_TRANSFER_OPS = {"transfer", "transferFrom", "safeTransfer", "safeTransferFrom", "safeBatchTransferFrom"}
 _APPROVAL_OPS = {"approve", "increaseAllowance", "setApprovalForAll", "permit"}
+_UPGRADE_NAMES = {"upgradeto", "upgradeandcall", "setimplementation"}
 
 
 # ===========================================================================
@@ -487,6 +488,227 @@ def derive_relationship_chains(ctx: ProjectContext) -> None:
                     extraction_method="ast+heuristic",
                 )
             )
+
+
+def derive_initializer_lifecycle_facts(ctx: ProjectContext) -> None:
+    """Structural initializer lifecycle modeling.
+
+    Emits only what Recon can support from observed declarations and
+    already-extracted writes/auth surfaces: initializer presence,
+    constructor presence, initialized-flag usage, and whether an
+    initializer has an observed authorization boundary.
+    """
+    constructors_by_contract: dict[str, list[Fact]] = defaultdict(list)
+    initializers_by_contract: dict[str, list[Fact]] = defaultdict(list)
+    state_vars_by_contract: dict[str, list[Fact]] = defaultdict(list)
+    auth_by_function = {
+        f.subject.get("function"): f
+        for f in ctx.facts
+        if f.type == "access_controlled_function"
+    }
+    writes_by_function: dict[str, list[Fact]] = defaultdict(list)
+
+    for f in ctx.facts:
+        if f.type == "constructor_function":
+            constructors_by_contract[f.subject.get("contract")].append(f)
+        elif f.type == "initializer_function":
+            initializers_by_contract[f.subject.get("contract")].append(f)
+        elif f.type == "state_variable":
+            state_vars_by_contract[f.subject.get("contract")].append(f)
+        elif f.type == "state_write":
+            writes_by_function[f.subject.get("function")].append(f)
+
+    for contract_key in sorted(ctx.contracts.keys()):
+        constructors = constructors_by_contract.get(contract_key, [])
+        initializers = initializers_by_contract.get(contract_key, [])
+        init_state_vars = [
+            f for f in state_vars_by_contract.get(contract_key, [])
+            if str((f.subject or {}).get("name", "")).lower() in {"initialized", "_initialized", "isinitialized"}
+        ]
+        if constructors or initializers or init_state_vars:
+            basis = [f.id for f in constructors + initializers + init_state_vars]
+            ctx.add_fact(
+                Fact(
+                    id=ids.fact_id("initializer_lifecycle", ctx.contracts[contract_key].file, f"{contract_key}:lifecycle"),
+                    type="initializer_lifecycle",
+                    status="derived",
+                    subject={"contract": contract_key},
+                    properties={
+                        "constructor_functions": [f.subject.get("function") for f in constructors],
+                        "initializer_functions": [f.subject.get("function") for f in initializers],
+                        "initialized_state_variables": [f.subject.get("state_variable") for f in init_state_vars],
+                        "basis_facts": basis,
+                    },
+                    source=None,
+                    evidence=[],
+                    confidence="high",
+                    extraction_method="ast+heuristic",
+                )
+            )
+
+        for init_fact in initializers:
+            fn_key = init_fact.subject.get("function")
+            auth_fact = auth_by_function.get(fn_key)
+            write_facts = writes_by_function.get(fn_key, [])
+            writes_initialized_flag = any(
+                str((wf.subject or {}).get("name", "")).lower() in {"initialized", "_initialized", "isinitialized"}
+                for wf in write_facts
+            )
+            ctx.add_fact(
+                Fact(
+                    id=ids.fact_id("initializer_surface", ctx.contracts[contract_key].file, f"{fn_key}:surface"),
+                    type="initializer_surface",
+                    status="derived",
+                    subject={"contract": contract_key, "function": fn_key},
+                    properties={
+                        "authorization_status": "observed" if auth_fact else "none_observed",
+                        "authorization_fact_ids": [auth_fact.id] if auth_fact else [],
+                        "writes_initialized_flag": writes_initialized_flag,
+                        "basis_facts": [init_fact.id] + ([auth_fact.id] if auth_fact else []) + [wf.id for wf in write_facts],
+                    },
+                    source=init_fact.source,
+                    evidence=list(init_fact.evidence),
+                    confidence="medium",
+                    extraction_method="ast+heuristic",
+                )
+            )
+
+
+
+def derive_proxy_upgradeability_facts(ctx: ProjectContext) -> None:
+    """Post-analysis structural proxy/upgradeability synthesis.
+
+    Uses already-emitted declaration facts (`proxy_like_contract`,
+    `implementation_slot`, `upgrade_function`) plus expression/auth facts
+    (`low_level_call`, `access_controlled_function`) to build richer proxy
+    relations without reparsing the AST.
+    """
+    proxy_like = {
+        f.subject.get("contract"): f
+        for f in ctx.facts
+        if f.type == "proxy_like_contract"
+    }
+    impl_slots_by_contract: dict[str, list[Fact]] = defaultdict(list)
+    for f in ctx.facts:
+        if f.type == "implementation_slot":
+            impl_slots_by_contract[f.subject.get("contract")].append(f)
+
+    access_controlled_by_function = {
+        f.subject.get("function"): f
+        for f in ctx.facts
+        if f.type == "access_controlled_function"
+    }
+    low_level_by_function: dict[str, list[Fact]] = defaultdict(list)
+    for f in ctx.facts:
+        if f.type == "low_level_call":
+            low_level_by_function[f.subject.get("caller")].append(f)
+
+    for contract_key, proxy_fact in sorted(proxy_like.items()):
+        contract = ctx.contracts.get(contract_key)
+        if contract is None:
+            continue
+        impl_slots = impl_slots_by_contract.get(contract_key, [])
+        impl_slot_keys = [f.subject.get("state_variable") for f in impl_slots if f.subject.get("state_variable")]
+
+        for fu in contract.functions:
+            if (fu.name or "").lower() in _UPGRADE_NAMES:
+                auth_fact = access_controlled_by_function.get(fu.key)
+                if auth_fact:
+                    ctx.add_fact(
+                        Fact(
+                            id=ids.fact_id("upgrade_authority", fu.file, f"{fu.ast_id}:authority"),
+                            type="upgrade_authority",
+                            status="derived",
+                            subject={"contract": contract_key, "function": fu.key, "name": fu.name},
+                            properties={
+                                "mechanisms": auth_fact.properties.get("mechanisms", []),
+                                "basis_facts": auth_fact.properties.get("basis_facts", [auth_fact.id]),
+                            },
+                            source=ctx.source_ref(fu.file, fu.node),
+                            evidence=[ctx.make_evidence(fu.file, fu.node)] if ctx.make_evidence(fu.file, fu.node) else [],
+                            confidence="high",
+                            extraction_method="ast+heuristic",
+                        )
+                    )
+
+            ll_calls = low_level_by_function.get(fu.key, [])
+            delegate_basis = [call.id for call in ll_calls if call.properties.get("call_subtype") == "delegatecall"]
+            assembly_basis = [
+                f.id for f in ctx.facts
+                if f.type == "special_evm_feature"
+                and f.subject.get("function") == fu.key
+                and f.properties.get("feature") == "assembly_block"
+            ]
+            if delegate_basis or (fu.kind in ("fallback", "receive") and assembly_basis and impl_slot_keys):
+                basis = delegate_basis or assembly_basis
+                ctx.add_fact(
+                    Fact(
+                        id=ids.fact_id("proxy_delegatecall_path", fu.file, f"{fu.ast_id}:proxy_delegatecall_path"),
+                        type="proxy_delegatecall_path",
+                        status="derived",
+                        subject={"contract": contract_key, "function": fu.key},
+                        properties={
+                            "implementation_slots": impl_slot_keys,
+                            "delegatecall_function": fu.key,
+                            "fallback_like": fu.kind in ("fallback", "receive"),
+                            "basis_facts": basis,
+                            "delegatecall_evidence": "low_level_call" if delegate_basis else "assembly_fallback_proxy_shape",
+                        },
+                        source=ctx.source_ref(fu.file, fu.node),
+                        evidence=[ctx.make_evidence(fu.file, fu.node)] if ctx.make_evidence(fu.file, fu.node) else [],
+                        confidence="high",
+                        extraction_method="ast+heuristic",
+                    )
+                )
+
+
+
+def derive_capability_authority_facts(ctx: ProjectContext) -> None:
+    """Richer structural linkage between capabilities and observed authority.
+
+    This remains in Recon: it does not decide exploitability, only records
+    which observed capabilities are guarded, unguarded, and whether the same
+    function writes authorization-relevant state.
+    """
+    access_controlled_by_function = {
+        f.subject.get("function"): f
+        for f in ctx.facts
+        if f.type == "access_controlled_function"
+    }
+    auth_relevant_state = set()
+    for f in ctx.facts:
+        if f.type == "authorization_check":
+            auth_relevant_state.update(f.properties.get("referenced_state_variables", []))
+
+    for cap in [f for f in ctx.facts if f.type == "capability"]:
+        fn_key = cap.subject.get("function")
+        auth_fact = access_controlled_by_function.get(fn_key)
+        writes_auth_state = [
+            f.id for f in ctx.facts
+            if f.type == "state_write"
+            and f.subject.get("function") == fn_key
+            and f.subject.get("state_variable") in auth_relevant_state
+        ]
+        ctx.add_fact(
+            Fact(
+                id=ids.fact_id("capability_authority_surface", fn_key, cap.subject.get("capability", "")),
+                type="capability_authority_surface",
+                status="derived",
+                subject={"function": fn_key, "capability": cap.subject.get("capability")},
+                properties={
+                    "authority_status": "guarded" if auth_fact else "none_observed",
+                    "authority_fact_ids": [auth_fact.id] if auth_fact else [],
+                    "writes_authorization_state": bool(writes_auth_state),
+                    "authorization_state_write_fact_ids": writes_auth_state,
+                    "capability_fact_id": cap.id,
+                },
+                source=None,
+                evidence=[],
+                confidence="high",
+                extraction_method="ast+heuristic",
+            )
+        )
+
 
 
 def derive_frontrun_vulnerability_facts(ctx: ProjectContext) -> None:

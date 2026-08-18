@@ -1,0 +1,7 @@
+function hashOperation(
+        address target,
+        uint256 value,
+        bytes calldata data,
+        bytes32 predecessor,
+        bytes32 salt
+    ) external pure returns (bytes32);

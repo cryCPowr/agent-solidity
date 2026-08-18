@@ -1,1 +1,0 @@
-RPLRecovered(_lotIndex, msg.sender, remainingRplAmount, block.timestamp)

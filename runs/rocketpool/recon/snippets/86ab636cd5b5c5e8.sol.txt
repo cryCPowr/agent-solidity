@@ -1,1 +1,0 @@
-MegapoolValidatorStaked(_validatorId, block.timestamp)

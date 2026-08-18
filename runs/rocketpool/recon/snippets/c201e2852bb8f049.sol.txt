@@ -1,1 +1,0 @@
-function getTotal() external view returns (uint256);

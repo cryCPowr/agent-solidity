@@ -1,1 +1,0 @@
-function stakeRPL(uint256 _amount) external;

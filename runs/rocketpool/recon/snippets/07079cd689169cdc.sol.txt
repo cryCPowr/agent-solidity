@@ -1,1 +1,0 @@
-keccak256(abi.encodePacked("minipool.penalty.submission.applied", _minipool, _block))

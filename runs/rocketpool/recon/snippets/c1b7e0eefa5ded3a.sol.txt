@@ -1,4 +1,0 @@
-function getExpressTicketsProvisioned(address _nodeAddress) external override view returns (bool) {
-        bytes32 provisionedKey = keccak256(abi.encodePacked("node.express.provisioned", _nodeAddress));
-        return getBool(provisionedKey);
-    }

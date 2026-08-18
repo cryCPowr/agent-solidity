@@ -1,1 +1,0 @@
-require(getNodeStakedRPL(_from) >= _amount, "Node has insufficient RPL")

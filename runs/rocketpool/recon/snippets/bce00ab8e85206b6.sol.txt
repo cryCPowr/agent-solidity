@@ -1,1 +1,0 @@
-require(rplToken.approve(address(rocketVault), _amount), "Could not approve vault RPL deposit")

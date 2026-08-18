@@ -1,6 +1,0 @@
-if (last._block == blockNumber) {
-                last._value = _value;
-                _set(_key, pos - 1, last);
-            } else {
-                _push(_key, Checkpoint224({_block: blockNumber, _value: _value}));
-            }

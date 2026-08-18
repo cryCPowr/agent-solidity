@@ -1,3 +1,0 @@
-for (uint i = 0; i < _submission.nodeETH.length; ++i) {
-            totalETH += _submission.nodeETH[i];
-        }

@@ -1,1 +1,0 @@
-rocketNetworkRevenues.getNodeAverageCapitalRatioSince(nodeAddress, lastDistributionTime64)

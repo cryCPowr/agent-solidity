@@ -1,1 +1,0 @@
-function setSmoothingPoolRegistrationState(bool _state) external;

@@ -1,1 +1,0 @@
-_withdrawalProof.withdrawal.validatorIndex == _validatorProof.validatorIndex

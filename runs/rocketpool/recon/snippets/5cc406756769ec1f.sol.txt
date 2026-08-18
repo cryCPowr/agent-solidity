@@ -1,1 +1,0 @@
-userDepositAssignedTime == 0

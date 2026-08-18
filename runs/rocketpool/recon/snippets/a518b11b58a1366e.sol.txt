@@ -1,4 +1,0 @@
-for (uint256 i = 0; i < depositSizes.length; ++i) {
-            depositWeights[i] = (launchAmount - depositSizes[i]) * depositCounts[i];
-            depositWeightTotal = depositWeightTotal + depositWeights[i];
-        }

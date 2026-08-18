@@ -1,1 +1,0 @@
-function getStakingMinipoolCount() external view returns (uint256);

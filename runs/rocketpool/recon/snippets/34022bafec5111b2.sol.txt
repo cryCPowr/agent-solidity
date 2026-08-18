@@ -1,1 +1,0 @@
-function canPromote() external view returns (bool);

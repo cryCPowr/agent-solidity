@@ -1,3 +1,0 @@
-if (toReth > msg.value) {
-            toReth = msg.value;
-        }

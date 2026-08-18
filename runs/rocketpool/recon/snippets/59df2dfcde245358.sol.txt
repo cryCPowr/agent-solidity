@@ -1,8 +1,0 @@
-if (tokenCode > 0) {
-            (bool success, bytes memory result) = token.staticcall(abi.encodeWithSignature("balanceOf(address)", user));
-            if (!success) {
-                return 0;
-            }
-            (uint256 balance) = abi.decode(result, (uint256));
-            return balance;
-        }

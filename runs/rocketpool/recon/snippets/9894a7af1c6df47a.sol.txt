@@ -1,3 +1,0 @@
-function getSubmitBalancesEnabled() override external view returns (bool) {
-        return getSettingBool("network.submit.balances.enabled");
-    }

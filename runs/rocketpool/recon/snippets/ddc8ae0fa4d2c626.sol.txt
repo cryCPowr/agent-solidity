@@ -1,1 +1,0 @@
-setUint(bytes32(proposalKey + proposalBondOffset), proposalBond)

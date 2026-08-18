@@ -1,1 +1,0 @@
-require(index > 0, "Item does not exist in queue")

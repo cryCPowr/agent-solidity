@@ -1,3 +1,0 @@
-function getLastBondReductionPrevValue(address _minipoolAddress) override external view returns (uint256) {
-        return getUint(keccak256(abi.encodePacked("minipool.last.bond.reduction.prev.value", _minipoolAddress)));
-    }

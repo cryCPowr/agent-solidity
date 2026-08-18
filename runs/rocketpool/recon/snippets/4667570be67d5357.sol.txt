@@ -1,1 +1,0 @@
-setUint(keccak256(abi.encodePacked(daoNameSpace, "member.executed.time", "leave", msg.sender)), block.timestamp + rocketDAOProtocolSettingsSecurity.getLeaveTime())

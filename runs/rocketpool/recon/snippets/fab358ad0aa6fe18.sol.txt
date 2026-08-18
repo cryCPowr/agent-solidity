@@ -1,3 +1,0 @@
-for (uint256 i = 0; i < allowList.length; ++i) {
-            if (allowList[i] == _address) return true;
-        }

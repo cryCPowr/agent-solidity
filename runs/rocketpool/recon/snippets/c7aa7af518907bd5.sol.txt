@@ -1,1 +1,0 @@
-function getEffectiveCapacity() external view returns (uint256);

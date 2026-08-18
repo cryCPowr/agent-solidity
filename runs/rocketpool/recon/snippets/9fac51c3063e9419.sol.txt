@@ -1,1 +1,0 @@
-setUint(keccak256(abi.encodePacked(_key, ".end")), lastIndex)

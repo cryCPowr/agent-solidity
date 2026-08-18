@@ -1,1 +1,0 @@
-emit BidClaimed(_lotIndex, msg.sender, bidAmount, rplAmount, block.timestamp)

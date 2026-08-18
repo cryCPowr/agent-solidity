@@ -1,1 +1,0 @@
-uint256(uint160(_item.receiver)) << receiverOffset

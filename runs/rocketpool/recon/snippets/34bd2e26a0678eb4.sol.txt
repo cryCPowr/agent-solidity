@@ -1,1 +1,0 @@
-function getMemberIsValid(address _nodeAddress) external view returns (bool);

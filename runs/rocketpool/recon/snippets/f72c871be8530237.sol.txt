@@ -1,5 +1,0 @@
-for (uint256 i = 0; i < _claims.length; ++i) {
-                totalAmountRPL = totalAmountRPL + _claims[i].amountRPL;
-                totalAmountSmoothingPoolETH = totalAmountSmoothingPoolETH + _claims[i].amountSmoothingPoolETH;
-                totalAmountVoterETH = totalAmountVoterETH + _claims[i].amountVoterETH;
-            }

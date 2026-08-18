@@ -1,1 +1,0 @@
-_witness.length == getDepthFromIndex(_index) - getDepthFromIndex(previousIndex)

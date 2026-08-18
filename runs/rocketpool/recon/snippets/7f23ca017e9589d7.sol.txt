@@ -1,1 +1,0 @@
-require(userDepositAssignedTime == 0, "The user deposit has already been assigned")

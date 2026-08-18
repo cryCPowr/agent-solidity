@@ -1,3 +1,0 @@
-function getReduceBondCancelled(address _minipoolAddress) override public view returns (bool) {
-        return getBool(keccak256(abi.encodePacked("minipool.bond.reduction.cancelled", address(_minipoolAddress))));
-    }

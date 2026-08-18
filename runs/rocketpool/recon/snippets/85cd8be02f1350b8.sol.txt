@@ -1,1 +1,0 @@
-rocketStorage.setBytes32(_key, _value)

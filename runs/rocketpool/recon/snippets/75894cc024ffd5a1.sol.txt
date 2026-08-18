@@ -1,1 +1,0 @@
-event DelegateUpgraded(address oldDelegate, address newDelegate, uint256 time);

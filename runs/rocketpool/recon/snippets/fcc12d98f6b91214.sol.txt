@@ -1,1 +1,0 @@
-isNodeCalling(msg.sender)

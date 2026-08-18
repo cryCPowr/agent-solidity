@@ -1,1 +1,0 @@
-updateWithdrawalAddress(_nodeAddress, _newWithdrawalAddress)

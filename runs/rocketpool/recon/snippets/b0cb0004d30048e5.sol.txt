@@ -1,1 +1,0 @@
-require(!memberScrubVotes[msg.sender], "Member has already voted to scrub")

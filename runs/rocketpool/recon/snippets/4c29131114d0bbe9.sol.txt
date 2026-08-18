@@ -1,1 +1,0 @@
-require(!vacant, "Cannot stake a vacant minipool")

@@ -1,1 +1,0 @@
-event RPLTokensSentByDAOProtocol(string indexed invoiceID, address indexed from, address indexed to, uint256 amount, uint256 time);

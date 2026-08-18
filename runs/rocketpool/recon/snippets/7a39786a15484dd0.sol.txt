@@ -1,1 +1,0 @@
-require(account != address(0), "ERC20: mint to the zero address")

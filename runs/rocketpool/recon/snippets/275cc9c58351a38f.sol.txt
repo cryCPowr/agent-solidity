@@ -1,7 +1,0 @@
-function enqueueMinipool(address _minipool) override external onlyLatestContract("rocketMinipoolQueue", address(this)) onlyLatestContract("rocketNodeDeposit", msg.sender) {
-        // Enqueue
-        AddressQueueStorageInterface addressQueueStorage = AddressQueueStorageInterface(getContractAddress("addressQueueStorage"));
-        addressQueueStorage.enqueueItem(queueKeyVariable, _minipool);
-        // Emit enqueued event
-        emit MinipoolEnqueued(_minipool, queueKeyVariable, block.timestamp);
-    }

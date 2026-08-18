@@ -1,1 +1,0 @@
-function getUpgradeAddress(uint256 _upgradeProposalID) external view returns (address);

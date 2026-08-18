@@ -1,1 +1,0 @@
-getBool(keccak256(abi.encodePacked("minipool.exists", msg.sender)))

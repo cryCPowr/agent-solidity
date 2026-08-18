@@ -1,5 +1,0 @@
-function getLengthLegacy(MinipoolDeposit _depositType) override external view returns (uint256) {
-        if (_depositType == MinipoolDeposit.Full) { return getLengthLegacy(queueKeyFull); }
-        if (_depositType == MinipoolDeposit.Half) { return getLengthLegacy(queueKeyHalf); }
-        return 0;
-    }

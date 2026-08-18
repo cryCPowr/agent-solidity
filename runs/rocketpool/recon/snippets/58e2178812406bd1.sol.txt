@@ -1,7 +1,0 @@
-function getOrDeployContract(address _nodeAddress) override external onlyLatestContract("rocketNodeDeposit", msg.sender) onlyLatestContract("rocketMegapoolFactory", address(this)) returns (address) {
-        address contractAddress = getExpectedAddress(_nodeAddress);
-        if (getBool(keccak256(abi.encodePacked("megapool.exists", contractAddress)))) {
-            return contractAddress;
-        }
-        return _deployContract(_nodeAddress);
-    }

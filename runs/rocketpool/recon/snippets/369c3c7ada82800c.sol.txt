@@ -1,4 +1,0 @@
-if (value >> 16 > 0) {
-                value >>= 16;
-                result += 16;
-            }

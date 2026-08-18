@@ -1,1 +1,0 @@
-function getPendingVoterShare() external view returns (uint256);

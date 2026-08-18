@@ -1,1 +1,0 @@
-function bootstrapSecurityKick(address _memberAddress) external;

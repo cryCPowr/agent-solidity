@@ -1,1 +1,0 @@
-toHexString(uint256(uint160(addr)), _ADDRESS_LENGTH)

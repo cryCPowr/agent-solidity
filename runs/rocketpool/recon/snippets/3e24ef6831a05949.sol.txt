@@ -1,1 +1,0 @@
-abi.encodeWithSignature('initialise(address)', _nodeAddress)

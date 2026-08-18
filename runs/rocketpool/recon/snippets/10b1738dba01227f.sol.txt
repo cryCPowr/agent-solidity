@@ -1,3 +1,0 @@
-function getPenaltyThreshold() override external view returns (uint256) {
-        return getSettingUint("megapool.penalty.threshold");
-    }

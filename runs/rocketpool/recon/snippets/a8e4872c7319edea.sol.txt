@@ -1,3 +1,0 @@
-if (_max > 0) {
-            _assignMegapools(_max, _rocketDAOProtocolSettingsDeposit);
-        }

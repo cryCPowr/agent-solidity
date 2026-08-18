@@ -1,1 +1,0 @@
-function getQueueTop() external view returns (address receiver, bool assignmentPossible, uint256 headMovedBlock);

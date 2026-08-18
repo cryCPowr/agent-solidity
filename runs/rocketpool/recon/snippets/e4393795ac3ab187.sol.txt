@@ -1,1 +1,0 @@
-rocketMinipoolQueue.getEffectiveCapacity().toInt256()

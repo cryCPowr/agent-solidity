@@ -1,1 +1,0 @@
-keccak256(abi.encodePacked(daoProposalNameSpace, "receipt.hasVoted", _proposalID, _member))

@@ -1,3 +1,0 @@
-function getExecuteTime() override external view returns (uint256) {
-        return getSettingUint("proposal.execute.time");
-    }

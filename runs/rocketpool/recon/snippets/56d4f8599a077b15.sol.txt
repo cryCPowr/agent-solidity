@@ -1,5 +1,0 @@
-function _encode(Checkpoint192 memory _item) internal pure returns (bytes32) {
-        return bytes32(
-            uint256(_item._time) << 192 | uint256(_item._value)
-        );
-    }

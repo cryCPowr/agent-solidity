@@ -1,4 +1,0 @@
-unchecked {
-            uint256 result = sqrt(a);
-            return result + (rounding == Rounding.Up && result * result < a ? 1 : 0);
-        }

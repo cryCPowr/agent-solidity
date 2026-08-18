@@ -1,1 +1,0 @@
-proposalInvite(_newMemberId, _newMemberAddress)

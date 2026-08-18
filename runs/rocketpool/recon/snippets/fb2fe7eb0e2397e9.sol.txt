@@ -1,1 +1,0 @@
-require(getAddress(keccak256(abi.encodePacked("contract.address", _name))) == address(0x0), "Contract name is already in use")

@@ -1,1 +1,0 @@
-addUint(numeratorKey, minipool.getNodeFee())

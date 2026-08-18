@@ -1,1 +1,0 @@
-function receiveVaultWithdrawalETH() override external payable onlyLatestContract("rocketNodeManager", address(this)) onlyLatestContract("rocketVault", msg.sender) {}

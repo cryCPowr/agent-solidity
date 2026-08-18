@@ -1,1 +1,0 @@
-function incrementNodeFinalisedMinipoolCount(address _nodeAddress) external;

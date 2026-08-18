@@ -1,1 +1,0 @@
-function setPenaltyRate(address _minipoolAddress, uint256 _rate) external;

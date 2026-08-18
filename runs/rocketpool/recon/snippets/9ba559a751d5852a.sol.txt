@@ -1,1 +1,0 @@
-getLotTotalRPLAmount(_index).sub(getLotClaimedRPLAmount(_index))

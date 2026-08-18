@@ -1,1 +1,0 @@
-function getReceiptHasVoted(uint256 _proposalID, address _nodeAddress) external view returns (bool);

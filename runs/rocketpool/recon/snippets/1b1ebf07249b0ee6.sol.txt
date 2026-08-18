@@ -1,1 +1,0 @@
-rocketVaultContract.depositToken("rocketRewardsPool", IERC20(address(this)), newTokens)

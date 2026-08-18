@@ -1,1 +1,0 @@
-event PricesSubmitted(address indexed from, uint256 block, uint256 slotTimestamp, uint256 rplPrice, uint256 time);

@@ -1,5 +1,0 @@
-function hasUserDistributeWindowPassed(uint256 _time) override external view returns (bool) {
-        uint256 start = getUserDistributeWindowStart();
-        uint256 length = getUserDistributeWindowLength();
-        return _time >= start + length;
-    }

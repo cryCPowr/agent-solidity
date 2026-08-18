@@ -1,1 +1,0 @@
-rocketDepositPool.applyCredit(nodeAddress, _amount)

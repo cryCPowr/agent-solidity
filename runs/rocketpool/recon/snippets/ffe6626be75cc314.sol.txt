@@ -1,1 +1,0 @@
-ProposalVoteOverridden(_proposalID, _delegate, _voter, _votes, block.timestamp)

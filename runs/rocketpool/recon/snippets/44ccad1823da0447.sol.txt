@@ -1,1 +1,0 @@
-require(expected.sum == actual.sum, "Invalid sum")

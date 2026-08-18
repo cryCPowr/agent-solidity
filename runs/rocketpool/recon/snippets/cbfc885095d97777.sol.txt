@@ -1,5 +1,0 @@
-if (rewardsETH > 0) {
-                // Send ETH rewards to the relay
-                (bool result,) = address(relay).call{value: rewardsETH}("");
-                require(result, "Failed to send ETH rewards to relay");
-            }

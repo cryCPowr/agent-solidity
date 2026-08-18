@@ -1,1 +1,0 @@
-require(bytes(_id).length >= 3, "The ID for this new member must be at least 3 characters")

@@ -1,1 +1,0 @@
-daoSecurity.getMemberJoinedTime(msg.sender)

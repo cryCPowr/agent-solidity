@@ -1,1 +1,0 @@
-(_path._data >> 8) | anchor

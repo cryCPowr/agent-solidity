@@ -1,4 +1,0 @@
-if (voterAmount > 0) {
-            RocketRewardsPoolInterface rocketRewardsPool = RocketRewardsPoolInterface(getContractAddress("rocketRewardsPool"));
-            rocketRewardsPool.depositVoterShare{value: voterAmount}();
-        }

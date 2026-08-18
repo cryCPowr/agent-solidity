@@ -1,1 +1,0 @@
-assignedValue += msg.value - prestakeValue

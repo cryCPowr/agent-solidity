@@ -1,1 +1,0 @@
-function getFeeDistributorInitialised(address _nodeAddress) external view returns (bool);

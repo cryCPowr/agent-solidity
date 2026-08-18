@@ -1,1 +1,0 @@
-_memberRemove(msg.sender)

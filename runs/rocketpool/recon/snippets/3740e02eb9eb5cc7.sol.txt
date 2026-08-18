@@ -1,1 +1,0 @@
-RocketMinipoolFactoryInterface(getContractAddress("rocketMinipoolFactory"))

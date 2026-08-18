@@ -1,1 +1,0 @@
-require(_nodeAddress != address(0), "Invalid node address")

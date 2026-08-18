@@ -1,4 +1,0 @@
-function getItem(bytes32 _namespace, uint256 _index) override external view returns (DepositQueueValue memory) {
-        uint256 packedValue = getUint(keccak256(abi.encodePacked(_namespace, ".item", _index)));
-        return _unpackItem(packedValue);
-    }
